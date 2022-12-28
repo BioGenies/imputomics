@@ -206,6 +206,14 @@
         "testthat"
       ]
     },
+    "PEMM": {
+      "Package": "PEMM",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "804659e2b19a006c232640218ab79aea",
+      "Requirements": []
+    },
     "PRROC": {
       "Package": "PRROC",
       "Version": "1.3.1",
@@ -851,13 +859,14 @@
     },
     "htmltools": {
       "Package": "htmltools",
-      "Version": "0.5.3",
+      "Version": "0.5.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6496090a9e00f8354b811d1a2d47b566",
+      "Hash": "9d27e99cc90bd701c0a7a63e5923f9b7",
       "Requirements": [
         "base64enc",
         "digest",
+        "ellipsis",
         "fastmap",
         "rlang"
       ]

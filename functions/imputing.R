@@ -202,6 +202,11 @@ impute_irmi <- function(missing_data_set) {
                            percent_of_missing = colMeans(is.na(missing_data_set))*100, maxit = 200)
 }
 
+
+impute_PEMM <- function(missing_data_set) {
+  PEMM::PEMM_fun(missing_data_set, phi = 1)
+}
+
 all_names <- c("impute_min", "impute_mean", "impute_halfmin", "impute_median",
                "impute_zero", "impute_random",
                "impute_bpca", "impute_ppca", "impute_svd", "impute_nipals", "impute_nlpca",
