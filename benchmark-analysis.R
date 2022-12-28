@@ -5,6 +5,14 @@ library(ggplot2)
 res <- readRDS("./results/first-time-benchmark.RDS") %>% 
   unlist(recursive = FALSE)
 
+res %>% 
+  unlist(recursive = FALSE) %>% 
+  unlist(recursive = FALSE) %>% 
+  bind_rows() %>% 
+  select(name, n_metabolites, n_samples, mean, converged) %>% 
+  filter(!converged)
+
+
 png("./results/benchmark-summary.png", width = 480*1.5, height = 480*2, res = 100)
 res[sapply(res, class) != "try-error"] %>% 
   bind_rows() %>% 
