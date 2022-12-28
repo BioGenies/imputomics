@@ -58,6 +58,22 @@ estimate_ncp <- function(missing_data_set) {
   ifelse(estimated_ncp < 2, 2, estimated_ncp)
 }
 
+safe_impute <- function(imputing_function, missing_data_set) {
+  imputed <- structure(structure(list(), class = "try-error"))
+  n <- 1
+  while(inherits(imputed, "try-error") & n < 101) {
+    imputed <- try(imputing_function(missing_data_set), silent = TRUE)
+    n <- n + 1
+  }
+  
+  if(inherits(imputed, "try-error")) {
+    missing_data_set
+  } else {
+    imputed
+  }
+}
+
+
 impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpozycji
   imputed <- pcaMethods::pca(missing_data_set, method = "svdImpute", 
                              nPcs = estimate_ncp(missing_data_set),
@@ -133,39 +149,20 @@ impute_missforest <- function(missing_data_set) {
 
 impute_mi <- function(missing_data_set) {
   # requires betareg
-  imputed <- structure(structure(list(), class = "try-error"))
-  n <- 1
-  while(inherits(imputed, "try-error") & n < 101) {
-    capture.output(imputed <- try(mi::mi(missing_data_set, n.chain = 1, 
-                                         n.iter = 100, verbose = FALSE, parallel = FALSE), 
-                                  silent = TRUE))
-    n <- n + 1
-  }
+  capture.output(imputed <- mi::mi(missing_data_set, n.chain = 1, 
+                                   n.iter = 100, verbose = FALSE, parallel = FALSE))
   
-  if(inherits(imputed, "try-error")) {
-    missing_data_set
-  } else {
-    mi::complete(imputed)[colnames(missing_data_set)]
-  }
+  mi::complete(imputed)[colnames(missing_data_set)]
+  
 }
 
 impute_areg <- function(missing_data_set) {
-  imputed <- structure(structure(list(), class = "try-error"))
-  n <- 1
-  while(inherits(imputed, "try-error") & n < 101) {
-    capture.output(imputed <- try(Hmisc::aregImpute(formula = as.formula(paste0("~ ", paste0(colnames(df), collapse = " + "))), 
-                                                    data = df, tlinear = FALSE), silent = TRUE))
-    n <- n + 1
-  }
-  
-  if(inherits(imputed, "try-error")) {
-    missing_data_set
-  } else {
-    data.frame(do.call(cbind, 
-                       Hmisc::impute.transcan(imputed, imputation = 1,
-                                              data = df, list.out = TRUE, 
-                                              pr = FALSE, check = FALSE)))
-  }
+  capture.output(imputed <- Hmisc::aregImpute(formula = as.formula(paste0("~ ", paste0(colnames(df), collapse = " + "))), 
+                                              data = df, tlinear = FALSE))
+  data.frame(do.call(cbind, 
+                     Hmisc::impute.transcan(imputed, imputation = 1,
+                                            data = df, list.out = TRUE, 
+                                            pr = FALSE, check = FALSE)))
 }
 
 impute_knn <- function(missing_data_set) {
