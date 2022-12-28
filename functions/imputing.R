@@ -31,8 +31,8 @@ compute_col_min <- function(x)
 compute_col_mean <- function(x)
   lapply(x, mean, na.rm = TRUE)  
 
-compute_col_halfmean <- function(x)
-  lapply(x, function(i) mean(i, na.rm = TRUE)/2)  
+compute_col_halfmin <- function(x)
+  lapply(x, function(i) min(i, na.rm = TRUE)/2)  
 
 compute_col_median <- function(x)
   lapply(x, mean, na.rm = TRUE) 
@@ -46,8 +46,8 @@ impute_min <- function(missing_data_set)
 impute_mean <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_mean)
 
-impute_halfmean <- function(missing_data_set)
-  impute_per_column(missing_data_set, compute_col_halfmean)
+impute_halfmin <- function(missing_data_set)
+  impute_per_column(missing_data_set, compute_col_halfmin)
 
 impute_median <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_median)
@@ -202,7 +202,7 @@ impute_irmi <- function(missing_data_set) {
                            percent_of_missing = colMeans(is.na(missing_data_set))*100, maxit = 200)
 }
 
-all_names <- c("impute_min", "impute_mean", "impute_halfmean", "impute_median",
+all_names <- c("impute_min", "impute_mean", "impute_halfmin", "impute_median",
                "impute_zero", "impute_random",
                "impute_bpca", "impute_ppca", "impute_svd", "impute_nipals", "impute_nlpca",
                "impute_missmda_reg", "impute_missmda_em",
