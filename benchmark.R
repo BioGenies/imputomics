@@ -1,12 +1,14 @@
 source("functions/generate-data.R")
 source("functions/imputing.R")
 
-df <- create_df(5, 40, 0.05)
+df <- create_df(n_metabolites = 50, n_samples = 20, frac_na = 0.05)
 
-pbapply::pblapply(names(all_imp_funs), function(ith_name) try({
-    mb <- microbenchmark::microbenchmark(all_imp_funs[[ith_name]](df), times = 10)
-  }, silent = TRUE))
+pbapply::pblapply(names(all_safe_imp_funs), function(ith_name) {
+    mb <- microbenchmark::microbenchmark(all_safe_imp_funs[[ith_name]](df), times = 10)
+  })
 
+
+all_safe_imp_funs[["safe_impute_mice_norm.boot"]](df)
 
 set.seed(1)
 

@@ -1,5 +1,4 @@
 #devtools::install_version("PEMM", version = "1.0", repos = "http://cran.us.r-project.org")
-#devtools::install_github("BeanLabASU/metabimpute")
 
 
 #' @param missing_data_set \code{data.frame} with missing data
@@ -58,6 +57,11 @@ estimate_ncp <- function(missing_data_set) {
   ifelse(estimated_ncp < 2, 2, estimated_ncp)
 }
 
+#' Convert an imputing function into its safe version. 
+#' @param imputing_function a function that takes missing_data_set as an input
+#' @param missing_data_set \code{data.frame} with missing data
+#' @return A \code{data.frame} with imputed values or the \code{missing_data_set} 
+#' if the imputing function failed to converge.
 safe_impute <- function(imputing_function, missing_data_set) {
   imputed <- structure(structure(list(), class = "try-error"))
   n <- 1
@@ -223,3 +227,9 @@ all_imp_funs <- c(lapply(mice_methods, function(ith_method)
   lapply(all_names, get))
 
 names(all_imp_funs) <- c(paste0("impute_mice_", mice_methods), all_names)
+
+all_safe_imp_funs <- lapply(all_imp_funs, function(ith_imp) {
+  function(missing_data_set) safe_impute(ith_imp, missing_data_set)
+})
+
+names(all_safe_imp_funs) <- paste0("safe_", names(all_imp_funs))
