@@ -1,15 +1,6 @@
 source("functions/generate-data.R")
 source("functions/imputing.R")
 
-df <- create_df(n_metabolites = 50, n_samples = 20, frac_na = 0.05)
-
-pbapply::pblapply(names(all_safe_imp_funs), function(ith_name) {
-    mb <- microbenchmark::microbenchmark(all_safe_imp_funs[[ith_name]](df), times = 10)
-  })
-
-
-all_safe_imp_funs[["safe_impute_mice_norm.boot"]](df)
-
 set.seed(1)
 
 all_dfs <- unlist(lapply(c(5, 10, 50), function(ith_metabolities)
@@ -17,12 +8,20 @@ all_dfs <- unlist(lapply(c(5, 10, 50), function(ith_metabolities)
     create_df(ith_metabolities, ith_samples, 0.05)
   })), recursive = FALSE)
 
-res <- lapply(all_dfs, function(ith_df)
-  pbapply::pblapply(names(all_imp_funs), function(ith_name) try({
-    mb <- microbenchmark::microbenchmark(all_imp_funs[[ith_name]](ith_df), times = 10)
-    data.frame(summary(mb, unit = "s"), 
-               name = ith_name, 
-               n_metabolites = ncol(ith_df),
-               n_samples = nrow(ith_df))
-  }, silent = TRUE))
+res <- lapply(all_dfs[1L:2], function(ith_df)
+  pbapply::pblapply(names(all_safe_imp_funs), function(ith_name) 
+    lapply(1L:5, function(dummy) {
+      imputation_time <- microbenchmark::microbenchmark(imputed_df <- all_safe_imp_funs[["safe_impute_softimpute"]](df),
+                                                        times = 1, unit = "s")
+      data.frame(summary(imputation_time), 
+                 name = ith_name, 
+                 n_metabolites = ncol(ith_df),
+                 n_samples = nrow(ith_df),
+                 converged = !any(is.na(imputed_df)))
+    })
+  )
 )
+
+
+
+
