@@ -1,5 +1,8 @@
 #devtools::install_version("PEMM", version = "1.0", repos = "http://cran.us.r-project.org")
 
+source("./functions/Trunc_KNN.R")
+
+
 
 #' @param missing_data_set \code{data.frame} with missing data
 #' @param constant_value a constant value to impute
@@ -207,6 +210,12 @@ impute_PEMM <- function(missing_data_set) {
   PEMM::PEMM_fun(missing_data_set, phi = 1)
 }
 
+impute_tknn <- function(missing_data_set) {
+  imputed <- imputeKNN(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set)*0.05) + 1, distance = "truncation",
+            rm.na = TRUE, rm.nan = FALSE, rm.inf = FALSE)
+  data.frame(imputed)
+}
+
 all_names <- c("impute_min", "impute_mean", "impute_halfmin", "impute_median",
                "impute_zero", "impute_random",
                "impute_bpca", "impute_ppca", "impute_svd", "impute_nipals", "impute_nlpca",
@@ -220,7 +229,8 @@ all_names <- c("impute_min", "impute_mean", "impute_halfmin", "impute_median",
                "impute_mle",
                "impute_twlsa",
                "impute_softimpute",
-               "impute_irmi")
+               "impute_irmi",
+               "impute_tknn")
 
 # need pan package
 mice_methods <- c("pmm", "midastouch", "cart", "rf", "norm", "norm.nob", "norm.boot",
