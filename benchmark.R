@@ -1,10 +1,12 @@
 source("functions/generate-data.R")
 source("functions/imputing.R")
 
+require(magrittr)
+
 set.seed(1)
 
-all_dfs <- unlist(lapply(c(50), function(ith_metabolities)
-  lapply(c(10, 20), function(ith_samples) {
+all_dfs <- unlist(lapply(c(10, 20, 50, 100), function(ith_metabolities)
+  lapply(c(10, 20, 50, 100), function(ith_samples) {
     create_df(ith_metabolities, ith_samples, 0.05)
   })), recursive = FALSE)
 
@@ -23,5 +25,5 @@ res <- lapply(all_dfs, function(ith_df)
 )
 
 
-
+saveRDS("./results/second-time-benchmark.RDS")
 

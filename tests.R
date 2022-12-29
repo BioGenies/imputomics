@@ -12,3 +12,4 @@ expect_true(any(is.na(all_safe_imp_funs[["safe_impute_mice_norm.boot"]](df))))
 expect_false(any(is.na(all_safe_imp_funs[["safe_impute_tknn"]](df))))
 
 #all_safe_imp_funs[["safe_impute_gsimp"]](df)
+#impute_gsimp(df)

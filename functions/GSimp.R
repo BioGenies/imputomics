@@ -6,7 +6,6 @@
 
 # require(missForest)
 # require(imputeLCMD)
-require(magrittr)
 # require(foreach)
 # require(doParallel)
 # require(MASS)
