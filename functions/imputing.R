@@ -1,7 +1,7 @@
 #devtools::install_version("PEMM", version = "1.0", repos = "http://cran.us.r-project.org")
 
 source("./functions/Trunc_KNN.R")
-
+source("functions/GSimp.R")
 
 
 #' @param missing_data_set \code{data.frame} with missing data
@@ -216,6 +216,11 @@ impute_tknn <- function(missing_data_set) {
   data.frame(imputed)
 }
 
+impute_gsimp <- function(missing_data_set) {
+  imputed <- GS_impute(missing_data_set, initial = "lsym", imp_model='glmnet_pred')
+  imputed[["data_imp"]] 
+}
+  
 all_names <- c("impute_min", "impute_mean", "impute_halfmin", "impute_median",
                "impute_zero", "impute_random",
                "impute_bpca", "impute_ppca", "impute_svd", "impute_nipals", "impute_nlpca",
@@ -230,7 +235,8 @@ all_names <- c("impute_min", "impute_mean", "impute_halfmin", "impute_median",
                "impute_twlsa",
                "impute_softimpute",
                "impute_irmi",
-               "impute_tknn")
+               "impute_tknn",
+               "impute_gsimp")
 
 # need pan package
 mice_methods <- c("pmm", "midastouch", "cart", "rf", "norm", "norm.nob", "norm.boot",

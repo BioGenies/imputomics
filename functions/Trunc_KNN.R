@@ -4,7 +4,7 @@
 #### Hessian Functions
 #### This function was copied from https://github.com/WandeRum/GSimp
 #### and contains kNN-TN algorithm and related functions developed by 
-#### Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6).
+#### Jasmit S. Shah (10.1186/s12859-017-1547-6).
 ##################################################################################
 
 ## data = numeric vector
