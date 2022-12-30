@@ -1,6 +1,6 @@
 #devtools::install_version("PEMM", version = "1.0", repos = "http://cran.us.r-project.org")
 
-source("./functions/Trunc_KNN.R")
+source("functions/Trunc_KNN.R")
 source("functions/GSimp.R")
 
 
@@ -247,7 +247,8 @@ all_imp_funs <- c(lapply(mice_methods, function(ith_method)
     impute_mice(missing_data_set, method = ith_method)),
   lapply(all_names, get))
 
-names(all_imp_funs) <- c(paste0("impute_mice_", mice_methods), all_names)
+names(all_imp_funs) <- c(paste0("impute_mice_", gsub(pattern = ".", replacement = "_", mice_methods, fixed = TRUE)), 
+                                all_names)
 
 all_safe_imp_funs <- lapply(all_imp_funs, function(ith_imp) {
   function(missing_data_set) safe_impute(ith_imp, missing_data_set)
