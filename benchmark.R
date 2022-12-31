@@ -4,7 +4,7 @@ source("functions/scaling.R")
 
 require(magrittr)
 
-set.seed(1)
+set.seed(1410)
 
 all_dfs <- unlist(lapply(c(10, 20, 50, 100), function(ith_metabolities)
   lapply(c(10, 20, 50, 100), function(ith_samples) {
