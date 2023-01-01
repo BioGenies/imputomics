@@ -60,3 +60,14 @@ ggplot(dat, aes(x = name, y = log10(mean_time), fill = converged)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = "bottom")
 dev.off()
+
+png("./results/benchmark-summary-normal-grid.png", width = 480*2.5, height = 480*2.7, res = 110)
+ggplot(dat, aes(x = name, y = mean_time, fill = converged)) +
+  geom_col(position = "dodge") +
+  facet_grid(n_samples ~ n_metabolites, labeller = "label_both") +
+  scale_y_continuous("Time [s]") +
+  scale_fill_gradient("% converged", low = "red", high = "navyblue") +
+  theme_bw(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        legend.position = "bottom")
+dev.off()
