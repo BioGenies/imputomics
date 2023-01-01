@@ -71,3 +71,19 @@ ggplot(dat, aes(x = name, y = mean_time, fill = converged)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
         legend.position = "bottom")
 dev.off()
+
+png("./results/benchmark-fastest.png", width = 480*2.5, height = 480*2.7, res = 110)
+filter(dat, converged == 1) %>% 
+  filter(!(name %in% c("halfmin", "min", "random", "zero", "median", "mean"))) %>% 
+  group_by(n_metabolites, n_samples) %>% 
+  mutate(fast = mean_time < quantile(mean_time, 0.09)) %>% 
+  filter(fast) %>% 
+  ggplot(aes(x = name, y = mean_time)) +
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(ymax = mean_time + sd_time, ymin = mean_time)) +
+  facet_grid(n_samples ~ n_metabolites, labeller = "label_both") +
+  scale_y_continuous("Time [s]") +
+  theme_bw(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        legend.position = "bottom")
+dev.off()
