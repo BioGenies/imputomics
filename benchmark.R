@@ -31,4 +31,7 @@ res <- lapply(all_dfs, function(ith_df)
   })
 )
 
-saveRDS("./results/second-time-benchmark.RDS")
+saveRDS(res, "./results/second-time-benchmark.RDS")
+
+
+readRDS("./results/second-time-benchmark.RDS")
