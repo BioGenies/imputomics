@@ -39,51 +39,53 @@ dat <- readRDS("./results/second-time-benchmark.RDS") %>%
   ungroup() %>% 
   mutate(name = gsub(pattern = "safe_impute_", replacement = "", x = name, fixed = TRUE)) 
 
-png("./results/benchmark-summary.png", width = 480*2.5, height = 480*2.7, res = 110)
+png("./results/benchmark-summary.png", width = 480*5.7, height = 480*2.7, res = 150)
 ggplot(dat, aes(x = name, y = mean_time, fill = converged)) +
   geom_col(position = "dodge") +
   facet_grid2(n_samples ~ n_metabolites, independent = "y", scales = "free_y", labeller = "label_both") +
+  scale_x_discrete("Method name") +
   scale_y_continuous("Time [s]") +
   scale_fill_gradient("% converged", low = "red", high = "navyblue") +
-  theme_bw(base_size = 12) +
+  theme_bw(base_size = 14) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 dev.off()
 
-png("./results/benchmark-summary-log.png", width = 480*2.5, height = 480*2.7, res = 110)
+png("./results/benchmark-summary-log.png", width = 480*5.7, height = 480*2.7, res = 150)
 ggplot(dat, aes(x = name, y = log10(mean_time), fill = converged)) +
   geom_col(position = "dodge") +
   facet_grid2(n_samples ~ n_metabolites, independent = "y", scales = "free_y", labeller = "label_both") +
+  scale_x_discrete("Method name") +
   scale_y_continuous("Time [s] (log-scale)") +
   scale_fill_gradient("% converged", low = "red", high = "navyblue") +
-  theme_bw(base_size = 12) +
+  theme_bw(base_size = 14) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 dev.off()
 
-png("./results/benchmark-summary-normal-grid.png", width = 480*2.5, height = 480*2.7, res = 110)
+png("./results/benchmark-summary-normal-grid.png", width = 480*5.7, height = 480*2.7, res = 150)
 ggplot(dat, aes(x = name, y = mean_time, fill = converged)) +
   geom_col(position = "dodge") +
   facet_grid(n_samples ~ n_metabolites, labeller = "label_both") +
   scale_y_continuous("Time [s]") +
   scale_fill_gradient("% converged", low = "red", high = "navyblue") +
-  theme_bw(base_size = 12) +
+  theme_bw(base_size = 14) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 dev.off()
 
-png("./results/benchmark-fastest.png", width = 480*2.5, height = 480*2.7, res = 110)
+png("./results/benchmark-fastest.png", width = 480*5.7, height = 480*2.7, res = 150)
 filter(dat, converged == 1) %>% 
   filter(!(name %in% c("halfmin", "min", "random", "zero", "median", "mean"))) %>% 
   group_by(n_metabolites, n_samples) %>% 
-  mutate(fast = mean_time < quantile(mean_time, 0.09)) %>% 
+  mutate(fast = mean_time < quantile(mean_time, 0.1)) %>% 
   filter(fast) %>% 
   ggplot(aes(x = name, y = mean_time)) +
   geom_col(position = "dodge") +
   geom_errorbar(aes(ymax = mean_time + sd_time, ymin = mean_time)) +
   facet_grid(n_samples ~ n_metabolites, labeller = "label_both") +
   scale_y_continuous("Time [s]") +
-  theme_bw(base_size = 12) +
+  theme_bw(base_size = 14) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
-        legend.position = "bottom")
+        legend.position = "right")
 dev.off()
