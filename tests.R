@@ -1,4 +1,6 @@
 library(testthat)
+library(magrittr)
+
 
 source("functions/generate-data.R")
 source("functions/imputing.R")
@@ -17,3 +19,10 @@ expect_false(any(is.na(all_safe_imp_funs[["safe_impute_tknn"]](mdf))))
 
 scaled <- scale_df(mdf)
 expect_equal(unscale_df(scaled), mdf)
+
+set.seed(1410)
+
+all_dfs <- unlist(lapply(c(10, 20), function(ith_metabolities)
+  lapply(c(10, 20), function(ith_samples) {
+    scale_df(create_df(ith_metabolities, ith_samples, 0.05))
+  })), recursive = FALSE)
