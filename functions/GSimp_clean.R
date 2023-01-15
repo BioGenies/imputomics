@@ -23,33 +23,33 @@ rnorm_trunc <- function (n, mu, std, lo=-Inf, hi=Inf) {
 ## lsym will draw samples from the right tail of the distribution and transformed to the left tail
 miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
   init_data <- miss_data
-  if (method=='lsym') { # moze switch?
-    for (i in 1:ncol(init_data)) { # moze apply?
-      col_temp <- init_data[, i]
-      na_idx <- which(is.na(col_temp))
-      prop <- mean(is.na(col_temp))
-      min_temp <- min(col_temp, na.rm=TRUE)
-      col_temp[na_idx] <- min_temp - 1
-      med_temp <- median(col_temp)
-      col_temp[na_idx] <- med_temp - (sample(col_temp[col_temp >= quantile(col_temp, 1-prop)], length(na_idx), replace=TRUE) - med_temp)
-      init_data[, i] <- col_temp
-    }
-  }
-  if (method=='rsym') {
-    for (i in 1:ncol(init_data)) {
-      col_temp <- init_data[, i]
-      na_idx <- which(is.na(col_temp))
-      prop <- mean(is.na(col_temp))
-      max_temp <- max(col_temp, na.rm=TRUE)
-      col_temp[na_idx] <- max_temp + 1
-      med_temp <- median(col_temp)
-      col_temp[na_idx] <- med_temp + (med_temp - sample(col_temp[col_temp<=quantile(col_temp, prop)], length(na_idx), replace=TRUE))
-      init_data[, i] <- col_temp
-    }
-  }
-  if (method=='qrilc') {
-    init_data <- impute.QRILC(miss_data)[[1]]
-  }
+  switch (method,
+          lsym = {
+            init_data <- apply(init_data, 2, function(ith_col){
+              na_idx <- which(is.na(ith_col))
+              prop <- mean(is.na(ith_col))
+              min_temp <- min(ith_col, na.rm=TRUE)
+              ith_col[na_idx] <- min_temp - 1
+              med_temp <- median(ith_col)
+              ith_col[na_idx] <- med_temp - (sample(ith_col[ith_col >= quantile(ith_col, 1-prop)], length(na_idx), replace=TRUE) - med_temp)
+              ith_col
+            })
+          },
+          rsym = {
+            init_data <- apply(init_data, 2, function(ith_col){
+              na_idx <- which(is.na(ith_col))
+              prop <- mean(is.na(ith_col))
+              max_temp <- max(ith_col, na.rm=TRUE)
+              ith_col[na_idx] <- max_temp + 1
+              med_temp <- median(ith_col)
+              ith_col[na_idx] <- med_temp + (med_temp - sample(ith_col[ith_col<=quantile(ith_col, prop)], length(na_idx), replace=TRUE))
+              ith_col
+            })
+          },
+          qrilc = {
+            init_data <- impute.QRILC(miss_data)[[1]]
+          }
+  )
   return(init_data)
 }
 
@@ -93,7 +93,7 @@ single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pre
 ## initial=character ('qrilc'/'lysm'); initialized data maatrix
 ## n_cores=1 is sequentially (non-parallel) computing
 GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', lo=-Inf, hi='min', 
-                      n_cores=1, imp_model='glmnet_pred', gibbs=data.frame(row=integer(), col=integer())) {
+                      imp_model='glmnet_pred', gibbs=data.frame(row=integer(), col=integer())) {
   ## Make vector for iters_each ##
   if (length(iters_each)==1) {
     iters_each <- rep(iters_each, iters_all)
@@ -103,13 +103,14 @@ GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', 
   
   
   ## Missing count in each column ##
-  miss_count <- apply(data_miss, 2, function(x) sum(is.na(x))) # wyrzucic piep tylko dodac tam gdzie .
+  miss_count <- apply(data_miss, 2, function(x) sum(is.na(x)))
   ## Index of missing variables, sorted (increasing) by the number of missings 
-  # miss_col_idx <- order(miss_count, decreasing = TRUE) %>% extract(1:sum(miss_count!=0)) %>% rev() # stad tez wyrzucic piep oraz extract
-  miss_col_idx_temp <- order(miss_count, decreasing = T)
+  miss_col_idx_temp <- order(miss_count, decreasing = TRUE)
   miss_col_idx <- rev(miss_col_idx_temp[1:sum(miss_count!=0)])
+  browser()
   
-  if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')}
+  # if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')} # tutaj pozbyc się %in% ale jak 
+  if (!all(setdiff(gibbs$col, miss_col_idx))) {stop('improper argument: gibbs')}
   gibbs_sort <- gibbs
   if (nrow(gibbs_sort)>0) {
     gibbs_sort$order <- c(1:nrow(gibbs_sort))
@@ -125,7 +126,6 @@ GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', 
     lo_vec <- rep(lo, ncol(data_miss))
   } else if (is.character(lo)) {
     lo_fun <- getFunction(lo)
-    # lo_vec <- apply(data_miss, 2, function(x) x %>% na.omit %>% lo_fun) # pozbyc sie tego lo_fun(na.omit(x))
     lo_vec <- apply(data_miss, 2, function(x) lo_fun(na.omit(x)))
   }
   
@@ -136,7 +136,6 @@ GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', 
     hi_vec <- rep(hi, ncol(data_miss))
   } else if (is.character(hi)) {
     hi_fun <- getFunction(hi)
-    # hi_vec <- apply(data_miss, 2, function(x) x %>% na.omit %>% hi_fun) # pozbyc sie tego  hi_fun(na.omit(x))
     hi_vec <- apply(data_miss, 2, function(x) hi_fun(na.omit(x)))
   }
   
@@ -155,44 +154,17 @@ GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', 
   
   ## Iterations for the whole data matrix ##
   for (i in 1:iters_all) {
-    
-    ## Parallel computing ##
-    if (n_cores>1) {
-      cat(paste0('Parallel computing (n_cores=', n_cores, ')...'))
-      ## Parallel on missing variables
-      cl <- makeCluster(n_cores)
-      registerDoParallel(cl)
-      core_res <- foreach (k=miss_col_idx, .combine='cbind_abind', .export=c('single_impute_iters', 'rnorm_trunc'), .packages=c('magrittr')) %dopar% {
-        #source('Prediction_funcs.R')
-        gibbs_sort_temp <- gibbs_sort[gibbs_sort$col==k, ]
-        y_imp_res <- single_impute_iters(data_imp[, -k], data_imp[, k], data_miss[, k], imp_model=imp_model, 
-                                         lo=lo_vec[k], hi=hi_vec[k], iters_each=iters_each[i], gibbs=gibbs_sort_temp$row)
-        # y_imp_df <- y_imp_res$y_imp %>% data.frame # pozbyc sie tego data.frame(y_imp_res)
-        y_imp_df <- data.frame(y_imp_res$y_imp)
-        colnames(y_imp_df) <- colnames(data_miss)[k]
-        gibbs_res <- y_imp_res$gibbs_res
-        list(y_imp=y_imp_df, gibbs_res=gibbs_res)
-      } # to cale chyba magrittr
-      stopCluster(cl)
-      y_imp_df <- core_res$y_imp
-      gibbs_res_final <- abind::abind(gibbs_res_final, core_res$gibbs_res, along=3)
-      miss_col_idx_match <- match(colnames(y_imp_df), colnames(data_miss))
-      data_imp[, miss_col_idx_match] <- y_imp_df
-    } else {
-      cat(i, ' -- ', iters_all)
-      ## Sequential computing ##
-      gibbs_res_j <- array(NA, dim=c(3, 0, iters_each[i]))
-      for (j in miss_col_idx) {
-        gibbs_sort_temp <- gibbs_sort[gibbs_sort$col==j, ]
-        y_miss <- data_miss[, j]
-        y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss, imp_model=imp_model, lo=lo_vec[j], hi=hi_vec[j], 
-                                         iters_each=iters_each[i], gibbs=gibbs_sort_temp$row)
-        y_imp <- y_imp_res$y_imp
-        gibbs_res_j <- abind::abind(gibbs_res_j, y_imp_res$gibbs_res, along=2)
-        data_imp[is.na(y_miss), j] <- y_imp[is.na(y_miss)]
-      }
-      gibbs_res_final <- abind::abind(gibbs_res_final, gibbs_res_j, along=3)
+    gibbs_res_j <- array(NA, dim=c(3, 0, iters_each[i]))
+    for (j in miss_col_idx) {
+      gibbs_sort_temp <- gibbs_sort[gibbs_sort$col==j, ]
+      y_miss <- data_miss[, j]
+      y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss, imp_model=imp_model, lo=lo_vec[j], hi=hi_vec[j], 
+                                       iters_each=iters_each[i], gibbs=gibbs_sort_temp$row)
+      y_imp <- y_imp_res$y_imp
+      gibbs_res_j <- abind::abind(gibbs_res_j, y_imp_res$gibbs_res, along=2)
+      data_imp[is.na(y_miss), j] <- y_imp[is.na(y_miss)]
     }
+    gibbs_res_final <- abind::abind(gibbs_res_final, gibbs_res_j, along=3)
   }
   gibbs_res_final_reorder <- gibbs_res_final[, gibbs_sort$order, ]
   return(list(data_imp=data_imp, gibbs_res=gibbs_res_final_reorder))
