@@ -92,7 +92,7 @@ single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pre
 ## lo/hi=numer; vector; functions like min/max/median/mean...
 ## initial=character ('qrilc'/'lysm'); initialized data maatrix
 ## n_cores=1 is sequentially (non-parallel) computing
-GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', lo=-Inf, hi='min', 
+GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', lo=-Inf, hi='min', 
                       imp_model='glmnet_pred', gibbs=data.frame(row=integer(), col=integer())) {
   ## Make vector for iters_each ##
   if (length(iters_each)==1) {
@@ -107,7 +107,6 @@ GS_impute <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', 
   ## Index of missing variables, sorted (increasing) by the number of missings 
   miss_col_idx_temp <- order(miss_count, decreasing = TRUE)
   miss_col_idx <- rev(miss_col_idx_temp[1:sum(miss_count!=0)])
-  browser()
   
   # if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')} # tutaj pozbyc się %in% ale jak 
   if (!all(setdiff(gibbs$col, miss_col_idx))) {stop('improper argument: gibbs')}
