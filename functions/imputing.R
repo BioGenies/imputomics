@@ -11,6 +11,15 @@ impute_constant <- function(missing_data_set, constant_value) {
   missing_data_set
 }
 
+
+#' Imputes missing values into a data frame with \code{zero} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{zero} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_zero <- function(missing_data_set)
   impute_constant(missing_data_set, constant_value = 0)
 
@@ -40,18 +49,63 @@ compute_col_halfmin <- function(x)
 compute_col_median <- function(x)
   lapply(x, mean, na.rm = TRUE) 
 
+
+#' Imputes missing values into a data frame with \code{random} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{random} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_random <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_random)
 
+
+#' Imputes missing values into a data frame with \code{minimum} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{minimum} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_min <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_min)
 
+
+#' Imputes missing values into a data frame with \code{mean} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{mean} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_mean <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_mean)
 
+
+#' Imputes missing values into a data frame with \code{half-minimum} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{half-minimum} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_halfmin <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_halfmin)
 
+
+#' Imputes missing values into a data frame with \code{median} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{median} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_median <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_median)
 
@@ -81,6 +135,15 @@ safe_impute <- function(imputing_function, missing_data_set) {
 }
 
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpozycji
   imputed <- pcaMethods::pca(missing_data_set, method = "svdImpute", 
                              nPcs = estimate_ncp(missing_data_set),
@@ -89,6 +152,15 @@ impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpo
   data.frame(pcaMethods::completeObs(imputed))
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_ppca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "ppca", 
                              nPcs = estimate_ncp(missing_data_set),
@@ -98,6 +170,15 @@ impute_ppca <- function(missing_data_set) {
   data.frame(pcaMethods::completeObs(imputed))
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_bpca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "bpca", 
                              nPcs = estimate_ncp(missing_data_set),
@@ -107,6 +188,15 @@ impute_bpca <- function(missing_data_set) {
   data.frame(pcaMethods::completeObs(imputed))
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_nipals <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "nipals", 
                              nPcs = estimate_ncp(missing_data_set),
@@ -115,6 +205,15 @@ impute_nipals <- function(missing_data_set) {
   data.frame(pcaMethods::completeObs(imputed))
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_nlpca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "nlpca", 
                              nPcs = estimate_ncp(missing_data_set),
@@ -124,6 +223,15 @@ impute_nlpca <- function(missing_data_set) {
   data.frame(pcaMethods::completeObs(imputed))
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_missmda_reg <- function(missing_data_set) {
   imputed <- missMDA::imputePCA(missing_data_set, ncp = estimate_ncp(missing_data_set),
                                 method = "Regularized", scale = FALSE)
@@ -131,6 +239,15 @@ impute_missmda_reg <- function(missing_data_set) {
   data.frame(imputed[["completeObs"]])
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_missmda_em <- function(missing_data_set) {
   imputed <- missMDA::imputePCA(missing_data_set, ncp = estimate_ncp(missing_data_set),
                                 method = "EM", scale = FALSE)
@@ -138,22 +255,58 @@ impute_missmda_em <- function(missing_data_set) {
   data.frame(imputed[["completeObs"]])
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_mice <- function(missing_data_set, method) {
   imputed <- mice::mice(missing_data_set, method = method, m = 1, maxit = 100, printFlag = FALSE,
                         predictorMatrix = mice::quickpred(missing_data_set))
   mice::complete(imputed)
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_amelia <- function(missing_data_set) {
   capture.output(imputed <- Amelia::amelia(missing_data_set, m = 1))
   imputed[["imputations"]][["imp1"]]
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_missforest <- function(missing_data_set) {
   imputed <- missForest::missForest(missing_data_set, maxiter = 10, ntree = 500, replace = TRUE)
   imputed[["ximp"]]
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_mi <- function(missing_data_set) {
   # requires betareg
   capture.output(imputed <- mi::mi(missing_data_set, n.chain = 1, 
@@ -163,6 +316,15 @@ impute_mi <- function(missing_data_set) {
   
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_areg <- function(missing_data_set) {
   capture.output(imputed <- Hmisc::aregImpute(formula = as.formula(paste0("~ ", paste0(colnames(df), collapse = " + "))), 
                                               data = df, tlinear = FALSE))
@@ -172,6 +334,15 @@ impute_areg <- function(missing_data_set) {
                                             pr = FALSE, check = FALSE)))
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_knn <- function(missing_data_set) {
   # this function has a default random seed, so we need to sample one
   imputed <- impute::impute.knn(as.matrix(missing_data_set), k = 10, 
@@ -180,42 +351,111 @@ impute_knn <- function(missing_data_set) {
 }
 
 
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_qrilc <- function(missing_data_set) {
   imputeLCMD::impute.QRILC(missing_data_set)[[1]]
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_mle <- function(missing_data_set) {
   imputed <- imputeLCMD::impute.wrapper.MLE(as.matrix(missing_data_set))
   data.frame(imputed)
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_twlsa <- function(missing_data_set) {
   imputed <- tWLSA::wlsMisImp(as.matrix(missing_data_set))
   data.frame(imputed)
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_softimpute <- function(missing_data_set) {
   fit <- softImpute::softImpute(as.matrix(missing_data_set))
   data.frame(softImpute::complete(as.matrix(missing_data_set), fit))
 }
 
 
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_irmi <- function(missing_data_set) {
   NADIA::autotune_VIM_Irmi(missing_data_set, col_type = rep("numeric", ncol(missing_data_set)),
                            percent_of_missing = colMeans(is.na(missing_data_set))*100, maxit = 200)
 }
 
 
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_PEMM <- function(missing_data_set) {
   PEMM::PEMM_fun(missing_data_set, phi = 1)
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_tknn <- function(missing_data_set) {
   imputed <- imputeKNN(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set)*0.05) + 1, distance = "truncation",
             rm.na = TRUE, rm.nan = FALSE, rm.inf = FALSE)
   data.frame(imputed)
 }
 
+
+#' Imputes missing values into a data frame with \code{} method.
+#'
+#' @param missing_data_set \code{data.frame} with missing data
+#' @returns Data frame with imputed values by \code{} method.
+#' @export
+#' @examples
+#' 
+#' 
 impute_gsimp <- function(missing_data_set) {
   imputed <- GS_impute(missing_data_set, initial = "lsym", imp_model='glmnet_pred')
   imputed[["data_imp"]] 
