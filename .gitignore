@@ -3,3 +3,4 @@
 .RData
 .Ruserdata
 metabolomics-missing-value-imputation.Rproj
+packrat/lib*/
