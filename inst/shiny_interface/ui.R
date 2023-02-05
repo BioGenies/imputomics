@@ -1,39 +1,36 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
+library(dplyr)
 
-# Define UI for application that draws a histogram
+number_impute <- function(missing_data, number){
+  missing_data[is.na(missing_data)] <- number
+  missing_data
+}
+imputation_method <- lapply(0:20, function(ith_number){
+  function(missing_data){number_impute(missing_data, number = ith_number)}
+}) %>%
+  setNames(paste0('impute_', 0:20))
+
 navbarPage(id = 'tabs',
            title = 'Nazwa apki',
            tabPanel("Upload data file",
                     fileInput(inputId = 'missing_data',
                               label = "Wybierz plik z brakujacymi wartosciami",
                               multiple = FALSE,
-                              accept = c(".csv", ".xlsx", ".xls"))), # dodac wiecej rozszerzen
+                              accept = c(".csv", ".xlsx")),#,  dodac wiecej rozszerzen
+                    tableOutput("table")),
            tabPanel("Metody imputacji",
+                    actionButton(inputId = "id_select_all", label = "Select all"),
+                    actionButton(inputId = "id_deselect_all", label = "Deselect all"),
                     checkboxGroupInput(inputId = 'id_imput_metod',
                                        label = "Wybierz imputacje",
-                                       choices = c("A" = 'A', "b" = 'B'),
-                                       selected = 'A')),
+                                       choices = names(imputation_method),
+                                       selected = NULL)),
            tabPanel("Download",
+                    actionButton("id_make", label = "wykonaj analizy"),
                     radioButtons(inputId = 'id_save',
                                  label = "w czym zapisac",
                                  choices = c('Excel', 'csv'),
                                  selected = 'Excel'),
-                    downloadButton("Download",
-                                   "Pobierz plik")),
-           tabPanel("Dziala",
-                    numericInput("bins",
-                                 label = 'Liczba',
-                                 value = 5,
-                                 min = 1,
-                                 max = 10,
-                                 step = 1))
-           )
+                    actionButton("download",
+                                   "Pobierz plik"))
+)
