@@ -1,13 +1,21 @@
 Package: imputomics
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Compare imputation times and quality of missing values for ‘omics’ data
 Version: 0.1.0
-Author: Who wrote it
+Author: c(person("", 
+           email = "", 
+           comment = c(ORCID = ""),
+           role = c("cre", "ctb"))
+           )
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: description description
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.5.0)
+VignetteBuilder: knitr
+Depends: R (>= 4.2.2)
 RoxygenNote: 7.2.3
+URL:
+BugReports:
+Suggests: 
+Imports:
