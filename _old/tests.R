@@ -7,7 +7,15 @@ source("functions/imputing.R")
 source("functions/scaling.R")
 source('functions/GSimp_clean.R')
 
-set.seed(1)
+set.seed(2137)
+
+create_df <- function(n_metabolites, n_samples, frac_na) {
+  total <- n_metabolites * n_samples
+  vals <- runif(total)
+  vals[sample(1L:total, round(frac_na * total, 0))] <- NA
+
+  data.frame(matrix(vals, nrow = n_samples))
+}
 
 mdf <- create_df(n_metabolites = 20, n_samples = 20, frac_na = 0.05)
 
