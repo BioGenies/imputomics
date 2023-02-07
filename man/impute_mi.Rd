@@ -10,8 +10,11 @@ impute_mi(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{mi} method.
+A \code{data.frame} with imputed values by \code{\link[mi:mi]{mi::mi}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{mi} method.
+Replaces \code{NA} values in the data frame using \code{\link[mi:mi]{mi::mi}}.
+}
+\seealso{
+\code{\link[mi:mi]{mi::mi}}
 }

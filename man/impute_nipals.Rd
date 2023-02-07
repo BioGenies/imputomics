@@ -10,8 +10,14 @@ impute_nipals(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{NIPALS} method.
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NIPALS method.
 }
 \description{
-Imputes missing values into a data frame with \strong{NIPALS} method.
+\strong{NIPALS} stands for Nonlinear Iterative Partial Least Squares.
+}
+\details{
+Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NIPALS method.
+}
+\seealso{
+\code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 }

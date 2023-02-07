@@ -10,8 +10,14 @@ impute_missmda_em(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{missMDA EM} method.
+A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} EM method.
 }
 \description{
-Imputes missing values into a data frame with \strong{missMDA EM} method.
+Function for imputation uses PCA method with EM argument.
+}
+\details{
+Replaces \code{NA} values in the data frame using \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} EM method.
+}
+\seealso{
+\code{\link[missMDA:imputePCA]{missMDA::imputePCA}}
 }

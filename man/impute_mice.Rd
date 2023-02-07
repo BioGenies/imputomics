@@ -2,16 +2,23 @@
 % Please edit documentation in R/imputing.R
 \name{impute_mice}
 \alias{impute_mice}
-\title{Imputes missing values into a data frame with \strong{MICE} method.}
+\title{Imputes missing values into a data frame with \strong{MICE} method.
+\strong{MICE}  stands for Multiple Imputation by Chained Equations.}
 \usage{
 impute_mice(missing_data_set, method)
 }
 \arguments{
 \item{missing_data_set}{\code{data.frame} with missing data.}
+
+\item{method}{Imputation method for mice. One or vector of pmm, midastouch,
+cart, rf, norm, norm.nob, norm.boot, norm.predict, lasso.norm, lasso.select.norm}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{MICE} method.
+A \code{data.frame} with imputed values by \code{\link[mice:mice]{mice::mice}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{MICE} method.
+Replaces \code{NA} values in the data frame using \code{\link[mice:mice]{mice::mice}}.
+}
+\seealso{
+\code{\link[mice:mice]{mice::mice}}
 }

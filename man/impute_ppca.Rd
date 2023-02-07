@@ -10,8 +10,12 @@ impute_ppca(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{PPCA} method.
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} PPCA method.
 }
 \description{
-Imputes missing values into a data frame with \strong{PPCA} method.
+Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} PPCA method.
+\strong{PPCA} stands for Probabilistic Principal Component Analysis.
+}
+\seealso{
+\code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 }

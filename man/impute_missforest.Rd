@@ -10,8 +10,11 @@ impute_missforest(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{MissForest} method.
+A \code{data.frame} with imputed values by \code{\link[missForest:missForest]{missForest::missForest}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{MissForest} method.
+Replaces \code{NA} values in the data frame using \code{\link[missForest:missForest]{missForest::missForest}}.
+}
+\seealso{
+\code{\link[missForest:missForest]{missForest::missForest}}
 }

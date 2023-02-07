@@ -21,7 +21,11 @@ impute_constant <- function(missing_data_set, constant_value) {
 #' @returns A \code{data.frame} with imputed values by \strong{zero} method.
 #' @export
 #' @examples
-#'
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
+#' impute_zero(idf)
+#' }
 #'
 impute_zero <- function(missing_data_set)
   impute_constant(missing_data_set, constant_value = 0)
@@ -61,7 +65,11 @@ compute_col_median <- function(x)
 #' @returns A \code{data.frame} with imputed values by \strong{random} method.
 #' @export
 #' @examples
-#'
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
+#' impute_random(idf)
+#' }
 #'
 impute_random <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_random)
@@ -75,7 +83,11 @@ impute_random <- function(missing_data_set)
 #' @returns A \code{data.frame} with imputed values by \strong{minimum} method.
 #' @export
 #' @examples
-#'
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
+#' impute_min(idf)
+#' }
 #'
 impute_min <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_min)
@@ -89,7 +101,11 @@ impute_min <- function(missing_data_set)
 #' @returns A \code{data.frame} with imputed values by \strong{mean} method.
 #' @export
 #' @examples
-#'
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
+#' impute_mean(idf)
+#' }
 #'
 impute_mean <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_mean)
@@ -103,7 +119,11 @@ impute_mean <- function(missing_data_set)
 #' @returns A \code{data.frame} with imputed values by \strong{half-minimum} method.
 #' @export
 #' @examples
-#'
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
+#' impute_halfmin(idf)
+#' }
 #'
 impute_halfmin <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_halfmin)
@@ -117,7 +137,11 @@ impute_halfmin <- function(missing_data_set)
 #' @returns A \code{data.frame} with imputed values by \strong{median} method.
 #' @export
 #' @examples
-#'
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
+#' impute_median(idf)
+#' }
 #'
 impute_median <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_median)
@@ -151,13 +175,13 @@ safe_impute <- function(imputing_function, missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{SVD} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods]{pca}} svdImpute method.
+#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} svdImpute method.
 #' \strong{SVD} stands for Singular Value Decomposition.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods]{pca}} svdImpute method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} svdImpute method.
 #' @export
-#' @seealso \code{\link{pcaMethods}()}
+#' @seealso \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 #' @examples
 #'
 #'
@@ -172,13 +196,13 @@ impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpo
 
 #' Imputes missing values into a data frame with \strong{PPCA} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods]{pca}} PPCA method.
+#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} PPCA method.
 #' \strong{PPCA} stands for Probabilistic Principal Component Analysis.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods]{pca}} PPCA method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} PPCA method.
 #' @export
-#' @seealso \code{\link{pcaMethods}()}
+#' @seealso \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 #' @examples
 #'
 #'
@@ -194,13 +218,13 @@ impute_ppca <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{BPCA} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods]{pca}} BPCA method.
+#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}}} BPCA method.
 #' \strong{BPCA} stands for Bayesian Principal Component Analysis.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods]{pca}} BPCA method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
 #' @export
-#' @seealso \code{\link{pcaMethods}()}
+#' @seealso \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 #' @examples
 #'
 #'
@@ -218,12 +242,12 @@ impute_bpca <- function(missing_data_set) {
 #'
 #' \strong{NIPALS} stands for Nonlinear Iterative Partial Least Squares.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods]{pca}} NIPALS method.
+#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NIPALS method.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods]{pca}} NIPALS method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NIPALS method.
 #' @export
-#' @seealso \code{\link{pcaMethods}()}
+#' @seealso \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 #' @examples
 #'
 #'
@@ -239,12 +263,12 @@ impute_nipals <- function(missing_data_set) {
 #' Imputes missing values into a data frame with \strong{NLPCA} method.
 #' \strong{NLPCA} stands for Nonlinear Principal Component Analysis.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods]{pca}} NLPCA method.
+#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NLPCA method.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods]{pca}} NLPCA method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NLPCA method.
 #' @export
-#' @seealso \code{\link{pcaMethods}()}
+#' @seealso \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 #' @examples
 #'
 #'
@@ -261,12 +285,12 @@ impute_nlpca <- function(missing_data_set) {
 #' Imputes missing values into a data frame with \strong{missMDA regularized} method.
 #' Function for imputation uses PCA method with regularized argument.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[missMDA]{imputePCA}} regularized method.
+#' Replaces \code{NA} values in the data frame using \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} regularized method.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[missMDA]{imputePCA}} regularized method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} regularized method.
 #' @export
-#' @seealso \code{\link{missMDA}()}
+#' @seealso \code{\link[missMDA:imputePCA]{missMDA::imputePCA}}
 #' @examples
 #'
 #'
@@ -282,12 +306,12 @@ impute_missmda_reg <- function(missing_data_set) {
 #'
 #' Function for imputation uses PCA method with EM argument.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[missMDA]{imputePCA}} EM method.
+#' Replaces \code{NA} values in the data frame using \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} EM method.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[missMDA]{imputePCA}} EM method.
+#' @returns A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} EM method.
 #' @export
-#' @seealso \code{\link{missMDA}()}
+#' @seealso \code{\link[missMDA:imputePCA]{missMDA::imputePCA}}
 #' @examples
 #'
 #'
@@ -302,12 +326,14 @@ impute_missmda_em <- function(missing_data_set) {
 #' Imputes missing values into a data frame with \strong{MICE} method.
 #' \strong{MICE}  stands for Multiple Imputation by Chained Equations.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[mice]{mice}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[mice:mice]{mice::mice}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[mice]{mice}}.
+#' @param method Imputation method for mice. One or vector of pmm, midastouch,
+#' cart, rf, norm, norm.nob, norm.boot, norm.predict, lasso.norm, lasso.select.norm
+#' @returns A \code{data.frame} with imputed values by \code{\link[mice:mice]{mice::mice}}.
 #' @export
-#' @seealso \code{\link{mice}()}
+#' @seealso \code{\link[mice:mice]{mice::mice}}
 #' @examples
 #'
 #'
@@ -321,12 +347,12 @@ impute_mice <- function(missing_data_set, method) {
 #' Imputes missing values into a data frame with \strong{Amelia} method.
 #' \strong{Amelia} is an R package for the multiple imputation.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[Amelia]{amelia}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[Amelia:amelia]{Amelia::amelia}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[Amelia]{amelia}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::amelia}}.
 #' @export
-#' @seealso \code{\link{Amelia}()}
+#' @seealso \code{\link[Amelia:amelia]{Amelia::amelia}}
 #' @examples
 #'
 #'
@@ -338,12 +364,12 @@ impute_amelia <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{MissForest} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[missForest]{missForest}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[missForest:missForest]{missForest::missForest}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[missForest]{missForest}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[missForest:missForest]{missForest::missForest}}.
 #' @export
-#' @seealso \code{\link{missForest}()}
+#' @seealso \code{\link[missForest:missForest]{missForest::missForest}}
 #' @examples
 #'
 #'
@@ -355,12 +381,12 @@ impute_missforest <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{mi} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[mi]{mi}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[mi:mi]{mi::mi}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[mi]{mi}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[mi:mi]{mi::mi}}.
 #' @export
-#' @seealso \code{\link{mi}()}
+#' @seealso \code{\link[mi:mi]{mi::mi}}
 #' @examples
 #'
 #'
@@ -376,12 +402,12 @@ impute_mi <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{Hmisc areg} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[Hmisc]{aregImpute}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[Hmisc]{aregImpute}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 #' @export
-#' @seealso \code{\link{Hmisc}()}
+#' @seealso \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}
 #' @examples
 #'
 #'
@@ -397,12 +423,12 @@ impute_areg <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{kNN} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[impute]{impute.knn}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[impute:impute.knn]{impute::impute.knn}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[impute]{impute.knn}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn}}.
 #' @export
-#' @seealso \code{\link{impute}()}
+#' @seealso \code{\link[impute:impute.knn]{impute::impute.knn}}
 #' @examples
 #'
 #'
@@ -416,12 +442,12 @@ impute_knn <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{QRLIC} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD]{impute.QRILC}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[imputeLCMD]{impute.QRILC}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}.
 #' @export
-#' @seealso \code{\link{imputeLCMD}()}
+#' @seealso \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}
 #' @examples
 #'
 #'
@@ -432,12 +458,12 @@ impute_qrilc <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{MLE} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD]{impute.wrapper.MLE}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD:impute.wrapper.MLE]{imputeLCMD::impute.wrapper.MLE}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[imputeLCMD]{impute.wrapper.MLE}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[imputeLCMD:impute.wrapper.MLE]{imputeLCMD::impute.wrapper.MLE}}.
 #' @export
-#' @seealso \code{\link{imputeLCMD}()}
+#' @seealso \code{\link[imputeLCMD:impute.wrapper.MLE]{imputeLCMD::impute.wrapper.MLE}}
 #' @examples
 #'
 #'
@@ -449,12 +475,12 @@ impute_mle <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{tWLSA} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[tWLSA]{wlsMisImp}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[tWLSA]{wlsMisImp}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}.
 #' @export
-#' @seealso \code{\link{tWLSA}()}
+#' @seealso \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}
 #' @examples
 #'
 #'
@@ -466,12 +492,12 @@ impute_twlsa <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{SoftImpute} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[softImpute]{softImpute}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[softImpute]{softImpute}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
 #' @export
-#' @seealso \code{\link{softImpute}()}
+#' @seealso \code{\link[softImpute:softImpute]{softImpute::softImpute}}
 #' @examples
 #'
 #'
@@ -483,12 +509,12 @@ impute_softimpute <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{IRMI} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[NADIA]{autotune_VIM_Irmi}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[NADIA]{autotune_VIM_Irmi}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi}}.
 #' @export
-#' @seealso \code{\link{NADIA}()}
+#' @seealso \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi}}
 #' @examples
 #'
 #'
@@ -500,12 +526,12 @@ impute_irmi <- function(missing_data_set) {
 
 #' Imputes missing values into a data frame with \strong{PEMM} method.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[PEMM]{PEMM_fun}}.
+#' Replaces \code{NA} values in the data frame using \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
 #'
 #' @template param_missing_ds
-#' @returns A \code{data.frame} with imputed values by \code{\link[PEMM]{PEMM_fun}}.
+#' @returns A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
 #' @export
-#' @seealso \code{\link{PEMM}()}
+#' @seealso \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}
 #' @examples
 #'
 #'

@@ -10,8 +10,11 @@ impute_bpca(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{BPCA} method.
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
 }
 \description{
-Imputes missing values into a data frame with \strong{BPCA} method.
+
+}
+\seealso{
+\code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 }

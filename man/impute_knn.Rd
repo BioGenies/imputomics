@@ -10,8 +10,11 @@ impute_knn(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{kNN} method.
+A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{kNN} method.
+Replaces \code{NA} values in the data frame using \code{\link[impute:impute.knn]{impute::impute.knn}}.
+}
+\seealso{
+\code{\link[impute:impute.knn]{impute::impute.knn}}
 }

@@ -13,5 +13,13 @@ impute_zero(missing_data_set)
 A \code{data.frame} with imputed values by \strong{zero} method.
 }
 \description{
-Imputes missing values into a data frame with \strong{zero} method.
+Replaces \code{NA} with zeros (0).
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+values2 = c(21, 32, 48, NA, 59))
+impute_zero(idf)
+}
+
 }

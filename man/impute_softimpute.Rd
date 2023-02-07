@@ -10,8 +10,11 @@ impute_softimpute(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{SoftImpute} method.
+A \code{data.frame} with imputed values by \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{SoftImpute} method.
+Replaces \code{NA} values in the data frame using \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
+}
+\seealso{
+\code{\link[softImpute:softImpute]{softImpute::softImpute}}
 }

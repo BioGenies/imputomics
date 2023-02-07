@@ -10,8 +10,11 @@ impute_irmi(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{IRMI} method.
+A \code{data.frame} with imputed values by \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{IRMI} method.
+Replaces \code{NA} values in the data frame using \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi}}.
+}
+\seealso{
+\code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi}}
 }

@@ -13,5 +13,5 @@ impute_tknn(missing_data_set)
 A \code{data.frame} with imputed values by \strong{tkNN} method.
 }
 \description{
-Imputes missing values into a data frame with \strong{tkNN} method.
+Replaces \code{NA} values in the data frame using \strong{tkNN} method.
 }

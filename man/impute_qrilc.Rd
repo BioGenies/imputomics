@@ -10,8 +10,11 @@ impute_qrilc(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{QRLIC} method.
+A \code{data.frame} with imputed values by \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{QRLIC} method.
+Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}.
+}
+\seealso{
+\code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}
 }

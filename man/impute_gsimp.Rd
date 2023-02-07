@@ -13,5 +13,5 @@ impute_gsimp(missing_data_set)
 A \code{data.frame} with imputed values by \strong{GSimp} method.
 }
 \description{
-Imputes missing values into a data frame with \strong{GSimp} method.
+Replaces \code{NA} values in the data frame using \strong{GSimp} method.
 }

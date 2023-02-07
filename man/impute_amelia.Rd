@@ -2,7 +2,8 @@
 % Please edit documentation in R/imputing.R
 \name{impute_amelia}
 \alias{impute_amelia}
-\title{Imputes missing values into a data frame with \strong{Amelia} method.}
+\title{Imputes missing values into a data frame with \strong{Amelia} method.
+\strong{Amelia} is an R package for the multiple imputation.}
 \usage{
 impute_amelia(missing_data_set)
 }
@@ -10,8 +11,11 @@ impute_amelia(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{Amelia} method.
+A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::amelia}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{Amelia} method.
+Replaces \code{NA} values in the data frame using \code{\link[Amelia:amelia]{Amelia::amelia}}.
+}
+\seealso{
+\code{\link[Amelia:amelia]{Amelia::amelia}}
 }

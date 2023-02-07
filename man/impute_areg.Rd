@@ -10,8 +10,11 @@ impute_areg(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{Hmisc areg} method.
+A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{Hmisc areg} method.
+Replaces \code{NA} values in the data frame using \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
+}
+\seealso{
+\code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}
 }

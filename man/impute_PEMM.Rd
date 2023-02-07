@@ -10,8 +10,11 @@ impute_PEMM(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{PEMM} method.
+A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{PEMM} method.
+Replaces \code{NA} values in the data frame using \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
+}
+\seealso{
+\code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}
 }

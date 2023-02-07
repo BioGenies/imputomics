@@ -13,5 +13,13 @@ impute_halfmin(missing_data_set)
 A \code{data.frame} with imputed values by \strong{half-minimum} method.
 }
 \description{
-Imputes missing values into a data frame with \strong{half-minimum} method.
+Replaces \code{NA} with the half of the minimum value of data frame.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+values2 = c(21, 32, 48, NA, 59))
+impute_halfmin(idf)
+}
+
 }

@@ -10,8 +10,11 @@ impute_mle(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{MLE} method.
+A \code{data.frame} with imputed values by \code{\link[imputeLCMD:impute.wrapper.MLE]{imputeLCMD::impute.wrapper.MLE}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{MLE} method.
+Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD:impute.wrapper.MLE]{imputeLCMD::impute.wrapper.MLE}}.
+}
+\seealso{
+\code{\link[imputeLCMD:impute.wrapper.MLE]{imputeLCMD::impute.wrapper.MLE}}
 }

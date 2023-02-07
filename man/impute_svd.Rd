@@ -10,8 +10,12 @@ impute_svd(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{SVD} method.
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} svdImpute method.
 }
 \description{
-Imputes missing values into a data frame with \strong{SVD} method.
+Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} svdImpute method.
+\strong{SVD} stands for Singular Value Decomposition.
+}
+\seealso{
+\code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 }

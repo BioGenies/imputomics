@@ -10,8 +10,11 @@ impute_twlsa(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{tWLSA} method.
+A \code{data.frame} with imputed values by \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}.
 }
 \description{
-Imputes missing values into a data frame with \strong{tWLSA} method.
+Replaces \code{NA} values in the data frame using \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}.
+}
+\seealso{
+\code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/imputing.R
 \name{impute_nlpca}
 \alias{impute_nlpca}
-\title{Imputes missing values into a data frame with \strong{NLPCA} method.}
+\title{Imputes missing values into a data frame with \strong{NLPCA} method.
+\strong{NLPCA} stands for Nonlinear Principal Component Analysis.}
 \usage{
 impute_nlpca(missing_data_set)
 }
@@ -10,8 +11,11 @@ impute_nlpca(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \strong{NLPCA} method.
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NLPCA method.
 }
 \description{
-Imputes missing values into a data frame with \strong{NLPCA} method.
+Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NLPCA method.
+}
+\seealso{
+\code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 }

@@ -1,4 +1,4 @@
-#' @example
-#'
-#' idf <- data.frame(metabolites = c("a", "b", "c", "d", "e"),
-#' values = c(21, 37, 48, NA, 59))
+#' @examples
+#' \dontrun{
+#' idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+#' values2 = c(21, 32, 48, NA, 59))
