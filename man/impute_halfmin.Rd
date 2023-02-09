@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_halfmin}
 \alias{impute_halfmin}
-\title{Imputes missing values into a data frame with \strong{half-minimum} method.}
+\title{\strong{half-minimum} imputation.}
 \usage{
 impute_halfmin(missing_data_set)
 }

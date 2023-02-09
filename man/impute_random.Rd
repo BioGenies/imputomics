@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_random}
 \alias{impute_random}
-\title{Imputes missing values into a data frame with \strong{random} method.}
+\title{\strong{random} imputation.}
 \usage{
 impute_random(missing_data_set)
 }

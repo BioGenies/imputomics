@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_nipals}
 \alias{impute_nipals}
-\title{Imputes missing values into a data frame with \strong{NIPALS} method.}
+\title{\strong{NIPALS} imputation.}
 \usage{
 impute_nipals(missing_data_set)
 }
@@ -13,10 +13,18 @@ impute_nipals(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NIPALS method.
 }
 \description{
-\strong{NIPALS} stands for Nonlinear Iterative Partial Least Squares.
+Nonlinear Iterative Partial Least Squares.
 }
 \details{
 Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} NIPALS method.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+values2 = c(21, 32, 48, NA, 59))
+impute_nipals(idf)
+}
+
 }
 \seealso{
 \code{\link[pcaMethods:pca]{pcaMethods::pca()}}

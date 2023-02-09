@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_bpca}
 \alias{impute_bpca}
-\title{Imputes missing values into a data frame with \strong{BPCA} method.}
+\title{\strong{BPCA} imputation.}
 \usage{
 impute_bpca(missing_data_set)
 }
@@ -13,6 +13,17 @@ impute_bpca(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
 }
 \description{
+Bayesian Principal Component Analysis.
+}
+\details{
+
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+values2 = c(21, 32, 48, NA, 59))
+impute_bpca(idf)
+}
 
 }
 \seealso{

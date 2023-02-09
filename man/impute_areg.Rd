@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_areg}
 \alias{impute_areg}
-\title{Imputes missing values into a data frame with \strong{Hmisc areg} method.}
+\title{\strong{Hmisc areg} imputation.}
 \usage{
 impute_areg(missing_data_set)
 }
@@ -13,7 +13,20 @@ impute_areg(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 }
 \description{
+Multiple Imputation using Additive Regression, Bootstrapping, and Predictive Mean Matching.
+}
+\details{
 Replaces \code{NA} values in the data frame using \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+values2 = rep(c(21, 32, 48, NA, 59), 10),
+values3 = rep(c(37, NA, 33, 44, 32), 10))
+impute_areg(idf)
+}                                                                             ############ dont work, check it!!!!!!!!!!!!!!!!!!!!!!!
+
+
 }
 \seealso{
 \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_median}
 \alias{impute_median}
-\title{Imputes missing values into a data frame with \strong{median} method.}
+\title{\strong{median} imputation.}
 \usage{
 impute_median(missing_data_set)
 }

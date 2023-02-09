@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_svd}
 \alias{impute_svd}
-\title{Imputes missing values into a data frame with \strong{SVD} method.}
+\title{\strong{SVD} imputation.}
 \usage{
 impute_svd(missing_data_set)
 }
@@ -13,8 +13,18 @@ impute_svd(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} svdImpute method.
 }
 \description{
+Singular Value Decomposition.
+}
+\details{
 Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} svdImpute method.
-\strong{SVD} stands for Singular Value Decomposition.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+values2 = c(21, 32, 48, NA, 59))
+impute_svd(idf)
+}
+
 }
 \seealso{
 \code{\link[pcaMethods:pca]{pcaMethods::pca()}}

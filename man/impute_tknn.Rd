@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_tknn}
 \alias{impute_tknn}
-\title{Imputes missing values into a data frame with \strong{tkNN} method.}
+\title{\strong{tkNN} imputation.}
 \usage{
 impute_tknn(missing_data_set)
 }
@@ -13,5 +13,17 @@ impute_tknn(missing_data_set)
 A \code{data.frame} with imputed values by \strong{tkNN} method.
 }
 \description{
+Truncated K Nearest Neighbors.
+}
+\details{
 Replaces \code{NA} values in the data frame using \strong{tkNN} method.
+}
+\examples{
+\dontrun{
+idf <- runif(100)
+idf[sample(1L:100, round(4, 0))] <- NA
+idf <- data.frame(matrix(idf, nrow = 10))
+impute_tknn(idf)
+}
+
 }

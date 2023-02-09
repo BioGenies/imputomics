@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_softimpute}
 \alias{impute_softimpute}
-\title{Imputes missing values into a data frame with \strong{SoftImpute} method.}
+\title{\strong{SoftImpute} imputation.}
 \usage{
 impute_softimpute(missing_data_set)
 }
@@ -14,6 +14,15 @@ A \code{data.frame} with imputed values by \code{\link[softImpute:softImpute]{so
 }
 \description{
 Replaces \code{NA} values in the data frame using \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+values2 = rep(c(21, 32, 48, NA, 59), 10),
+values3 = rep(c(37, NA, 33, 44, 32), 10))
+impute_softimpute(idf)
+}
+
 }
 \seealso{
 \code{\link[softImpute:softImpute]{softImpute::softImpute}}

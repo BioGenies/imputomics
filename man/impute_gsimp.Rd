@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_gsimp}
 \alias{impute_gsimp}
-\title{Imputes missing values into a data frame with \strong{GSimp} method.}
+\title{\strong{GSimp} imputation.}
 \usage{
 impute_gsimp(missing_data_set)
 }
@@ -13,5 +13,17 @@ impute_gsimp(missing_data_set)
 A \code{data.frame} with imputed values by \strong{GSimp} method.
 }
 \description{
+Gibbs Sampler Based Left-Censored Missing Value Imputation.
+}
+\details{
 Replaces \code{NA} values in the data frame using \strong{GSimp} method.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+values2 = rep(c(21, 32, 48, NA, 59), 10),
+values3 = rep(c(37, NA, 33, 44, 32), 10))
+impute_gsimp(idf)
+}
+
 }

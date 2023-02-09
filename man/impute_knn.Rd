@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_knn}
 \alias{impute_knn}
-\title{Imputes missing values into a data frame with \strong{kNN} method.}
+\title{\strong{kNN} imputation.}
 \usage{
 impute_knn(missing_data_set)
 }
@@ -13,7 +13,20 @@ impute_knn(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn}}.
 }
 \description{
+K Nearest Neighbors.
+}
+\details{
 Replaces \code{NA} values in the data frame using \code{\link[impute:impute.knn]{impute::impute.knn}}.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+values2 = rep(c(21, 32, 48, NA, 59), 10),
+values3 = rep(c(37, NA, 33, 44, 32), 10))
+set.seed(2137)
+impute_knn(idf)
+}
+
 }
 \seealso{
 \code{\link[impute:impute.knn]{impute::impute.knn}}

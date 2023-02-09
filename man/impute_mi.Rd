@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_mi}
 \alias{impute_mi}
-\title{Imputes missing values into a data frame with \strong{mi} method.}
+\title{\strong{mi} imputation.}
 \usage{
 impute_mi(missing_data_set)
 }
@@ -14,6 +14,15 @@ A \code{data.frame} with imputed values by \code{\link[mi:mi]{mi::mi}}.
 }
 \description{
 Replaces \code{NA} values in the data frame using \code{\link[mi:mi]{mi::mi}}.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+values2 = rep(c(21, 32, 48, NA, 59), 10),
+values3 = rep(c(37, NA, 33, 44, 32), 10))
+impute_mi(idf)
+}
+
 }
 \seealso{
 \code{\link[mi:mi]{mi::mi}}

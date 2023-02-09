@@ -2,8 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_missmda_reg}
 \alias{impute_missmda_reg}
-\title{Imputes missing values into a data frame with \strong{missMDA regularized} method.
-Function for imputation uses PCA method with regularized argument.}
+\title{\strong{missMDA regularized} imputation.}
 \usage{
 impute_missmda_reg(missing_data_set)
 }
@@ -14,7 +13,19 @@ impute_missmda_reg(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} regularized method.
 }
 \description{
+PCA method with regularized argument.
+}
+\details{
 Replaces \code{NA} values in the data frame using \code{\link[missMDA:imputePCA]{missMDA::imputePCA}} regularized method.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+values2 = rep(c(21, 32, 48, NA, 59), 10),
+values3 = rep(c(37, NA, 33, 44, 32), 10))
+impute_missmda_reg(idf)
+}
+
 }
 \seealso{
 \code{\link[missMDA:imputePCA]{missMDA::imputePCA}}

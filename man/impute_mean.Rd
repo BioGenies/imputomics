@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_mean}
 \alias{impute_mean}
-\title{Imputes missing values into a data frame with \strong{mean} method.}
+\title{\strong{mean} imputation.}
 \usage{
 impute_mean(missing_data_set)
 }

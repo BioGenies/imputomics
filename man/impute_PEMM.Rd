@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_PEMM}
 \alias{impute_PEMM}
-\title{Imputes missing values into a data frame with \strong{PEMM} method.}
+\title{\strong{PEMM} imputation.}
 \usage{
 impute_PEMM(missing_data_set)
 }
@@ -13,7 +13,19 @@ impute_PEMM(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
 }
 \description{
+Penalized EM Algorithm.
+}
+\details{
 Replaces \code{NA} values in the data frame using \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
+}
+\examples{
+\dontrun{
+idf <- runif(100)
+idf[sample(1L:100, round(4, 0))] <- NA
+idf <- data.frame(matrix(idf, nrow = 10))
+impute_PEMM(as.matrix(idf))
+}
+
 }
 \seealso{
 \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}

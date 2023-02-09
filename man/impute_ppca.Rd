@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_ppca}
 \alias{impute_ppca}
-\title{Imputes missing values into a data frame with \strong{PPCA} method.}
+\title{\strong{PPCA} imputation.}
 \usage{
 impute_ppca(missing_data_set)
 }
@@ -13,8 +13,18 @@ impute_ppca(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} PPCA method.
 }
 \description{
+Probabilistic Principal Component Analysis.
+}
+\details{
 Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} PPCA method.
-\strong{PPCA} stands for Probabilistic Principal Component Analysis.
+}
+\examples{
+\dontrun{
+idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
+values2 = c(21, 32, 48, NA, 59))
+impute_ppca(idf)
+}
+
 }
 \seealso{
 \code{\link[pcaMethods:pca]{pcaMethods::pca()}}

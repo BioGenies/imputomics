@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_zero}
 \alias{impute_zero}
-\title{Imputes missing values into a data frame with \strong{zero} method.}
+\title{\strong{zero} imputation.}
 \usage{
 impute_zero(missing_data_set)
 }

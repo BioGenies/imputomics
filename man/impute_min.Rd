@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_min}
 \alias{impute_min}
-\title{Imputes missing values into a data frame with \strong{minimum} method.}
+\title{\strong{minimum} imputation.}
 \usage{
 impute_min(missing_data_set)
 }
