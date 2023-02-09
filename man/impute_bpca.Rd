@@ -16,7 +16,7 @@ A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethod
 Bayesian Principal Component Analysis.
 }
 \details{
-
+Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
 }
 \examples{
 \dontrun{

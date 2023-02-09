@@ -3,7 +3,8 @@
 source("R/Trunc_KNN.R")
 source("R/GSimp_clean.R")
 
-
+#' Helper function.
+#' Imputes constant value.
 #' @template param_missing_ds
 #' @param constant_value a constant value to impute
 impute_constant <- function(missing_data_set, constant_value) {
@@ -258,7 +259,7 @@ impute_ppca <- function(missing_data_set) {
 #'
 #' Bayesian Principal Component Analysis.
 #'
-#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}}} BPCA method.
+#' Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
 #'
 #' @template param_missing_ds
 #' @returns A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
@@ -496,6 +497,8 @@ impute_mi <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 #' @export
 #' @seealso \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}
+#' @importFrom utils capture.output
+#' @importFrom stats as.formula df
 #' @examples
 #' \dontrun{
 #' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
@@ -525,6 +528,7 @@ impute_areg <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn}}.
 #' @export
 #' @seealso \code{\link[impute:impute.knn]{impute::impute.knn}}
+#' @importFrom stats sd cor
 #' @examples
 #' \dontrun{
 #' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
