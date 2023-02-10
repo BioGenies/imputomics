@@ -181,7 +181,7 @@ estimate_ncp <- function(missing_data_set) {
 }
 
 #' Convert an imputing function into its safe version.
-#' @param imputing_function a function that takes missing_data_set as an input
+#' @param imputing_function a function (imputation method) that takes missing_data_set as an input
 #' @template param_missing_ds
 #' @return A \code{data.frame} with imputed values or the \strong{missing_data_set}
 #' if the imputing function failed to converge.
@@ -497,8 +497,6 @@ impute_mi <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 #' @export
 #' @seealso \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}
-#' @importFrom utils capture.output
-#' @importFrom stats as.formula df
 #' @examples
 #' \dontrun{
 #' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
@@ -528,7 +526,6 @@ impute_areg <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn}}.
 #' @export
 #' @seealso \code{\link[impute:impute.knn]{impute::impute.knn}}
-#' @importFrom stats sd cor
 #' @examples
 #' \dontrun{
 #' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
