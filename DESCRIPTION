@@ -34,10 +34,11 @@ Imports:
     abind,
     Amelia,
     glmnet,
+    graphics,
     Hmisc,
     impute,
     imputeLCMD,
-    knitr,
+    methods,
     mi,
     mice,
     missForest,
@@ -46,5 +47,9 @@ Imports:
     pcaMethods,
     PEMM,
     softImpute,
-    testthat,
-    tWLSA
+    stats,
+    tWLSA,
+    utils
+Suggests:
+    knitr,
+    testthat

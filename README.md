@@ -1,9 +1,5 @@
   <!-- badges: start -->
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/imputomics)](https://cran.r-project.org/package=imputomics)
-[![Downloads](http://cranlogs.r-pkg.org/badges/imputomics)](https://cran.r-project.org/package=imputomics)
-![pkgdown](https://github.com/BioGenies/imputomics/workflows/pkgdown/badge.svg)
-![check](https://github.com/BioGenies/imputomics/workflows/check/badge.svg)
-[![R build status](https://github.com/BioGenies/imputomics/workflows/R-CMD-check/badge.svg)](https://github.com/BioGenies/imputomics/actions)
+[![R-CMD-check](https://github.com/michbur/metabolomics-missing-value-imputation/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/michbur/metabolomics-missing-value-imputation/actions/workflows/R-CMD-check.yaml)
   <!-- badges: end -->
 
 # imputomics

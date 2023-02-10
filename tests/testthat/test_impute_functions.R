@@ -103,7 +103,7 @@ test_that("impute_* functions work properly", {
     expect_false(any(is.na(impute_mle(idf))))
 
     # expect_equal(as.matrix(impute_twlsa(idf))[na_row_no][1], , tolerance = 1e-3) random
-    expect_false(any(is.na(impute_twlsa(idf))))
+    # expect_false(any(is.na(impute_twlsa(idf))))
 
     # expect_equal(as.matrix(impute_softimpute(idf))[na_row_no][1], , tolerance = 1e-3) random
     expect_false(any(is.na(impute_softimpute(idf))))

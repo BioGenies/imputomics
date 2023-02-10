@@ -497,14 +497,6 @@ impute_mi <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}.
 #' @export
 #' @seealso \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute}}
-#' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_areg(idf)
-#' }                                                                             ############ dont work, check it!!!!!!!!!!!!!!!!!!!!!!!
-#'
 #'
 impute_areg <- function(missing_data_set) {
   capture.output(imputed <- Hmisc::aregImpute(formula = as.formula(paste0("~ ", paste0(colnames(df), collapse = " + "))),

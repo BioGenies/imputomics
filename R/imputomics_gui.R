@@ -7,7 +7,7 @@
 #' @export imputomics_gui
 #' @importFrom tools package_dependencies
 #' @importFrom utils available.packages
-#' @author
+#' @author "Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski", "Jarosław Chilimoniuk"
 #' @examples
 #' if(interactive()) {
 #'   imputomics()
