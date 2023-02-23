@@ -2,16 +2,25 @@ library(testthat)
 library(magrittr)
 
 
-source("functions/generate-data.R")
-source("functions/imputing.R")
-source("functions/scaling.R")
-source('functions/GSimp_clean.R')
+source("_old/generate-data.R")
+source("R/imputing.R")
+source("_old/scaling.R")
+source('R/GSimp_clean.R')
+source("inst/test_func.R")
 
-set.seed(1)
+set.seed(2137)
+
+create_df <- function(n_metabolites, n_samples, frac_na) {
+  total <- n_metabolites * n_samples
+  vals <- runif(total)
+  vals[sample(1L:total, round(frac_na * total, 0))] <- NA
+
+  data.frame(matrix(vals, nrow = n_samples))
+}
 
 mdf <- create_df(n_metabolites = 20, n_samples = 20, frac_na = 0.05)
 
-expect_true(any(is.na(all_safe_imp_funs[["safe_impute_mice_norm.boot"]](mdf))))
+expect_true(any(is.na(all_safe_imp_funs[["safe_impute_mean"]](mdf))))
 
 expect_false(any(is.na(all_safe_imp_funs[["safe_impute_tknn"]](mdf))))
 

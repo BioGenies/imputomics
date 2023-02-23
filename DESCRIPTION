@@ -1,13 +1,56 @@
 Package: imputomics
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Compare imputation times and quality of missing values for ‘omics’ data
 Version: 0.1.0
-Author: Who wrote it
+Author: c(
+          person("Michal", "Burdukiewicz",
+    email = "michalburdukiewicz@gmail.com",
+    comment = c(ORCID = "0000-0001-8926-582X"),
+    role = c("cre", "aut")),
+           person("Krystyna Grzesiak", 
+           email = "krygrz11@gmail.com", 
+           comment = c(ORCID = ""),
+           role = c("cre", "ctb")),
+           person("Dominik Nowakowski", 
+           email = "nowakowskisf@gmail.com", 
+           comment = c(ORCID = ""),
+           role = c("cre", "ctb")),
+           (person("Jaroslaw", "Chilimoniuk", 
+           email = "jaroslaw.chilimoniuk@gmail.com", 
+           comment = c(ORCID = "0000-0001-5467-018X"),
+           role = c("cre", "ctb"))
+           )
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: Package description, what it does.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.5.0)
+VignetteBuilder: knitr
+Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+URL: https://github.com/michbur/metabolomics-missing-value-imputation
+BugReports: https://github.com/michbur/metabolomics-missing-value-imputation/issues
+Imports:
+    abind,
+    Amelia,
+    glmnet,
+    graphics,
+    Hmisc,
+    impute,
+    imputeLCMD,
+    methods,
+    mi,
+    mice,
+    missForest,
+    missMDA,
+    NADIA,
+    pcaMethods,
+    PEMM,
+    softImpute,
+    stats,
+    tWLSA,
+    utils
+Suggests:
+    knitr,
+    testthat
