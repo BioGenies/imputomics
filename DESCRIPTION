@@ -53,4 +53,6 @@ Suggests:
     knitr,
     testthat,
     tWLSA,
-    PEMM
+    PEMM,
+    spelling
+Language: en-US

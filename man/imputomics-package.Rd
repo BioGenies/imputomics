@@ -11,8 +11,8 @@ Package description, what it does.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/michbur/metabolomics-missing-value-imputation}
-  \item Report bugs at \url{https://github.com/michbur/metabolomics-missing-value-imputation/issues}
+  \item \url{https://github.com/michbur/imputomics}
+  \item Report bugs at \url{https://github.com/michbur/imputomics/issues}
 }
 
 }
