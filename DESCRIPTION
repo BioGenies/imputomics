@@ -46,11 +46,11 @@ Imports:
     missMDA,
     NADIA,
     pcaMethods,
-    PEMM,
     softImpute,
     stats,
-    tWLSA,
     utils
 Suggests:
     knitr,
-    testthat
+    testthat,
+    tWLSA,
+    PEMM
