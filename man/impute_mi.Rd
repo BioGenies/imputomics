@@ -10,10 +10,10 @@ impute_mi(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[mi:mi]{mi::mi}}.
+A \code{data.frame} with imputed values by \code{\link[mi:04mi]{mi::mi()}}.
 }
 \description{
-Replaces \code{NA} values in the data frame using \code{\link[mi:mi]{mi::mi}}.
+A function to replace \code{NA} in the data frame by \code{\link[mi:04mi]{mi::mi()}}.
 }
 \examples{
 \dontrun{
@@ -25,5 +25,5 @@ impute_mi(idf)
 
 }
 \seealso{
-\code{\link[mi:mi]{mi::mi}}
+\code{\link[mi:04mi]{mi::mi()}}
 }

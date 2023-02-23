@@ -13,7 +13,7 @@ impute_mean(missing_data_set)
 A \code{data.frame} with imputed values by \strong{mean} method.
 }
 \description{
-Replaces \code{NA} with mean value of data frame.
+A function to replace \code{NA} in the data frame by  mean values.
 }
 \examples{
 \dontrun{

@@ -13,13 +13,13 @@ impute_mice(missing_data_set, method)
 cart, rf, norm, norm.nob, norm.boot, norm.predict, lasso.norm, lasso.select.norm}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[mice:mice]{mice::mice}}.
+A \code{data.frame} with imputed values by \code{\link[mice:mice]{mice::mice()}}.
 }
 \description{
 Multiple Imputation by Chained Equations.
 }
 \details{
-Replaces \code{NA} values in the data frame using \code{\link[mice:mice]{mice::mice}}.
+A function to replace \code{NA} in the data frame by \code{\link[mice:mice]{mice::mice()}}.
 }
 \examples{
 \dontrun{
@@ -33,5 +33,5 @@ impute_mice(idf, method = "rf")
 
 }
 \seealso{
-\code{\link[mice:mice]{mice::mice}}
+\code{\link[mice:mice]{mice::mice()}}
 }

@@ -13,7 +13,7 @@ impute_zero(missing_data_set)
 A \code{data.frame} with imputed values by \strong{zero} method.
 }
 \description{
-Replaces \code{NA} with zeros (0).
+A function to replace \code{NA} in the data frame by  zeros (0).
 }
 \examples{
 \dontrun{

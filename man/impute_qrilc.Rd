@@ -10,13 +10,13 @@ impute_qrilc(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}.
+A \code{data.frame} with imputed values by \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC()}}.
 }
 \description{
 Quantile Regression Imputation Of Left-Censored Data.
 }
 \details{
-Replaces \code{NA} values in the data frame using \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}.
+A function to replace \code{NA} in the data frame by \code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC()}}.
 }
 \examples{
 \dontrun{
@@ -28,5 +28,5 @@ impute_qrilc(idf)
 
 }
 \seealso{
-\code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC}}
+\code{\link[imputeLCMD:impute.QRILC]{imputeLCMD::impute.QRILC()}}
 }

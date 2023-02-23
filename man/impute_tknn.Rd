@@ -16,7 +16,7 @@ A \code{data.frame} with imputed values by \strong{tkNN} method.
 Truncated K Nearest Neighbors.
 }
 \details{
-Replaces \code{NA} values in the data frame using \strong{tkNN} method.
+A function to replace \code{NA} in the data frame by \strong{tkNN} method.
 }
 \examples{
 \dontrun{

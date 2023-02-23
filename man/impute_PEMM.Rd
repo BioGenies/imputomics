@@ -10,13 +10,13 @@ impute_PEMM(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
+A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}.
 }
 \description{
 Penalized EM Algorithm.
 }
 \details{
-Replaces \code{NA} values in the data frame using \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}.
+A function to replace \code{NA} in the data frame by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}.
 }
 \examples{
 \dontrun{
@@ -28,5 +28,5 @@ impute_PEMM(as.matrix(idf))
 
 }
 \seealso{
-\code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun}}
+\code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}
 }

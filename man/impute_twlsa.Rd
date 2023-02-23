@@ -10,13 +10,13 @@ impute_twlsa(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}.
+A \code{data.frame} with imputed values by \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp()}}.
 }
 \description{
 Two Way Weighted Least Square Approach.
 }
 \details{
-Replaces \code{NA} values in the data frame using \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}.
+A function to replace \code{NA} in the data frame by \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp()}}.
 }
 \examples{
 \dontrun{
@@ -28,5 +28,5 @@ impute_twlsa(idf)
 
 }
 \seealso{
-\code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp}}
+\code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp()}}
 }

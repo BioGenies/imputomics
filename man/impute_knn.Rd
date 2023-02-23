@@ -10,13 +10,13 @@ impute_knn(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn}}.
+A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn()}}.
 }
 \description{
 K Nearest Neighbors.
 }
 \details{
-Replaces \code{NA} values in the data frame using \code{\link[impute:impute.knn]{impute::impute.knn}}.
+A function to replace \code{NA} in the data frame by \code{\link[impute:impute.knn]{impute::impute.knn()}}.
 }
 \examples{
 \dontrun{
@@ -29,5 +29,5 @@ impute_knn(idf)
 
 }
 \seealso{
-\code{\link[impute:impute.knn]{impute::impute.knn}}
+\code{\link[impute:impute.knn]{impute::impute.knn()}}
 }

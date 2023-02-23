@@ -16,7 +16,7 @@ A \code{data.frame} with imputed values by \strong{GSimp} method.
 Gibbs Sampler Based Left-Censored Missing Value Imputation.
 }
 \details{
-Replaces \code{NA} values in the data frame using \strong{GSimp} method.
+A function to replace \code{NA} in the data frame by \strong{GSimp} method.
 }
 \examples{
 \dontrun{

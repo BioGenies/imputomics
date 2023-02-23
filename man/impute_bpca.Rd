@@ -10,13 +10,13 @@ impute_bpca(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with method = "bpca".
 }
 \description{
 Bayesian Principal Component Analysis.
 }
 \details{
-Replaces \code{NA} values in the data frame using \code{\link[pcaMethods:pca]{pcaMethods::pca()}} BPCA method.
+A function to replace \code{NA} in the data frame by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with method = "bpca".
 }
 \examples{
 \dontrun{

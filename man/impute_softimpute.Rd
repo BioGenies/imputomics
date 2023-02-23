@@ -10,10 +10,10 @@ impute_softimpute(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
+A \code{data.frame} with imputed values by \code{\link[softImpute:softImpute]{softImpute::softImpute()}}.
 }
 \description{
-Replaces \code{NA} values in the data frame using \code{\link[softImpute:softImpute]{softImpute::softImpute}}.
+A function to replace \code{NA} in the data frame by \code{\link[softImpute:softImpute]{softImpute::softImpute()}}.
 }
 \examples{
 \dontrun{
@@ -25,5 +25,5 @@ impute_softimpute(idf)
 
 }
 \seealso{
-\code{\link[softImpute:softImpute]{softImpute::softImpute}}
+\code{\link[softImpute:softImpute]{softImpute::softImpute()}}
 }

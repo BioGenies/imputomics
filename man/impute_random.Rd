@@ -13,7 +13,7 @@ impute_random(missing_data_set)
 A \code{data.frame} with imputed values by \strong{random} method.
 }
 \description{
-Replaces \code{NA} with random values.
+A function to replace \code{NA} in the data frame by  random values.
 }
 \examples{
 \dontrun{

@@ -13,7 +13,7 @@ impute_median(missing_data_set)
 A \code{data.frame} with imputed values by \strong{median} method.
 }
 \description{
-Replaces \code{NA} with median of data frame.
+A function to replace \code{NA} in the data frame by a median values.
 }
 \examples{
 \dontrun{

@@ -10,10 +10,10 @@ impute_amelia(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::amelia}}.
+A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::amelia()}}.
 }
 \description{
-Replaces \code{NA} values in the data frame using \code{\link[Amelia:amelia]{Amelia::amelia}}.
+A function to replace \code{NA} in the data frame by \code{\link[Amelia:amelia]{Amelia::amelia()}}.
 }
 \examples{
 \dontrun{
@@ -25,5 +25,5 @@ impute_amelia(idf)
 
 }
 \seealso{
-\code{\link[Amelia:amelia]{Amelia::amelia}}
+\code{\link[Amelia:amelia]{Amelia::amelia()}}
 }

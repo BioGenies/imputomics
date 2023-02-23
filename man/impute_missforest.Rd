@@ -10,10 +10,10 @@ impute_missforest(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[missForest:missForest]{missForest::missForest}}.
+A \code{data.frame} with imputed values by \code{\link[missForest:missForest]{missForest::missForest()}}.
 }
 \description{
-Replaces \code{NA} values in the data frame using \code{\link[missForest:missForest]{missForest::missForest}}.
+A function to replace \code{NA} in the data frame by \code{\link[missForest:missForest]{missForest::missForest()}}.
 }
 \examples{
 \dontrun{
@@ -25,5 +25,5 @@ impute_missforest(idf)
 
 }
 \seealso{
-\code{\link[missForest:missForest]{missForest::missForest}}
+\code{\link[missForest:missForest]{missForest::missForest()}}
 }
