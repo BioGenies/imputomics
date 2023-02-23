@@ -29,8 +29,8 @@ VignetteBuilder: knitr
 Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/michbur/metabolomics-missing-value-imputation
-BugReports: https://github.com/michbur/metabolomics-missing-value-imputation/issues
+URL: https://github.com/michbur/imputomics
+BugReports: https://github.com/michbur/imputomics/issues
 Imports:
     abind,
     Amelia,

@@ -1,5 +1,5 @@
   <!-- badges: start -->
-[![R-CMD-check](https://github.com/michbur/metabolomics-missing-value-imputation/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/michbur/metabolomics-missing-value-imputation/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/michbur/imputomics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/michbur/imputomics/actions/workflows/R-CMD-check.yaml)
   <!-- badges: end -->
 
 # imputomics
@@ -19,7 +19,7 @@ install.packages("imputomics")
 However, you can also install the developmental version of imputomics directly from GitHub
 
 ```R
-devtools::install_github("BioGenies/imputomics")
+devtools::install_github("michbur/imputomics")
 ```
 
 ## Run imputomics
