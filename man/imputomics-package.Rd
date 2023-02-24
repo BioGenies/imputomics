@@ -4,9 +4,9 @@
 \name{imputomics-package}
 \alias{imputomics}
 \alias{imputomics-package}
-\title{imputomics: Compare imputation times and quality of missing values for ‘omics’ data}
+\title{imputomics: The Biggest Collection of Methods of Missing Values Imputation for ‘Omics’ Data}
 \description{
-Package description, what it does.
+Offers a range of methods for simulating and imputing missing values in different types of omics data such as genomics, transcriptomics, proteomics, and metabolomics. Provides tools for comparing and evaluating the performance of imputation methods in the terms of accuracy and computation time.
 }
 \seealso{
 Useful links:

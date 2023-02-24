@@ -1,17 +1,23 @@
 #' imputomics Graphical User Interface
 #'
 #' @description Launches graphical user interface .
-#' @name imputomics_gui
-#' @section Warning: Any ad-blocking software may cause malfunctions.
-#' @keywords count Poisson zero-inflated
-#' @export imputomics_gui
+#'
 #' @importFrom tools package_dependencies
 #' @importFrom utils available.packages
+#' @importFrom shiny runApp
+#'
+#' @section Warning: Any ad-blocking software may cause malfunctions.
+#'
 #' @author "Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski", "Jarosław Chilimoniuk"
+#'
 #' @examples
 #' if(interactive()) {
 #'   imputomics()
 #' }
+#'
+#' @keywords count Poisson zero-inflated
+#' @export imputomics_gui
+#'
 
 imputomics_gui <- function(){
   imputomics_suggests <- package_dependencies("imputomics",

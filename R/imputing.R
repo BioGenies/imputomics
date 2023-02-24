@@ -541,10 +541,14 @@ impute_knn <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [imputeLCMD::impute.QRILC()].
 #'
+#' @importFrom imputeLCMD impute.QRILC
+#'
 #' @template param_missing_ds
+#'
 #' @returns A \code{data.frame} with imputed values by [imputeLCMD::impute.QRILC()].
-#' @export
+#'
 #' @seealso [imputeLCMD::impute.QRILC()]
+#'
 #' @examples
 #' \dontrun{
 #' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
@@ -552,6 +556,8 @@ impute_knn <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_qrilc(idf)
 #' }
+#'
+#' @export
 #'
 impute_qrilc <- function(missing_data_set) {
   imputeLCMD::impute.QRILC(missing_data_set)[[1]]
