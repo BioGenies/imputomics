@@ -171,15 +171,6 @@ impute_median <- function(missing_data_set)
   impute_per_column(missing_data_set, compute_col_median)
 
 
-#' Helper function for \strong{missMDA}.
-#'
-#' @template param_missing_ds
-#'
-estimate_ncp <- function(missing_data_set) {
-  estimated_ncp <- missMDA::estim_ncpPCA(missing_data_set, ncp.max = ncol(df) - 2)[["ncp"]]
-  ifelse(estimated_ncp < 2, 2, estimated_ncp)
-}
-
 #' Convert an imputing function into its safe version.
 #' @param imputing_function a function (imputation method) that takes missing_data_set as an input
 #' @template param_missing_ds
@@ -221,7 +212,6 @@ safe_impute <- function(imputing_function, missing_data_set) {
 #'
 impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpozycji
   imputed <- pcaMethods::pca(missing_data_set, method = "svdImpute",
-                             nPcs = estimate_ncp(missing_data_set),
                              verbose = FALSE, center = FALSE, scale = "none")
   # data.frame necessary because pcaMethods::pca returns matrix
   data.frame(pcaMethods::completeObs(imputed))
@@ -247,7 +237,6 @@ impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpo
 #'
 impute_ppca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "ppca",
-                             nPcs = estimate_ncp(missing_data_set),
                              verbose = FALSE, center = FALSE, scale = "none",
                              maxIterations = 1e5)
   # data.frame necessary because pcaMethods::pca returns matrix
@@ -274,7 +263,6 @@ impute_ppca <- function(missing_data_set) {
 #'
 impute_bpca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "bpca",
-                             nPcs = estimate_ncp(missing_data_set),
                              verbose = FALSE, center = FALSE, scale = "none",
                              maxSteps = 500)
   # data.frame necessary because pcaMethods::pca returns matrix
@@ -301,7 +289,6 @@ impute_bpca <- function(missing_data_set) {
 #'
 impute_nipals <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "nipals",
-                             nPcs = estimate_ncp(missing_data_set),
                              verbose = FALSE, center = FALSE, scale = "none")
   # data.frame necessary because pcaMethods::pca returns matrix
   data.frame(pcaMethods::completeObs(imputed))
@@ -328,7 +315,6 @@ impute_nipals <- function(missing_data_set) {
 #'
 impute_nlpca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "nlpca",
-                             nPcs = estimate_ncp(missing_data_set),
                              verbose = FALSE, center = FALSE, scale = "none",
                              maxSteps = 500)
   # data.frame necessary because pcaMethods::pca returns matrix
@@ -355,7 +341,7 @@ impute_nlpca <- function(missing_data_set) {
 #' }
 #'
 impute_missmda_reg <- function(missing_data_set) {
-  imputed <- missMDA::imputePCA(missing_data_set, ncp = estimate_ncp(missing_data_set),
+  imputed <- missMDA::imputePCA(missing_data_set,
                                 method = "Regularized", scale = FALSE)
   # data.frame necessary because missMDA::imputePCA returns matrix
   data.frame(imputed[["completeObs"]])
@@ -381,7 +367,7 @@ impute_missmda_reg <- function(missing_data_set) {
 #' }
 #'
 impute_missmda_em <- function(missing_data_set) {
-  imputed <- missMDA::imputePCA(missing_data_set, ncp = estimate_ncp(missing_data_set),
+  imputed <- missMDA::imputePCA(missing_data_set,
                                 method = "EM", scale = FALSE)
   # data.frame necessary because missMDA::imputePCA returns matrix
   data.frame(imputed[["completeObs"]])
@@ -541,10 +527,14 @@ impute_knn <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [imputeLCMD::impute.QRILC()].
 #'
+#' @importFrom imputeLCMD impute.QRILC
+#'
 #' @template param_missing_ds
+#'
 #' @returns A \code{data.frame} with imputed values by [imputeLCMD::impute.QRILC()].
-#' @export
+#'
 #' @seealso [imputeLCMD::impute.QRILC()]
+#'
 #' @examples
 #' \dontrun{
 #' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
@@ -552,6 +542,8 @@ impute_knn <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_qrilc(idf)
 #' }
+#'
+#' @export
 #'
 impute_qrilc <- function(missing_data_set) {
   imputeLCMD::impute.QRILC(missing_data_set)[[1]]

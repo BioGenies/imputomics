@@ -17,6 +17,7 @@ Launches graphical user interface .
 if(interactive()) {
   imputomics()
 }
+
 }
 \author{
 "Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski", "Jarosław Chilimoniuk"
