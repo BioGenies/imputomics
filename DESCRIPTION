@@ -28,7 +28,6 @@ Description: Offers a range of methods for simulating and imputing missing value
              accuracy and computation time.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 VignetteBuilder: knitr
 Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
@@ -50,6 +49,7 @@ Imports:
     missMDA,
     NADIA,
     pcaMethods,
+    shiny,
     softImpute,
     stats,
     utils
