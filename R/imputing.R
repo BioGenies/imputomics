@@ -711,3 +711,81 @@ impute_gsimp <- function(missing_data_set) {
   imputed <- GS_impute_clean(missing_data_set, initial = "lsym", imp_model='glmnet_pred')
   imputed[["data_imp"]]
 }
+
+#' \strong{kNN} imputation.
+#'
+#' K Nearest Neighbors.
+#'
+#' A function to replace \code{NA} in the data frame by [VIM::kNN()].
+#'
+#' @template param_missing_ds
+#' @returns A \code{data.frame} with imputed values by [VIM::kNN()].
+#' @export
+#' @seealso [VIM::kNN()]
+#' @examples
+#' \dontrun{
+#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+#' values2 = rep(c(21, 32, 48, NA, 59), 10),
+#' values3 = rep(c(37, NA, 33, 44, 32), 10))
+#' impute_vim_knn(idf)
+#' }
+#'
+impute_vim_knn <- function(missing_data_set) {
+  imputed <- VIM::kNN(missing_data_set, k = 10)[,1:ncol(missing_data_set)]
+  data.frame(imputed)
+}
+
+#' \strong{MetabImpute} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by [MetabImpute::Impute()] or [MetabImpute::imputeMulti()].
+#'
+#' @template param_missing_ds
+#' @param method Imputation method for mice. One or vector of RF, BPCA, QRILC,
+#' GSIMP, RHM, RMEAN, RMEDIAN, RMIN, RZERO, RRF, RGSIMP, RQRILC, RBPCA, min,
+#' halfmin, mean, median, zero
+#' @returns A \code{data.frame} with imputed values by [MetabImpute::Impute()] or [MetabImpute::imputeMulti()].
+#' @export
+#' @seealso [MetabImpute::Impute()], [MetabImpute::imputeMulti()]]
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute(idf, method = "median")
+#' impute_MetabImpute(idf, method = c("median", "RF"))
+#' }
+#'
+impute_MetabImpute <- function(missing_data_set, method) {
+  if(length(method) > 1){
+    imputed <- MetabImpute::imputeMulti(data = missing_data_set,
+                                        methods = method, reps = 5)
+    imputed
+  }else{
+    imputed <- MetabImpute::Impute(data = missing_data_set, method = method,
+                                   reps = 5)
+    data.frame(imputed)
+  }
+}
+
+#' \strong{MA} imputation.
+#'
+#' Mechanism-Aware imputation
+#'
+#' A function to replace \code{NA} in the data frame by [MAI::MAI()].
+#'
+#' @template param_missing_ds
+#' @returns A \code{data.frame} with imputed values by [MAI::MAI()].
+#' @export
+#' @seealso [MAI::MAI()]
+#' @examples
+#' \dontrun{
+#' idf <- matrix(rnorm(10000), ncol =  50)
+#' idf[runif(10000) < 0.1] <- NA
+#' impute_nsKNN(idf)
+#' }
+#'
+impute_nsKNN <- function(missing_data_set) {
+  imputed <- MAI::MAI(missing_data_set, MCAR_algorithm = 'Multi_nsKNN',
+                      MNAR_algorithm = 'nsKNN')
+  data.frame(imputed[["Imputed_data"]])
+}
