@@ -758,11 +758,11 @@ impute_vim_knn <- function(missing_data_set) {
 impute_MetabImpute <- function(missing_data_set, method) {
   if(length(method) > 1){
     imputed <- MetabImpute::imputeMulti(data = missing_data_set,
-                                        methods = method, reps = 5)
+                                        methods = method, reps = 5, local = TRUE)
     imputed
   }else{
     imputed <- MetabImpute::Impute(data = missing_data_set, method = method,
-                                   reps = 5)
+                                   reps = 5, local = TRUE)
     data.frame(imputed)
   }
 }
@@ -788,4 +788,26 @@ impute_nsKNN <- function(missing_data_set) {
   imputed <- MAI::MAI(missing_data_set, MCAR_algorithm = 'Multi_nsKNN',
                       MNAR_algorithm = 'nsKNN')
   data.frame(imputed[["Imputed_data"]])
+}
+
+#' \strong{kNN-Euclidean} imputation.
+#'
+#' A function to replace \code{NA} in the data frame based on
+#' \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}.
+#'
+#' @template param_missing_ds
+#' @returns A \code{data.frame} with imputed values by kNN-Euclidean imputation.
+#' @export
+#' @seealso \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}
+#' @examples
+#' \dontrun{
+#' idf <- matrix(rnorm(10000), ncol =  50)
+#' idf[runif(10000) < 0.1] <- NA
+#' impute_KNNEuc(idf)
+#' }
+#'
+impute_KNNEuc <- function(missing_data_set) {
+  imputed <- KNNEuc(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set)*0.05) + 1,
+                    rm.na = TRUE, rm.nan = TRUE, rm.inf = TRUE)
+  data.frame(imputed)
 }
