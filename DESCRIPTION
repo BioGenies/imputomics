@@ -9,7 +9,7 @@ Author: c(
     role = c("cre", "aut")),
            person("Krystyna Grzesiak", 
            email = "krygrz11@gmail.com", 
-           comment = c(ORCID = ""),
+           comment = c(ORCID = "0000-0002-3515-4320"),
            role = c("cre", "ctb")),
            person("Dominik Nowakowski", 
            email = "nowakowskisf@gmail.com", 
@@ -39,6 +39,8 @@ Imports:
     Hmisc,
     impute,
     imputeLCMD,
+    MAI,
+    MetabImpute,
     methods,
     mi,
     mice,
@@ -46,11 +48,17 @@ Imports:
     missMDA,
     NADIA,
     pcaMethods,
-    PEMM,
+    shiny,
     softImpute,
     stats,
-    tWLSA,
-    utils
+    utils,
+    VIM
 Suggests:
     knitr,
-    testthat
+    testthat,
+    tWLSA,
+    PEMM,
+    spelling,
+    DreamAI,
+    missCompare,
+    matrixStats

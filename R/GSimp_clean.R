@@ -1,6 +1,6 @@
 ##################################################################################
 #### This function was copied from https://github.com/WandeRum/GSimp
-#### and contains the GSimp algorithm and related functions developed by 
+#### and contains the GSimp algorithm and related functions developed by
 #### Rum Wei (10.1371/journal.pcbi.1005973).
 ##################################################################################
 
@@ -19,8 +19,14 @@ rnorm_trunc <- function (n, mu, std, lo=-Inf, hi=Inf) {
   return(qnorm(u, mu, std))
 }
 
-## Initialize the missing data ##
-## lsym will draw samples from the right tail of the distribution and transformed to the left tail
+
+#' Supplementary function for GSimp
+#' Initialize the missing data
+#' lsym will draw samples from the right tail of the distribution and transformed to the left tail
+#'
+#' @inheritParams GS_impute_clean
+#'
+#' @keywords internal
 miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
   init_data <- miss_data
   switch (method,
@@ -47,13 +53,21 @@ miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
             })
           },
           qrilc = {
-            init_data <- impute.QRILC(miss_data)[[1]]
+            init_data <- imputeLCMD::impute.QRILC(miss_data)[[1]]
           }
   )
   return(init_data)
 }
 
-## Single missing variable imputation based on Gibbs sampler ##
+#' Supplementary function for GSimp
+#' Single missing variable imputation based on Gibbs sampler
+#'
+#' @importFrom missForest nrmse
+#'
+#' @inheritParams GS_impute_clean
+#'
+#' @keywords internal
+#'
 single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pred', lo=-Inf, hi=Inf, iters_each=100, gibbs=c()) {
   y_res <- y
   x <- as.matrix(x)
@@ -62,7 +76,7 @@ single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pre
   nrmse_vec <- c()
   gibbs_res <- array(NA, dim=c(3, length(gibbs), iters_each))
   dimnames(gibbs_res) <- list(c('std', 'yhat', 'yres'), NULL, NULL)
-  
+
   for (i in 1:iters_each) {
     y_hat <- imp_model_func(x, y_res)
     std <- sqrt(sum((y_hat[na_idx]-y_res[na_idx])^2)/length(na_idx))
@@ -87,12 +101,22 @@ single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pre
 }
 
 
-## Multiple missing variables imputation ##
-## iters_each=number (100); vector of numbers, e.g. rep(100, 20) while iters_all=20
-## lo/hi=numer; vector; functions like min/max/median/mean...
-## initial=character ('qrilc'/'lysm'); initialized data maatrix
-## n_cores=1 is sequentially (non-parallel) computing
-GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', lo=-Inf, hi='min', 
+#' Supplementary function for GSimp
+#' Multiple missing variables imputation
+#'
+#' @param data_miss data to impute
+#' @param iters_each number (100); vector of numbers, e.g. rep(100, 20)
+#' @param iters_all = 20
+#' @param lo number; vector; functions like min/max/median/mean
+#' @param hi number; vector; functions like min/max/median/mean
+#' @param imp_model = \code{glmnet_pred},
+#' @param initial character ('qrilc'/'lysm') initialized data matrix
+#' @param gibbs = data.frame(row = integer(), col=integer())
+#'
+#' @keywords internal
+#'
+#'
+GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', lo=-Inf, hi='min',
                       imp_model='glmnet_pred', gibbs=data.frame(row=integer(), col=integer())) {
   ## Make vector for iters_each ##
   if (length(iters_each)==1) {
@@ -100,15 +124,15 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
   } else if (length(iters_each)==iters_all) {
     iters_each <- iters_each
   } else {stop('improper argument: iters_each')}
-  
-  
+
+
   ## Missing count in each column ##
   miss_count <- apply(data_miss, 2, function(x) sum(is.na(x)))
-  ## Index of missing variables, sorted (increasing) by the number of missings 
+  ## Index of missing variables, sorted (increasing) by the number of missings
   miss_col_idx_temp <- order(miss_count, decreasing = TRUE)
   miss_col_idx <- rev(miss_col_idx_temp[1:sum(miss_count!=0)])
-  
-  # if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')} # tutaj pozbyc się %in% ale jak 
+
+  # if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')} # tutaj pozbyc się %in% ale jak
   if (!all(setdiff(gibbs$col, miss_col_idx))) {stop('improper argument: gibbs')}
   gibbs_sort <- gibbs
   if (nrow(gibbs_sort)>0) {
@@ -116,10 +140,10 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
     gibbs_sort <- gibbs_sort[order(gibbs_sort$row), ]
     gibbs_sort <- gibbs_sort[order(match(gibbs_sort$col, miss_col_idx)), ]
   } else {gibbs_sort$order <- integer()}
-  
+
   ## Make vectors for lo and hi ##
   if (length(lo)>1) {
-    if (length(lo)!=ncol(data_miss)) {stop('Length of lo should equal to one or the number of variables')} 
+    if (length(lo)!=ncol(data_miss)) {stop('Length of lo should equal to one or the number of variables')}
     else {lo_vec <- lo}
   } else if (is.numeric(lo)) {
     lo_vec <- rep(lo, ncol(data_miss))
@@ -127,7 +151,7 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
     lo_fun <- getFunction(lo)
     lo_vec <- apply(data_miss, 2, function(x) lo_fun(na.omit(x)))
   }
-  
+
   if (length(hi)>1) {
     if (length(hi)!=ncol(data_miss)) {stop('Length of hi should equal to one or the number of variables')}
     else {hi_vec <- hi}
@@ -137,27 +161,27 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
     hi_fun <- getFunction(hi)
     hi_vec <- apply(data_miss, 2, function(x) hi_fun(na.omit(x)))
   }
-  
+
   # Check whether lo is lower than hi
   if(!all(lo_vec < hi_vec)) {stop('lo should be lower than hi')}
-  
+
   ## Initialization using build-in method or input initial matrix ##
   if(is.character(initial)) {
     data_init <- miss_init(data_miss, method=initial)
   } else if(is.data.frame(initial) & identical(data_miss[!is.na(data_miss)], initial[!is.na(data_miss)])) {
     data_init <- initial
   } else {stop('improper argument: initial')}
-  
+
   data_imp <- data_init
   gibbs_res_final <- array(NA, dim=c(3, nrow(gibbs), 0))
-  
+
   ## Iterations for the whole data matrix ##
   for (i in 1:iters_all) {
     gibbs_res_j <- array(NA, dim=c(3, 0, iters_each[i]))
     for (j in miss_col_idx) {
       gibbs_sort_temp <- gibbs_sort[gibbs_sort$col==j, ]
       y_miss <- data_miss[, j]
-      y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss, imp_model=imp_model, lo=lo_vec[j], hi=hi_vec[j], 
+      y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss, imp_model=imp_model, lo=lo_vec[j], hi=hi_vec[j],
                                        iters_each=iters_each[i], gibbs=gibbs_sort_temp$row)
       y_imp <- y_imp_res$y_imp
       gibbs_res_j <- abind::abind(gibbs_res_j, y_imp_res$gibbs_res, along=2)
