@@ -1128,6 +1128,30 @@ impute_MetabImpute_halfmin <- function(missing_data_set) {
   data.frame(imputed)
 }
 
+#' \strong{MetabImpute replicate half-minimum} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate half-minimum
+#' from [MetabImpute::Impute()].
+#'
+#' @template param_missing_ds
+#' @returns A \code{data.frame} with imputed values of replicate half-minimum
+#' by [MetabImpute::Impute()].
+#' @export
+#' @seealso [MetabImpute::Impute()]
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rhalfmin(idf)
+#' }
+#'
+impute_MetabImpute_rhalfmin <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set, method = 'RHM',
+                                 reps = 5, local = TRUE)
+  data.frame(imputed)
+}
+
 #' \strong{MetabImpute mean} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by mean from [MetabImpute::Impute()].
@@ -1408,10 +1432,10 @@ impute_nsKNN <- function(missing_data_set) {
 #' \dontrun{
 #' idf <- matrix(rnorm(10000), ncol =  50)
 #' idf[runif(10000) < 0.1] <- NA
-#' impute_KNNEuc(idf)
+#' impute_eucknn(idf)
 #' }
 #'
-impute_KNNEuc <- function(missing_data_set) {
+impute_eucknn <- function(missing_data_set) {
   imputed <- KNNEuc(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set)*0.05) + 1,
                     rm.na = TRUE, rm.nan = TRUE, rm.inf = TRUE)
   data.frame(imputed)
