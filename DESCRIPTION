@@ -61,4 +61,5 @@ Suggests:
     spelling,
     DreamAI,
     missCompare,
-    matrixStats
+    matrixStats,
+    randomForest

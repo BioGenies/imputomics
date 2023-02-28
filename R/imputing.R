@@ -1508,3 +1508,34 @@ impute_RegImpute <- function(missing_data_set) {
                      method = c("RegImpute"), out = c("Ensemble"))
   data.frame(imputed[['Ensemble']])
 }
+
+#' \strong{Random Fprest} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by [randomForest::rfImpute()].
+#'
+#' @template param_missing_ds
+#' @returns A \code{data.frame} with imputed values by randomForest.
+#' @export
+#' @seealso [randomForest::rfImpute()]
+#' @examples
+#' \dontrun{
+#' idf <- matrix(rnorm(80), ncol =  4)
+#' colnames(idf) <- letters[1L:4]
+#' for(i in 1:3) idf[runif(20) < 0.1, i] <- NA
+#' impute_randomForest(idf)
+#' }
+#'
+impute_randomForest <- function(missing_data_set){
+  cols_index <- apply(missing_data_set, 2, function(ith_cols){
+    anyNA(ith_cols)
+  })
+  if(all(cols_index)){
+    stop("All the variables have a missing values. The response variable can't have NA's.")
+  }
+  col_names_variable <- names(missing_data_set)[!cols_index]
+  response_variable <- sample(col_names_variable, size = 1, replace = FALSE)
+  imputed <- randomForest::rfImpute(x = missing_data_set[,setdiff(names(missing_data_set), response_variable)],
+                                    y = missing_data_set[,response_variable])
+  colnames(imputed)[1] <- response_variable
+  imputed
+}
