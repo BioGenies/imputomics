@@ -13,7 +13,7 @@ Author: c(
                role = c("cre", "ctb")),
           person("Dominik Nowakowski", 
                email = "nowakowskisf@gmail.com", 
-               comment = c(ORCID = ""),
+               comment = c(ORCID = "0000-0002-3515-4320"),
                role = c("cre", "ctb")),
           person("Jaroslaw", "Chilimoniuk", 
                email = "jaroslaw.chilimoniuk@gmail.com", 
@@ -42,6 +42,8 @@ Imports:
     Hmisc,
     impute,
     imputeLCMD,
+    MAI,
+    MetabImpute,
     methods,
     mi,
     mice,
@@ -52,7 +54,8 @@ Imports:
     shiny,
     softImpute,
     stats,
-    utils
+    utils,
+    VIM
 Suggests:
     knitr,
     testthat,
