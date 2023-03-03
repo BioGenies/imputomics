@@ -22,7 +22,9 @@ values2 = rep(c(21, 32, 48, NA, 59), 10),
 values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_softimpute(idf)
 }
-
+}
+\references{
+\insertRef{mazumder_softimpute_2021}{imputomics}
 }
 \seealso{
 \code{\link[softImpute:softImpute]{softImpute::softImpute()}}

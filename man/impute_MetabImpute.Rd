@@ -27,7 +27,9 @@ idf <- data.frame(matrix(idf, nrow = 10))
 impute_MetabImpute(idf, method = "median")
 impute_MetabImpute(idf, method = c("median", "RF"))
 }
-
+}
+\references{
+\insertRef{davis_addressing_2022}{imputomics}
 }
 \seealso{
 \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}, \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}]

@@ -18,6 +18,9 @@ Multiple Imputation using Additive Regression, Bootstrapping, and Predictive Mea
 \details{
 A function to replace \code{NA} in the data frame by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.
 }
+\references{
+\insertRef{jr_hmisc_2023}{imputomics}
+}
 \seealso{
 \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}
 }

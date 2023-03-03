@@ -210,6 +210,9 @@ safe_impute <- function(imputing_function, missing_data_set) {
 #' impute_svd(idf)
 #' }
 #'
+#' @references
+#' \insertRef{stacklies_pcamethods_2007}{imputomics}
+#'
 impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpozycji
   imputed <- pcaMethods::pca(missing_data_set, method = "svdImpute",
                              verbose = FALSE, center = FALSE, scale = "none")
@@ -234,6 +237,8 @@ impute_svd <- function(missing_data_set) { # sprawdzic czy to nie wymaga transpo
 #' values2 = c(21, 32, 48, NA, 59))
 #' impute_ppca(idf)
 #' }
+#' @references
+#' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 impute_ppca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "ppca",
@@ -260,6 +265,8 @@ impute_ppca <- function(missing_data_set) {
 #' values2 = c(21, 32, 48, NA, 59))
 #' impute_bpca(idf)
 #' }
+#' @references
+#' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 impute_bpca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "bpca",
@@ -286,6 +293,8 @@ impute_bpca <- function(missing_data_set) {
 #' values2 = c(21, 32, 48, NA, 59))
 #' impute_nipals(idf)
 #' }
+#' @references
+#' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 impute_nipals <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "nipals",
@@ -312,6 +321,8 @@ impute_nipals <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_nlpca(idf)
 #' }
+#' @references
+#' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 impute_nlpca <- function(missing_data_set) {
   imputed <- pcaMethods::pca(missing_data_set, method = "nlpca",
@@ -339,6 +350,8 @@ impute_nlpca <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_missmda_reg(idf)
 #' }
+#' @references
+#' \insertRef{josse_missmda_2016}{imputomics}
 #'
 impute_missmda_reg <- function(missing_data_set) {
   imputed <- missMDA::imputePCA(missing_data_set,
@@ -365,6 +378,8 @@ impute_missmda_reg <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_missmda_em(idf)
 #' }
+#' @references
+#' \insertRef{josse_missmda_2016}{imputomics}
 #'
 impute_missmda_em <- function(missing_data_set) {
   imputed <- missMDA::imputePCA(missing_data_set,
@@ -395,6 +410,8 @@ impute_missmda_em <- function(missing_data_set) {
 #' impute_mice(idf, method = "pmm")
 #' impute_mice(idf, method = "rf")
 #' }
+#' @references
+#' \insertRef{buuren_mice_2011}{imputomics}
 #'
 impute_mice <- function(missing_data_set, method) {
   imputed <- mice::mice(missing_data_set, method = method, m = 1, maxit = 100, printFlag = FALSE,
@@ -418,6 +435,8 @@ impute_mice <- function(missing_data_set, method) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_amelia(idf)
 #' }
+#' @references
+#' \insertRef{honaker_amelia_2011}{imputomics}
 #'
 impute_amelia <- function(missing_data_set) {
   capture.output(imputed <- Amelia::amelia(missing_data_set, m = 1))
@@ -440,6 +459,8 @@ impute_amelia <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_missforest(idf)
 #' }
+#' @references
+#' \insertRef{stekhoven_missforest_2012}{imputomics}
 #'
 impute_missforest <- function(missing_data_set) {
   imputed <- missForest::missForest(missing_data_set, maxiter = 10, ntree = 500, replace = TRUE)
@@ -462,6 +483,8 @@ impute_missforest <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_mi(idf)
 #' }
+#' @references
+#' \insertRef{su_multiple_2011}{imputomics}
 #'
 impute_mi <- function(missing_data_set) {
   # requires betareg
@@ -483,6 +506,8 @@ impute_mi <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by [Hmisc::aregImpute()].
 #' @export
 #' @seealso [Hmisc::aregImpute()]
+#' @references
+#' \insertRef{jr_hmisc_2023}{imputomics}
 #'
 impute_areg <- function(missing_data_set) {
   capture.output(imputed <- Hmisc::aregImpute(formula = as.formula(paste0("~ ", paste0(colnames(df), collapse = " + "))),
@@ -512,6 +537,8 @@ impute_areg <- function(missing_data_set) {
 #' set.seed(2137)
 #' impute_knn(idf)
 #' }
+#' @references
+#' \insertRef{hastie_impute_2023}{imputomics}
 #'
 impute_knn <- function(missing_data_set) {
   # this function has a default random seed, so we need to sample one
@@ -542,6 +569,8 @@ impute_knn <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_qrilc(idf)
 #' }
+#' @references
+#' \insertRef{lazar_imputelcmd_2022}{imputomics}
 #'
 #' @export
 #'
@@ -567,6 +596,8 @@ impute_qrilc <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_mle(idf)
 #' }
+#' @references
+#' \insertRef{lazar_imputelcmd_2022}{imputomics}
 #'
 impute_mle <- function(missing_data_set) {
   imputed <- imputeLCMD::impute.wrapper.MLE(as.matrix(missing_data_set))
@@ -591,6 +622,8 @@ impute_mle <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_twlsa(idf)
 #' }
+#' @references
+#' \insertRef{kumar_kernel_2021}{imputomics}
 #'
 impute_twlsa <- function(missing_data_set) {
   imputed <- tWLSA::wlsMisImp(as.matrix(missing_data_set))
@@ -613,6 +646,8 @@ impute_twlsa <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_softimpute(idf)
 #' }
+#' @references
+#' \insertRef{mazumder_softimpute_2021}{imputomics}
 #'
 impute_softimpute <- function(missing_data_set) {
   fit <- softImpute::softImpute(as.matrix(missing_data_set))
@@ -637,6 +672,8 @@ impute_softimpute <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_irmi(idf)
 #' }
+#' @references
+#' \insertRef{borowski_nadia_2022}{imputomics}
 #'
 impute_irmi <- function(missing_data_set) {
   NADIA::autotune_VIM_Irmi(missing_data_set, col_type = rep("numeric", ncol(missing_data_set)),
@@ -661,6 +698,8 @@ impute_irmi <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_PEMM(as.matrix(idf))
 #' }
+#' @references
+#' \insertRef{chen_penalized_2014}{imputomics}
 #'
 impute_PEMM <- function(missing_data_set) {
   PEMM::PEMM_fun(missing_data_set, phi = 1)
@@ -682,6 +721,8 @@ impute_PEMM <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_tknn(idf)
 #' }
+#' @references
+#' \insertRef{shah_distribution_2017}{imputomics}
 #'
 impute_tknn <- function(missing_data_set) {
   imputed <- imputeKNN(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set)*0.05) + 1, distance = "truncation",
@@ -706,6 +747,8 @@ impute_tknn <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_gsimp(idf)
 #' }
+#' @references
+#' \insertRef{wei_gsimp_2018}{imputomics}
 #'
 impute_gsimp <- function(missing_data_set) {
   imputed <- GS_impute_clean(missing_data_set, initial = "lsym", imp_model='glmnet_pred')
@@ -729,6 +772,8 @@ impute_gsimp <- function(missing_data_set) {
 #' values3 = rep(c(37, NA, 33, 44, 32), 10))
 #' impute_vim_knn(idf)
 #' }
+#' @references
+#' \insertRef{kowarik_imputation_2016}{imputomics}
 #'
 impute_vim_knn <- function(missing_data_set) {
   imputed <- VIM::kNN(missing_data_set, k = 10)[,1:ncol(missing_data_set)]
@@ -754,6 +799,8 @@ impute_vim_knn <- function(missing_data_set) {
 #' impute_MetabImpute(idf, method = "median")
 #' impute_MetabImpute(idf, method = c("median", "RF"))
 #' }
+#' @references
+#' \insertRef{davis_addressing_2022}{imputomics}
 #'
 impute_MetabImpute <- function(missing_data_set, method) {
   if(length(method) > 1){
@@ -783,6 +830,8 @@ impute_MetabImpute <- function(missing_data_set, method) {
 #' idf[runif(10000) < 0.1] <- NA
 #' impute_nsKNN(idf)
 #' }
+#' @references
+#' \insertRef{dekermanjian_mechanismaware_2022}{imputomics}
 #'
 impute_nsKNN <- function(missing_data_set) {
   imputed <- MAI::MAI(missing_data_set, MCAR_algorithm = 'Multi_nsKNN',
@@ -805,8 +854,10 @@ impute_nsKNN <- function(missing_data_set) {
 #' idf[runif(10000) < 0.1] <- NA
 #' impute_KNNEuc(idf)
 #' }
+#' @references
+#' \insertRef{shah_distribution_2017}{imputomics}
 #'
-impute_KNNEuc <- function(missing_data_set) {
+impute_eucknn <- function(missing_data_set) {
   imputed <- KNNEuc(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set)*0.05) + 1,
                     rm.na = TRUE, rm.nan = TRUE, rm.inf = TRUE)
   data.frame(imputed)

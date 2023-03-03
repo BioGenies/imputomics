@@ -25,7 +25,9 @@ values2 = rep(c(21, 32, 48, NA, 59), 10),
 values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_nlpca(idf)
 }
-
+}
+\references{
+\insertRef{stacklies_pcamethods_2007}{imputomics}
 }
 \seealso{
 \code{\link[pcaMethods:pca]{pcaMethods::pca()}}

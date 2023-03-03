@@ -30,7 +30,9 @@ idf <- data.frame(matrix(idf, nrow = 10))
 impute_mice(idf, method = "pmm")
 impute_mice(idf, method = "rf")
 }
-
+}
+\references{
+\insertRef{buuren_mice_2011}{imputomics}
 }
 \seealso{
 \code{\link[mice:mice]{mice::mice()}}

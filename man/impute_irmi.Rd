@@ -25,7 +25,9 @@ values2 = rep(c(21, 32, 48, NA, 59), 10),
 values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_irmi(idf)
 }
-
+}
+\references{
+\insertRef{borowski_nadia_2022}{imputomics}
 }
 \seealso{
 \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi()}}

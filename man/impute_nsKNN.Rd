@@ -24,7 +24,9 @@ idf <- matrix(rnorm(10000), ncol =  50)
 idf[runif(10000) < 0.1] <- NA
 impute_nsKNN(idf)
 }
-
+}
+\references{
+\insertRef{dekermanjian_mechanismaware_2022}{imputomics}
 }
 \seealso{
 \code{\link[MAI:MAI]{MAI::MAI()}}

@@ -26,6 +26,9 @@ impute_svd(idf)
 }
 
 }
+\references{
+\insertRef{stacklies_pcamethods_2007}{imputomics}
+}
 \seealso{
 \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
 }

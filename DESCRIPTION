@@ -55,7 +55,8 @@ Imports:
     softImpute,
     stats,
     utils,
-    VIM
+    VIM,
+    Rdpack
 Suggests:
     knitr,
     testthat,
@@ -63,3 +64,4 @@ Suggests:
     PEMM,
     spelling
 Language: en-US
+RdMacros: Rdpack
