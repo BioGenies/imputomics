@@ -1,0 +1,669 @@
+@article{armitage_missing_2015,
+  title = {Missing Value Imputation Strategies for Metabolomics Data: {{General}}},
+  shorttitle = {Missing Value Imputation Strategies for Metabolomics Data},
+  author = {Armitage, Emily Grace and Godzien, Joanna and {Alonso-Herranz}, Vanesa and {L{\'o}pez-Gonz{\'a}lvez}, {\'A}ngeles and Barbas, Coral},
+  year = {2015},
+  month = dec,
+  journal = {ELECTROPHORESIS},
+  volume = {36},
+  number = {24},
+  pages = {3050--3060},
+  issn = {01730835},
+  doi = {10.1002/elps.201500352},
+  langid = {english}
+}
+
+@misc{borowski_nadia_2022,
+  title = {{{NADIA}}: {{NA Data Imputation Algorithms}}},
+  shorttitle = {{{NADIA}}},
+  author = {Borowski, Jan and Fic, Piotr},
+  year = {2022},
+  month = oct,
+  abstract = {Creates a uniform interface for several advanced imputations missing data methods. Every available method can be used as a part of 'mlr3' pipelines which allows easy tuning and performance evaluation. Most of the used functions work separately on the training and test sets (imputation is trained on the training set and impute training data. After that imputation is again trained on the test set and impute test data).},
+  copyright = {GPL-2 | GPL-3 [expanded from: GPL]},
+  keywords = {MissingData}
+}
+
+@article{buuren_mice_2011,
+  title = {Mice: {{Multivariate Imputation}} by {{Chained Equations}} in {{R}}},
+  shorttitle = {Mice},
+  author = {van Buuren, Stef and {Groothuis-Oudshoorn}, Karin},
+  year = {2011},
+  month = dec,
+  journal = {Journal of Statistical Software},
+  volume = {45},
+  pages = {1--67},
+  issn = {1548-7660},
+  doi = {10.18637/jss.v045.i03},
+  abstract = {The R package mice imputes incomplete multivariate data by chained equations. The software mice 1.0 appeared in the year 2000 as an S-PLUS library, and in 2001 as an R package. mice 1.0 introduced predictor selection, passive imputation and automatic pooling. This article documents mice, which extends the functionality of mice 1.0 in several ways. In mice, the analysis of imputed data is made completely general, whereas the range of models under which pooling works is substantially extended. mice adds new functionality for imputing multilevel data, automatic predictor selection, data handling, post-processing imputed values, specialized pooling routines, model selection tools, and diagnostic graphs. Imputation of categorical data is improved in order to bypass problems caused by perfect prediction. Special attention is paid to transformations, sum scores, indices and interactions using passive imputation, and to the proper setup of the predictor matrix. mice can be downloaded from the Comprehensive R Archive Network. This article provides a hands-on, stepwise approach to solve applied incomplete data problems.},
+  copyright = {Copyright (c) 2009 Stef van Buuren, Karin Groothuis-Oudshoorn},
+  langid = {english}
+}
+
+@article{chen_penalized_2014,
+  title = {A Penalized {{EM}} Algorithm Incorporating Missing Data Mechanism for {{Gaussian}} Parameter Estimation},
+  author = {Chen, Lin S. and Prentice, Ross L. and Wang, Pei},
+  year = {2014},
+  month = jun,
+  journal = {Biometrics},
+  volume = {70},
+  number = {2},
+  pages = {312--322},
+  issn = {0006-341X},
+  doi = {10.1111/biom.12149},
+  abstract = {Missing data rates could depend on the targeted values in many settings, including mass spectrometry-based proteomic profiling studies. Here we consider mean and covariance estimation under a multivariate Gaussian distribution with non-ignorable missingness, including scenarios in which the dimension (p) of the response vector is equal to or greater than the number (n) of independent observations. A parameter estimation procedure is developed by maximizing a class of penalized likelihood functions that entails explicit modeling of missing data probabilities. The performance of the resulting `penalized EM algorithm incorporating missing data mechanism (PEMM)' estimation procedure is evaluated in simulation studies and in a proteomic data illustration.},
+  pmcid = {PMC4061266},
+  pmid = {24471933},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\TR4CGV3N\\Chen et al. - 2014 - A penalized EM algorithm incorporating missing dat.pdf}
+}
+
+@article{davis_addressing_2022,
+  title = {Addressing {{Missing Data}} in {{GC}} \texttimes{} {{GC Metabolomics}}: {{Identifying Missingness Type}} and {{Evaluating}} the {{Impact}} of {{Imputation Methods}} on {{Experimental Replication}}},
+  shorttitle = {Addressing {{Missing Data}} in {{GC}} \texttimes{} {{GC Metabolomics}}},
+  author = {Davis, Trenton J. and Firzli, Tarek R. and Higgins Keppler, Emily A. and Richardson, Matthew and Bean, Heather D.},
+  year = {2022},
+  month = aug,
+  journal = {Analytical Chemistry},
+  volume = {94},
+  number = {31},
+  pages = {10912--10920},
+  publisher = {{American Chemical Society}},
+  issn = {0003-2700},
+  doi = {10.1021/acs.analchem.1c04093},
+  abstract = {Missing data is a significant issue in metabolomics that is often neglected when conducting data preprocessing, particularly when it comes to imputation. This can have serious implications for downstream statistical analyses and lead to misleading or uninterpretable inferences. In this study, we aim to identify the primary types of missingness that affect untargeted metabolomics data and compare strategies for imputation using two real-world comprehensive two-dimensional gas chromatography (GC \texttimes{} GC) data sets. We also present these goals in the context of experimental replication whereby imputation is conducted in a within-replicate-based fashion-the first description and evaluation of this strategy-and introduce an R package MetabImpute to carry out these analyses. Our results conclude that, in these two GC \texttimes{} GC data sets, missingness was most likely of the missing at-random (MAR) and missing not-at-random (MNAR) types as opposed to missing completely at-random (MCAR). Gibbs sampler imputation and Random Forest gave the best results when imputing MAR and MNAR compared against single-value imputation (zero, minimum, mean, median, and half-minimum) and other more sophisticated approaches (Bayesian principal component analysis and quantile regression imputation for left-censored data). When samples are replicated, within-replicate imputation approaches led to an increase in the reproducibility of peak quantification compared to imputation that ignores replication, suggesting that imputing with respect to replication may preserve potentially important features in downstream analyses for biomarker discovery.}
+}
+
+@misc{dekermanjian_mai_2023,
+  title = {{{MAI}}: {{Mechanism-Aware Imputation}}},
+  shorttitle = {{{MAI}}},
+  author = {Dekermanjian, Jonathan and Shaddox, Elin and N, Debmalya and {y} and Ghosh, Debashis and Kechris, Katerina},
+  year = {2023},
+  doi = {10.18129/B9.bioc.MAI},
+  abstract = {A two-step approach to imputing missing data in metabolomics. Step 1 uses a random forest classifier to classify missing values as either Missing Completely at Random/Missing At Random (MCAR/MAR) or Missing Not At Random (MNAR). MCAR/MAR are combined because it is often difficult to distinguish these two missing types in metabolomics data. Step 2 imputes the missing values based on the classified missing mechanisms, using the appropriate imputation algorithms. Imputation algorithms tested and available for MCAR/MAR include Bayesian Principal Component Analysis (BPCA), Multiple Imputation No-Skip K-Nearest Neighbors (Multi\_nsKNN), and Random Forest. Imputation algorithms tested and available for MNAR include nsKNN and a single imputation approach for imputation of metabolites where left-censoring is present.},
+  copyright = {GPL-3},
+  howpublished = {Bioconductor version: Release (3.16)},
+  keywords = {Classification,Metabolomics,Software,StatisticalMethod}
+}
+
+@article{dekermanjian_mechanismaware_2022,
+  title = {Mechanism-Aware Imputation: A Two-Step Approach in Handling Missing Values in Metabolomics},
+  shorttitle = {Mechanism-Aware Imputation},
+  author = {Dekermanjian, Jonathan P. and Shaddox, Elin and Nandy, Debmalya and Ghosh, Debashis and Kechris, Katerina},
+  year = {2022},
+  month = dec,
+  journal = {BMC Bioinformatics},
+  volume = {23},
+  number = {1},
+  pages = {179},
+  issn = {1471-2105},
+  doi = {10.1186/s12859-022-04659-1},
+  abstract = {Abstract             When analyzing large datasets from high-throughput technologies, researchers often encounter missing quantitative measurements, which are particularly frequent in metabolomics datasets. Metabolomics, the comprehensive profiling of metabolite abundances, are typically measured using mass spectrometry technologies that often introduce missingness via multiple mechanisms: (1) the metabolite signal may be smaller than the instrument limit of detection; (2) the conditions under which the data are collected and processed may lead to missing values; (3) missing values can be introduced randomly. Missingness resulting from mechanism (1) would be classified as Missing Not At Random (MNAR), that from mechanism (2) would be Missing At Random (MAR), and that from mechanism (3) would be classified as Missing Completely At Random (MCAR). Two common approaches for handling missing data are the following: (1) omit missing data from the analysis; (2) impute the missing values. Both approaches may introduce bias and reduce statistical power in downstream analyses such as testing metabolite associations with clinical variables. Further, standard imputation methods in metabolomics often ignore the mechanisms causing missingness and inaccurately estimate missing values within a data set. We propose a mechanism-aware imputation algorithm that leverages a two-step approach in imputing missing values. First, we use a random forest classifier to classify the missing mechanism for each missing value in the data set. Second, we impute each missing value using imputation algorithms that are specific to the predicted missingness mechanism (i.e., MAR/MCAR or MNAR). Using complete data, we conducted simulations, where we imposed different missingness patterns within the data and tested the performance of combinations of imputation algorithms. Our proposed algorithm provided imputations closer to the original data than those using only one imputation algorithm for all the missing values. Consequently, our two-step approach was able to reduce bias for improved downstream analyses.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\XI94C5ZW\\Dekermanjian et al. - 2022 - Mechanism-aware imputation a two-step approach in.pdf}
+}
+
+@article{diguida_nontargeted_2016,
+  title = {Non-Targeted {{UHPLC-MS}} Metabolomic Data Processing Methods: A Comparative Investigation of Normalisation, Missing Value Imputation, Transformation and Scaling},
+  shorttitle = {Non-Targeted {{UHPLC-MS}} Metabolomic Data Processing Methods},
+  author = {Di Guida, Riccardo and Engel, Jasper and Allwood, J. William and Weber, Ralf J. M. and Jones, Martin R. and Sommer, Ulf and Viant, Mark R. and Dunn, Warwick B.},
+  year = {2016},
+  month = may,
+  journal = {Metabolomics},
+  volume = {12},
+  number = {5},
+  pages = {93},
+  issn = {1573-3882, 1573-3890},
+  doi = {10.1007/s11306-016-1030-9},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\F55QTF3R\\Di Guida et al. - 2016 - Non-targeted UHPLC-MS metabolomic data processing .pdf}
+}
+
+@misc{faquih_tofaquih_2022,
+  title = {Tofaquih/Imputation\_of\_untargeted\_metabolites: {{Official Release}} v1.4},
+  shorttitle = {Tofaquih/Imputation\_of\_untargeted\_metabolites},
+  author = {Faquih, Tariq},
+  year = {2022},
+  month = mar,
+  doi = {10.5281/zenodo.6347808},
+  abstract = {Update 2022 03 11 Added two new functions: 1) use\_covars: Logical. Optional. Whether the covars will be used to impute the missing values in the metabolites. Default = FALSE. 2) maxN\_input: sets the max number of ccm metabolites to be used for the imputation. Default is 10. Is overridden if covars\_only\_mode == TRUE. Useful in case of collinear/constant variables. Added a line for makeing a prediction matrix (make.predictorMatrix(minidf) Added a collinearity issue check. It will be returned from the output object \#\$Msummary\$collinear Msummary also returns the loggedEvents from the Mice function (mice package) Script is compatible with R 4.1.0 Script tested on Nightingale data Full Changelog: https://github.com/tofaquih/imputation\_of\_untargeted\_metabolites/compare/v1.3...v1.4},
+  howpublished = {Zenodo},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\475RBGJL\\6347808.html}
+}
+
+@article{faquih_workflow_2020,
+  title = {A {{Workflow}} for {{Missing Values Imputation}} of {{Untargeted Metabolomics Data}}},
+  author = {Faquih, Tariq and {van Smeden}, Maarten and Luo, Jiao and {le Cessie}, Saskia and Kastenm{\"u}ller, Gabi and Krumsiek, Jan and Noordam, Raymond and {van Heemst}, Diana and Rosendaal, Frits R. and {van Hylckama Vlieg}, Astrid and {Willems van Dijk}, Ko and {Mook-Kanamori}, Dennis O.},
+  year = {2020},
+  month = nov,
+  journal = {Metabolites},
+  volume = {10},
+  number = {12},
+  pages = {486},
+  issn = {2218-1989},
+  doi = {10.3390/metabo10120486},
+  abstract = {Metabolomics studies have seen a steady growth due to the development and implementation of affordable and high-quality metabolomics platforms. In large metabolite panels, measurement values are frequently missing and, if neglected or sub-optimally imputed, can cause biased study results. We provided a publicly available, user-friendly R script to streamline the imputation of missing endogenous, unannotated, and xenobiotic metabolites. We evaluated the multivariate imputation by chained equations (MICE) and k-nearest neighbors (kNN) analyses implemented in our script by simulations using measured metabolites data from the Netherlands Epidemiology of Obesity (NEO) study (n = 599). We simulated missing values in four unique metabolites from different pathways with different correlation structures in three sample sizes (599, 150, 50) with three missing percentages (15\%, 30\%, 60\%), and using two missing mechanisms (completely at random and not at random). Based on the simulations, we found that for MICE, larger sample size was the primary factor decreasing bias and error. For kNN, the primary factor reducing bias and error was the metabolite correlation with its predictor metabolites. MICE provided consistently higher performance measures particularly for larger datasets (n {$>$} 50). In conclusion, we presented an imputation workflow in a publicly available R script to impute untargeted metabolomics data. Our simulations provided insight into the effects of sample size, percentage missing, and correlation structure on the accuracy of the two imputation methods.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\3LWNNNU4\\Faquih et al. - 2020 - A Workflow for Missing Values Imputation of Untarg.pdf}
+}
+
+@article{fouad_advanced_2021,
+  title = {Advanced Methods for Missing Values Imputation Based on Similarity Learning},
+  author = {Fouad, Khaled M. and Ismail, Mahmoud M. and Azar, Ahmad Taher and Arafa, Mona M.},
+  year = {2021},
+  month = jul,
+  journal = {PeerJ Computer Science},
+  volume = {7},
+  pages = {e619},
+  issn = {2376-5992},
+  doi = {10.7717/peerj-cs.619},
+  abstract = {The real-world data analysis and processing using data mining techniques often are facing observations that contain missing values. The main challenge of mining datasets is the existence of missing values. The missing values in a dataset should be imputed using the imputation method to improve the data mining methods' accuracy and performance. There are existing techniques that use k-nearest neighbors algorithm for imputing the missing values but determining the appropriate k value can be a challenging task. There are other existing imputation techniques that are based on hard clustering algorithms. When records are not well-separated, as in the case of missing data, hard clustering provides a poor description tool in many cases. In general, the imputation depending on similar records is more accurate than the imputation depending on the entire dataset's records. Improving the similarity among records can result in improving the imputation performance. This paper proposes two numerical missing data imputation methods. A hybrid missing data imputation method is initially proposed, called KI, that incorporates k-nearest neighbors and iterative imputation algorithms. The best set of nearest neighbors for each missing record is discovered through the records similarity by using the k-nearest neighbors algorithm (kNN). To improve the similarity, a suitable k value is estimated automatically for the kNN. The iterative imputation method is then used to impute the missing values of the incomplete records by using the global correlation structure among the selected records. An enhanced hybrid missing data imputation method is then proposed, called FCKI, which is an extension of KI. It integrates fuzzy c-means, k-nearest neighbors, and iterative imputation algorithms to impute the missing data in a dataset. The fuzzy c-means algorithm is selected because the records can belong to multiple clusters at the same time. This can lead to further improvement for similarity. FCKI searches a cluster, instead of the whole dataset, to find the best k-nearest neighbors. It applies two levels of similarity to achieve a higher imputation accuracy. The performance of the proposed imputation techniques is assessed by using fifteen datasets with variant missing ratios for three types of missing data; MCAR, MAR, MNAR. These different missing data types are generated in this work. The datasets with different sizes are used in this paper to validate the model. Therefore, proposed imputation techniques are compared with other missing data imputation methods by means of three measures; the root mean square error (RMSE), the normalized root mean square error (NRMSE), and the mean absolute error (MAE). The results show that the proposed methods achieve better imputation accuracy and require significantly less time than other missing data imputation methods.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\4G5HT9B4\\Fouad et al. - 2021 - Advanced methods for missing values imputation bas.pdf}
+}
+
+@misc{hastie_impute_2023,
+  title = {Impute: Impute: {{Imputation}} for Microarray Data},
+  shorttitle = {Impute},
+  author = {Hastie, Trevor and Tibshirani, Robert and Narasimhan, Balasubramanian and Chu, Gilbert},
+  year = {2023},
+  doi = {10.18129/B9.bioc.impute},
+  abstract = {Imputation for microarray data (currently KNN only)},
+  copyright = {GPL-2},
+  howpublished = {Bioconductor version: Release (3.16)},
+  keywords = {Microarray,Software}
+}
+
+@article{honaker_amelia_2011,
+  title = {Amelia {{II}}: {{A Program}} for {{Missing Data}}},
+  shorttitle = {Amelia {{II}}},
+  author = {Honaker, James and King, Gary and Blackwell, Matthew},
+  year = {2011},
+  month = dec,
+  journal = {Journal of Statistical Software},
+  volume = {45},
+  pages = {1--47},
+  issn = {1548-7660},
+  doi = {10.18637/jss.v045.i07},
+  abstract = {Amelia II is a complete R package for multiple imputation of missing data. The package implements a new expectation-maximization with bootstrapping algorithm that works faster, with larger numbers of variables, and is far easier to use, than various Markov chain Monte Carlo approaches, but gives essentially the same answers. The program also improves imputation models by allowing researchers to put Bayesian priors on individual cell values, thereby including a great deal of potentially valuable and extensive information. It also includes features to accurately impute cross-sectional datasets, individual time series, or sets of time series for different cross-sections. A full set of graphical diagnostics are also available. The program is easy to use, and the simplicity of the algorithm makes it far more robust; both a simple command line and extensive graphical user interface are included.},
+  copyright = {Copyright (c) 2009 James Honaker, Gary King, Matthew Blackwell},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\DR3BWUZS\\Honaker et al. - 2011 - Amelia II A Program for Missing Data.pdf}
+}
+
+@article{jager_benchmark_2021,
+  title = {A {{Benchmark}} for {{Data Imputation Methods}}},
+  author = {J{\"a}ger, Sebastian and Allhorn, Arndt and Bie{\ss}mann, Felix},
+  year = {2021},
+  month = jul,
+  journal = {Frontiers in Big Data},
+  volume = {4},
+  pages = {693674},
+  issn = {2624-909X},
+  doi = {10.3389/fdata.2021.693674},
+  abstract = {With the increasing importance and complexity of data pipelines, data quality became one of the key challenges in modern software applications. The importance of data quality has been recognized beyond the field of data engineering and database management systems (DBMSs). Also, for machine learning (ML) applications, high data quality standards are crucial to ensure robust predictive performance and responsible usage of automated decision making. One of the most frequent data quality problems is missing values. Incomplete datasets can break data pipelines and can have a devastating impact on downstream ML applications when not detected. While statisticians and, more recently, ML researchers have introduced a variety of approaches to impute missing values, comprehensive benchmarks comparing classical and modern imputation approaches under fair and realistic conditions are underrepresented. Here, we aim to fill this gap. We conduct a comprehensive suite of experiments on a large number of datasets with heterogeneous data and realistic missingness conditions, comparing both novel deep learning approaches and classical ML imputation methods when either only test or train and test data are affected by missing data. Each imputation method is evaluated regarding the imputation quality and the impact imputation has on a downstream ML task. Our results provide valuable insights into the performance of a variety of imputation methods under realistic conditions. We hope that our results help researchers and engineers to guide their data preprocessing method selection for automated data quality improvement.},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\L7KE9HD2\\Jäger et al. - 2021 - A Benchmark for Data Imputation Methods.pdf}
+}
+
+@article{jin_missing_2018,
+  title = {Missing Value Imputation for {{LC-MS}} Metabolomics Data by Incorporating Metabolic Network and Adduct Ion Relations},
+  author = {Jin, Zhuxuan and Kang, Jian and Yu, Tianwei},
+  editor = {Wren, Jonathan},
+  year = {2018},
+  month = may,
+  journal = {Bioinformatics},
+  volume = {34},
+  number = {9},
+  pages = {1555--1561},
+  issn = {1367-4803, 1367-4811},
+  doi = {10.1093/bioinformatics/btx816},
+  abstract = {Abstract                            Motivation               Metabolomics data generated from liquid chromatography-mass spectrometry platforms often contain missing values. Existing imputation methods do not consider underlying feature relations and the metabolic network information. As a result, the imputation results may not be optimal.                                         Results               We proposed an imputation algorithm that incorporates the existing metabolic network, adduct ion relations even for unknown compounds, as well as linear and nonlinear associations between feature intensities to build a feature-level network. The algorithm uses support vector regression for missing value imputation based on features in the neighborhood on the network. We compared our proposed method with methods being widely used. As judged by the normalized root mean squared error in real data-based simulations, our proposed methods can achieve better accuracy.                                         Availability and implementation               The R package is available at http://web1.sph.emory.edu/users/tyu8/MINMA.                                         Supplementary information               Supplementary data are available at Bioinformatics online.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\SGQX3ND4\\Jin et al. - 2018 - Missing value imputation for LC-MS metabolomics da.pdf}
+}
+
+@article{josse_missmda_2016,
+  title = {{{missMDA}}: {{A Package}} for {{Handling Missing Values}} in {{Multivariate Data Analysis}}},
+  shorttitle = {{{missMDA}}},
+  author = {Josse, Julie and Husson, Fran{\c c}ois},
+  year = {2016},
+  month = apr,
+  journal = {Journal of Statistical Software},
+  volume = {70},
+  pages = {1--31},
+  issn = {1548-7660},
+  doi = {10.18637/jss.v070.i01},
+  abstract = {We present the R package missMDA which performs principal component methods on incomplete data sets, aiming to obtain scores, loadings and graphical representations despite missing values. Package methods include principal component analysis for continuous variables, multiple correspondence analysis for categorical variables, factorial analysis on mixed data for both continuous and categorical variables, and multiple factor analysis for multi-table data. Furthermore, missMDA can be used to perform single imputation to complete data involving continuous, categorical and mixed variables. A multiple imputation method is also available. In the principal component analysis framework, variability across different imputations is represented by confidence areas around the row and column positions on the graphical outputs. This allows assessment of the credibility of results obtained from incomplete data sets.},
+  copyright = {Copyright (c) 2016 Julie Josse, Fran\c{c}ois Husson},
+  langid = {english},
+  keywords = {missing values,mixed data,multi-table data,multiple correspondence analysis,multiple factor analysis,multiple imputation,principal component analysis,single imputation},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\D58XPIZA\\Josse and Husson - 2016 - missMDA A Package for Handling Missing Values in .pdf}
+}
+
+@misc{jr_hmisc_2023,
+  title = {Hmisc: {{Harrell Miscellaneous}}},
+  shorttitle = {Hmisc},
+  author = {Jr, Frank E. Harrell and several functions {and} maintains latex {functions)}, Charles Dupont (contributed},
+  year = {2023},
+  month = feb,
+  abstract = {Contains many functions useful for data analysis, high-level graphics, utility operations, functions for computing sample size and power, simulation, importing and annotating datasets, imputing missing values, advanced table making, variable clustering, character string manipulation, conversion of R objects to LaTeX and html code, and recoding variables.},
+  copyright = {GPL-2 | GPL-3 [expanded from: GPL ({$\geq$} 2)]},
+  keywords = {Bayesian,ClinicalTrials,Databases,Econometrics,MissingData,ReproducibleResearch}
+}
+
+@article{kokla_random_2019,
+  title = {Random Forest-Based Imputation Outperforms Other Methods for Imputing {{LC-MS}} Metabolomics Data: A Comparative Study},
+  shorttitle = {Random Forest-Based Imputation Outperforms Other Methods for Imputing {{LC-MS}} Metabolomics Data},
+  author = {Kokla, Marietta and Virtanen, Jyrki and Kolehmainen, Marjukka and Paananen, Jussi and Hanhineva, Kati},
+  year = {2019},
+  month = dec,
+  journal = {BMC Bioinformatics},
+  volume = {20},
+  number = {1},
+  pages = {492},
+  issn = {1471-2105},
+  doi = {10.1186/s12859-019-3110-0},
+  abstract = {Abstract                            Background               LC-MS technology makes it possible to measure the relative abundance of numerous molecular features of a sample in single analysis. However, especially non-targeted metabolite profiling approaches generate vast arrays of data that are prone to aberrations such as missing values. No matter the reason for the missing values in the data, coherent and complete data matrix is always a pre-requisite for accurate and reliable statistical analysis. Therefore, there is a need for proper imputation strategies that account for the missingness and reduce the bias in the statistical analysis.                                         Results               Here we present our results after evaluating nine imputation methods in four different percentages of missing values of different origin. The performance of each imputation method was analyzed by Normalized Root Mean Squared Error (NRMSE). We demonstrated that random forest (RF) had the lowest NRMSE in the estimation of missing values for Missing at Random (MAR) and Missing Completely at Random (MCAR). In case of absent values due to Missing Not at Random (MNAR), the left truncated data was best imputed with minimum value imputation. We also tested the different imputation methods for datasets containing missing data of various origin, and RF was the most accurate method in all cases. The results were obtained by repeating the evaluation process 100 times with the use of metabolomics datasets where the missing values were introduced to represent absent data of different origin.                                         Conclusion               Type and rate of missingness affects the performance and suitability of imputation methods. RF-based imputation method performs best in most of the tested scenarios, including combinations of different types and rates of missingness. Therefore, we recommend using random forest-based imputation for imputing missing metabolomics data, and especially in situations where the types of missingness are not known in advance.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\SYCD46FY\\Kokla et al. - 2019 - Random forest-based imputation outperforms other m.pdf}
+}
+
+@article{kowarik_imputation_2016,
+  title = {Imputation with the {{R Package VIM}}},
+  author = {Kowarik, Alexander and Templ, Matthias},
+  year = {2016},
+  month = oct,
+  journal = {Journal of Statistical Software},
+  volume = {74},
+  pages = {1--16},
+  issn = {1548-7660},
+  doi = {10.18637/jss.v074.i07},
+  abstract = {The package VIM (Templ, Alfons, Kowarik, and Prantner 2016) is developed to explore and analyze the structure of missing values in data using visualization methods, to impute these missing values with the built-in imputation methods and to verify the imputation process using visualization tools, as well as to produce high-quality graphics for publications. This article focuses on the different imputation techniques available in the package. Four different imputation methods are currently implemented in VIM, namely hot-deck imputation, k-nearest neighbor imputation, regression imputation and iterative robust model-based imputation (Templ, Kowarik, and Filzmoser 2011). All of these methods are implemented in a flexible manner with many options for customization. Furthermore in this article practical examples are provided to highlight the use of the implemented methods on real-world applications. In addition, the graphical user interface of VIM has been re-implemented from scratch resulting in the package VIMGUI (Schopfhauser, Templ, Alfons, Kowarik, and Prantner 2016) to enable users without extensive R skills to access these imputation and visualization methods.},
+  copyright = {Copyright (c) 2016 Alexander Kowarik, Matthias Templ},
+  langid = {english},
+  keywords = {imputation methods,missing values,R},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\U3QVRCQ3\\Kowarik and Templ - 2016 - Imputation with the R Package VIM.pdf}
+}
+
+@article{kumar_kernel_2021,
+  title = {Kernel Weighted Least Square Approach for Imputing Missing Values of Metabolomics Data},
+  author = {Kumar, Nishith and Hoque, Md Aminul and Sugimoto, Masahiro},
+  year = {2021},
+  month = may,
+  journal = {Scientific Reports},
+  volume = {11},
+  number = {1},
+  pages = {11108},
+  publisher = {{Nature Publishing Group}},
+  issn = {2045-2322},
+  doi = {10.1038/s41598-021-90654-0},
+  abstract = {Mass spectrometry is a modern and sophisticated high-throughput analytical technique that enables large-scale metabolomic analyses. It yields a high-dimensional large-scale matrix (samples\,\texttimes\,metabolites) of quantified data that often contain missing cells in the data matrix as well as outliers that originate for several reasons, including technical and biological sources. Although several missing data imputation techniques are described in the literature, all conventional existing techniques only solve the missing value problems. They do not relieve the problems of outliers. Therefore, outliers in the dataset decrease the accuracy of the imputation. We developed a new kernel weight function-based proposed missing data imputation technique that resolves the problems of missing values and outliers. We evaluated the performance of the proposed method and other conventional and recently developed missing imputation techniques using both artificially generated data and experimentally measured data analysis in both the absence and presence of different rates of outliers. Performances based on both artificial data and real metabolomics data indicate the superiority of our proposed kernel weight-based missing data imputation technique to the existing alternatives. For user convenience, an R package of the proposed kernel weight-based missing value imputation technique was developed, which is available at https://github.com/NishithPaul/tWLSA.},
+  copyright = {2021 The Author(s)},
+  langid = {english},
+  keywords = {Computational biology and bioinformatics,Mathematics and computing},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\GAW3JS5F\\Kumar et al. - 2021 - Kernel weighted least square approach for imputing.pdf}
+}
+
+@article{kumar_new_2018,
+  title = {A {{New Approach}} of {{Outlier-robust Missing Value Imputation}} for {{Metabolomics Data Analysis}}},
+  author = {Kumar, Nishith and Hoque, Md. Aminul and Shahjaman, {\relax Md} and Islam, S.M. Shahinul and Mollah, Md. Nurul Haque},
+  year = {2018},
+  month = dec,
+  journal = {Current Bioinformatics},
+  volume = {14},
+  number = {1},
+  pages = {43--52},
+  issn = {15748936},
+  doi = {10.2174/1574893612666171121154655},
+  abstract = {Background:               Metabolomics data generation and quantification are different from other types of molecular ``omics'' data in bioinformatics. Mass spectrometry (MS) based (gas chromatography mass spectrometry (GC-MS), liquid chromatography mass spectrometry (LC-MS), etc.) metabolomics data frequently contain missing values that make some quantitative analysis complex. Typically metabolomics datasets contain 10\% to 20\% missing values that originate from several reasons, like analytical, computational as well as biological hazard. Imputation of missing values is a very important and interesting issue for further metabolomics data analysis. {$<$}/P{$><$}P{$>$} Objective: This paper introduces a new algorithm for missing value imputation in the presence of outliers for metabolomics data analysis. {$<$}/P{$><$}P{$>$} Method: Currently, the most well known missing value imputation techniques in metabolomics data are knearest neighbours (kNN), random forest (RF) and zero imputation. However, these techniques are sensitive to outliers. In this paper, we have proposed an outlier robust missing imputation technique by minimizing twoway empirical mean absolute error (MAE) loss function for imputing missing values in metabolomics data.                                         Results:               We have investigated the performance of the proposed missing value imputation technique in a comparison of the other traditional imputation techniques using both simulated and real data analysis in the absence and presence of outliers.                                         Conclusion:               Results of both simulated and real data analyses show that the proposed outlier robust missing imputation technique is better performer than the traditional missing imputation methods in both absence and presence of outliers.},
+  langid = {english}
+}
+
+@misc{lazar_imputelcmd_2022,
+  title = {{{imputeLCMD}}: {{A Collection}} of {{Methods}} for {{Left-Censored Missing Data Imputation}}},
+  shorttitle = {{{imputeLCMD}}},
+  author = {Lazar, Cosmin and Burger, Thomas and Wieczorek, Samuel},
+  year = {2022},
+  month = jun,
+  abstract = {A collection of functions for left-censored missing data imputation. Left-censoring is a special case of missing not at random (MNAR) mechanism that generates non-responses in proteomics experiments. The package also contains functions to artificially generate peptide/protein expression data (log-transformed) as random draws from a multivariate Gaussian distribution as well as a function to generate missing data (both randomly and non-randomly). For comparison reasons, the package also contains several wrapper functions for the imputation of non-responses that are missing at random. * New functionality has been added: a hybrid method that allows the imputation of missing values in a more complex scenario where the missing data are both MAR and MNAR.},
+  copyright = {GPL-2 | GPL-3 [expanded from: GPL ({$\geq$} 2)]}
+}
+
+@article{lee_nsknn_2018,
+  title = {{{NS-kNN}}: A Modified k-Nearest Neighbors Approach for Imputing Metabolomics Data},
+  shorttitle = {{{NS-kNN}}},
+  author = {Lee, Justin Y. and Styczynski, Mark P.},
+  year = {2018},
+  month = dec,
+  journal = {Metabolomics},
+  volume = {14},
+  number = {12},
+  pages = {153},
+  issn = {1573-3882, 1573-3890},
+  doi = {10.1007/s11306-018-1451-8},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\X4ZMU89X\\Lee and Styczynski - 2018 - NS-kNN a modified k-nearest neighbors approach fo.pdf}
+}
+
+@article{li_gmsimpute_2020,
+  title = {{{GMSimpute}}: A Generalized Two-Step {{Lasso}} Approach to Impute Missing Values in Label-Free Mass Spectrum Analysis},
+  shorttitle = {{{GMSimpute}}},
+  author = {Li, Qian and Fisher, Kate and Meng, Wenjun and Fang, Bin and Welsh, Eric and Haura, Eric B and Koomen, John M and Eschrich, Steven A and Fridley, Brooke L and Chen, Y Ann},
+  editor = {Wren, Jonathan},
+  year = {2020},
+  month = jan,
+  journal = {Bioinformatics},
+  volume = {36},
+  number = {1},
+  pages = {257--263},
+  issn = {1367-4803, 1367-4811},
+  doi = {10.1093/bioinformatics/btz488},
+  abstract = {Abstract                            Motivation               Missingness in label-free mass spectrometry is inherent to the technology. A computational approach to recover missing values in metabolomics and proteomics datasets is important. Most existing methods are designed under a particular assumption, either missing at random or under the detection limit. If the missing pattern deviates from the assumption, it may lead to biased results. Hence, we investigate the missing patterns in free mass spectrometry data and develop an omnibus approach GMSimpute, to allow effective imputation accommodating different missing patterns.                                         Results               Three proteomics datasets and one metabolomics dataset indicate missing values could be a mixture of abundance-dependent and abundance-independent missingness. We assess the performance of GMSimpute using simulated data (with a wide range of 80 missing patterns) and metabolomics data from the Cancer Genome Atlas breast cancer and clear cell renal cell carcinoma studies. Using Pearson correlation and normalized root mean square errors between the true and imputed abundance, we compare its performance to K-nearest neighbors' type approaches, Random Forest, GSimp, a model-based method implemented in DanteR and minimum values. The results indicate GMSimpute provides higher accuracy in imputation and exhibits stable performance across different missing patterns. In addition, GMSimpute is able to identify the features in downstream differential expression analysis with high accuracy when applied to the Cancer Genome Atlas datasets.                                         Availability and implementation               GMSimpute is on CRAN: https://cran.r-project.org/web/packages/GMSimpute/index.html.                                         Supplementary information               Supplementary data are available at Bioinformatics online.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\WYYZJTB4\\Li et al. - 2020 - GMSimpute a generalized two-step Lasso approach t.pdf}
+}
+
+@article{liaw_classification_2002,
+  title = {Classification and Regression by {{randomForest}}},
+  author = {Liaw, Andy and Wiener, Matthew},
+  year = {2002},
+  journal = {R News},
+  volume = {2},
+  number = {3},
+  pages = {18--22}
+}
+
+@misc{ma_dreamai_2021,
+  title = {{{DreamAI}}: Algorithm for the Imputation of Proteomics Data},
+  shorttitle = {{{DreamAI}}},
+  author = {Ma, Weiping and Kim, Sunkyu and Chowdhury, Shrabanti and Li, Zhi and Yang, Mi and Yoo, Seungyeul and Petralia, Francesca and Jacobsen, Jeremy and Li, Jingyi Jessica and Ge, Xinzhou and Li, Kexin and Yu, Thomas and Calinawan, Anna P. and Edwards, Nathan and Payne, Samuel H. and Boutros, Paul C. and Rodriguez, Henry and Stolovitzky, Gustavo and Zhu, Jun and Kang, Jaewoo and Fenyo, David and {Saez-Rodriguez}, Julio and Wang, Pei},
+  year = {2021},
+  month = may,
+  primaryclass = {New Results},
+  pages = {2020.07.21.214205},
+  publisher = {{bioRxiv}},
+  doi = {10.1101/2020.07.21.214205},
+  abstract = {Deep proteomics profiling using labeled LC-MS/MS experiments has been proven to be powerful to study complex diseases. However, due to the dynamic nature of the discovery mass spectrometry, the generated data contain a substantial fraction of missing values. This poses great challenges for data analyses, as many tools, especially those for high dimensional data, cannot deal with missing values directly. To address this problem, the NCI-CPTAC Proteogenomics DREAM Challenge was carried out to develop effective imputation algorithms for labeled LC-MS/MS proteomics data through crowd learning. The final resulting algorithm, DreamAI, is based on an ensemble of six different imputation methods. The imputation accuracy of DreamAI, as measured by Pearson correlation, is about 15\%-50\% greater than existing tools among less abundant proteins, which are more vulnerable to be missed in proteomics data sets. This new tool notably enhances data analysis capabilities in proteomics research.},
+  archiveprefix = {bioRxiv},
+  chapter = {New Results},
+  copyright = {\textcopyright{} 2021, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution-NonCommercial-NoDerivs 4.0 International), CC BY-NC-ND 4.0, as described at http://creativecommons.org/licenses/by-nc-nd/4.0/},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\ZH9KFPC5\\Ma et al. - 2021 - DreamAI algorithm for the imputation of proteomic.pdf}
+}
+
+@misc{mazumder_softimpute_2021,
+  title = {{{softImpute}}: {{Matrix Completion}} via {{Iterative Soft-Thresholded SVD}}},
+  shorttitle = {{{softImpute}}},
+  author = {Mazumder, Trevor Hastie {and} Rahul},
+  year = {2021},
+  month = may,
+  abstract = {Iterative methods for matrix completion that use nuclear-norm regularization. There are two main approaches.The one approach uses iterative soft-thresholded svds to impute the missing values. The second approach uses alternating least squares. Both have an 'EM' flavor, in that at each iteration the matrix is completed with the current estimate. For large matrices there is a special sparse-matrix class named "Incomplete" that efficiently handles all computations. The package includes procedures for centering and scaling rows, columns or both, and for computing low-rank SVDs on large sparse centered matrices (i.e. principal components).},
+  copyright = {GPL-2},
+  keywords = {MissingData}
+}
+
+@article{miller_discrepancies_2021,
+  title = {Discrepancies in Metabolomic Biomarker Identification from Patient-Derived Lung Cancer Revealed by Combined Variation in Data Pre-Treatment and Imputation Methods},
+  author = {Miller, Hunter A. and Emam, Ramy and Lynch, Chip M. and Bockhorst, Samuel and Frieboes, Hermann B.},
+  year = {2021},
+  month = apr,
+  journal = {Metabolomics},
+  volume = {17},
+  number = {4},
+  pages = {37},
+  issn = {1573-3882, 1573-3890},
+  doi = {10.1007/s11306-021-01787-2},
+  langid = {english}
+}
+
+@misc{nishithpaul_nishithpaul_2021,
+  title = {{{NishithPaul}}/{{missingImputation}}},
+  author = {NishithPaul},
+  year = {2021},
+  month = apr
+}
+
+@article{razzaghi_multilevel_2016,
+  title = {Multilevel {{Weighted Support Vector Machine}} for {{Classification}} on {{Healthcare Data}} with {{Missing Values}}},
+  author = {Razzaghi, Talayeh and Roderick, Oleg and Safro, Ilya and Marko, Nicholas},
+  editor = {Kaderali, Lars},
+  year = {2016},
+  month = may,
+  journal = {PLOS ONE},
+  volume = {11},
+  number = {5},
+  pages = {e0155119},
+  issn = {1932-6203},
+  doi = {10.1371/journal.pone.0155119},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\9Q6DYNQ9\\Razzaghi et al. - 2016 - Multilevel Weighted Support Vector Machine for Cla.pdf}
+}
+
+@article{samad_missing_2022,
+  title = {Missing Value Estimation Using Clustering and Deep Learning within Multiple Imputation Framework},
+  author = {Samad, Manar D. and Abrar, Sakib and Diawara, Norou},
+  year = {2022},
+  month = aug,
+  journal = {Knowledge-Based Systems},
+  volume = {249},
+  pages = {108968},
+  issn = {09507051},
+  doi = {10.1016/j.knosys.2022.108968},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\NDWARJKN\\Samad et al. - 2022 - Missing value estimation using clustering and deep.pdf}
+}
+
+@article{shah_bayesmetab_2019,
+  title = {{{BayesMetab}}: Treatment of Missing Values in Metabolomic Studies Using a {{Bayesian}} Modeling Approach},
+  shorttitle = {{{BayesMetab}}},
+  author = {Shah, Jasmit and Brock, Guy N. and Gaskins, Jeremy},
+  year = {2019},
+  month = dec,
+  journal = {BMC Bioinformatics},
+  volume = {20},
+  number = {S24},
+  pages = {673},
+  issn = {1471-2105},
+  doi = {10.1186/s12859-019-3250-2},
+  abstract = {Abstract                            Background               With the rise of metabolomics, the development of methods to address analytical challenges in the analysis of metabolomics data is of great importance. Missing values (MVs) are pervasive, yet the treatment of MVs can have a substantial impact on downstream statistical analyses. The MVs problem in metabolomics is quite challenging and can arise because the metabolite is not biologically present in the sample, or is present in the sample but at a concentration below the lower limit of detection (LOD), or is present in the sample but undetected due to technical issues related to sample pre-processing steps. The former is considered missing not at random (MNAR) while the latter is an example of missing at random (MAR). Typically, such MVs are substituted by a minimum value, which may lead to severely biased results in downstream analyses.                                         Results               We develop a Bayesian model, called BayesMetab, that systematically accounts for missing values based on a Markov chain Monte Carlo (MCMC) algorithm that incorporates data augmentation by allowing MVs to be due to either truncation below the LOD or other technical reasons unrelated to its abundance. Based on a variety of performance metrics (power for detecting differential abundance, area under the curve, bias and MSE for parameter estimates), our simulation results indicate that BayesMetab outperformed other imputation algorithms when there is a mixture of missingness due to MAR and MNAR. Further, our approach was competitive with other methods tailored specifically to MNAR in situations where missing data were completely MNAR. Applying our approach to an analysis of metabolomics data from a mouse myocardial infarction revealed several statistically significant metabolites not previously identified that were of direct biological relevance to the study.                                         Conclusions               Our findings demonstrate that BayesMetab has improved performance in imputing the missing values and performing statistical inference compared to other current methods when missing values are due to a mixture of MNAR and MAR. Analysis of real metabolomics data strongly suggests this mixture is likely to occur in practice, and thus, it is important to consider an imputation model that accounts for a mixture of missing data types.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\26M7DPCK\\Shah et al. - 2019 - BayesMetab treatment of missing values in metabol.pdf}
+}
+
+@article{shah_distribution_2017,
+  title = {Distribution Based Nearest Neighbor Imputation for Truncated High Dimensional Data with Applications to Pre-Clinical and Clinical Metabolomics Studies},
+  author = {Shah, Jasmit S. and Rai, Shesh N. and DeFilippis, Andrew P. and Hill, Bradford G. and Bhatnagar, Aruni and Brock, Guy N.},
+  year = {2017},
+  month = feb,
+  journal = {BMC Bioinformatics},
+  volume = {18},
+  number = {1},
+  pages = {114},
+  issn = {1471-2105},
+  doi = {10.1186/s12859-017-1547-6},
+  abstract = {High throughput metabolomics makes it possible to measure the relative abundances of numerous metabolites in biological samples, which is useful to many areas of biomedical research. However, missing values (MVs) in metabolomics datasets are common and can arise due to both technical and biological reasons. Typically, such MVs are substituted by a minimum value, which may lead to different results in downstream analyses.},
+  keywords = {High dimensional data,Imputation,K-nearest neighbors,Metabolomics,Missing value,Truncated normal},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\PAMPRSUY\\Shah et al. - 2017 - Distribution based nearest neighbor imputation for.pdf;C\:\\Users\\jarek\\Zotero\\storage\\C6CIVYFB\\s12859-017-1547-6.html}
+}
+
+@article{shahjaman_rmisbeta_2021,
+  title = {{{rMisbeta}}: {{A}} Robust Missing Value Imputation Approach in Transcriptomics and Metabolomics Data},
+  shorttitle = {{{rMisbeta}}},
+  author = {Shahjaman, {\relax Md} and Rahman, Md. Rezanur and Islam, Tania and Auwul, Md. Rabiul and Moni, Mohammad Ali and Mollah, Md. Nurul Haque},
+  year = {2021},
+  month = nov,
+  journal = {Computers in Biology and Medicine},
+  volume = {138},
+  pages = {104911},
+  issn = {00104825},
+  doi = {10.1016/j.compbiomed.2021.104911},
+  langid = {english}
+}
+
+@article{stacklies_pcamethods_2007,
+  title = {{{pcaMethods}}\textemdash a Bioconductor Package Providing {{PCA}} Methods for Incomplete Data},
+  author = {Stacklies, Wolfram and Redestig, Henning and Scholz, Matthias and Walther, Dirk and Selbig, Joachim},
+  year = {2007},
+  month = may,
+  journal = {Bioinformatics},
+  volume = {23},
+  number = {9},
+  pages = {1164--1167},
+  issn = {1367-4803},
+  doi = {10.1093/bioinformatics/btm069},
+  abstract = {Summary:pcaMethods is a Bioconductor compliant library for computing principal component analysis (PCA) on incomplete data sets. The results can be analyzed directly or used to estimate missing values to enable the use of missing value sensitive statistical methods. The package was mainly developed with microarray and metabolite data sets in mind, but can be applied to any other incomplete data set as well.Availability:http://www.bioconductor.orgContact:selbig@mpimp-golm.mpg.deSupplementary information: Please visit our webpage at http://bioinformatics.mpimp-golm.mpg.de/},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\IEBS66II\\Stacklies et al. - 2007 - pcaMethods—a bioconductor package providing PCA me.pdf;C\:\\Users\\jarek\\Zotero\\storage\\59S4I9V4\\272597.html}
+}
+
+@article{stekhoven_missforest_2012,
+  title = {{{MissForest}}\textemdash Non-Parametric Missing Value Imputation for Mixed-Type Data},
+  author = {Stekhoven, Daniel J. and B{\"u}hlmann, Peter},
+  year = {2012},
+  month = jan,
+  journal = {Bioinformatics},
+  volume = {28},
+  number = {1},
+  pages = {112--118},
+  issn = {1367-4803},
+  doi = {10.1093/bioinformatics/btr597},
+  abstract = {Motivation: Modern data acquisition based on high-throughput technology is often facing the problem of missing data. Algorithms commonly used in the analysis of such large-scale data often depend on a complete set. Missing value imputation offers a solution to this problem. However, the majority of available imputation methods are restricted to one type of variable only: continuous or categorical. For mixed-type data, the different types are usually handled separately. Therefore, these methods ignore possible relations between variable types. We propose a non-parametric method which can cope with different types of variables simultaneously.Results: We compare several state of the art methods for the imputation of missing values. We propose and evaluate an iterative imputation method (missForest) based on a random forest. By averaging over many unpruned classification or regression trees, random forest intrinsically constitutes a multiple imputation scheme. Using the built-in out-of-bag error estimates of random forest, we are able to estimate the imputation error without the need of a test set. Evaluation is performed on multiple datasets coming from a diverse selection of biological fields with artificially introduced missing values ranging from 10\% to 30\%. We show that missForest can successfully handle missing values, particularly in datasets including different types of variables. In our comparative study, missForest outperforms other methods of imputation especially in data settings where complex interactions and non-linear relations are suspected. The out-of-bag imputation error estimates of missForest prove to be adequate in all settings. Additionally, missForest exhibits attractive computational efficiency and can cope with high-dimensional data.Availability: The {$\mathbb{R}$} package missForest is freely available from http://stat.ethz.ch/CRAN/.Contact:stekhoven@stat.math.ethz.ch; buhlmann@stat.math.ethz.ch},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\4D7U2ABQ\\Stekhoven and Bühlmann - 2012 - MissForest—non-parametric missing value imputation.pdf;C\:\\Users\\jarek\\Zotero\\storage\\92M6D37F\\219101.html}
+}
+
+@article{su_multiple_2011,
+  title = {Multiple {{Imputation}} with {{Diagnostics}} (Mi) in {{R}}: {{Opening Windows}} into the {{Black Box}}},
+  shorttitle = {Multiple {{Imputation}} with {{Diagnostics}} (Mi) in {{R}}},
+  author = {Su, Yu-Sung and Gelman, Andrew and Hill, Jennifer and Yajima, Masanao},
+  year = {2011},
+  month = dec,
+  journal = {Journal of Statistical Software},
+  volume = {45},
+  pages = {1--31},
+  issn = {1548-7660},
+  doi = {10.18637/jss.v045.i02},
+  abstract = {Our mi package in R has several features that allow the user to get inside the imputation process and evaluate the reasonableness of the resulting models and imputations. These features include: choice of predictors, models, and transformations for chained imputation models; standard and binned residual plots for checking the fit of the conditional distributions used for imputation; and plots for comparing the distributions of observed and imputed data. In addition, we use Bayesian models and weakly informative prior distributions to construct more stable estimates of imputation models. Our goal is to have a demonstration package that (a) avoids many of the practical problems that arise with existing multivariate imputation programs, and (b) demonstrates state-of-the-art diagnostics that can be applied more generally and can be incorporated into the software of others.},
+  copyright = {Copyright (c) 2009 Yu-Sung Su, Andrew Gelman, Jennifer Hill, Masanao Yajima},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\ABXCU9IT\\Su et al. - 2011 - Multiple Imputation with Diagnostics (mi) in R Op.pdf}
+}
+
+@article{taylor_comparison_2022,
+  title = {Comparison of Imputation and Imputation-Free Methods for Statistical Analysis of Mass Spectrometry Data with Missing Data},
+  author = {Taylor, Sandra and Ponzini, Matthew and Wilson, Machelle and Kim, Kyoungmi},
+  year = {2022},
+  month = jan,
+  journal = {Briefings in Bioinformatics},
+  volume = {23},
+  number = {1},
+  pages = {bbab353},
+  issn = {1467-5463, 1477-4054},
+  doi = {10.1093/bib/bbab353},
+  abstract = {Abstract             Missing values are common in high-throughput mass spectrometry data. Two strategies are available to address missing values: (i) eliminate or impute the missing values and apply statistical methods that require complete data and (ii) use statistical methods that specifically account for missing values without imputation (imputation-free methods). This study reviews the effect of sample size and percentage of missing values on statistical inference for multiple methods under these two strategies. With increasing missingness, the ability of imputation and imputation-free methods to identify differentially and non-differentially regulated compounds in a two-group comparison study declined. Random forest and k-nearest neighbor imputation combined with a Wilcoxon test performed well in statistical testing for up to 50\% missingness with little bias in estimating the effect size. Quantile regression imputation accompanied with a Wilcoxon test also had good statistical testing outcomes but substantially distorted the difference in means between groups. None of the imputation-free methods performed consistently better for statistical testing than imputation methods.},
+  langid = {english}
+}
+
+@article{taylor_effects_2016,
+  title = {Effects of Imputation on Correlation: Implications for Analysis of Mass Spectrometry Data from Multiple Biological Matrices},
+  shorttitle = {Effects of Imputation on Correlation},
+  author = {Taylor, Sandra L. and Ruhaak, L. Renee and Kelly, Karen and Weiss, Robert H. and Kim, Kyoungmi},
+  year = {2016},
+  month = feb,
+  journal = {Briefings in Bioinformatics},
+  pages = {bbw010},
+  issn = {1467-5463, 1477-4054},
+  doi = {10.1093/bib/bbw010},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\HYU8P9XL\\Taylor et al. - 2016 - Effects of imputation on correlation implications.pdf}
+}
+
+@misc{varga_misscompare_2020,
+  title = {{{missCompare}}: {{Intuitive Missing Data Imputation Framework}}},
+  shorttitle = {{{missCompare}}},
+  author = {Varga, Tibor V. and Westergaard, David},
+  year = {2020},
+  month = dec,
+  abstract = {Offers a convenient pipeline to test and compare various missing data imputation algorithms on simulated and real data. These include simpler methods, such as mean and median imputation and random replacement, but also include more sophisticated algorithms already implemented in popular R packages, such as 'mi', described by Su et al. (2011) {$<$}doi:10.18637/jss.v045.i02{$>$}; 'mice', described by van Buuren and Groothuis-Oudshoorn (2011) {$<$}doi:10.18637/jss.v045.i03{$>$}; 'missForest', described by Stekhoven and Buhlmann (2012) {$<$}doi:10.1093/bioinformatics/btr597{$>$}; 'missMDA', described by Josse and Husson (2016) {$<$}doi:10.18637/jss.v070.i01{$>$}; and 'pcaMethods', described by Stacklies et al. (2007) {$<$}doi:10.1093/bioinformatics/btm069{$>$}. The central assumption behind 'missCompare' is that structurally different datasets (e.g. larger datasets with a large number of correlated variables vs. smaller datasets with non correlated variables) will benefit differently from different missing data imputation algorithms. 'missCompare' takes measurements of your dataset and sets up a sandbox to try a curated list of standard and sophisticated missing data imputation algorithms and compares them assuming custom missingness patterns. 'missCompare' will also impute your real-life dataset for you after the selection of the best performing algorithm in the simulations. The package also provides various post-imputation diagnostics and visualizations to help you assess imputation performance.},
+  copyright = {MIT + file LICENSE},
+  keywords = {MissingData}
+}
+
+@article{wei_gsimp_2018,
+  title = {{{GSimp}}: {{A Gibbs}} Sampler Based Left-Censored Missing Value Imputation Approach for Metabolomics Studies},
+  shorttitle = {{{GSimp}}},
+  author = {Wei, Runmin and Wang, Jingye and Jia, Erik and Chen, Tianlu and Ni, Yan and Jia, Wei},
+  year = {2018},
+  month = jan,
+  journal = {PLOS Computational Biology},
+  volume = {14},
+  number = {1},
+  pages = {e1005973},
+  publisher = {{Public Library of Science}},
+  issn = {1553-7358},
+  doi = {10.1371/journal.pcbi.1005973},
+  abstract = {Left-censored missing values commonly exist in targeted metabolomics datasets and can be considered as missing not at random (MNAR). Improper data processing procedures for missing values will cause adverse impacts on subsequent statistical analyses. However, few imputation methods have been developed and applied to the situation of MNAR in the field of metabolomics. Thus, a practical left-censored missing value imputation method is urgently needed. We developed an iterative Gibbs sampler based left-censored missing value imputation approach (GSimp). We compared GSimp with other three imputation methods on two real-world targeted metabolomics datasets and one simulation dataset using our imputation evaluation pipeline. The results show that GSimp outperforms other imputation methods in terms of imputation accuracy, observation distribution, univariate and multivariate analyses, and statistical sensitivity. Additionally, a parallel version of GSimp was developed for dealing with large scale metabolomics datasets. The R code for GSimp, evaluation pipeline, tutorial, real-world and simulated targeted metabolomics datasets are available at: https://github.com/WandeRum/GSimp.},
+  langid = {english},
+  keywords = {Data processing,Forecasting,Metabolomics,Multivariate analysis,Normal distribution,Simulation and modeling,Singular value decomposition,Statistical data},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\XE4RES2K\\Wei et al. - 2018 - GSimp A Gibbs sampler based left-censored missing.pdf}
+}
+
+@article{wei_missing_2018,
+  title = {Missing {{Value Imputation Approach}} for {{Mass Spectrometry-based Metabolomics Data}}},
+  author = {Wei, Runmin and Wang, Jingye and Su, Mingming and Jia, Erik and Chen, Shaoqiu and Chen, Tianlu and Ni, Yan},
+  year = {2018},
+  month = jan,
+  journal = {Scientific Reports},
+  volume = {8},
+  number = {1},
+  pages = {663},
+  issn = {2045-2322},
+  doi = {10.1038/s41598-017-19120-0},
+  abstract = {Abstract                            Missing values exist widely in mass-spectrometry (MS) based metabolomics data. Various methods have been applied for handling missing values, but the selection can significantly affect following data analyses. Typically, there are three types of missing values, missing not at random (MNAR), missing at random (MAR), and missing completely at random (MCAR). Our study comprehensively compared eight imputation methods (zero, half minimum (HM), mean, median, random forest (RF), singular value decomposition (SVD), k-nearest neighbors (kNN), and quantile regression imputation of left-censored data (QRILC)) for different types of missing values using four metabolomics datasets. Normalized root mean squared error (NRMSE) and NRMSE-based sum of ranks (SOR) were applied to evaluate imputation accuracy. Principal component analysis (PCA)/partial least squares (PLS)-Procrustes analysis were used to evaluate the overall sample distribution. Student's               t               -test followed by correlation analysis was conducted to evaluate the effects on univariate statistics. Our findings demonstrated that RF performed the best for MCAR/MAR and QRILC was the favored one for left-censored MNAR. Finally, we proposed a comprehensive strategy and developed a public-accessible web-tool for the application of missing value imputation in metabolomics (               https://metabolomics.cc.hawaii.edu/software/MetImp/               ).},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\BCYJTA9L\\Wei et al. - 2018 - Missing Value Imputation Approach for Mass Spectro.pdf}
+}
+
+@article{wilson_imputation_2022,
+  title = {Imputation of {{Missing Values}} for {{Multi-Biospecimen Metabolomics Studies}}: {{Bias}} and {{Effects}} on {{Statistical Validity}}},
+  shorttitle = {Imputation of {{Missing Values}} for {{Multi-Biospecimen Metabolomics Studies}}},
+  author = {Wilson, Machelle D. and Ponzini, Matthew D. and Taylor, Sandra L. and Kim, Kyoungmi},
+  year = {2022},
+  month = jul,
+  journal = {Metabolites},
+  volume = {12},
+  number = {7},
+  pages = {671},
+  issn = {2218-1989},
+  doi = {10.3390/metabo12070671},
+  abstract = {The analysis of high-throughput metabolomics mass spectrometry data across multiple biological sample types (biospecimens) poses challenges due to missing data. During differential abundance analysis, dropping samples with missing values can lead to severe loss of data as well as biased results in group comparisons and effect size estimates. However, the imputation of missing data (the process of replacing missing data with estimated values such as a mean) may compromise the inherent intra-subject correlation of a metabolite across multiple biospecimens from the same subject, which in turn may compromise the efficacy of the statistical analysis of differential metabolites in biomarker discovery. We investigated imputation strategies when considering multiple biospecimens from the same subject. We compared a novel, but simple, approach that consists of combining the two biospecimen data matrices (rows and columns of subjects and metabolites) and imputes the two biospecimen data matrices together to an approach that imputes each biospecimen data matrix separately. We then compared the bias in the estimation of the intra-subject multi-specimen correlation and its effects on the validity of statistical significance tests between two approaches. The combined approach to multi-biospecimen studies has not been evaluated previously even though it is intuitive and easy to implement. We examine these two approaches for five imputation methods: random forest, k nearest neighbor, expectation-maximization with bootstrap, quantile regression, and half the minimum observed value. Combining the biospecimen data matrices for imputation did not greatly increase efficacy in conserving the correlation structure or improving accuracy in the statistical conclusions for most of the methods examined. Random forest tended to outperform the other methods in all performance metrics, except specificity.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\ESFJ8BF4\\Wilson et al. - 2022 - Imputation of Missing Values for Multi-Biospecimen.pdf}
+}
+
+@article{xu_deep_2020,
+  title = {A Deep Learning\textendash Based, Unsupervised Method to Impute Missing Values in Electronic Health Records for Improved Patient Management},
+  author = {Xu, Da and Hu, Paul Jen-Hwa and Huang, Ting-Shuo and Fang, Xiao and Hsu, Chih-Chin},
+  year = {2020},
+  month = nov,
+  journal = {Journal of Biomedical Informatics},
+  volume = {111},
+  pages = {103576},
+  issn = {15320464},
+  doi = {10.1016/j.jbi.2020.103576},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\RJRAZXAJ\\Xu et al. - 2020 - A deep learning–based, unsupervised method to impu.pdf}
+}
+
+@article{xu_nmfbased_2021,
+  title = {{{NMF-Based Approach}} for {{Missing Values Imputation}} of {{Mass Spectrometry Metabolomics Data}}},
+  author = {Xu, Jingjing and Wang, Yuanshan and Xu, Xiangnan and Cheng, Kian-Kai and Raftery, Daniel and Dong, Jiyang},
+  year = {2021},
+  month = sep,
+  journal = {Molecules},
+  volume = {26},
+  number = {19},
+  pages = {5787},
+  issn = {1420-3049},
+  doi = {10.3390/molecules26195787},
+  abstract = {In mass spectrometry (MS)-based metabolomics, missing values (NAs) may be due to different causes, including sample heterogeneity, ion suppression, spectral overlap, inappropriate data processing, and instrumental errors. Although a number of methodologies have been applied to handle NAs, NA imputation remains a challenging problem. Here, we propose a non-negative matrix factorization (NMF)-based method for NA imputation in MS-based metabolomics data, which makes use of both global and local information of the data. The proposed method was compared with three commonly used methods: k-nearest neighbors (kNN), random forest (RF), and outlier-robust (ORI) missing values imputation. These methods were evaluated from the perspectives of accuracy of imputation, retrieval of data structures, and rank of imputation superiority. The experimental results showed that the NMF-based method is well-adapted to various cases of data missingness and the presence of outliers in MS-based metabolic profiles. It outperformed kNN and ORI and showed results comparable with the RF method. Furthermore, the NMF method is more robust and less susceptible to outliers as compared with the RF method. The proposed NMF-based scheme may serve as an alternative NA imputation method which may facilitate biological interpretations of metabolomics data.},
+  langid = {english},
+  file = {C\:\\Users\\jarek\\Zotero\\storage\\B5B2FJKM\\Xu et al. - 2021 - NMF-Based Approach for Missing Values Imputation o.pdf}
+}
