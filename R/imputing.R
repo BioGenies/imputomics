@@ -3,6 +3,7 @@
 source("R/Trunc_KNN.R")
 source("R/GSimp_clean.R")
 source('R/rmiMAE.R')
+source('R/ImputationWithNetwork.R')
 
 #' Helper function.
 #' Imputes constant value.
