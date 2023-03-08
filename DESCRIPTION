@@ -55,11 +55,17 @@ Imports:
     softImpute,
     stats,
     utils,
-    VIM
+    VIM,
+    Rdpack
 Suggests:
     knitr,
     testthat,
     tWLSA,
     PEMM,
+    DreamAI,
+    missCompare,
+    matrixStats,
+    randomForest,
     spelling
 Language: en-US
+RdMacros: Rdpack

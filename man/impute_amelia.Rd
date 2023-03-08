@@ -24,6 +24,9 @@ impute_amelia(idf)
 }
 
 }
+\references{
+\insertRef{honaker_amelia_2011}{imputomics}
+}
 \seealso{
 \code{\link[Amelia:amelia]{Amelia::amelia()}}
 }

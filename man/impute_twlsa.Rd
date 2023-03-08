@@ -27,6 +27,9 @@ impute_twlsa(idf)
 }
 
 }
+\references{
+\insertRef{kumar_kernel_2021}{imputomics}
+}
 \seealso{
 \code{\link[tWLSA:wlsMisImp]{tWLSA::wlsMisImp()}}
 }

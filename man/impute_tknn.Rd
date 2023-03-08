@@ -27,3 +27,6 @@ impute_tknn(idf)
 }
 
 }
+\references{
+\insertRef{shah_distribution_2017}{imputomics}
+}

@@ -12,3 +12,4 @@ compute_col_halfmin(x)
 \description{
 Helper function. Half-minimum imputation.
 }
+\keyword{internal}

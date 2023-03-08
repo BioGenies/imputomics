@@ -13,10 +13,8 @@ impute_vim_knn(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[VIM:kNN]{VIM::kNN()}}.
 }
 \description{
-K Nearest Neighbors.
-}
-\details{
-A function to replace \code{NA} in the data frame by \code{\link[VIM:kNN]{VIM::kNN()}}.
+K Nearest Neighbors. A function to replace \code{NA} in the data frame by
+\code{\link[VIM:kNN]{VIM::kNN()}}.
 }
 \examples{
 \dontrun{
@@ -26,6 +24,9 @@ values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_vim_knn(idf)
 }
 
+}
+\references{
+\insertRef{kowarik_imputation_2016}{imputomics}
 }
 \seealso{
 \code{\link[VIM:kNN]{VIM::kNN()}}

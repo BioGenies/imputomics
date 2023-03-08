@@ -14,10 +14,12 @@ GSIMP, RHM, RMEAN, RMEDIAN, RMIN, RZERO, RRF, RGSIMP, RQRILC, RBPCA, min,
 halfmin, mean, median, zero}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}} or \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}.
+A \code{data.frame} with imputed values by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
+or \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}.
 }
 \description{
-A function to replace \code{NA} in the data frame by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}} or \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}.
+A function to replace \code{NA} in the data frame by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
+or \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}.
 }
 \examples{
 \dontrun{
@@ -28,6 +30,9 @@ impute_MetabImpute(idf, method = "median")
 impute_MetabImpute(idf, method = c("median", "RF"))
 }
 
+}
+\references{
+\insertRef{davis_addressing_2022}{imputomics}
 }
 \seealso{
 \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}, \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}]

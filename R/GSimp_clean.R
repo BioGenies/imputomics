@@ -66,7 +66,7 @@ miss_init <- function(miss_data,
             })
           },
           qrilc = {
-            init_data <- impute.QRILC(miss_data)[[1]]
+            init_data <- imputeLCMD::impute.QRILC(miss_data)[[1]]
           }
   )
   return(init_data)

@@ -10,13 +10,15 @@ impute_irmi(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi()}}.
+A \code{data.frame} with imputed values by
+\code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi()}}.
 }
 \description{
 Iterative Robust Model-Based Imputation.
 }
 \details{
-A function to replace \code{NA} in the data frame by \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi()}}.
+A function to replace \code{NA} in the data frame by
+\code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi()}}.
 }
 \examples{
 \dontrun{
@@ -26,6 +28,9 @@ values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_irmi(idf)
 }
 
+}
+\references{
+\insertRef{borowski_nadia_2022}{imputomics}
 }
 \seealso{
 \code{\link[NADIA:autotune_VIM_Irmi]{NADIA::autotune_VIM_Irmi()}}

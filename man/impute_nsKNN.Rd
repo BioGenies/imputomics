@@ -26,6 +26,9 @@ impute_nsKNN(idf)
 }
 
 }
+\references{
+\insertRef{dekermanjian_mechanismaware_2022}{imputomics}
+}
 \seealso{
 \code{\link[MAI:MAI]{MAI::MAI()}}
 }

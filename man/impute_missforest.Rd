@@ -10,10 +10,12 @@ impute_missforest(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[missForest:missForest]{missForest::missForest()}}.
+A \code{data.frame} with imputed values by
+\code{\link[missForest:missForest]{missForest::missForest()}}.
 }
 \description{
-A function to replace \code{NA} in the data frame by \code{\link[missForest:missForest]{missForest::missForest()}}.
+A function to replace \code{NA} in the data frame by
+\code{\link[missForest:missForest]{missForest::missForest()}}.
 }
 \examples{
 \dontrun{
@@ -23,6 +25,9 @@ values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_missforest(idf)
 }
 
+}
+\references{
+\insertRef{stekhoven_missforest_2012}{imputomics}
 }
 \seealso{
 \code{\link[missForest:missForest]{missForest::missForest()}}
