@@ -7,14 +7,16 @@
 safe_impute(imputing_function, missing_data_set)
 }
 \arguments{
-\item{imputing_function}{a function (imputation method) that takes missing_data_set as an input}
+\item{imputing_function}{a function (imputation method) that takes
+missing_data_set as an input}
 
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values or the \strong{missing_data_set}
-if the imputing function failed to converge.
+A \code{data.frame} with imputed values or the
+\strong{missing_data_set} if the imputing function failed to converge.
 }
 \description{
 Convert an imputing function into its safe version.
 }
+\keyword{internal}

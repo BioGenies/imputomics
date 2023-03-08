@@ -25,6 +25,7 @@ idf[sample(1L:100, round(4, 0))] <- NA
 idf <- data.frame(matrix(idf, nrow = 10))
 impute_tknn(idf)
 }
+
 }
 \references{
 \insertRef{shah_distribution_2017}{imputomics}

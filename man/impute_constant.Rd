@@ -16,3 +16,4 @@ impute_constant(missing_data_set, constant_value)
 Helper function.
 Imputes constant value.
 }
+\keyword{internal}

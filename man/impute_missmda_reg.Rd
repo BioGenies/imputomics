@@ -10,13 +10,15 @@ impute_missmda_reg(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}} with method = "regularized".
+A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}}
+with method = "regularized".
 }
 \description{
 PCA method with regularized argument.
 }
 \details{
-A function to replace \code{NA} in the data frame by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}} with method = "regularized".
+A function to replace \code{NA} in the data frame by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}}
+with method = "regularized".
 }
 \examples{
 \dontrun{
@@ -25,6 +27,7 @@ values2 = rep(c(21, 32, 48, NA, 59), 10),
 values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_missmda_reg(idf)
 }
+
 }
 \references{
 \insertRef{josse_missmda_2016}{imputomics}

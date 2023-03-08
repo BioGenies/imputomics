@@ -10,20 +10,24 @@ impute_ppca(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with method = "ppca".
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with
+method = "ppca".
 }
 \description{
 Probabilistic Principal Component Analysis.
 }
 \details{
-A function to replace \code{NA} in the data frame by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with method = "ppca".
+A function to replace \code{NA} in the data frame by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with
+method = "ppca".
 }
 \examples{
+
 \dontrun{
 idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
 values2 = c(21, 32, 48, NA, 59))
 impute_ppca(idf)
 }
+
 }
 \references{
 \insertRef{stacklies_pcamethods_2007}{imputomics}

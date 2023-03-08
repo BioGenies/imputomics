@@ -26,6 +26,7 @@ values3 = rep(c(37, NA, 33, 44, 32), 10))
 set.seed(2137)
 impute_knn(idf)
 }
+
 }
 \references{
 \insertRef{hastie_impute_2023}{imputomics}

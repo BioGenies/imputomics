@@ -62,6 +62,10 @@ Suggests:
     testthat,
     tWLSA,
     PEMM,
+    DreamAI,
+    missCompare,
+    matrixStats,
+    randomForest,
     spelling
 Language: en-US
 RdMacros: Rdpack
