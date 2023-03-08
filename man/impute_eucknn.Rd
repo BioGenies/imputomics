@@ -20,8 +20,9 @@ A function to replace \code{NA} in the data frame based on
 \dontrun{
 idf <- matrix(rnorm(10000), ncol =  50)
 idf[runif(10000) < 0.1] <- NA
-impute_KNNEuc(idf)
+impute_eucknn(idf)
 }
+
 }
 \references{
 \insertRef{shah_distribution_2017}{imputomics}

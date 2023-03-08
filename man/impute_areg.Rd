@@ -13,7 +13,8 @@ impute_areg(missing_data_set)
 A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.
 }
 \description{
-Multiple Imputation using Additive Regression, Bootstrapping, and Predictive Mean Matching.
+Multiple Imputation using Additive Regression, Bootstrapping, and Predictive
+Mean Matching.
 }
 \details{
 A function to replace \code{NA} in the data frame by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.

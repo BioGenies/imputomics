@@ -10,13 +10,15 @@ impute_svd(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with method = "svdImpute".
+A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
+with method = "svdImpute".
 }
 \description{
 Singular Value Decomposition.
 }
 \details{
-A function to replace \code{NA} in the data frame by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with method = "svdImpute".
+A function to replace \code{NA} in the data frame by \code{\link[pcaMethods:pca]{pcaMethods::pca()}}
+with method = "svdImpute".
 }
 \examples{
 \dontrun{
