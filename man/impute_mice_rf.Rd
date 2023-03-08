@@ -16,8 +16,8 @@ A \code{data.frame} with imputed values by rf used \code{\link[mice:mice]{mice::
 Multiple Imputation by Chained Equations.
 }
 \details{
-A function to replace \code{NA} in the data frame by random forest imputations
-(rf) used \code{\link[mice:mice]{mice::mice()}}.
+A function to replace \code{NA} in the data frame by random forest
+imputations (rf) used \code{\link[mice:mice]{mice::mice()}}.
 }
 \examples{
 \dontrun{

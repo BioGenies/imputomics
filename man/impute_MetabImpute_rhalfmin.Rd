@@ -11,7 +11,7 @@ impute_MetabImpute_rhalfmin(missing_data_set)
 }
 \value{
 A \code{data.frame} with imputed values of replicate half-minimum
-by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
+by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
 }
 \description{
 A function to replace \code{NA} in the data frame by replicate half-minimum

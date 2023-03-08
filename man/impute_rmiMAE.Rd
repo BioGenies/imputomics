@@ -14,7 +14,7 @@ A \code{data.frame} with imputed values by rmiMAE.
 }
 \description{
 A function to replace \code{NA} in the data frame by outlier robust missing
-imputation technique by minimizing twoway empirical mean absolute error.
+imputation technique by minimizing two-way empirical mean absolute error.
 }
 \examples{
 \dontrun{

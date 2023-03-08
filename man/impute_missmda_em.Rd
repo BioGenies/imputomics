@@ -10,13 +10,15 @@ impute_missmda_em(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}} with method = "em".
+A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}}
+with method = "em".
 }
 \description{
 PCA method with EM argument.
 }
 \details{
-A function to replace \code{NA} in the data frame by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}} with method = "em".
+A function to replace \code{NA} in the data frame by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}}
+with method = "em".
 }
 \examples{
 \dontrun{
@@ -26,6 +28,9 @@ values3 = rep(c(37, NA, 33, 44, 32), 10))
 impute_missmda_em(idf)
 }
 
+}
+\references{
+\insertRef{josse_missmda_2016}{imputomics}
 }
 \seealso{
 \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}}

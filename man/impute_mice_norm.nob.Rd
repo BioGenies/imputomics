@@ -10,14 +10,15 @@ impute_mice_norm.nob(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by norm.nob used \code{\link[mice:mice]{mice::mice()}}.
+A \code{data.frame} with imputed values by norm.nob used
+\code{\link[mice:mice]{mice::mice()}}.
 }
 \description{
 Multiple Imputation by Chained Equations.
 }
 \details{
-A function to replace \code{NA} in the data frame by linear regression ignoring
-model error (norm.nob) used \code{\link[mice:mice]{mice::mice()}}.
+A function to replace \code{NA} in the data frame by linear regression
+ignoring model error (norm.nob) used \code{\link[mice:mice]{mice::mice()}}.
 }
 \examples{
 \dontrun{

@@ -10,10 +10,12 @@ impute_MetabImpute_min(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values of minimum by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
+A \code{data.frame} with imputed values of minimum by
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }
 \description{
-A function to replace \code{NA} in the data frame by minimum from \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
+A function to replace \code{NA} in the data frame by minimum from
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }
 \examples{
 \dontrun{

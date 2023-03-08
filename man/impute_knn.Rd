@@ -28,6 +28,9 @@ impute_knn(idf)
 }
 
 }
+\references{
+\insertRef{hastie_impute_2023}{imputomics}
+}
 \seealso{
 \code{\link[impute:impute.knn]{impute::impute.knn()}}
 }

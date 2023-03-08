@@ -24,6 +24,9 @@ impute_mi(idf)
 }
 
 }
+\references{
+\insertRef{su_multiple_2011}{imputomics}
+}
 \seealso{
 \code{\link[mi:04mi]{mi::mi()}}
 }

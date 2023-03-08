@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_randomForest}
 \alias{impute_randomForest}
-\title{\strong{Random Fprest} imputation.}
+\title{\strong{Random Forest} imputation.}
 \usage{
 impute_randomForest(missing_data_set)
 }
@@ -13,7 +13,8 @@ impute_randomForest(missing_data_set)
 A \code{data.frame} with imputed values by randomForest.
 }
 \description{
-A function to replace \code{NA} in the data frame by \code{\link[randomForest:rfImpute]{randomForest::rfImpute()}}.
+A function to replace \code{NA} in the data frame by
+\code{\link[randomForest:rfImpute]{randomForest::rfImpute()}}.
 }
 \examples{
 \dontrun{

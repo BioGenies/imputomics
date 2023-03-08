@@ -12,3 +12,4 @@ compute_col_random(x)
 \description{
 Helper function. Random imputation.
 }
+\keyword{internal}

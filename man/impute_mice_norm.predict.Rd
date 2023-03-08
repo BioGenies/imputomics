@@ -10,7 +10,8 @@ impute_mice_norm.predict(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values by norm.predict used \code{\link[mice:mice]{mice::mice()}}.
+A \code{data.frame} with imputed values by norm.predict used
+\code{\link[mice:mice]{mice::mice()}}.
 }
 \description{
 Multiple Imputation by Chained Equations.

@@ -29,6 +29,9 @@ impute_mice_pmm(idf)
 }
 
 }
+\references{
+\insertRef{buuren_mice_2011}{imputomics}
+}
 \seealso{
 \code{\link[mice:mice]{mice::mice()}}, \code{\link[mice:mice.impute.pmm]{mice::mice.impute.pmm()}}
 }

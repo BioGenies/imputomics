@@ -24,6 +24,9 @@ impute_eucknn(idf)
 }
 
 }
+\references{
+\insertRef{shah_distribution_2017}{imputomics}
+}
 \seealso{
 \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}
 }

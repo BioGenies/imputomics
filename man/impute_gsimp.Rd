@@ -27,3 +27,6 @@ impute_gsimp(idf)
 }
 
 }
+\references{
+\insertRef{wei_gsimp_2018}{imputomics}
+}

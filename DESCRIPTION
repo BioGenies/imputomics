@@ -1,36 +1,39 @@
 Package: imputomics
 Type: Package
-Title: Compare imputation times and quality of missing values for ‘omics’ data
+Title: The Biggest Collection of Methods of Missing Values Imputation for ‘Omics’ Data
 Version: 0.1.0
 Author: c(
           person("Michal", "Burdukiewicz",
-    email = "michalburdukiewicz@gmail.com",
-    comment = c(ORCID = "0000-0001-8926-582X"),
-    role = c("cre", "aut")),
-           person("Krystyna Grzesiak", 
-           email = "krygrz11@gmail.com", 
-           comment = c(ORCID = "0000-0002-3515-4320"),
-           role = c("cre", "ctb")),
-           person("Dominik Nowakowski", 
-           email = "nowakowskisf@gmail.com", 
-           comment = c(ORCID = ""),
-           role = c("cre", "ctb")),
-           (person("Jaroslaw", "Chilimoniuk", 
-           email = "jaroslaw.chilimoniuk@gmail.com", 
-           comment = c(ORCID = "0000-0001-5467-018X"),
-           role = c("cre", "ctb"))
-           )
+               email = "michalburdukiewicz@gmail.com",
+               comment = c(ORCID = "0000-0001-8926-582X"),
+               role = c("cre", "aut")),
+          person("Krystyna Grzesiak", 
+               email = "krygrz11@gmail.com", 
+               comment = c(ORCID = "0000-0003-2581-7722"),
+               role = c("cre", "ctb")),
+          person("Dominik Nowakowski", 
+               email = "nowakowskisf@gmail.com", 
+               comment = c(ORCID = "0000-0002-3515-4320"),
+               role = c("cre", "ctb")),
+          person("Jaroslaw", "Chilimoniuk", 
+               email = "jaroslaw.chilimoniuk@gmail.com", 
+               comment = c(ORCID = "0000-0001-5467-018X"),
+               role = c("cre", "ctb"))
+        )
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: Package description, what it does.
+Description: Offers a range of methods for simulating and imputing missing values 
+             in different types of omics data such as genomics, transcriptomics, 
+             proteomics, and metabolomics. Provides tools for comparing and 
+             evaluating the performance of imputation methods in the terms of 
+             accuracy and computation time.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 VignetteBuilder: knitr
 Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/michbur/metabolomics-missing-value-imputation
-BugReports: https://github.com/michbur/metabolomics-missing-value-imputation/issues
+URL: https://github.com/michbur/imputomics
+BugReports: https://github.com/michbur/imputomics/issues
 Imports:
     abind,
     Amelia,
@@ -52,14 +55,17 @@ Imports:
     softImpute,
     stats,
     utils,
-    VIM
+    VIM,
+    Rdpack
 Suggests:
     knitr,
     testthat,
     tWLSA,
     PEMM,
-    spelling,
     DreamAI,
     missCompare,
     matrixStats,
-    randomForest
+    randomForest,
+    spelling
+Language: en-US
+RdMacros: Rdpack

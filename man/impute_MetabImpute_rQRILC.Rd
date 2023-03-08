@@ -10,10 +10,12 @@ impute_MetabImpute_rQRILC(missing_data_set)
 \item{missing_data_set}{\code{data.frame} with missing data.}
 }
 \value{
-A \code{data.frame} with imputed values of replicate QRILC by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
+A \code{data.frame} with imputed values of replicate QRILC by
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }
 \description{
-A function to replace \code{NA} in the data frame by replicate QRILC from \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
+A function to replace \code{NA} in the data frame by replicate QRILC from
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }
 \examples{
 \dontrun{

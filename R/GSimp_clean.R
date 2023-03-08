@@ -10,15 +10,20 @@
 #require(doParallel)
 #require(MASS)
 
-## Draw n samples from a truncated normal distribution N(mu, std^2|[lo, hi]) ##
-rnorm_trunc <- function (n, mu, std, lo=-Inf, hi=Inf) {
+#' Supplementary function for GSimp
+#' Draw n samples from a truncated normal distribution \code{N(mu, std^2|lo, hi)}
+#'
+#' @inheritParams GS_impute_clean
+#'
+#' @keywords internal
+
+rnorm_trunc <- function (n, mu, std, lo = -Inf, hi = Inf) {
   p_lo <- pnorm(lo, mu, std)
   p_hi <- pnorm(hi, mu, std)
   p_hi[p_hi < .01] <- .01
   u <- runif(n, p_lo, p_hi)
   return(qnorm(u, mu, std))
 }
-
 
 #' Supplementary function for GSimp
 #' Initialize the missing data
@@ -27,7 +32,9 @@ rnorm_trunc <- function (n, mu, std, lo=-Inf, hi=Inf) {
 #' @inheritParams GS_impute_clean
 #'
 #' @keywords internal
-miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
+
+miss_init <- function(miss_data,
+                      method = c('lsym', 'qrilc', 'rsym')[1]) {
   init_data <- miss_data
   switch (method,
           lsym = {
@@ -37,7 +44,10 @@ miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
               min_temp <- min(ith_col, na.rm=TRUE)
               ith_col[na_idx] <- min_temp - 1
               med_temp <- median(ith_col)
-              ith_col[na_idx] <- med_temp - (sample(ith_col[ith_col >= quantile(ith_col, 1-prop)], length(na_idx), replace=TRUE) - med_temp)
+              ith_col[na_idx] <- med_temp -
+                (sample(ith_col[ith_col >= quantile(ith_col, 1-prop)],
+                        length(na_idx),
+                        replace = TRUE) - med_temp)
               ith_col
             })
           },
@@ -48,7 +58,10 @@ miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
               max_temp <- max(ith_col, na.rm=TRUE)
               ith_col[na_idx] <- max_temp + 1
               med_temp <- median(ith_col)
-              ith_col[na_idx] <- med_temp + (med_temp - sample(ith_col[ith_col<=quantile(ith_col, prop)], length(na_idx), replace=TRUE))
+              ith_col[na_idx] <- med_temp +
+                (med_temp - sample(ith_col[ith_col <= quantile(ith_col, prop)],
+                                   length(na_idx),
+                                   replace=TRUE))
               ith_col
             })
           },
@@ -68,13 +81,21 @@ miss_init <- function(miss_data, method=c('lsym', 'qrilc', 'rsym')[1]) {
 #'
 #' @keywords internal
 #'
-single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pred', lo=-Inf, hi=Inf, iters_each=100, gibbs=c()) {
+single_impute_iters <- function(x,
+                                y,
+                                y_miss,
+                                y_real = NULL,
+                                imp_model = 'glmnet_pred',
+                                lo = -Inf,
+                                hi = Inf,
+                                iters_each = 100,
+                                gibbs = c()) {
   y_res <- y
   x <- as.matrix(x)
   na_idx <- which(is.na(y_miss))
   imp_model_func <- getFunction(imp_model)
   nrmse_vec <- c()
-  gibbs_res <- array(NA, dim=c(3, length(gibbs), iters_each))
+  gibbs_res <- array(NA, dim = c(3, length(gibbs), iters_each))
   dimnames(gibbs_res) <- list(c('std', 'yhat', 'yres'), NULL, NULL)
 
   for (i in 1:iters_each) {
@@ -90,7 +111,7 @@ single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pre
     if (!is.null(y_real)) {
       Sys.sleep(.5)
       par(mfrow=c(2, 2))
-      nrmse_vec <- c(nrmse_vec, nrmse(y_res, y_miss, y_real))
+      nrmse_vec <- c(nrmse_vec, missForest::nrmse(y_res, y_miss, y_real))
       plot(y_real~y_res)
       plot(y_real~y_hat)
       plot(y_hat~y_res)
@@ -116,15 +137,21 @@ single_impute_iters <- function(x, y, y_miss, y_real=NULL, imp_model='glmnet_pre
 #' @keywords internal
 #'
 #'
-GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qrilc', lo=-Inf, hi='min',
-                      imp_model='glmnet_pred', gibbs=data.frame(row=integer(), col=integer())) {
+GS_impute_clean <- function(data_miss,
+                            iters_each = 100,
+                            iters_all = 20,
+                            initial = 'qrilc',
+                            lo = -Inf,
+                            hi = 'min',
+                            imp_model = 'glmnet_pred',
+                            gibbs = data.frame(row = integer(), col=integer())) {
+
   ## Make vector for iters_each ##
-  if (length(iters_each)==1) {
+  if (length(iters_each) == 1) {
     iters_each <- rep(iters_each, iters_all)
-  } else if (length(iters_each)==iters_all) {
+  } else if (length(iters_each) == iters_all) {
     iters_each <- iters_each
   } else {stop('improper argument: iters_each')}
-
 
   ## Missing count in each column ##
   miss_count <- apply(data_miss, 2, function(x) sum(is.na(x)))
@@ -143,7 +170,8 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
 
   ## Make vectors for lo and hi ##
   if (length(lo)>1) {
-    if (length(lo)!=ncol(data_miss)) {stop('Length of lo should equal to one or the number of variables')}
+    if (length(lo)!=ncol(data_miss))
+      stop('Length of lo should equal to one or the number of variables')
     else {lo_vec <- lo}
   } else if (is.numeric(lo)) {
     lo_vec <- rep(lo, ncol(data_miss))
@@ -153,7 +181,8 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
   }
 
   if (length(hi)>1) {
-    if (length(hi)!=ncol(data_miss)) {stop('Length of hi should equal to one or the number of variables')}
+    if (length(hi)!=ncol(data_miss))
+      stop('Length of hi should equal to one or the number of variables')
     else {hi_vec <- hi}
   } else if (is.numeric(hi)) {
     hi_vec <- rep(hi, ncol(data_miss))
@@ -168,7 +197,8 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
   ## Initialization using build-in method or input initial matrix ##
   if(is.character(initial)) {
     data_init <- miss_init(data_miss, method=initial)
-  } else if(is.data.frame(initial) & identical(data_miss[!is.na(data_miss)], initial[!is.na(data_miss)])) {
+  } else if(is.data.frame(initial) & identical(data_miss[!is.na(data_miss)],
+                                               initial[!is.na(data_miss)])) {
     data_init <- initial
   } else {stop('improper argument: initial')}
 
@@ -181,8 +211,10 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
     for (j in miss_col_idx) {
       gibbs_sort_temp <- gibbs_sort[gibbs_sort$col==j, ]
       y_miss <- data_miss[, j]
-      y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss, imp_model=imp_model, lo=lo_vec[j], hi=hi_vec[j],
-                                       iters_each=iters_each[i], gibbs=gibbs_sort_temp$row)
+      y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss,
+                                       imp_model = imp_model, lo = lo_vec[j],
+                                       hi = hi_vec[j], iters_each = iters_each[i],
+                                       gibbs = gibbs_sort_temp$row)
       y_imp <- y_imp_res$y_imp
       gibbs_res_j <- abind::abind(gibbs_res_j, y_imp_res$gibbs_res, along=2)
       data_imp[is.na(y_miss), j] <- y_imp[is.na(y_miss)]
@@ -193,6 +225,11 @@ GS_impute_clean <- function(data_miss, iters_each=100, iters_all=20, initial='qr
   return(list(data_imp=data_imp, gibbs_res=gibbs_res_final_reorder))
 }
 
+#' Supplementary function for GSimp
+#'
+#' @keywords internal
+#'
+
 glmnet_pred <- function(x, y, alpha=.5, lambda=.01) {
   x_mat <- as.matrix(x)
   model <- glmnet::glmnet(x=x_mat, y=y, alpha=alpha, lambda=lambda)
@@ -201,6 +238,11 @@ glmnet_pred <- function(x, y, alpha=.5, lambda=.01) {
 }
 
 # Parallel combination ----------------------------------------------------
+
+#' Supplementary function for GSimp
+#'
+#' @keywords internal
+#'
 
 cbind_abind <- function(a, b) {
   res <- list()
