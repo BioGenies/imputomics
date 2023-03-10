@@ -7,7 +7,8 @@
 #' Helper function.
 #' Imputes constant value.
 #'
-#' @template param_missing_ds
+#' @param missing_data_set a matrix or data frame with missing values to be
+#' imputed.
 #'
 #' @param constant_value a constant value to impute
 #'
@@ -24,7 +25,7 @@ impute_constant <- function(missing_data_set, constant_value) {
 #'
 #' A function to replace \code{NA} in the data frame by  zeros (0).
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{zero} method.
 #'
@@ -45,7 +46,7 @@ impute_zero <- function(missing_data_set)
 #' Basic imputation of missing values into dataframe.
 #' Zero, minimum, half-minimum, mean, median and random.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @param compute_values one of the basic imputation methods
 #'
@@ -62,7 +63,7 @@ impute_per_column <- function(missing_data_set, compute_values) {
 
 #' Helper function. Random imputation.
 #'
-#' @template param_x
+#' @param x list with values.
 #'
 #' @keywords internal
 
@@ -74,7 +75,7 @@ compute_col_random <- function(x)
 
 #' Helper function. Minimum imputation.
 #'
-#' @template param_x
+#' @inheritParams compute_col_random
 #'
 #' @keywords internal
 
@@ -82,14 +83,14 @@ compute_col_min <- function(x)
   lapply(x, min, na.rm = TRUE)
 
 #' Helper function. Mean imputation.
-#' @template param_x
+#' @inheritParams compute_col_random
 #'
 compute_col_mean <- function(x)
   lapply(x, mean, na.rm = TRUE)
 
 #' Helper function. Half-minimum imputation.
 #'
-#' @template param_x
+#' @inheritParams compute_col_random
 #'
 #' @keywords internal
 
@@ -98,7 +99,7 @@ compute_col_halfmin <- function(x)
 
 #' Helper function. Median imputation.
 #'
-#' @template param_x
+#' @inheritParams compute_col_random
 #'
 #' @keywords internal
 
@@ -109,7 +110,7 @@ compute_col_median <- function(x)
 #'
 #' A function to replace \code{NA} in the data frame by  random values.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{random} method.
 #'
@@ -130,7 +131,7 @@ impute_random <- function(missing_data_set)
 #'
 #' A function to replace \code{NA} in the data frame by minimum values.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{minimum} method.
 #'
@@ -151,7 +152,7 @@ impute_min <- function(missing_data_set)
 #'
 #' A function to replace \code{NA} in the data frame by  mean values.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{mean} method.
 #'
@@ -172,7 +173,7 @@ impute_mean <- function(missing_data_set)
 #'
 #' A function to replace \code{NA} in the data frame by the half minimum values.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{half-minimum}
 #' method.
@@ -194,7 +195,7 @@ impute_halfmin <- function(missing_data_set)
 #'
 #' A function to replace \code{NA} in the data frame by a median values.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{median} method.
 #'
@@ -213,7 +214,7 @@ impute_median <- function(missing_data_set)
 
 #' Convert an imputing function into its safe version.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @param imputing_function a function (imputation method) that takes
 #' missing_data_set as an input
@@ -247,7 +248,10 @@ safe_impute <- function(imputing_function, missing_data_set) {
 #' A function to replace \code{NA} in the data frame by [pcaMethods::pca()]
 #' with method = "svdImpute".
 #'
-#' @template param_missing_ds
+#' @importFrom pcaMethods pca
+#' @importFrom pcaMethods completeObs
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "svdImpute".
@@ -283,7 +287,7 @@ impute_svd <- function(missing_data_set) { # TODO:: sprawdzic czy to nie wymaga 
 #' A function to replace \code{NA} in the data frame by [pcaMethods::pca()] with
 #' method = "ppca".
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()] with
 #' method = "ppca".
@@ -319,7 +323,7 @@ impute_ppca <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by [pcaMethods::pca()]
 #' with method = "bpca".
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "bpca".
@@ -353,7 +357,7 @@ impute_bpca <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by [pcaMethods::pca()]
 #' with method = "nipals".
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "nipals".
@@ -387,7 +391,7 @@ impute_nipals <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by [pcaMethods::pca()]
 #' with method = "nlpca".
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "nlpca".
@@ -423,7 +427,9 @@ impute_nlpca <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by [missMDA::imputePCA()]
 #' with method = "regularized".
 #'
-#' @template param_missing_ds
+#' @importFrom missMDA imputePCA
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [missMDA::imputePCA()]
 #' with method = "regularized".
@@ -458,7 +464,7 @@ impute_missmda_reg <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by [missMDA::imputePCA()]
 #' with method = "em".
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [missMDA::imputePCA()]
 #' with method = "em".
@@ -492,7 +498,11 @@ impute_missmda_em <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by predictive mean matching
 #' (pmm) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice
+#' @importFrom mice quickpred
+#' @importFrom mice mice.impute.pmm
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by pmm used [mice::mice()].
 #'
@@ -529,7 +539,9 @@ impute_mice_pmm <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by weighted predictive mean
 #' matching (midastouch) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.midastouch
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by midastouch used
 #' [mice::mice()].
@@ -564,7 +576,9 @@ impute_mice_midastouch <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by classification and
 #' regression trees (cart) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.cart
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by cart used [mice::mice()].
 #'
@@ -598,7 +612,9 @@ impute_mice_cart <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by random forest
 #' imputations (rf) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.rf
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by rf used [mice::mice()].
 #'
@@ -632,7 +648,9 @@ impute_mice_rf <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by Bayesian linear
 #' regression (norm) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.norm
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by norm used [mice::mice()].
 #'
@@ -666,7 +684,9 @@ impute_mice_norm <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by linear regression
 #' ignoring model error (norm.nob) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.norm.nob
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by norm.nob used
 #' [mice::mice()].
@@ -701,7 +721,9 @@ impute_mice_norm.nob <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by linear regression using
 #' bootstrap (norm.boot) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.norm.boot
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by norm.boot used
 #' [mice::mice()].
@@ -736,7 +758,9 @@ impute_mice_norm.boot <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by predicted values from
 #' linear regression (norm.predict) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.norm.predict
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by norm.predict used
 #' [mice::mice()].
@@ -771,7 +795,9 @@ impute_mice_norm.predict <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by LASSO linear regression
 #' (lasso.norm) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.lasso.norm
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by lasso.norm used
 #' [mice::mice()].
@@ -806,7 +832,9 @@ impute_mice_lasso.norm <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by LASSO selection with
 #' linear regression regression (lasso.select.norm) used [mice::mice()].
 #'
-#' @template param_missing_ds
+#' @importFrom mice mice.impute.lasso.select.norm
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by lasso.select.norm used
 #' [mice::mice()].
@@ -838,7 +866,9 @@ impute_mice_lasso.select.norm <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [Amelia::amelia()].
 #'
-#' @template param_missing_ds
+#' @importFrom Amelia amelia
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [Amelia::amelia()].
 #'
@@ -868,7 +898,9 @@ impute_amelia <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by
 #' [missForest::missForest()].
 #'
-#' @template param_missing_ds
+#' @importFrom missForest missForest
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [missForest::missForest()].
@@ -901,7 +933,10 @@ impute_missforest <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [mi::mi()].
 #'
-#' @template param_missing_ds
+#' @importFrom mi mi
+#' @importFrom mi complete
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [mi::mi()].
 #'
@@ -940,7 +975,10 @@ impute_mi <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [Hmisc::aregImpute()].
 #'
-#' @template param_missing_ds
+#' @importFrom Hmisc aregImpute
+#' @importFrom Hmisc impute.transcan
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [Hmisc::aregImpute()].
 #'
@@ -969,7 +1007,9 @@ impute_areg <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [impute::impute.knn()].
 #'
-#' @template param_missing_ds
+#' @importFrom impute impute.knn
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [impute::impute.knn()].
 #'
@@ -1006,7 +1046,9 @@ impute_knn <- function(missing_data_set) {
 #'
 #' @importFrom imputeLCMD impute.QRILC
 #'
-#' @template param_missing_ds
+#' @importFrom imputeLCMD impute.QRILC
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [imputeLCMD::impute.QRILC()].
@@ -1037,7 +1079,9 @@ impute_qrilc <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by
 #' [imputeLCMD::impute.wrapper.MLE()].
 #'
-#' @template param_missing_ds
+#' @importFrom imputeLCMD impute.wrapper.MLE
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [imputeLCMD::impute.wrapper.MLE()].
@@ -1069,7 +1113,9 @@ impute_mle <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [tWLSA::wlsMisImp()].
 #'
-#' @template param_missing_ds
+#' @importFrom tWLSA wlsMisImp
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [tWLSA::wlsMisImp()].
 #'
@@ -1099,7 +1145,9 @@ impute_twlsa <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by
 #' [softImpute::softImpute()].
 #'
-#' @template param_missing_ds
+#' @importFrom softImpute softImpute
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [softImpute::softImpute()].
@@ -1132,7 +1180,9 @@ impute_softimpute <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by
 #' [NADIA::autotune_VIM_Irmi()].
 #'
-#' @template param_missing_ds
+#' @importFrom NADIA autotune_VIM_Irmi
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [NADIA::autotune_VIM_Irmi()].
@@ -1168,7 +1218,9 @@ impute_irmi <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by [PEMM::PEMM_fun()].
 #'
-#' @template param_missing_ds
+#' @importFrom PEMM PEMM_fun
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [PEMM::PEMM_fun()].
 #'
@@ -1198,9 +1250,13 @@ impute_PEMM <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by \strong{tkNN} method.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{tkNN} method.
+#'
+#' @details This function was copied from https://github.com/WandeRum/GSimp and
+#' contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
+#' (https://doi.org/10.1186/s12859-017-1547-6).
 #'
 #' @examples
 #' \dontrun{
@@ -1214,6 +1270,8 @@ impute_PEMM <- function(missing_data_set) {
 #' \insertRef{shah_distribution_2017}{imputomics}
 #'
 #' @export
+#'
+#'
 
 impute_tknn <- function(missing_data_set) {
   imputed <- imputeKNN(as.matrix(missing_data_set),
@@ -1229,9 +1287,13 @@ impute_tknn <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by \strong{corkNN} method.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{corkNN} method.
+#'
+#' @details This function was copied from https://github.com/WandeRum/GSimp and
+#' contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
+#' (https://doi.org/10.1186/s12859-017-1547-6).
 #'
 #' @examples
 #' \dontrun{
@@ -1257,9 +1319,13 @@ impute_corknn <- function(missing_data_set) {
 #'
 #' A function to replace \code{NA} in the data frame by \strong{GSimp} method.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by \strong{GSimp} method.
+#'
+#' @details  This function was copied from https://github.com/WandeRum/GSimp and
+#' contains the GSimp algorithm and related functions developed by Rum Wei
+#' (10.1371/journal.pcbi.1005973).
 #'
 #' @examples
 #' \dontrun{
@@ -1286,7 +1352,9 @@ impute_gsimp <- function(missing_data_set) {
 #' K Nearest Neighbors. A function to replace \code{NA} in the data frame by
 #' [VIM::kNN()].
 #'
-#' @template param_missing_ds
+#' @importFrom VIM kNN
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [VIM::kNN()].
 #'
@@ -1313,10 +1381,12 @@ impute_vim_knn <- function(missing_data_set) {
 
 #' \strong{MetabImpute RF} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by [MetabImpute::Impute()]
-#' or [MetabImpute::imputeMulti()].
+#' A function to replace \code{NA} in the data frame using random forest.
 #'
-#' @template param_missing_ds
+#' @importFrom MetabImpute imputeMulti
+#' @importFrom MetabImpute Impute
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [MetabImpute::Impute()]
 #' or [MetabImpute::imputeMulti()].
@@ -1341,10 +1411,9 @@ impute_MetabImpute_RF <- function(missing_data_set) {
 
 #' \strong{MetabImpute BPCA} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by Bayesian PCA from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by Bayesian PCA.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of Bayesian PCA by
 #' [MetabImpute::Impute()].
@@ -1369,10 +1438,9 @@ impute_MetabImpute_BPCA <- function(missing_data_set) {
 
 #' \strong{MetabImpute QRILC} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by QRILC from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by QRILC.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of QRILC by
 #' [MetabImpute::Impute()].
@@ -1397,10 +1465,9 @@ impute_MetabImpute_QRILC <- function(missing_data_set) {
 
 #' \strong{MetabImpute GSIMP} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by GSIMP from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by GSIMP.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of GSIMP by
 #' [MetabImpute::Impute()].
@@ -1425,10 +1492,9 @@ impute_MetabImpute_GSIMP <- function(missing_data_set) {
 
 #' \strong{MetabImpute minimum} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by minimum from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by minimum.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of minimum by
 #' [MetabImpute::Impute()].
@@ -1453,10 +1519,9 @@ impute_MetabImpute_min <- function(missing_data_set) {
 
 #' \strong{MetabImpute half-minimum} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by half-minimum from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by half-minimum from.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of half-minimum by
 #' [MetabImpute::Impute()].
@@ -1481,10 +1546,9 @@ impute_MetabImpute_halfmin <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate half-minimum} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate half-minimum
-#' from [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate half-minimum.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate half-minimum
 #' by [MetabImpute::Impute()]
@@ -1509,10 +1573,9 @@ impute_MetabImpute_rhalfmin <- function(missing_data_set) {
 
 #' \strong{MetabImpute mean} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by mean from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by mean.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of mean by
 #' [MetabImpute::Impute()].
@@ -1537,10 +1600,9 @@ impute_MetabImpute_mean <- function(missing_data_set) {
 
 #' \strong{MetabImpute median} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by median from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by median.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of median by
 #' [MetabImpute::Impute()].
@@ -1565,10 +1627,9 @@ impute_MetabImpute_median <- function(missing_data_set) {
 
 #' \strong{MetabImpute zero} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by zero from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by zero.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of zero by
 #' [MetabImpute::Impute()].
@@ -1593,10 +1654,9 @@ impute_MetabImpute_zero <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate mean} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate mean from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate mean.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate mean by
 #' [MetabImpute::Impute()].
@@ -1621,10 +1681,9 @@ impute_MetabImpute_rmean <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate median} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate median from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate median.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate median by
 #' [MetabImpute::Impute()].
@@ -1649,10 +1708,9 @@ impute_MetabImpute_rmedian <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate min} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate min from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate min.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate min by
 #' [MetabImpute::Impute()].
@@ -1677,10 +1735,9 @@ impute_MetabImpute_rmin <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate zero} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate zero from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate zero.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate zero by
 #' [MetabImpute::Impute()].\
@@ -1705,10 +1762,9 @@ impute_MetabImpute_rzero <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate Random Forest} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate Random Forest
-#' from [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate Random Forest.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate Random Forest
 #' by [MetabImpute::Impute()].
@@ -1733,10 +1789,9 @@ impute_MetabImpute_rrf <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate GSIMP} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate GSIMP from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate GSIMP.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate GSIMP by
 #' [MetabImpute::Impute()].
@@ -1761,10 +1816,9 @@ impute_MetabImpute_rGSIMP <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate QRILC} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate QRILC from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate QRILC.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate QRILC by
 #' [MetabImpute::Impute()].
@@ -1789,10 +1843,9 @@ impute_MetabImpute_rQRILC <- function(missing_data_set) {
 
 #' \strong{MetabImpute replicate BPCA} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by replicate BPCA from
-#' [MetabImpute::Impute()].
+#' A function to replace \code{NA} in the data frame by replicate BPCA.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values of replicate BPCA by
 #' [MetabImpute::Impute()].
@@ -1817,10 +1870,9 @@ impute_MetabImpute_rBPCA <- function(missing_data_set) {
 
 #' \strong{MetabImpute} imputation.
 #'
-#' A function to replace \code{NA} in the data frame by [MetabImpute::Impute()]
-#' or [MetabImpute::imputeMulti()].
+#' A function to replace \code{NA} in the data frame.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @param method Imputation method for mice. One or vector of RF, BPCA, QRILC,
 #' GSIMP, RHM, RMEAN, RMEDIAN, RMIN, RZERO, RRF, RGSIMP, RQRILC, RBPCA, min,
@@ -1865,7 +1917,9 @@ impute_MetabImpute <- function(missing_data_set, method) {
 #'
 #' A function to replace \code{NA} in the data frame by [MAI::MAI()].
 #'
-#' @template param_missing_ds
+#' @importFrom MAI MAI
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by [MAI::MAI()].
 #'
@@ -1894,9 +1948,13 @@ impute_nsKNN <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame based on
 #' \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by kNN-Euclidean imputation.
+#'
+#' @details This function was copied from https://github.com/WandeRum/GSimp and
+#' contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
+#' (https://doi.org/10.1186/s12859-017-1547-6).
 #'
 #' @seealso \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}
 #'
@@ -1926,7 +1984,9 @@ impute_eucknn <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by
 #' [missCompare::impute_data()].
 #'
-#' @template param_missing_ds
+#' @importFrom missCompare impute_data
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [missCompare::impute_data()].
@@ -1955,9 +2015,14 @@ impute_mice_mixed <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by outlier robust missing
 #' imputation technique by minimizing two-way empirical mean absolute error.
 #'
-#' @template param_missing_ds
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by rmiMAE.
+#'
+#' @details Robust Missing imputation by minimizing two way mean absolute error
+#' (RMIMAE) Function URL:
+#' https://github.com/NishithPaul/missingImputation/blob/main/rmiMAE.R
+#' Author: NishithPaul
 #'
 #' @seealso \emph{doi: 10.2174/1574893612666171121154655}
 #'
@@ -1980,7 +2045,9 @@ impute_rmiMAE <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by imputation using Glmnet
 #' ridge regression (RegImpute) from [DreamAI::DreamAI()].
 #'
-#' @template param_missing_ds
+#' @importFrom DreamAI DreamAI
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by RegImpute
 #'
@@ -2020,7 +2087,9 @@ impute_RegImpute <- function(missing_data_set) {
 #' A function to replace \code{NA} in the data frame by
 #' [randomForest::rfImpute()].
 #'
-#' @template param_missing_ds
+#' @importFrom randomForest rfImpute
+#'
+#' @inheritParams impute_constant
 #'
 #' @returns A \code{data.frame} with imputed values by randomForest.
 #'

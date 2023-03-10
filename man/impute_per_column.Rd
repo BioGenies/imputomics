@@ -9,7 +9,8 @@ Zero, minimum, half-minimum, mean, median and random.}
 impute_per_column(missing_data_set, compute_values)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 
 \item{compute_values}{one of the basic imputation methods}
 }

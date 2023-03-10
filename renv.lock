@@ -3,6 +3,26 @@
     "Version": "4.2.2",
     "Repositories": [
       {
+        "Name": "BioCsoft",
+        "URL": "https://bioconductor.org/packages/3.16/bioc"
+      },
+      {
+        "Name": "BioCann",
+        "URL": "https://bioconductor.org/packages/3.16/data/annotation"
+      },
+      {
+        "Name": "BioCexp",
+        "URL": "https://bioconductor.org/packages/3.16/data/experiment"
+      },
+      {
+        "Name": "BioCworkflows",
+        "URL": "https://bioconductor.org/packages/3.16/workflows"
+      },
+      {
+        "Name": "BioCbooks",
+        "URL": "https://bioconductor.org/packages/3.16/books"
+      },
+      {
         "Name": "CRAN",
         "URL": "https://cloud.r-project.org"
       }
@@ -556,6 +576,22 @@
       ],
       "Hash": "35136c52e39f2679ebbe7bf448e3bd5a"
     },
+    "ROC": {
+      "Package": "ROC",
+      "Version": "1.74.0",
+      "Source": "Bioconductor",
+      "git_url": "https://git.bioconductor.org/packages/ROC",
+      "git_branch": "RELEASE_3_16",
+      "git_last_commit": "982ad4d",
+      "git_last_commit_date": "2022-11-01",
+      "Requirements": [
+        "R",
+        "knitr",
+        "methods",
+        "utils"
+      ],
+      "Hash": "4e8bb5d3ad4cf6b6c4f0c13d2e75c4ff"
+    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.10",
@@ -810,6 +846,13 @@
         "R"
       ],
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
+    },
+    "bcv": {
+      "Package": "bcv",
+      "Version": "1.0.1.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ac788320e5a5b650cd1b21b4144844a3"
     },
     "bit": {
       "Package": "bit",
@@ -3167,6 +3210,18 @@
       ],
       "Hash": "b8b2b861526c344a7e16e5991fa5a4ab"
     },
+    "rMisbeta": {
+      "Package": "rMisbeta",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ROC",
+        "stats"
+      ],
+      "Hash": "5c66ebe4e2126393192925a7118cf629"
+    },
     "ragg": {
       "Package": "ragg",
       "Version": "1.2.5",
@@ -3714,7 +3769,10 @@
       "RemoteUsername": "NishithPaul",
       "RemoteRef": "HEAD",
       "RemoteSha": "f81458845ad9c979fac75aec51235dc74a39fbc8",
-      "Hash": "1e411e5ae0af613757aefbb5ae52b98e"
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "4ebf4b81ef19dc084b79a78e5dab5d75"
     },
     "testthat": {
       "Package": "testthat",

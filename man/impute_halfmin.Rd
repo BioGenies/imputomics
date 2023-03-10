@@ -7,7 +7,8 @@
 impute_halfmin(missing_data_set)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 }
 \value{
 A \code{data.frame} with imputed values by \strong{half-minimum}

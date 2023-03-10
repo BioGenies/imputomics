@@ -7,7 +7,8 @@
 impute_MetabImpute(missing_data_set, method)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 
 \item{method}{Imputation method for mice. One or vector of RF, BPCA, QRILC,
 GSIMP, RHM, RMEAN, RMEDIAN, RMIN, RZERO, RRF, RGSIMP, RQRILC, RBPCA, min,
@@ -18,8 +19,7 @@ A \code{data.frame} with imputed values by \code{\link[MetabImpute:impute]{Metab
 or \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}.
 }
 \description{
-A function to replace \code{NA} in the data frame by \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
-or \code{\link[MetabImpute:imputeMulti]{MetabImpute::imputeMulti()}}.
+A function to replace \code{NA} in the data frame.
 }
 \examples{
 \dontrun{

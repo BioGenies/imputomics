@@ -7,7 +7,8 @@
 impute_rmiMAE(missing_data_set)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 }
 \value{
 A \code{data.frame} with imputed values by rmiMAE.
@@ -15,6 +16,12 @@ A \code{data.frame} with imputed values by rmiMAE.
 \description{
 A function to replace \code{NA} in the data frame by outlier robust missing
 imputation technique by minimizing two-way empirical mean absolute error.
+}
+\details{
+Robust Missing imputation by minimizing two way mean absolute error
+(RMIMAE) Function URL:
+https://github.com/NishithPaul/missingImputation/blob/main/rmiMAE.R
+Author: NishithPaul
 }
 \examples{
 \dontrun{

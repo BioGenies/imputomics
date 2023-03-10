@@ -7,7 +7,8 @@
 impute_gsimp(missing_data_set)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 }
 \value{
 A \code{data.frame} with imputed values by \strong{GSimp} method.
@@ -17,6 +18,10 @@ Gibbs Sampler Based Left-Censored Missing Value Imputation.
 }
 \details{
 A function to replace \code{NA} in the data frame by \strong{GSimp} method.
+
+This function was copied from https://github.com/WandeRum/GSimp and
+contains the GSimp algorithm and related functions developed by Rum Wei
+(10.1371/journal.pcbi.1005973).
 }
 \examples{
 \dontrun{
