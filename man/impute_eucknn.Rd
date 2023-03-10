@@ -7,7 +7,8 @@
 impute_eucknn(missing_data_set)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 }
 \value{
 A \code{data.frame} with imputed values by kNN-Euclidean imputation.
@@ -15,6 +16,11 @@ A \code{data.frame} with imputed values by kNN-Euclidean imputation.
 \description{
 A function to replace \code{NA} in the data frame based on
 \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}.
+}
+\details{
+This function was copied from https://github.com/WandeRum/GSimp and
+contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
+(https://doi.org/10.1186/s12859-017-1547-6).
 }
 \examples{
 \dontrun{

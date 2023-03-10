@@ -7,15 +7,15 @@
 impute_MetabImpute_QRILC(missing_data_set)
 }
 \arguments{
-\item{missing_data_set}{\code{data.frame} with missing data.}
+\item{missing_data_set}{a matrix or data frame with missing values to be
+imputed.}
 }
 \value{
 A \code{data.frame} with imputed values of QRILC by
 \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }
 \description{
-A function to replace \code{NA} in the data frame by QRILC from
-\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
+A function to replace \code{NA} in the data frame by QRILC.
 }
 \examples{
 \dontrun{
