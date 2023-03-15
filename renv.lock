@@ -530,6 +530,37 @@
       ],
       "Hash": "76f51bb03ebefaf2762f03bfc7d3d4a9"
     },
+    "NMF": {
+      "Package": "NMF",
+      "Version": "0.25",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Biobase",
+        "BiocManager",
+        "R",
+        "RColorBrewer",
+        "cluster",
+        "codetools",
+        "colorspace",
+        "digest",
+        "doParallel",
+        "foreach",
+        "ggplot2",
+        "grDevices",
+        "graphics",
+        "grid",
+        "gridBase",
+        "methods",
+        "registry",
+        "reshape2",
+        "rngtools",
+        "stats",
+        "stringr",
+        "utils"
+      ],
+      "Hash": "cc72349b450fd887166554fae56360bb"
+    },
     "PEMM": {
       "Package": "PEMM",
       "Version": "1.0",
@@ -723,6 +754,18 @@
         "utils"
       ],
       "Hash": "ae913ff30bce222686e66e45448fcfb6"
+    },
+    "TimeProjection": {
+      "Package": "TimeProjection",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "lubridate",
+        "timeDate"
+      ],
+      "Hash": "13d0c582785d5361586b0eb48c84d803"
     },
     "VIM": {
       "Package": "VIM",
@@ -1674,6 +1717,19 @@
       ],
       "Hash": "bb3208dcdfeb2e68bf33c87601b3cbe3"
     },
+    "gbm": {
+      "Package": "gbm",
+      "Version": "2.1.8.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lattice",
+        "parallel",
+        "survival"
+      ],
+      "Hash": "77c36d4d16a167e301137f4c1da6ec9d"
+    },
     "generics": {
       "Package": "generics",
       "Version": "0.1.3",
@@ -1868,6 +1924,18 @@
       "Repository": "CRAN",
       "Hash": "7a0051eef852c301b5efe2f7913dd45f"
     },
+    "gridBase": {
+      "Package": "gridBase",
+      "Version": "0.4-7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "graphics",
+        "grid"
+      ],
+      "Hash": "c6b1256546a22b4b9f4fae3ba5117b97"
+    },
     "gridExtra": {
       "Package": "gridExtra",
       "Version": "2.3",
@@ -2055,6 +2123,23 @@
         "uuid"
       ],
       "Hash": "99df65cfef20e525ed38c3d2577f7190"
+    },
+    "imputation": {
+      "Package": "imputation",
+      "Version": "2.0.3",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "imputation",
+      "RemoteUsername": "jeffwong",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "c1cc5e4db150dc5fe4fa069be0670284143a105f",
+      "Requirements": [
+        "TimeProjection",
+        "gbm",
+        "locfit"
+      ],
+      "Hash": "7c5360eab61a76c1d499b0278da590ed"
     },
     "impute": {
       "Package": "impute",
@@ -2381,6 +2466,17 @@
         "zoo"
       ],
       "Hash": "c6fafa6cccb1e1dfe7f7d122efd6e6a7"
+    },
+    "locfit": {
+      "Package": "locfit",
+      "Version": "1.5-9.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lattice"
+      ],
+      "Hash": "08c4156abea85c9b6d4e7798427a887d"
     },
     "lpSolve": {
       "Package": "lpSolve",
@@ -3349,6 +3445,17 @@
         "withr"
       ],
       "Hash": "a3ad6802b18da51f9d38ac7ae8949166"
+    },
+    "registry": {
+      "Package": "registry",
+      "Version": "0.5-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "utils"
+      ],
+      "Hash": "1c9935f4f14c6c096c9c9072ddee59f1"
     },
     "rematch": {
       "Package": "rematch",
