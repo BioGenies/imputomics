@@ -8,7 +8,8 @@
 #'
 #' @section Warning: Any ad-blocking software may cause malfunctions.
 #'
-#' @author "Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski", "Jarosław Chilimoniuk"
+#' @author "Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski",
+#' "Jarosław Chilimoniuk"
 #'
 #' @examples
 #' if(interactive()) {

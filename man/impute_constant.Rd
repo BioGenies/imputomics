@@ -9,7 +9,7 @@ impute_constant(missing_data_set, constant_value)
 }
 \arguments{
 \item{missing_data_set}{a matrix or data frame with missing values to be
-imputed.}
+imputed containing features in columns and samples in rows.}
 
 \item{constant_value}{a constant value to impute}
 }

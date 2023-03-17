@@ -35,10 +35,11 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/michbur/imputomics
 BugReports: https://github.com/michbur/imputomics/issues
 Imports:
-    abind,
     Amelia,
     bcv,
+    DreamAI,
     glmnet,
+    GMSimpute,
     graphics,
     Hmisc,
     imputation,
@@ -49,24 +50,24 @@ Imports:
     methods,
     mi,
     mice,
+    missCompare,
     missForest,
     missMDA,
     NADIA,
     NMF,
     pcaMethods,
+    PEMM,
+    SimDesign,
     shiny,
     softImpute,
-    stats,
-    utils,
+    truncnorm,
+    tWLSA,
     VIM,
     Rdpack
 Suggests:
+    abind,
     knitr,
     testthat,
-    tWLSA,
-    PEMM,
-    DreamAI,
-    missCompare,
     matrixStats,
     randomForest,
     spelling

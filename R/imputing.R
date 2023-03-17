@@ -8,7 +8,7 @@
 #' Imputes constant value.
 #'
 #' @param missing_data_set a matrix or data frame with missing values to be
-#' imputed.
+#' imputed containing features in columns and samples in rows.
 #'
 #' @param constant_value a constant value to impute
 #'
@@ -1944,7 +1944,7 @@ impute_MetabImpute_rBPCA <- function(missing_data_set) {
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(10000), ncol =  50)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(10000) < 0.1] <- NA
 #' impute_MA(idf)
 #' }
@@ -1979,7 +1979,7 @@ impute_MA <- function(missing_data_set) {
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(10000), ncol =  50)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(10000) < 0.1] <- NA
 #' impute_eucknn(idf)
 #' }
@@ -2014,7 +2014,7 @@ impute_eucknn <- function(missing_data_set) {
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(1000), ncol =  10)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(1000) < 0.1] <- NA
 #' impute_mice_mixed(idf)
 #' }
@@ -2047,7 +2047,7 @@ impute_mice_mixed <- function(missing_data_set) {
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(1000), ncol =  10)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(1000) < 0.1] <- NA
 #' impute_rmiMAE(idf)
 #' }
@@ -2074,7 +2074,7 @@ impute_rmiMAE <- function(missing_data_set) {
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(1000), ncol =  10)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(1000) < 0.1] <- NA
 #' impute_RegImpute(idf)
 #' }
@@ -2117,7 +2117,7 @@ impute_RegImpute <- function(missing_data_set) {
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(1000), ncol =  10)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(1000) < 0.1] <- NA
 #' impute_bcv_svd(idf)
 #' }
@@ -2145,7 +2145,7 @@ impute_bcv_svd <- function(missing_data_set){
 #'
 #' @examples
 #' \dontrun{
-#' idf <- matrix(rnorm(1000), ncol =  10)
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 #' idf[runif(1000) < 0.1] <- NA
 #' impute_imputation_kNN(idf)
 #' }
@@ -2176,14 +2176,13 @@ impute_imputation_kNN <- function(missing_data_set){
 
 impute_mNMF <- function(missing_data_set){
 
-  # nmf_opt assumes samples in columns and features in rows
+  # samples in columns and features in rows
   missing_data_set <- t(missing_data_set)
-
   k_group <- unique(round(seq(1,
                               min(ncol(missing_data_set),
                                   nrow(missing_data_set)),
                               length.out = min(20, ncol(missing_data_set))), 0))
-  imputed <- nmf_opt(IMP = idf,
+  imputed <- nmf_opt(IMP = missing_data_set,
                      M = NULL,
                      kgroup = k_group,
                      initialType = "mean")
@@ -2191,4 +2190,62 @@ impute_mNMF <- function(missing_data_set){
 }
 
 
+
+#' \strong{Compound Minimum} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by [GMSimpute::GMS.Lasso()]
+#'
+#' @inheritParams impute_constant
+#' @importFrom GMSimpute GMS.Lasso
+#'
+#' @returns A \code{data.frame} with imputed values by CM.
+#'
+#' @seealso [GMSimpute::GMS.Lasso()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
+#' idf[runif(1000) < 0.1] <- NA
+#' impute_CM(idf)
+#'}
+#' @export
+
+impute_CM <- function(missing_data_set){
+
+  # samples in columns and features in rows
+  missing_data_set <- t(missing_data_set)
+  imputed <- GMSimpute::GMS.Lasso(missing_data_set,
+                                  TS.Lasso = FALSE)
+  data.frame(t(imputed))
+}
+
+
+
+#' \strong{BayesMetab} imputation.
+#'
+#' A function to replace \code{NA} in the data frame based on
+#' \emph{Jasmit Shah (10.1186/s12859-019-3250-2)}.
+#'
+#' @importFrom SimDesign rmvnorm
+#' @importFrom truncnorm rtruncnorm
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values by BayesMetab
+#'
+#' @examples
+#' \dontrun{
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
+#' idf[runif(1000) < 0.1] <- NA
+#' impute_CM(idf)
+#'}
+#' @export
+
+impute_BayesMetab <- function(missing_data_set){
+  imputed <- MCMC.Factor(missing_data_set,
+                         M = 100,
+                         miss.pattern = !is.na(missing_data_set),
+                         K.max = ncol(missing_data_set))
+  data.frame(imputed[[5]])
+}
 

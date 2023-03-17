@@ -10,7 +10,7 @@ impute_per_column(missing_data_set, compute_values)
 }
 \arguments{
 \item{missing_data_set}{a matrix or data frame with missing values to be
-imputed.}
+imputed containing features in columns and samples in rows.}
 
 \item{compute_values}{one of the basic imputation methods}
 }

@@ -239,6 +239,20 @@
       ],
       "Hash": "cc8c8c4d61346cde1ca60030ff9c241f"
     },
+    "GMSimpute": {
+      "Package": "GMSimpute",
+      "Version": "0.0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "glmnet",
+        "reshape2",
+        "utils"
+      ],
+      "Hash": "468ee1576d6a84a077592128918a479b"
+    },
     "GenomeInfoDb": {
       "Package": "GenomeInfoDb",
       "Version": "1.34.9",
@@ -623,6 +637,19 @@
       ],
       "Hash": "4e8bb5d3ad4cf6b6c4f0c13d2e75c4ff"
     },
+    "RPushbullet": {
+      "Package": "RPushbullet",
+      "Version": "0.3.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "curl",
+        "jsonlite",
+        "stats",
+        "utils"
+      ],
+      "Hash": "0b600e4308115126387df20181e731d2"
+    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.10",
@@ -714,6 +741,28 @@
         "R"
       ],
       "Hash": "0cf10dab0d023d5b46a5a14387556891"
+    },
+    "SimDesign": {
+      "Package": "SimDesign",
+      "Version": "2.10.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "RPushbullet",
+        "beepr",
+        "dplyr",
+        "foreach",
+        "future",
+        "future.apply",
+        "methods",
+        "parallel",
+        "pbapply",
+        "progressr",
+        "sessioninfo",
+        "stats"
+      ],
+      "Hash": "0718292240de252973ca06fc8978009f"
     },
     "SparseM": {
       "Package": "SparseM",
@@ -870,6 +919,16 @@
       ],
       "Hash": "e8a22846fff485f0be3770c2da758713"
     },
+    "audio": {
+      "Package": "audio",
+      "Version": "0.1-10",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "d0c2f6b09c666cc84cd64813f43a54fc"
+    },
     "backports": {
       "Package": "backports",
       "Version": "1.4.1",
@@ -896,6 +955,17 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ac788320e5a5b650cd1b21b4144844a3"
+    },
+    "beepr": {
+      "Package": "beepr",
+      "Version": "1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "audio",
+        "stringr"
+      ],
+      "Hash": "b3158a579ecef0e8f7626f4dadc369d0"
     },
     "bit": {
       "Package": "bit",
@@ -3704,6 +3774,19 @@
       ],
       "Hash": "3838071b66e0c566d55cc26bd6e27bf4"
     },
+    "sessioninfo": {
+      "Package": "sessioninfo",
+      "Version": "1.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cli",
+        "tools",
+        "utils"
+      ],
+      "Hash": "3f9796a8d0a0e8c6eb49a4b029359d1f"
+    },
     "shape": {
       "Package": "shape",
       "Version": "1.4.6",
@@ -4072,6 +4155,16 @@
         "utils"
       ],
       "Hash": "1e4beacf8b8e82280c0329d97a4740d5"
+    },
+    "truncnorm": {
+      "Package": "truncnorm",
+      "Version": "1.0-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "cc8b5bfa01c930ccb56d3051e515fbd8"
     },
     "tzdb": {
       "Package": "tzdb",
