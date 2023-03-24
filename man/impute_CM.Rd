@@ -22,7 +22,9 @@ idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 idf[runif(1000) < 0.1] <- NA
 impute_CM(idf)
 }
+
 }
 \seealso{
 \code{\link[GMSimpute:GMS.Lasso]{GMSimpute::GMS.Lasso()}}
 }
+\keyword{constant}
