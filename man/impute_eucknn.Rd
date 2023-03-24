@@ -8,7 +8,7 @@ impute_eucknn(missing_data_set)
 }
 \arguments{
 \item{missing_data_set}{a matrix or data frame with missing values to be
-imputed.}
+imputed containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by kNN-Euclidean imputation.
@@ -24,7 +24,7 @@ contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
 }
 \examples{
 \dontrun{
-idf <- matrix(rnorm(10000), ncol =  50)
+idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 idf[runif(10000) < 0.1] <- NA
 impute_eucknn(idf)
 }

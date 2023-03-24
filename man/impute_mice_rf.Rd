@@ -8,7 +8,7 @@ impute_mice_rf(missing_data_set)
 }
 \arguments{
 \item{missing_data_set}{a matrix or data frame with missing values to be
-imputed.}
+imputed containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by rf used \code{\link[mice:mice]{mice::mice()}}.

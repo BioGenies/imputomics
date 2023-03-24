@@ -20,7 +20,8 @@ if(interactive()) {
 
 }
 \author{
-"Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski", "Jarosław Chilimoniuk"
+"Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski",
+"Jarosław Chilimoniuk"
 }
 \keyword{Poisson}
 \keyword{count}

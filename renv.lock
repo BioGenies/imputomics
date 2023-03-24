@@ -239,6 +239,20 @@
       ],
       "Hash": "cc8c8c4d61346cde1ca60030ff9c241f"
     },
+    "GMSimpute": {
+      "Package": "GMSimpute",
+      "Version": "0.0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "glmnet",
+        "reshape2",
+        "utils"
+      ],
+      "Hash": "468ee1576d6a84a077592128918a479b"
+    },
     "GenomeInfoDb": {
       "Package": "GenomeInfoDb",
       "Version": "1.34.9",
@@ -530,6 +544,37 @@
       ],
       "Hash": "76f51bb03ebefaf2762f03bfc7d3d4a9"
     },
+    "NMF": {
+      "Package": "NMF",
+      "Version": "0.25",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Biobase",
+        "BiocManager",
+        "R",
+        "RColorBrewer",
+        "cluster",
+        "codetools",
+        "colorspace",
+        "digest",
+        "doParallel",
+        "foreach",
+        "ggplot2",
+        "grDevices",
+        "graphics",
+        "grid",
+        "gridBase",
+        "methods",
+        "registry",
+        "reshape2",
+        "rngtools",
+        "stats",
+        "stringr",
+        "utils"
+      ],
+      "Hash": "cc72349b450fd887166554fae56360bb"
+    },
     "PEMM": {
       "Package": "PEMM",
       "Version": "1.0",
@@ -591,6 +636,19 @@
         "utils"
       ],
       "Hash": "4e8bb5d3ad4cf6b6c4f0c13d2e75c4ff"
+    },
+    "RPushbullet": {
+      "Package": "RPushbullet",
+      "Version": "0.3.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "curl",
+        "jsonlite",
+        "stats",
+        "utils"
+      ],
+      "Hash": "0b600e4308115126387df20181e731d2"
     },
     "Rcpp": {
       "Package": "Rcpp",
@@ -684,6 +742,28 @@
       ],
       "Hash": "0cf10dab0d023d5b46a5a14387556891"
     },
+    "SimDesign": {
+      "Package": "SimDesign",
+      "Version": "2.10.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "RPushbullet",
+        "beepr",
+        "dplyr",
+        "foreach",
+        "future",
+        "future.apply",
+        "methods",
+        "parallel",
+        "pbapply",
+        "progressr",
+        "sessioninfo",
+        "stats"
+      ],
+      "Hash": "0718292240de252973ca06fc8978009f"
+    },
     "SparseM": {
       "Package": "SparseM",
       "Version": "1.81",
@@ -723,6 +803,18 @@
         "utils"
       ],
       "Hash": "ae913ff30bce222686e66e45448fcfb6"
+    },
+    "TimeProjection": {
+      "Package": "TimeProjection",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "lubridate",
+        "timeDate"
+      ],
+      "Hash": "13d0c582785d5361586b0eb48c84d803"
     },
     "VIM": {
       "Package": "VIM",
@@ -827,6 +919,16 @@
       ],
       "Hash": "e8a22846fff485f0be3770c2da758713"
     },
+    "audio": {
+      "Package": "audio",
+      "Version": "0.1-10",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "d0c2f6b09c666cc84cd64813f43a54fc"
+    },
     "backports": {
       "Package": "backports",
       "Version": "1.4.1",
@@ -853,6 +955,17 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ac788320e5a5b650cd1b21b4144844a3"
+    },
+    "beepr": {
+      "Package": "beepr",
+      "Version": "1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "audio",
+        "stringr"
+      ],
+      "Hash": "b3158a579ecef0e8f7626f4dadc369d0"
     },
     "bit": {
       "Package": "bit",
@@ -1674,6 +1787,19 @@
       ],
       "Hash": "bb3208dcdfeb2e68bf33c87601b3cbe3"
     },
+    "gbm": {
+      "Package": "gbm",
+      "Version": "2.1.8.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lattice",
+        "parallel",
+        "survival"
+      ],
+      "Hash": "77c36d4d16a167e301137f4c1da6ec9d"
+    },
     "generics": {
       "Package": "generics",
       "Version": "0.1.3",
@@ -1868,6 +1994,18 @@
       "Repository": "CRAN",
       "Hash": "7a0051eef852c301b5efe2f7913dd45f"
     },
+    "gridBase": {
+      "Package": "gridBase",
+      "Version": "0.4-7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "graphics",
+        "grid"
+      ],
+      "Hash": "c6b1256546a22b4b9f4fae3ba5117b97"
+    },
     "gridExtra": {
       "Package": "gridExtra",
       "Version": "2.3",
@@ -2055,6 +2193,23 @@
         "uuid"
       ],
       "Hash": "99df65cfef20e525ed38c3d2577f7190"
+    },
+    "imputation": {
+      "Package": "imputation",
+      "Version": "2.0.3",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "imputation",
+      "RemoteUsername": "jeffwong",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "c1cc5e4db150dc5fe4fa069be0670284143a105f",
+      "Requirements": [
+        "TimeProjection",
+        "gbm",
+        "locfit"
+      ],
+      "Hash": "7c5360eab61a76c1d499b0278da590ed"
     },
     "impute": {
       "Package": "impute",
@@ -2381,6 +2536,17 @@
         "zoo"
       ],
       "Hash": "c6fafa6cccb1e1dfe7f7d122efd6e6a7"
+    },
+    "locfit": {
+      "Package": "locfit",
+      "Version": "1.5-9.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "lattice"
+      ],
+      "Hash": "08c4156abea85c9b6d4e7798427a887d"
     },
     "lpSolve": {
       "Package": "lpSolve",
@@ -3350,6 +3516,17 @@
       ],
       "Hash": "a3ad6802b18da51f9d38ac7ae8949166"
     },
+    "registry": {
+      "Package": "registry",
+      "Version": "0.5-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "utils"
+      ],
+      "Hash": "1c9935f4f14c6c096c9c9072ddee59f1"
+    },
     "rematch": {
       "Package": "rematch",
       "Version": "1.0.1",
@@ -3596,6 +3773,19 @@
         "stringr"
       ],
       "Hash": "3838071b66e0c566d55cc26bd6e27bf4"
+    },
+    "sessioninfo": {
+      "Package": "sessioninfo",
+      "Version": "1.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cli",
+        "tools",
+        "utils"
+      ],
+      "Hash": "3f9796a8d0a0e8c6eb49a4b029359d1f"
     },
     "shape": {
       "Package": "shape",
@@ -3965,6 +4155,16 @@
         "utils"
       ],
       "Hash": "1e4beacf8b8e82280c0329d97a4740d5"
+    },
+    "truncnorm": {
+      "Package": "truncnorm",
+      "Version": "1.0-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "cc8b5bfa01c930ccb56d3051e515fbd8"
     },
     "tzdb": {
       "Package": "tzdb",

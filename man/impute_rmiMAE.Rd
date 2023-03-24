@@ -8,7 +8,7 @@ impute_rmiMAE(missing_data_set)
 }
 \arguments{
 \item{missing_data_set}{a matrix or data frame with missing values to be
-imputed.}
+imputed containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by rmiMAE.
@@ -25,7 +25,7 @@ Author: NishithPaul
 }
 \examples{
 \dontrun{
-idf <- matrix(rnorm(1000), ncol =  10)
+idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
 idf[runif(1000) < 0.1] <- NA
 impute_rmiMAE(idf)
 }
