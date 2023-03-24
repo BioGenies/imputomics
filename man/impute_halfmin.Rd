@@ -25,3 +25,4 @@ impute_halfmin(idf)
 }
 
 }
+\keyword{constant}

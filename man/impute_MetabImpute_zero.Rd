@@ -29,3 +29,4 @@ impute_MetabImpute_zero(idf)
 \seealso{
 \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
 }
+\keyword{constant}

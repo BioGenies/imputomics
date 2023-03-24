@@ -24,3 +24,4 @@ impute_zero(idf)
 }
 
 }
+\keyword{constant}

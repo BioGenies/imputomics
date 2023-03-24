@@ -36,6 +36,8 @@ impute_constant <- function(missing_data_set, constant_value) {
 #' impute_zero(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_zero <- function(missing_data_set)
@@ -123,6 +125,8 @@ compute_col_median <- function(x)
 #' impute_min(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_min <- function(missing_data_set)
@@ -143,6 +147,8 @@ impute_min <- function(missing_data_set)
 #' values2 = c(21, 32, 48, NA, 59))
 #' impute_mean(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -166,6 +172,8 @@ impute_mean <- function(missing_data_set)
 #' impute_halfmin(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_halfmin <- function(missing_data_set)
@@ -186,6 +194,8 @@ impute_halfmin <- function(missing_data_set)
 #' values2 = c(21, 32, 48, NA, 59))
 #' impute_median(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -1070,6 +1080,8 @@ impute_MetabImpute_GSIMP <- function(missing_data_set) {
 #' impute_MetabImpute_min(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_MetabImpute_min <- function(missing_data_set) {
@@ -1098,6 +1110,8 @@ impute_MetabImpute_min <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_MetabImpute_halfmin(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -1128,6 +1142,8 @@ impute_MetabImpute_halfmin <- function(missing_data_set) {
 #' impute_MetabImpute_rhalfmin(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_MetabImpute_rhalfmin <- function(missing_data_set) {
@@ -1156,6 +1172,8 @@ impute_MetabImpute_rhalfmin <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_MetabImpute_mean(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -1186,6 +1204,8 @@ impute_MetabImpute_mean <- function(missing_data_set) {
 #' impute_MetabImpute_median(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_MetabImpute_median <- function(missing_data_set) {
@@ -1214,6 +1234,8 @@ impute_MetabImpute_median <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_MetabImpute_zero(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -1244,6 +1266,8 @@ impute_MetabImpute_zero <- function(missing_data_set) {
 #' impute_MetabImpute_rmean(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_MetabImpute_rmean <- function(missing_data_set) {
@@ -1272,6 +1296,8 @@ impute_MetabImpute_rmean <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_MetabImpute_rmedian(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -1302,6 +1328,8 @@ impute_MetabImpute_rmedian <- function(missing_data_set) {
 #' impute_MetabImpute_rmin(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_MetabImpute_rmin <- function(missing_data_set) {
@@ -1330,6 +1358,8 @@ impute_MetabImpute_rmin <- function(missing_data_set) {
 #' idf <- data.frame(matrix(idf, nrow = 10))
 #' impute_MetabImpute_rzero(idf)
 #' }
+#'
+#' @keywords constant
 #'
 #' @export
 
@@ -1581,6 +1611,8 @@ impute_mice_mixed <- function(missing_data_set) {
 #' impute_rmiMAE(idf)
 #' }
 #'
+#' @keywords constant
+#'
 #' @export
 
 impute_rmiMAE <- function(missing_data_set) {
@@ -1737,14 +1769,16 @@ impute_mNMF <- function(missing_data_set){
 #' idf[runif(1000) < 0.1] <- NA
 #' impute_CM(idf)
 #'}
+#'
+#' @keywords constant
+#'
 #' @export
 
 impute_CM <- function(missing_data_set){
 
   # samples in columns and features in rows
   missing_data_set <- t(missing_data_set)
-  imputed <- GMSimpute::GMS.Lasso(missing_data_set,
-                                  TS.Lasso = FALSE)
+  imputed <- GMSimpute::GMS.Lasso(missing_data_set, TS.Lasso = FALSE)
   data.frame(t(imputed))
 }
 

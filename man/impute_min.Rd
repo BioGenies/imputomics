@@ -24,3 +24,4 @@ impute_min(idf)
 }
 
 }
+\keyword{constant}
