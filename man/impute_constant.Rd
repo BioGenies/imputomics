@@ -3,8 +3,10 @@
 \name{impute_constant}
 \alias{impute_constant}
 \title{Helper function.
-Imputes constant value.}
+Checks if provided input is right}
 \usage{
+impute_constant(missing_data_set, constant_value)
+
 impute_constant(missing_data_set, constant_value)
 }
 \arguments{
@@ -14,6 +16,9 @@ imputed containing features in columns and samples in rows.}
 \item{constant_value}{a constant value to impute}
 }
 \description{
+Helper function.
+Checks if provided input is right
+
 Helper function.
 Imputes constant value.
 }

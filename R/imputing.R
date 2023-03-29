@@ -5,6 +5,19 @@
 # source('R/rmiMAE.R')
 
 #' Helper function.
+#' Checks if provided input is right
+#'
+#' @param missing_data_set a data frame with missing values to be imputed
+#' containing features in columns and samples in rows.
+#'
+#' @keywords internal
+
+impute_constant <- function(missing_data_set, constant_value) {
+  missing_data_set[is.na(missing_data_set)] <- constant_value
+  missing_data_set
+}
+
+#' Helper function.
 #' Imputes constant value.
 #'
 #' @param missing_data_set a matrix or data frame with missing values to be
@@ -13,7 +26,6 @@
 #' @param constant_value a constant value to impute
 #'
 #' @keywords internal
-
 
 impute_constant <- function(missing_data_set, constant_value) {
   missing_data_set[is.na(missing_data_set)] <- constant_value
@@ -109,7 +121,6 @@ compute_col_median <- function(x)
   lapply(x, mean, na.rm = TRUE)
 
 
-
 #' \strong{minimum} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by minimum values.
@@ -152,8 +163,11 @@ impute_min <- function(missing_data_set)
 #'
 #' @export
 
-impute_mean <- function(missing_data_set)
+impute_mean <- function(missing_data_set) {
+  missing_data_set <- data.frame(missing_data_set)
   impute_per_column(missing_data_set, compute_col_mean)
+
+}
 
 
 #' \strong{half-minimum} imputation.
@@ -176,8 +190,10 @@ impute_mean <- function(missing_data_set)
 #'
 #' @export
 
-impute_halfmin <- function(missing_data_set)
+impute_halfmin <- function(missing_data_set) {
+  missing_data_set <- data.frame(missing_data_set)
   impute_per_column(missing_data_set, compute_col_halfmin)
+}
 
 
 #' \strong{median} imputation.
@@ -617,13 +633,15 @@ impute_missforest <- function(missing_data_set) {
 
 impute_areg <- function(missing_data_set) {
   capture.output(imputed <- Hmisc::aregImpute(
-    formula = as.formula(paste0("~ ", paste0(colnames(df), collapse = " + "))),
-    data = df, tlinear = FALSE)
+    formula = as.formula(paste0("~ ", paste0(colnames(missing_data_set),
+                                             collapse = " + "))),
+    data = missing_data_set,
+    tlinear = FALSE)
   )
   data.frame(do.call(cbind,
                      Hmisc::impute.transcan(imputed,
                                             imputation = 1,
-                                            data = df,
+                                            data = missing_data_set,
                                             list.out = TRUE,
                                             pr = FALSE,
                                             check = FALSE)))
@@ -798,8 +816,11 @@ impute_softimpute <- function(missing_data_set) {
 #' @export
 
 impute_PEMM <- function(missing_data_set) {
-  PEMM::PEMM_fun(missing_data_set,
-                 phi = 1)
+  #PEMM_fun requires matrix
+  missing_data_set <- as.matrix(missing_data_set)
+  imputed <- PEMM::PEMM_fun(missing_data_set,
+                            phi = 1)
+  data.frame(imputed[["Xhat"]])
 }
 
 
@@ -1714,7 +1735,12 @@ impute_bcv_svd <- function(missing_data_set){
 #' @export
 
 impute_imputation_kNN <- function(missing_data_set){
-  imputed <- imputation::kNNImpute(missing_data_set, k = 10)
+  # kNNImpute needs data to be a matrix
+  missing_data_set <- as.matrix(missing_data_set)
+  imputed <- imputation::kNNImpute(missing_data_set,
+                                   k = min(nrow(missing_data_set),
+                                           ncol(missing_data_set),
+                                           11) - 1)
   data.frame(imputed[['x']])
 }
 
@@ -1722,6 +1748,8 @@ impute_imputation_kNN <- function(missing_data_set){
 #'
 #' A function to replace \code{NA} in the data frame based on
 #' \emph{Jingjing Xu (https://doi.org/10.3390/molecules26195787)}.
+#'
+#' @importFrom NMF nmf.getOption
 #'
 #' @inheritParams impute_constant
 #'
@@ -1744,7 +1772,7 @@ impute_mNMF <- function(missing_data_set){
                                   nrow(missing_data_set)),
                               length.out = min(20, ncol(missing_data_set))), 0))
   imputed <- nmf_opt(IMP = missing_data_set,
-                     M = NULL,
+                     M = NMF::nmf.getOption('default.algorithm'),
                      kgroup = k_group,
                      initialType = "mean")
   data.frame(t(imputed))
@@ -1775,11 +1803,10 @@ impute_mNMF <- function(missing_data_set){
 #' @export
 
 impute_CM <- function(missing_data_set){
-
   # samples in columns and features in rows
   missing_data_set <- t(missing_data_set)
   imputed <- GMSimpute::GMS.Lasso(missing_data_set, TS.Lasso = FALSE)
-  data.frame(t(imputed))
+  data.frame(imputed)
 }
 
 
@@ -1805,6 +1832,8 @@ impute_CM <- function(missing_data_set){
 #' @export
 
 impute_BayesMetab <- function(missing_data_set){
+  # MCMC.Factor requires matrix
+  missing_data_set <- as.matrix(missing_data_set)
   imputed <- MCMC.Factor(missing_data_set,
                          M = 100,
                          miss.pattern = !is.na(missing_data_set),
