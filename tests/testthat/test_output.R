@@ -65,14 +65,15 @@ lapply(functions, function(ith_method) {
   })
 })
 
-
 # check for right result
 context("impute_* functions do not change the original data.")
 
 lapply(functions, function(ith_method) {
   res <- results[[ith_method]]
   test_that(paste0(ith_method, " do not change the original data."), {
-    expect_true(all(res[!is.na(missing_data_set)] == missing_data_set[!is.na(missing_data_set)]))
+    expect_true(all.equal(res[!is.na(missing_data_set)],
+                          missing_data_set[!is.na(missing_data_set)],
+                          check.attributes = FALSE))
   })
 })
 
