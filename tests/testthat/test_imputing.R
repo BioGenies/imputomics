@@ -379,4 +379,199 @@ test_that("test impute_MetabImpute_BPCA()", {
                sum(imputed[!is.na(example_df)]))
 })
 
-# TODO: continue https://github.com/michbur/imputomics/blob/main/R/imputing.R#L1027
+test_that("test impute_MetabImpute_QRILC()", {
+
+  set.seed(42)
+  # TODO: prints notes
+  imputed <- imputomics::impute_MetabImpute_QRILC(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 0.734607230745018, 5),
+                              col2 = c(1, 0.71116003879889, 0, 4, 0.631595231957346)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+# test_that("test impute_MetabImpute_GSIMP()", {
+#
+#   set.seed(42)
+#   # TODO: task 1 failed - "x should be a matrix with 2 or more columns"
+#   # despite the fact that example_df does have 2 columns
+#   imputed <- imputomics::impute_MetabImpute_GSIMP(example_df)
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 3, 0.734607230745018, 5),
+#                               col2 = c(1, 0.71116003879889, 0, 4, 0.631595231957346)),
+#                          class = "data.frame",
+#                          row.names = c("1", "2", "3", "4", "5")))
+#
+#   expect_equal(sum(example_df[!is.na(example_df)]),
+#                sum(imputed[!is.na(example_df)]))
+# })
+
+test_that("test impute_MetabImpute_min()", {
+
+  imputed <- imputomics::impute_MetabImpute_min(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 1, 5),
+                              col2 = c(1, 1, 1, 4, 1)),
+                         class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+
+test_that("test impute_MetabImpute_halfmin()", {
+
+  imputed <- imputomics::impute_MetabImpute_halfmin(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 0.5, 5),
+                              col2 = c(1, 0.5, 0.5, 4, 0.5)),
+                         class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+# TODO:
+# test_that("test impute_MetabImpute_rhalfmin()", {
+#
+#   imputed <- imputomics::impute_MetabImpute_rhalfmin(example_df)
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 3, 0.5, 5),
+#                               col2 = c(0, 0, 0, 0, 0)),
+#                          class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+#
+#   expect_equal(sum(example_df[!is.na(example_df)]),
+#                sum(imputed[!is.na(example_df)]))
+# })
+
+test_that("test impute_MetabImpute_mean()", {
+
+  imputed <- imputomics::impute_MetabImpute_mean(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.75, 5),
+                              col2 = c(1, 2.5, 2.5, 4, 2.5)),
+                         class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+test_that("test impute_MetabImpute_median()", {
+
+  imputed <- imputomics::impute_MetabImpute_median(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.5, 5),
+                              col2 = c(1, 2.5, 2.5, 4, 2.5)),
+                         class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+test_that("test impute_MetabImpute_zero()", {
+
+  imputed <- imputomics::impute_MetabImpute_zero(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 0, 5),
+                              col2 = c(1, 0, 0, 4, 0)),
+                         class = "data.frame", row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+# test_that("test impute_MetabImpute_rmean()", {
+#
+#   imputed <- imputomics::impute_MetabImpute_rmean(example_df)
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 3, 2.75, 5),
+#                               col2 = c(0, 0, 0, 0, 0)),
+#                          class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+#
+#   expect_equal(sum(example_df[!is.na(example_df)]),
+#                sum(imputed[!is.na(example_df)]))
+# })
+# TODO:
+# impute_MetabImpute_rmean() is not working correctly
+
+# test_that("test impute_MetabImpute_rmedian()", {
+#
+#   imputed <- imputomics::impute_MetabImpute_rmedian(example_df)
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 3, 0, 5),
+#                               col2 = c(1, 0, 0, 4, 0)),
+#                          class = "data.frame", row.names = c(NA, -5L)))
+#
+#   expect_equal(sum(example_df[!is.na(example_df)]),
+#                sum(imputed[!is.na(example_df)]))
+# })
+# TODO:
+# impute_MetabImpute_rmedian() is not working correctly
+# impute_MetabImpute_rmin() is not working correctly
+# impute_MetabImpute_rzero() is not working correctly
+# impute_MetabImpute_rrf() is not working correctly
+# impute_MetabImpute_rrf() is not working correctly
+# TODO: impute_MetabImpute_rGSIMP not working
+#Error in { :
+#    task 1 failed - "x should be a matrix with 2 or more columns"
+# TODO:
+# > imputomics:::impute_MetabImpute_rQRILC(example_df)
+# Error in 1:nSamples : argument of length 0
+# TODO: imputomics:::impute_MetabImpute_rBPCA(example_df) return column zero
+# TODO: imputomics:::impute_MA(example_df)
+# Not enough data to estimate the pattern of missingness!
+# TODO: > imputomics:::impute_eucknn(example_df)
+#Error in KNNEuc(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set) * :
+#                                                           Fewer than K finite distances found
+# TODO: imputomics:::impute_mice_mixed(example_df) is drunk
+
+test_that("test impute_rmiMAE()", {
+
+  imputed <- imputomics::impute_rmiMAE(example_df)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 4, 5),
+                              col2 = c(1, 2, 3, 4, 5)),
+                         class = "data.frame", row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+# TODO: > imputomics:::impute_RegImpute(example_df)
+# !!! This function ruins the entire session :D
+# Error in filled[, -col][present_indices, ] :
+# incorrect number of dimensions
+
+# TODO: imputomics:::impute_bcv_svd(example_df) does not return anything
+test_that("test impute_bcv_svd()", {
+
+  imputed <- imputomics::impute_bcv_svd(example_df)
+  expect_equal(imputed,
+               structure(list(X1 = c(1, 2, 3, 2.75, 5),
+                              X2 = c(1, 2.5, 2.5, 4, 2.5)),
+                         class = "data.frame", row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+})
+
+# TODO:imputomics:::impute_imputation_kNN(example_df)
+#Error in imputation::kNNImpute(missing_data_set, k = 10) :
+#  x should be a numeric data matrix
+
+# TODO: imputomics:::impute_mNMF(example_df)
+#Error in do.call(getGeneric("seed"), c(list(x = x, model = init, method = seed.method), :
+#                                         'what' must be a function or character string
+
+# TODO: imputomics:::impute_CM(example_df)
+# Returns transposition
+
+# TODO:
+# > imputed <- imputomics:::impute_BayesMetab(example_df)
+# Error in t(sample.x[, , i]) %*% SigInv %*% (as.matrix(Data.init[i, ])) :
+#  non-conformable arguments
+
