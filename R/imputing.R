@@ -461,7 +461,7 @@ impute_missmda_em <- function(missing_data_set) {
 impute_mice_pmm <- function(missing_data_set) {
   imputed <- mice::mice(missing_data_set,
                         method = 'pmm',
-                        m = 1,
+                        m = 5,
                         maxit = 100,
                         printFlag = FALSE,
                         predictorMatrix = mice::quickpred(missing_data_set))
@@ -497,7 +497,7 @@ impute_mice_pmm <- function(missing_data_set) {
 impute_mice_cart <- function(missing_data_set) {
   imputed <- mice::mice(missing_data_set,
                         method = 'cart',
-                        m = 1,
+                        m = 5,
                         maxit = 100,
                         printFlag = FALSE,
                         predictorMatrix = mice::quickpred(missing_data_set))
@@ -533,7 +533,7 @@ impute_mice_cart <- function(missing_data_set) {
 impute_mice_rf <- function(missing_data_set) {
   imputed <- mice::mice(missing_data_set,
                         method = 'rf',
-                        m = 1,
+                        m = 5,
                         maxit = 100,
                         printFlag = FALSE,
                         predictorMatrix = mice::quickpred(missing_data_set))
@@ -958,7 +958,7 @@ impute_gsimp <- function(missing_data_set) {
 #' @export
 #'
 impute_vim_knn <- function(missing_data_set) {
-  imputed <- VIM::kNN(missing_data_set, k = 10)[,1:ncol(missing_data_set)]
+  imputed <- VIM::kNN(missing_data_set, k = 5)[,1:ncol(missing_data_set)]
   data.frame(imputed)
 }
 
@@ -991,7 +991,8 @@ impute_MetabImpute_RF <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RF',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1020,7 +1021,8 @@ impute_MetabImpute_BPCA <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'BPCA',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1049,7 +1051,8 @@ impute_MetabImpute_QRILC <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'QRILC',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1078,7 +1081,8 @@ impute_MetabImpute_GSIMP <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'GSIMP',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1109,7 +1113,8 @@ impute_MetabImpute_min <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'min',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1140,7 +1145,8 @@ impute_MetabImpute_halfmin <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'halfmin',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1171,7 +1177,8 @@ impute_MetabImpute_rhalfmin <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RHM',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1202,7 +1209,8 @@ impute_MetabImpute_mean <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'mean',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1233,7 +1241,8 @@ impute_MetabImpute_median <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'median',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1264,7 +1273,8 @@ impute_MetabImpute_zero <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'zero',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1295,7 +1305,8 @@ impute_MetabImpute_rmean <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RMEAN',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1326,7 +1337,8 @@ impute_MetabImpute_rmedian <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RMEDIAN',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1357,7 +1369,8 @@ impute_MetabImpute_rmin <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RMIN',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1388,7 +1401,8 @@ impute_MetabImpute_rzero <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RZERO',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1417,7 +1431,8 @@ impute_MetabImpute_rrf <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RRF',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1446,7 +1461,8 @@ impute_MetabImpute_rGSIMP <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RGSIMP',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1475,7 +1491,8 @@ impute_MetabImpute_rQRILC <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RQRILC',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1504,7 +1521,8 @@ impute_MetabImpute_rBPCA <- function(missing_data_set) {
   imputed <- MetabImpute::Impute(data = missing_data_set,
                                  method = 'RBPCA',
                                  reps = 5,
-                                 local = TRUE)
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
   data.frame(imputed)
 }
 
@@ -1606,7 +1624,7 @@ impute_mice_mixed <- function(missing_data_set) {
                                       scale = TRUE,
                                       n.iter = 10,
                                       sel_method = 11)
-  data.frame(imputed[['mice_mixed_imputation']])
+  data.frame(imputed[['mice_mixed_imputation']][[10]])
 }
 
 #' \strong{rmiMAE} imputation.
