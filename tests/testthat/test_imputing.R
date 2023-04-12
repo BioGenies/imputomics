@@ -348,6 +348,38 @@ test_that("test impute_amelia()", {
 # "The response has five or fewer unique values.  Are you sure you want to do regression?"
 # TODO: impute_areg throws an error
 
+test_that("test impute_eucknn()", {
+
+  imputed <- imputomics:::impute_eucknn(example_df_bigger)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.35924551796592, 5),
+                              col2 = c(1, 2.5, 4, 4, 0),
+                              col3 = c(1, 2, 3, 2.35924551796592, 5),
+                              col4 = c(1, 1.5, 2, 4, 1.54446657821975),
+                              col5 = c(1, 2, 3, 2.35924551796592, 5),
+                              col6 = c(1, 0.75, 2.79190075645217, 4, 0)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+  expect_equal(sum(example_df_bigger[!is.na(example_df_bigger)]),
+               sum(imputed[!is.na(example_df_bigger)]))
+
+  imputed <- imputomics:::impute_eucknn(example_df_bigger_w_negatives)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.94501341312175, 5),
+                              col2 = c(1, 2.5, 4, -4, 0),
+                              col3 = c(1, 2, 3, 2.94501341312175, 5),
+                              col4 = c(1, -0.5, -2, 4, -0.633399734659244),
+                              col5 = c(1, 2, 3, 2.94501341312175, 5),
+                              col6 = c(1, 0.75, 0.51925930159214, 4, 0)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+  expect_equal(sum(example_df_bigger_w_negatives[!is.na(example_df_bigger_w_negatives)]),
+               sum(imputed[!is.na(example_df_bigger_w_negatives)]))
+})
+
 test_that("test impute_knn()", {
   imputed <- imputomics:::impute_knn(example_df)
   #TODO: maybe we would like to have `k` param
@@ -359,6 +391,39 @@ test_that("test impute_knn()", {
   )
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_knn(example_df_w_negatives)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, 0.5, 5),
+                              col2 = c(1, 3.375, 3.375, -4, 3.375)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
+})
+
+test_that("test impute_vim_knn()", {
+  imputed <- imputomics:::impute_vim_knn(example_df)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 1, 5),
+                              col2 = c(1, 1, 1, 4, 1)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_vim_knn(example_df_w_negatives)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, 1, 5),
+                              col2 = c(1, 1, 1, -4, 1)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_qrilc()", {
@@ -625,10 +690,9 @@ test_that("test impute_MetabImpute_zero()", {
 # TODO: imputomics:::impute_MetabImpute_rBPCA(example_df) return column zero
 # TODO: imputomics:::impute_MA(example_df)
 # Not enough data to estimate the pattern of missingness!
-# TODO: > imputomics:::impute_eucknn(example_df)
-#Error in KNNEuc(as.matrix(missing_data_set), k = ceiling(nrow(missing_data_set) * :
-#                                                           Fewer than K finite distances found
 # TODO: imputomics:::impute_mice_mixed(example_df) is drunk
+
+
 
 test_that("test impute_rmiMAE()", {
 
@@ -663,6 +727,8 @@ test_that("test impute_bcv_svd()", {
 # TODO:imputomics:::impute_imputation_kNN(example_df)
 #Error in imputation::kNNImpute(missing_data_set, k = 10) :
 #  x should be a numeric data matrix
+
+
 
 # TODO: imputomics:::impute_mNMF(example_df)
 #Error in do.call(getGeneric("seed"), c(list(x = x, model = init, method = seed.method), :
