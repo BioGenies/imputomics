@@ -476,4 +476,360 @@ impute_missmda_reg <- function(missing_data_set) {
 }
 
 
+#' \strong{MetabImpute replicate BPCA} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate BPCA.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate BPCA by
+#' [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rBPCA(idf)
+#' }
+#'
+#' @export
+
+impute_MetabImpute_rBPCA <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RBPCA',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{MetabImpute replicate GSIMP} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate GSIMP.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate GSIMP by
+#' [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rGSIMP(idf)
+#' }
+#'
+#' @export
+
+impute_MetabImpute_rGSIMP <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RGSIMP',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{MetabImpute replicate half-minimum} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate half-minimum.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate half-minimum
+#' by [MetabImpute::Impute()]
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rhalfmin(idf)
+#' }
+#'
+#' @keywords constant
+#'
+#' @export
+
+impute_MetabImpute_rhalfmin <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RHM',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+#' \strong{MetabImpute replicate mean} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate mean.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate mean by
+#' [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rmean(idf)
+#' }
+#'
+#' @keywords constant
+#'
+#' @export
+
+impute_MetabImpute_rmean <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RMEAN',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{MetabImpute replicate median} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate median.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate median by
+#' [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rmedian(idf)
+#' }
+#'
+#' @keywords constant
+#'
+#' @export
+
+impute_MetabImpute_rmedian <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RMEDIAN',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+
+#' \strong{MetabImpute replicate min} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate min.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate min by
+#' [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rmin(idf)
+#' }
+#'
+#' @keywords constant
+#'
+#' @export
+
+impute_MetabImpute_rmin <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RMIN',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{MetabImpute replicate QRILC} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate QRILC.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate QRILC by
+#' [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rGSIMP(idf)
+#' }
+#'
+#' @export
+
+impute_MetabImpute_rQRILC <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RQRILC',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{MetabImpute replicate Random Forest} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate Random Forest.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate Random Forest
+#' by [MetabImpute::Impute()].
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rrf(idf)
+#' }
+#'
+#' @export
+
+impute_MetabImpute_rrf <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RRF',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{MetabImpute replicate zero} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by replicate zero.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values of replicate zero by
+#' [MetabImpute::Impute()].\
+#'
+#' @seealso [MetabImpute::Impute()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- runif(100)
+#' idf[sample(1L:100, round(4, 0))] <- NA
+#' idf <- data.frame(matrix(idf, nrow = 10))
+#' impute_MetabImpute_rzero(idf)
+#' }
+#'
+#' @keywords constant
+#'
+#' @export
+
+impute_MetabImpute_rzero <- function(missing_data_set) {
+  imputed <- MetabImpute::Impute(data = missing_data_set,
+                                 method = 'RZERO',
+                                 reps = 5,
+                                 local = TRUE,
+                                 rep_threshold = 2/3)
+  data.frame(imputed)
+}
+
+
+#' \strong{rmiMAE} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by outlier robust missing
+#' imputation technique by minimizing two-way empirical mean absolute error.
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values by rmiMAE.
+#'
+#' @details Robust Missing imputation by minimizing two way mean absolute error
+#' (RMIMAE) Function URL:
+#' https://github.com/NishithPaul/missingImputation/blob/main/rmiMAE.R
+#' Author: NishithPaul
+#'
+#' @seealso \emph{doi: 10.2174/1574893612666171121154655}
+#'
+#' @examples
+#' \dontrun{
+#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
+#' idf[runif(1000) < 0.1] <- NA
+#' impute_rmiMAE(idf)
+#' }
+#'
+#' @keywords constant
+#'
+#' @export
+
+impute_rmiMAE <- function(missing_data_set) {
+  imputed <- rmiMAE(as.matrix(missing_data_set), contRate = 99)
+  data.frame(imputed[['x']])
+}
+
+
+
+#' \strong{tWLSA} imputation.
+#'
+#' Two Way Weighted Least Square Approach.
+#'
+#' A function to replace \code{NA} in the data frame by [tWLSA::wlsMisImp()].
+#'
+#' @importFrom tWLSA wlsMisImp
+#'
+#' @inheritParams impute_constant
+#'
+#' @returns A \code{data.frame} with imputed values by [tWLSA::wlsMisImp()].
+#'
+#' @seealso [tWLSA::wlsMisImp()]
+#'
+#' @examples
+#' \dontrun{
+#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
+#' values2 = rep(c(21, 32, 48, NA, 59), 10),
+#' values3 = rep(c(37, NA, 33, 44, 32), 10))
+#' impute_twlsa(idf)
+#' }
+#'
+#' @references
+#' \insertRef{kumar_kernel_2021}{imputomics}
+#'
+#' @export
+
+impute_twlsa <- function(missing_data_set) {
+  imputed <- tWLSA::wlsMisImp(as.matrix(missing_data_set))
+  data.frame(imputed)
+}
+
+
 
