@@ -1,6 +1,7 @@
 
 set.seed(11)
-idf <- matrix(sample(1L:200, size = 100, replace = TRUE), ncol = 10)
+idf <- matrix(sample(1L:200, size = 100, replace = TRUE), ncol = 5)
+idf[runif(100) < 0.1] <- 0
 idf[runif(100) < 0.2] <- NA
 missing_data_set <- data.frame(idf)
 
@@ -9,6 +10,7 @@ impute_halfmin(missing_data_set)
 
 all_functions <- ls("package:imputomics")
 functions <- all_functions[substr(all_functions, 1, 7) == "impute_"]
+
 
 results <- lapply(functions, function(ith_fun) {
   print(ith_fun)
@@ -97,23 +99,27 @@ results[["impute_corknn"]]
 impute_MetabImpute_rmedian(missing_data_set)
 
 a <- MetabImpute::Impute(data = missing_data_set,
-                         method = 'RMEDIAN',
-                         reps = 1,
+                         method = 'GSIMP',
+                         reps = 5,
                          local = TRUE,
-                         rep_threshold = 2/3)
+                         rep_threshold = 1)
 
+
+results[["impute_MetabImpute_GSIMP"]] == a
 
 a == missing_data_set | is.na(missing_data_set)
+
 dat_example <- missing_data_set
-dat_example[is.na(dat_example)] <- results[["impute_mice_mixed"]][is.na(dat_example)]
+dat_example[is.na(dat_example)] <- results[["impute_MetabImpute_median"]][is.na(dat_example)]
 
-results[["impute_mice_mixed"]] == dat_example
-
-all.equal(results[["impute_mice_mixed"]], dat_example,
+results[["impute_MetabImpute_median"]] == dat_example
+all.equal(results[["impute_MetabImpute_median"]], dat_example,
           check.attributes = FALSE)
 
+dat_example <- missing_data_set
+dat_example[is.na(dat_example)] <- impute_rmiMAE(missing_data_set)[is.na(dat_example)]
 
-identical()
+impute_rmiMAE(missing_data_set) == dat_example
 
 
 

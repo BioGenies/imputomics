@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.2.2",
+    "Version": "4.2.3",
     "Repositories": [
       {
         "Name": "BioCsoft",
@@ -1192,14 +1192,14 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "3.6.0",
+      "Version": "3.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "3177a5a16c243adc199ba33117bd9657"
+      "Hash": "89e6d8219950eac806ae0c489052048a"
     },
     "clipr": {
       "Package": "clipr",
@@ -3959,10 +3959,7 @@
       "RemoteUsername": "NishithPaul",
       "RemoteRef": "HEAD",
       "RemoteSha": "f81458845ad9c979fac75aec51235dc74a39fbc8",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "4ebf4b81ef19dc084b79a78e5dab5d75"
+      "Hash": "1e411e5ae0af613757aefbb5ae52b98e"
     },
     "testthat": {
       "Package": "testthat",
