@@ -13,19 +13,21 @@
 #' @param ratio a number from 0 to 1 denoting the ratio of data to be
 #' exchanged into NA's
 #'
-#' @details This function uses \code{\link[mice]{ampute}}.
-#'
 #' @returns A \code{matrix} with NA values inserted.
 #'
 #' @examples
-#' m <- matrix(rnorm(10), 5, 2)
+#' m <- as.data.frame(matrix(rnorm(10), 5, 2))
 #' insert_MCAR(m, ratio = 0.3)
 #'
 #' @export insert_MCAR
 #'
 
 insert_MCAR <- function(dat, ratio = 0) {
-  mice::ampute(data = dat, prop = ratio, mech = "MCAR", bycases = FALSE)$amp
+  tmp_matrix <- matrix(runif(nrow(dat) * ncol(dat)),
+                       nrow = nrow(dat),
+                       ncol = ncol(dat))
+  dat[tmp_matrix < ratio] <- NA
+  dat
 }
 
 ######## MAR
@@ -42,14 +44,16 @@ insert_MCAR <- function(dat, ratio = 0) {
 #' @returns A \code{matrix} with NA values inserted.
 #'
 #' @examples
-#' m <- matrix(rnorm(10), 5, 2)
-#' insert_MCAR(m, ratio = 0.3)
+#' m <- as.data.frame(matrix(rnorm(10), 5, 2))
+#' insert_MAR(m, ratio = 0.3)
 #'
-#' @export
+#' @export insert_MAR
 #'
 
 insert_MAR <- function(dat, ratio = 0) {
-  mice::ampute(data = dat, prop = ratio, mech = "MAR", bycases = FALSE)$amp
+  pattern <- matrix(sample(c(0, 1), ncol(dat)*2, replace = TRUE, prob = c(0.7, 0.3)), ncol = ncol(dat))
+  mice::ampute(data = dat, prop = ratio, mech = "MAR", bycases = FALSE,
+               patterns = pattern)$amp
 }
 
 
@@ -62,6 +66,9 @@ insert_MAR <- function(dat, ratio = 0) {
 #'
 #' @inheritParams insert_MCAR
 #'
+#' @param thresh a value from 0 to 1: limit value indicating maximum ratio of
+#' missing observations in one column
+#'
 #' @details LOD missing data is simulated by sampling possible limit of
 #' detection (LOD) for each metabolite and truncates the observations below this
 #' values. Thus, each metabolite has different truncation threshold. However,
@@ -70,20 +77,21 @@ insert_MAR <- function(dat, ratio = 0) {
 #' @returns A \code{matrix} with NA values inserted.
 #'
 #' @examples
-#' m <- matrix(rnorm(10), 5, 2)
-#' insert_MNAR(m, ratio = 0.3)
-#' @export
+#' m <- as.data.frame(matrix(rnorm(200), 10, 20))
+#' insert_MNAR(m, ratio = 0.1)
+#'
+#' @export insert_MNAR
 #'
 
-insert_MNAR <- function(dat, ratio = 0.1) {
+insert_MNAR <- function(dat, ratio = 0.1, thresh = 1) {
   n <- ncol(dat)
   sum_value <- n * ratio
   ratio_cols <- runif(n - 1, 0, 0.9)
   p_vec <- diff(sort(c(ratio_cols, 0, 1))) * sum_value
 
-  while(any(p_vec >= 1)) {
-    excess <- (sum_value - sum(p_vec[!(p_vec >= 1)])) / n
-    p_vec[p_vec >= 1] <- 0
+  while(any(p_vec >= thresh)) {
+    excess <- (sum_value - sum(p_vec[!(p_vec >= thresh)])) / n
+    p_vec[p_vec >= thresh] <- 0
     p_vec <- p_vec + excess
   }
 
@@ -150,7 +158,7 @@ simulate_miss_value <- function(data_set,
                                 mar = 0,
                                 mnar = 0){
   if(!("data.frame" %in% class(data_set)))
-    stop("Variable data should be a data.frame") # as.matrix()
+    stop("Variable data should be a data.frame")
 
   if ((mcar + mar + mnar > 1) || any(c(mcar, mar, mnar) < 0))
     stop("Sum of mcar, mar and mnar should be between 0 and 1.")

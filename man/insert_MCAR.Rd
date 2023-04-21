@@ -19,11 +19,8 @@ A \code{matrix} with NA values inserted.
 This function inserts NA's to the provided matrix according to the
 MCAR (Missing Completely At Random) pattern.
 }
-\details{
-This function uses \code{\link[mice]{ampute}}.
-}
 \examples{
-m <- matrix(rnorm(10), 5, 2)
+m <- as.data.frame(matrix(rnorm(10), 5, 2))
 insert_MCAR(m, ratio = 0.3)
 
 }

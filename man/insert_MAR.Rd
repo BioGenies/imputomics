@@ -23,7 +23,7 @@ MNAR (Missing Not At Random) or MAR (Missing At Random) patterns.
 This function uses \code{\link[mice]{ampute}}.
 }
 \examples{
-m <- matrix(rnorm(10), 5, 2)
-insert_MCAR(m, ratio = 0.3)
+m <- as.data.frame(matrix(rnorm(10), 5, 2))
+insert_MAR(m, ratio = 0.3)
 
 }

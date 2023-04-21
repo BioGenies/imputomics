@@ -4,13 +4,16 @@
 \alias{insert_MNAR}
 \title{Inserting missing data of MNAR type}
 \usage{
-insert_MNAR(dat, ratio = 0.1)
+insert_MNAR(dat, ratio = 0.1, thresh = 1)
 }
 \arguments{
 \item{dat}{a matrix or data.frame of data to be filled with some NA's.}
 
 \item{ratio}{a number from 0 to 1 denoting the ratio of data to be
 exchanged into NA's}
+
+\item{thresh}{a value from 0 to 1: limit value indicating maximum ratio of
+missing observations in one column}
 }
 \value{
 A \code{matrix} with NA values inserted.
@@ -26,6 +29,7 @@ values. Thus, each metabolite has different truncation threshold. However,
 all the removed data corresponds to the provided fraction.
 }
 \examples{
-m <- matrix(rnorm(10), 5, 2)
-insert_MNAR(m, ratio = 0.3)
+m <- as.data.frame(matrix(rnorm(200), 10, 20))
+insert_MNAR(m, ratio = 0.1)
+
 }
