@@ -91,6 +91,20 @@ test_that("test impute_mean()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  expect_equal(sum(example_df[!is.na(example_df)]),
+               sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_mean(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, 1.25, 5),
+                              col2 = c(1, -1.5, -1.5, -4, -1.5)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_halfmin()", {
@@ -123,7 +137,7 @@ test_that("test impute_halfmin()", {
 test_that("test impute_median()", {
 
   imputed <- imputomics:::impute_median(example_df)
-  # one median or column-wise median?
+
   expect_equal(imputed,
                structure(list(col1 = c(1, 2, 3, 2.75, 5),
                               col2 = c(1, 2.5, 2.5, 4, 2.5)),
@@ -133,6 +147,18 @@ test_that("test impute_median()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_median(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, 1.25, 5),
+                              col2 = c(1, -1.5, -1.5, -4, -1.5)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test safe_impute()", {
@@ -624,6 +650,19 @@ test_that("test impute_MetabImpute_mean()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_MetabImpute_mean(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 0, 1.25, 5),
+                              col2 = c(1, 0, 0, 0, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5"))
+  )
+
+  # expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+  #              sum(imputed[!is.na(example_df_w_negatives)]))
+
 })
 
 test_that("test impute_MetabImpute_median()", {
@@ -636,6 +675,16 @@ test_that("test impute_MetabImpute_median()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed_w_negatives <- imputomics::impute_MetabImpute_median(example_df_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, 3, 2.5, 5),
+                              col2 = c(1, 2.5, 2.5, 4, 2.5)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  # expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+  #              sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_MetabImpute_zero()", {
