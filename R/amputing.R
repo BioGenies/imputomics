@@ -25,7 +25,6 @@
 
 insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 
-  dat <- as.data.frame(matrix(rnorm(200), 10, 20))
   tmp_matrix <- matrix(runif(nrow(dat) * ncol(dat)),
                        nrow = nrow(dat),
                        ncol = ncol(dat))
