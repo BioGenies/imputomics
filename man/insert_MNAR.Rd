@@ -4,7 +4,7 @@
 \alias{insert_MNAR}
 \title{Inserting missing data of MNAR type}
 \usage{
-insert_MNAR(dat, ratio = 0.1, thresh = 1)
+insert_MNAR(dat, ratio = 0.1, thresh = 0.2)
 }
 \arguments{
 \item{dat}{a matrix or data.frame of data to be filled with some NA's.}

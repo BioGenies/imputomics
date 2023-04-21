@@ -4,7 +4,7 @@
 \alias{insert_MCAR}
 \title{Inserting missing data of MCAR type}
 \usage{
-insert_MCAR(dat, ratio = 0)
+insert_MCAR(dat, ratio = 0, thresh = 0.2)
 }
 \arguments{
 \item{dat}{a matrix or data.frame of data to be filled with some NA's.}

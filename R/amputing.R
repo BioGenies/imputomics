@@ -12,6 +12,7 @@
 #' @param dat a matrix or data.frame of data to be filled with some NA's.
 #' @param ratio a number from 0 to 1 denoting the ratio of data to be
 #' exchanged into NA's
+#' @inheritParams insert_MCAR
 #'
 #' @returns A \code{matrix} with NA values inserted.
 #'
@@ -22,11 +23,16 @@
 #' @export insert_MCAR
 #'
 
-insert_MCAR <- function(dat, ratio = 0) {
+insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
+
+  dat <- as.data.frame(matrix(rnorm(200), 10, 20))
   tmp_matrix <- matrix(runif(nrow(dat) * ncol(dat)),
                        nrow = nrow(dat),
                        ncol = ncol(dat))
-  dat[tmp_matrix < ratio] <- NA
+  tmp_vec <- runif(length(dat[tmp_matrix < thresh]))
+  dat[tmp_matrix < thresh] <- ifelse(tmp_vec < ratio/thresh,
+                                     NA,
+                                     dat[tmp_matrix < ratio])
   dat
 }
 
@@ -51,7 +57,11 @@ insert_MCAR <- function(dat, ratio = 0) {
 #'
 
 insert_MAR <- function(dat, ratio = 0) {
-  pattern <- matrix(sample(c(0, 1), ncol(dat)*2, replace = TRUE, prob = c(0.7, 0.3)), ncol = ncol(dat))
+  pattern <- matrix(sample(c(0, 1),
+                           ncol(dat)*2,
+                           replace = TRUE,
+                           prob = c(0.7, 0.3)),
+                    ncol = ncol(dat))
   mice::ampute(data = dat, prop = ratio, mech = "MAR", bycases = FALSE,
                patterns = pattern)$amp
 }
@@ -83,7 +93,7 @@ insert_MAR <- function(dat, ratio = 0) {
 #' @export insert_MNAR
 #'
 
-insert_MNAR <- function(dat, ratio = 0.1, thresh = 1) {
+insert_MNAR <- function(dat, ratio = 0.1, thresh = 0.2) {
   n <- ncol(dat)
   sum_value <- n * ratio
   ratio_cols <- runif(n - 1, 0, 0.9)
