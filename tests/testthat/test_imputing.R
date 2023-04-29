@@ -76,6 +76,16 @@ test_that("test impute_min()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_min(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, -3, 5),
+                              col2 = c(1, -4, -4, -4, -4)),
+                         class = "data.frame", row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_mean()", {
@@ -88,9 +98,6 @@ test_that("test impute_mean()", {
                          row.names = c(NA, -5L),
                          class = "data.frame")
   )
-
-  expect_equal(sum(example_df[!is.na(example_df)]),
-               sum(imputed[!is.na(example_df)]))
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
@@ -213,6 +220,15 @@ test_that("test impute_ppca()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed_w_negatives <- imputomics::impute_ppca(example_df_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, -3, -3.15535981398885e-05, 5),
+                              col2 = c(1, 1.57667040923126e-05, -2.365005613858e-05, -4, 3.94167602308926e-05)),
+                         class = "data.frame", row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_bpca()", {
@@ -262,6 +278,49 @@ test_that("test impute_nipals()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed_w_negatives <- imputomics::impute_nipals(example_df_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, -3, -0.17081245613347, 5),
+                              col2 = c(1, 0.0902627856409907, -0.135394178461486, -4, 0.225656964102477)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
+})
+
+test_that("test impute_missmda_em()", {
+
+  set.seed(42)
+  imputed <- imputomics::impute_missmda_em(example_df_bigger)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 5.45979878684297, 5),
+                              col2 = c(1, 2.17030108964523, 4, 4, 0),
+                              col3 = c(1, 2, 3, 5.45979878684297, 5),
+                              col4 = c(1, 1.56858080182216, 2, 4, 4.45299044239315),
+                              col5 = c(1, 2, 3, 5.45979878684297, 5),
+                              col6 = c(1, 2.17089161524789, 4.00135503323105, 4, 0)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L))
+  )
+
+  # expect_equal(sum(example_df[!is.na(example_df_bigger)]),
+  #              sum(imputed[!is.na(example_df_bigger)]))
+
+  imputed_w_negatives <- imputomics::impute_missmda_em(example_df_bigger_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, 3, 2.47735909982635, 5),
+                              col2 = c(1, 0.101234839443088, 4, -4, 0),
+                              col3 = c(1, 2, 3, 2.47735909982635, 5),
+                              col4 = c(1, 1.23376735529684, -2, 4, 0.0535437684372712),
+                              col5 = c(1, 2, 3, 2.47735909982635, 5),
+                              col6 = c(1, 1.22299876433246, -2.04313682535228, 4, 0)),
+                         class = "data.frame", row.names = c(NA, -5L)))
+
+  # expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+  #              sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
 })
 
 # TODO: impute_missmda_em() throws an error for example df
@@ -300,6 +359,15 @@ test_that("test impute_mice_pmm()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  suppressWarnings(imputed_w_negatives <- imputomics::impute_mice_pmm(example_df_w_negatives))
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, -3, 1, 5),
+                              col2 = c(1, -4, -4, -4, -4)),
+                         row.names = c(NA, -5L), class = "data.frame"))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_mice_cart()", {
@@ -368,6 +436,39 @@ test_that("test impute_amelia()", {
 
   expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
                sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
+})
+
+test_that("test impute_missforest()", {
+
+  set.seed(42)
+  suppressWarnings(imputed <- imputomics:::impute_missforest(example_df_bigger))
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.584, 5),
+                              col2 = c(1, 3.238, 4, 4, 0),
+                              col3 = c(1, 2, 3, 2.61, 5),
+                              col4 = c(1, 2.844, 2, 4, 2.072),
+                              col5 = c(1, 2, 3, 2.608, 5),
+                              col6 = c(1, 2.762, 2.582, 4, 0)),
+                         row.names = c(NA, -5L),
+                         class = "data.frame")
+  )
+  expect_equal(sum(example_df_bigger[!is.na(example_df_bigger)]),
+               sum(imputed[!is.na(example_df_bigger)]))
+
+  suppressWarnings(imputed <- imputomics:::impute_missforest(example_df_bigger_w_negatives))
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.716, 5),
+                              col2 = c(1, 0.176, 4, -4, 0),
+                              col3 = c(1, 2, 3, 2.738, 5),
+                              col4 = c(1, 1.774, -2, 4, -0.032),
+                              col5 = c(1, 2, 3, 2.764, 5),
+                              col6 = c(1, 1.746, 1.752, 4, 0)),
+                         row.names = c(NA, -5L),
+                         class = "data.frame")
+  )
+  expect_equal(sum(example_df_bigger_w_negatives[!is.na(example_df_bigger_w_negatives)]),
+               sum(imputed[!is.na(example_df_bigger_w_negatives)]))
 })
 
 # TODO: impute_misforest does not work, example_df is too small
@@ -465,6 +566,15 @@ test_that("test impute_qrilc()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_qrilc(example_df_w_negatives)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, -3.90228834118572, 5),
+                              col2 = c(1, -3.47292941046733, -8.1347427856126, -4, -5.24440453439759)),
+                         row.names = c(NA, -5L), class = "data.frame"))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_twlsa()", {
@@ -502,7 +612,7 @@ test_that("test impute_softimpute()", {
 # TODO: impute_corknn(example_df) throws an error
 
 
-test_that("test impute_MetabImpute_RF()", {
+test_that("test impute_gsimp()", {
 
   set.seed(42)
   imputed <- imputomics::impute_gsimp(example_df_bigger)
@@ -535,7 +645,7 @@ test_that("test impute_MetabImpute_RF()", {
 test_that("test impute_MetabImpute_RF()", {
 
   set.seed(42)
-  # TODO: prints notes
+
   imputed <- imputomics::impute_MetabImpute_RF(example_df)
   expect_equal(imputed,
                structure(list(col1 = c(1, 2, 3, 1, 5),
@@ -544,6 +654,20 @@ test_that("test impute_MetabImpute_RF()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics::impute_MetabImpute_RF(example_df_bigger_w_negatives)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 1, 5),
+                              col2 = c(1, 0.1275, 4, 0, 0),
+                              col3 = c(1, 2, 3, 2.795, 5),
+                              col4 = c(1, 1.32, 0, 4, 1.32),
+                              col5 = c(1, 2, 3, 2.785, 5),
+                              col6 = c(1, 1.69333333333333, 1.69333333333333, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  # expect_equal(sum(example_df[!is.na(example_df_bigger_w_negatives)]),
+  #              sum(imputed[!is.na(example_df_bigger_w_negatives)]))
 })
 
 test_that("test impute_MetabImpute_BPCA()", {
@@ -582,6 +706,16 @@ test_that("test impute_MetabImpute_QRILC()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_MetabImpute_QRILC(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 0, 0, 5),
+                              col2 = c(1, 0, 0, 0, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+  # expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+  #              sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 # TODO:
@@ -612,6 +746,20 @@ test_that("test impute_MetabImpute_min()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics:::impute_MetabImpute_min(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 0, 0, 5),
+                              col2 = c(1, 0, 0, 0, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5"))
+  )
+
+  # expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+  #              sum(imputed[!is.na(example_df_w_negatives)]))
+
+
 })
 
 
