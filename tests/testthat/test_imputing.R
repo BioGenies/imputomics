@@ -940,7 +940,6 @@ test_that("test impute_rmiMAE()", {
 # Error in filled[, -col][present_indices, ] :
 # incorrect number of dimensions
 
-# TODO: imputomics:::impute_bcv_svd(example_df) does not return anything
 test_that("test impute_bcv_svd()", {
 
   imputed <- imputomics::impute_bcv_svd(example_df)
@@ -951,6 +950,16 @@ test_that("test impute_bcv_svd()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed_w_negatives <- imputomics::impute_bcv_svd(example_df_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(X1 = c(1, 2, -3, 1.25, 5),
+                              X2 = c(1, -1.5, -1.5, -4, -1.5)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
 })
 
 # TODO:imputomics:::impute_imputation_kNN(example_df)
