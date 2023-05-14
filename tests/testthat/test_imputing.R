@@ -605,6 +605,20 @@ test_that("test impute_softimpute()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed <- imputomics::impute_softimpute(example_df_bigger_w_negatives)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 0.42085699464543, 5),
+                              col2 = c(1, -1.62751387206527, 4, -4, 0),
+                              col3 = c(1, 2, 3, 0.42085699464543, 5),
+                              col4 = c(1, 2.80512651687386, -2, 4, 2.92625185721165),
+                              col5 = c(1, 2, 3, 0.42085699464543, 5),
+                              col6 = c(1, 1.80306107334002, -3.81838789422431, 4, 0)),
+                         class = "data.frame",
+                         row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_bigger_w_negatives[!is.na(example_df_bigger_w_negatives)]),
+               sum(imputed[!is.na(example_df_bigger_w_negatives)]))
 })
 
 # TODO: impute_PEMM(example_df) throws an error
@@ -775,18 +789,36 @@ test_that("test impute_MetabImpute_halfmin()", {
                sum(imputed[!is.na(example_df)]))
 })
 
-# TODO:
 # test_that("test impute_MetabImpute_rhalfmin()", {
 #
-#   imputed <- imputomics::impute_MetabImpute_rhalfmin(example_df)
+#   imputed <- imputomics::impute_MetabImpute_rhalfmin(example_df_bigger)
 #   expect_equal(imputed,
 #                structure(list(col1 = c(1, 2, 3, 0.5, 5),
-#                               col2 = c(0, 0, 0, 0, 0)),
-#                          class = "data.frame", row.names = c("1", "2", "3", "4", "5")))
+#                               col2 = c(1, 0.5, 4, 4, 0.5),
+#                               col3 = c(1, 2, 3, 0.5, 5),
+#                               col4 = c(1, 0.5, 2, 4, 0.5),
+#                               col5 = c(1, 2, 3, 0.5, 5),
+#                               col6 = c(0, 0, 0, 0, 0)),
+#                          class = "data.frame",
+#                          row.names = c("1", "2", "3", "4", "5")))
 #
-#   expect_equal(sum(example_df[!is.na(example_df)]),
-#                sum(imputed[!is.na(example_df)]))
+#   expect_equal(sum(example_df[!is.na(example_df_bigger)]),
+#                sum(imputed[!is.na(example_df_bigger)]))
+#
+#   imputed <- imputomics:::impute_MetabImpute_rhalfmin(example_df_w_negatives)
+#
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 0, 1.25, 5),
+#                               col2 = c(1, 0, 0, 0, 0)),
+#                          class = "data.frame",
+#                          row.names = c("1", "2", "3", "4", "5"))
+#   )
+#
+#   # expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+#   #              sum(imputed[!is.na(example_df_w_negatives)]))
+#
 # })
+
 
 test_that("test impute_MetabImpute_mean()", {
 
@@ -935,6 +967,159 @@ test_that("test impute_bcv_svd()", {
 # > imputed <- imputomics:::impute_BayesMetab(example_df)
 # Error in t(sample.x[, , i]) %*% SigInv %*% (as.matrix(Data.init[i, ])) :
 #  non-conformable arguments
+
+# test_that("test impute_MetabImpute_rGSIMP()", {
+#
+#   set.seed(42)
+#
+#   imputed <- imputomics::impute_MetabImpute_rGSIMP(example_df_bigger)
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 3, 0.999722724791032, 5),
+#                               col2 = c(1, 0.360803482967682, 4, 4, 0),
+#                               col3 = c(1, 2, 3, 0.998661404719745, 5),
+#                               col4 = c(1, 0.310365986524159, 2, 4, 0.547416349761128),
+#                               col5 = c(1, 2, 3, 0.999834122493599, 5),
+#                               col6 = c(1, 0.346529343767122, 0.334206244647767, 4, 0)),
+#                          class = "data.frame",
+#                          row.names = c("1", "2", "3", "4", "5")))
+#
+#   imputed_w_negatives <- imputomics::impute_MetabImpute_rGSIMP(example_df_bigger_w_negatives)
+#   expect_equal(imputed_w_negatives,
+#                structure(list(col1 = c(1, 2, 3, 2.75, 5),
+#                               col2 = c(1, 0.25, 4, 0, 0),
+#                               col3 = c(1, 2, 3, 2.75, 5),
+#                               col4 = c(1, 1, 0, 4, 1),
+#                               col5 = c(1, 2, 3, 2.75, 5),
+#                               col6 = c(1, 1.66666666666667, 1.66666666666667, 4, 0)),
+#                          class = "data.frame",
+#                          row.names = c("1","2", "3", "4", "5")))
+# })
+
+test_that("test impute_MetabImpute_rBPCA()", {
+
+  set.seed(42)
+
+  imputed <- imputomics::impute_MetabImpute_rBPCA(example_df_bigger)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 2.75, 5),
+                              col2 = c(1, 2.25, 4, 4, 0),
+                              col3 = c(1, 2, 3, 2.75, 5),
+                              col4 = c(1, 2.33333333333333, 2, 4, 2.33333333333333),
+                              col5 = c(1, 2, 3, 2.75, 5),
+                              col6 = c(1, 1.66666666666667, 1.66666666666667, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  imputed_w_negatives <- imputomics::impute_MetabImpute_rBPCA(example_df_bigger_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, 3, 2.75, 5),
+                              col2 = c(1, 0.25, 4, 0, 0),
+                              col3 = c(1, 2, 3, 2.75, 5),
+                              col4 = c(1, 1, 0, 4, 1),
+                              col5 = c(1, 2, 3, 2.75, 5),
+                              col6 = c(1, 1.66666666666667, 1.66666666666667, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1","2", "3", "4", "5")))
+})
+
+# test_that("test impute_MetabImpute_rzero()", {
+#
+#   set.seed(42)
+#
+#   imputed <- imputomics::impute_MetabImpute_rzero(example_df_bigger)
+#   expect_equal(imputed,
+#                structure(list(col1 = c(1, 2, 3, 0, 5),
+#                               col2 = c(1, 0, 4, 4, 0),
+#                               col3 = c(1, 2, 3, 0, 5),
+#                               col4 = c(1, 0, 2, 4, 0),
+#                               col5 = c(1, 2, 3, 0, 5),
+#                               col6 = c(0, 0, 0, 0, 0)),
+#                          class = "data.frame",
+#                          row.names = c("1", "2", "3", "4", "5")))
+#
+#   expect_equal(sum(example_df_bigger[!is.na(example_df_bigger)]),
+#                sum(imputed[!is.na(example_df_bigger)]))
+#
+#   imputed_w_negatives <- imputomics::impute_MetabImpute_rzero(example_df_bigger_w_negatives)
+#   expect_equal(imputed_w_negatives,
+#                structure(list(col1 = c(1, 2, 3, 5, 5),
+#                               col2 = c(1, 0.155, 4, 0, 0),
+#                               col3 = c(1, 2, 3, 2.81, 5),
+#                               col4 = c(1, 0.95, 0, 4, 0.95),
+#                               col5 = c(1, 2, 3, 2.65, 5),
+#                               col6 = c(1, 1.65333333333333, 1.65333333333333, 4, 0)),
+#                          class = "data.frame",
+#                          row.names = c("1", "2", "3", "4", "5")))
+#
+#   # expect_equal(sum(example_df_bigger_w_negatives[!is.na(example_df_bigger_w_negatives)]),
+#   #              sum(imputed_w_negatives[!is.na(example_df_bigger_w_negatives)]))
+# })
+
+test_that("test impute_MetabImpute_rrf()", {
+
+  set.seed(42)
+
+  imputed <- imputomics::impute_MetabImpute_rrf(example_df_bigger)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 1, 5),
+                              col2 = c(1, 2.1375, 4, 4, 0),
+                              col3 = c(1, 2, 3, 2.85, 5),
+                              col4 = c(1, 2.29666666666667, 2, 4, 2.29666666666667),
+                              col5 = c(1, 2, 3, 2.8425, 5),
+                              col6 = c(1, 1.6, 1.6, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2","3", "4", "5")))
+
+  expect_equal(sum(example_df_bigger[!is.na(example_df_bigger)]),
+               sum(imputed[!is.na(example_df_bigger)]))
+
+  imputed_w_negatives <- imputomics::impute_MetabImpute_rrf(example_df_bigger_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, 3, 5, 5),
+                              col2 = c(1, 0.155, 4, 0, 0),
+                              col3 = c(1, 2, 3, 2.81, 5),
+                              col4 = c(1, 0.95, 0, 4, 0.95),
+                              col5 = c(1, 2, 3, 2.65, 5),
+                              col6 = c(1, 1.65333333333333, 1.65333333333333, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  # expect_equal(sum(example_df_bigger_w_negatives[!is.na(example_df_bigger_w_negatives)]),
+  #              sum(imputed_w_negatives[!is.na(example_df_bigger_w_negatives)]))
+})
+
+test_that("test impute_MetabImpute_rQRILC()", {
+
+  set.seed(42)
+
+  imputed <- imputomics::impute_MetabImpute_rQRILC(example_df_bigger)
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, 3, 0.734607230745018, 5),
+                              col2 = c(1, 0, 4, 4, 0),
+                              col3 = c(1, 2, 3, 0, 5),
+                              col4 = c(1, 0.983898579365465, 2, 4, 0.30485190440496),
+                              col5 = c(1, 2, 3, 0.86702346113762, 5),
+                              col6 = c(1, 0, 0, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  expect_equal(sum(example_df_bigger[!is.na(example_df_bigger)]),
+               sum(imputed[!is.na(example_df_bigger)]))
+
+  imputed_w_negatives <- imputomics::impute_MetabImpute_rQRILC(example_df_bigger_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, 3, 0.550919423796097, 5),
+                              col2 = c(1, 0, 4, 0, 0),
+                              col3 = c(1, 2, 3, 0.896178562242372, 5),
+                              col4 = c(1, 0, 0, 4, 0),
+                              col5 = c(1, 2, 3, 0.679225654808343, 5),
+                              col6 = c(1, 0, 0, 4, 0)),
+                         class = "data.frame",
+                         row.names = c("1", "2", "3", "4", "5")))
+
+  # expect_equal(sum(example_df_bigger_w_negatives[!is.na(example_df_bigger_w_negatives)]),
+  #              sum(imputed_w_negatives[!is.na(example_df_bigger_w_negatives)]))
+})
 
 test_that("test impute_CM()", {
 
