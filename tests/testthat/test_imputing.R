@@ -54,6 +54,15 @@ test_that("test impute_zero()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+  imputed <- imputomics:::impute_zero(example_df_w_negatives)
+
+  expect_equal(imputed,
+               structure(list(col1 = c(1, 2, -3, 0, 5),
+                              col2 = c(1, 0, 0, -4, 0)),
+                         row.names = c(NA, -5L), class = "data.frame"))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed[!is.na(example_df_w_negatives)]))
 })
 
 #TODO: test `impute_per_column`
@@ -200,6 +209,17 @@ test_that("test impute_svd()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed_w_negatives <- imputomics::impute_svd(example_df_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, -3, 4.46864767411626e-15, 5),
+                              col2 = c(1, -1.62370117351429e-15, -6.93889390390723e-16, -4, 1.16573417585641e-15)
+                              ),
+                         class = "data.frame",
+                         row.names = c(NA, -5L)))
+
+  expect_equal(sum(example_df_w_negatives[!is.na(example_df_w_negatives)]),
+               sum(imputed_w_negatives[!is.na(example_df_w_negatives)]))
 })
 
 test_that("test impute_ppca()", {
@@ -877,6 +897,12 @@ test_that("test impute_MetabImpute_zero()", {
 
   expect_equal(sum(example_df[!is.na(example_df)]),
                sum(imputed[!is.na(example_df)]))
+
+  imputed_w_negatives <- imputomics::impute_MetabImpute_zero(example_df_w_negatives)
+  expect_equal(imputed_w_negatives,
+               structure(list(col1 = c(1, 2, 0, 0, 5),
+                              col2 = c(1, 0, 0, 0, 0)),
+                         class = "data.frame", row.names = c(NA, -5L)))
 })
 
 # test_that("test impute_MetabImpute_rmean()", {
