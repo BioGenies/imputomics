@@ -4,11 +4,11 @@
 \alias{impute_CM}
 \title{\strong{Compound Minimum} imputation.}
 \usage{
-impute_CM(missing_data_set)
+impute_CM(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by CM.

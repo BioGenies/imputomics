@@ -4,11 +4,11 @@
 \alias{impute_amelia}
 \title{\strong{Amelia} imputation.}
 \usage{
-impute_amelia(missing_data_set)
+impute_amelia(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::amelia()}}.

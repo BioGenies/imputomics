@@ -4,11 +4,11 @@
 \alias{impute_mice_cart}
 \title{\strong{MICE cart} imputation.}
 \usage{
-impute_mice_cart(missing_data_set)
+impute_mice_cart(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by cart used \code{\link[mice:mice]{mice::mice()}}.

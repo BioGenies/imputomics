@@ -4,11 +4,11 @@
 \alias{impute_MetabImpute_BPCA}
 \title{\strong{MetabImpute BPCA} imputation.}
 \usage{
-impute_MetabImpute_BPCA(missing_data_set)
+impute_MetabImpute_BPCA(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values of Bayesian PCA by

@@ -4,11 +4,11 @@
 \alias{impute_nipals}
 \title{\strong{NIPALS} imputation.}
 \usage{
-impute_nipals(missing_data_set)
+impute_nipals(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}}

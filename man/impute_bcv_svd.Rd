@@ -4,11 +4,11 @@
 \alias{impute_bcv_svd}
 \title{\strong{Singular Value Decomposition - SVD} imputation.}
 \usage{
-impute_bcv_svd(missing_data_set)
+impute_bcv_svd(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by SVD.

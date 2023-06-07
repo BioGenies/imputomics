@@ -4,11 +4,11 @@
 \alias{impute_zero}
 \title{\strong{zero} imputation.}
 \usage{
-impute_zero(missing_data_set)
+impute_zero(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \strong{zero} method.
@@ -17,11 +17,8 @@ A \code{data.frame} with imputed values by \strong{zero} method.
 A function to replace \code{NA} in the data frame by  zeros (0).
 }
 \examples{
-\dontrun{
-idf <- data.frame(values1 = c(11, 22, NA, 44, NA),
-values2 = c(21, 32, 48, NA, 59))
-impute_zero(idf)
-}
+data(sim_miss)
+impute_zero(sim_miss)
 
 }
 \keyword{constant}

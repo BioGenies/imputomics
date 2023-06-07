@@ -4,11 +4,11 @@
 \alias{impute_mNMF}
 \title{\strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.}
 \usage{
-impute_mNMF(missing_data_set)
+impute_mNMF(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by mNMF.

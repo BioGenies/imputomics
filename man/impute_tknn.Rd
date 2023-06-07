@@ -4,11 +4,11 @@
 \alias{impute_tknn}
 \title{\strong{tkNN} imputation.}
 \usage{
-impute_tknn(missing_data_set)
+impute_tknn(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \strong{tkNN} method.

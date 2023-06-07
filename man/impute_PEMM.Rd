@@ -4,11 +4,11 @@
 \alias{impute_PEMM}
 \title{\strong{PEMM} imputation.}
 \usage{
-impute_PEMM(missing_data_set)
+impute_PEMM(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}.

@@ -4,11 +4,11 @@
 \alias{impute_ppca}
 \title{\strong{PPCA} imputation.}
 \usage{
-impute_ppca(missing_data_set)
+impute_ppca(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}} with

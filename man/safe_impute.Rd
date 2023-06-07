@@ -4,18 +4,18 @@
 \alias{safe_impute}
 \title{Convert an imputing function into its safe version.}
 \usage{
-safe_impute(imputing_function, missing_data_set)
+safe_impute(imputing_function, missdf)
 }
 \arguments{
 \item{imputing_function}{a function (imputation method) that takes
-missing_data_set as an input}
+missdf as an input}
 
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values or the
-\strong{missing_data_set} if the imputing function failed to converge.
+\strong{missdf} if the imputing function failed to converge.
 }
 \description{
 Convert an imputing function into its safe version.

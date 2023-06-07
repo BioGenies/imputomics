@@ -4,11 +4,11 @@
 \alias{impute_RegImpute}
 \title{\strong{RegImpute} imputation.}
 \usage{
-impute_RegImpute(missing_data_set)
+impute_RegImpute(missdf)
 }
 \arguments{
-\item{missing_data_set}{a matrix or data frame with missing values to be
-imputed containing features in columns and samples in rows.}
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by RegImpute
