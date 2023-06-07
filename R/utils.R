@@ -2,16 +2,13 @@
 #'
 #' @param missdf an object.
 #' @param above_zero boolean, if \code{TRUE} checks if all values are above zero
-#'
+#' @noRd
 #' @keywords internal
-#' @importFrom checkmate function
+#' @importFrom checkmate testDataFrame testNumeric
 #' 
 check_missdf <- function(missdf, above_zero = FALSE) {
   if(!testDataFrame(missdf))
     stop("'missdf' must be a data.frame or tibble.")
-  
-  if(!all(sapply(missdf, testNumeric)))
-    stop("'missdf' must contain only numeric data.")
   
   if(above_zero) {
     if(!all(sapply(missdf, testNumeric, lower = 0)))

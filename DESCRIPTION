@@ -74,3 +74,4 @@ Suggests:
     spelling
 Language: en-US
 RdMacros: Rdpack
+LazyData: true
