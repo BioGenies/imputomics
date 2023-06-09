@@ -10,7 +10,8 @@ impute_bpca(missdf, ...)
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
 
-\item{...}{other parameters of \code{\link[pcaMethods:pca]{pcaMethods::pca()}} besides \code{method}.}
+\item{...}{other parameters of \code{\link[pcaMethods:pca]{pcaMethods::pca()}} besides \code{method} and
+\code{object}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[pcaMethods:pca]{pcaMethods::pca()}}

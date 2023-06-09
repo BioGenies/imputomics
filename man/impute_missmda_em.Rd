@@ -22,12 +22,8 @@ A function to replace \code{NA} in the data frame by \code{\link[missMDA:imputeP
 with method = "em".
 }
 \examples{
-\dontrun{
-idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-values2 = rep(c(21, 32, 48, NA, 59), 10),
-values3 = rep(c(37, NA, 33, 44, 32), 10))
-impute_missmda_em(idf)
-}
+data(sim_miss)
+impute_missmda_em(sim_miss)
 
 }
 \references{

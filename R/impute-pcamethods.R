@@ -19,7 +19,8 @@ eval_pcaMethods_calls <- function(missdf, method, ...) {
 #' @importFrom pcaMethods completeObs
 #'
 #' @inheritParams impute_zero
-#' @param ... other parameters of [pcaMethods::pca()] besides \code{method}.
+#' @param ... other parameters of [pcaMethods::pca()] besides \code{method} and
+#' \code{object}.
 #'
 #' @section Silent verbose:
 #' If \code{verbose} is not defined in the function call, it is set to 

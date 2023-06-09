@@ -11,10 +11,6 @@ compute_col_random <- function(x)
   })
 
 
-
-
-
-
 #' \strong{missMDA EM} imputation.
 #'
 #' PCA method with EM argument.
@@ -30,12 +26,8 @@ compute_col_random <- function(x)
 #' @seealso [missMDA::imputePCA()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_missmda_em(idf)
-#' }
+#' data(sim_miss)
+#' impute_missmda_em(sim_miss)
 #'
 #' @references
 #' \insertRef{josse_missmda_2016}{imputomics}
@@ -43,124 +35,13 @@ compute_col_random <- function(x)
 #' @export
 
 impute_missmda_em <- function(missdf) {
-  imputed <- missMDA::imputePCA(missdf,
-                                method = "EM")
-  # data.frame necessary because missMDA::imputePCA returns matrix
+  check_missdf(missdf)
+  
+  imputed <- missMDA::imputePCA(missdf, method = "EM")
+
   data.frame(imputed[["completeObs"]])
 }
 
-#' \strong{MICE PMM} imputation.
-#'
-#' Multiple Imputation by Chained Equations.
-#'
-#' A function to replace \code{NA} in the data frame by predictive mean matching
-#' (pmm) used [mice::mice()].
-#'
-#' @importFrom mice mice
-#' @importFrom mice quickpred
-#' @importFrom mice mice.impute.pmm
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by pmm used [mice::mice()].
-#'
-#' @seealso [mice::mice()], [mice::mice.impute.pmm()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#'
-#' impute_mice_pmm(idf)
-#' }
-#'
-#' @references
-#' \insertRef{buuren_mice_2011}{imputomics}
-#'
-#' @export
-
-impute_mice_pmm <- function(missdf) {
-  imputed <- mice::mice(missdf,
-                        method = 'pmm',
-                        m = 5,
-                        maxit = 100,
-                        printFlag = FALSE,
-                        predictorMatrix = mice::quickpred(missdf))
-  mice::complete(imputed)
-}
-
-#' \strong{MICE cart} imputation.
-#'
-#' Multiple Imputation by Chained Equations.
-#'
-#' A function to replace \code{NA} in the data frame by classification and
-#' regression trees (cart) used [mice::mice()].
-#'
-#' @importFrom mice mice.impute.cart
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by cart used [mice::mice()].
-#'
-#' @seealso [mice::mice()], [mice::mice.impute.cart()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#'
-#' impute_mice_cart(idf)
-#' }
-#'
-#' @export
-
-impute_mice_cart <- function(missdf) {
-  imputed <- mice::mice(missdf,
-                        method = 'cart',
-                        m = 5,
-                        maxit = 100,
-                        printFlag = FALSE,
-                        predictorMatrix = mice::quickpred(missdf))
-  mice::complete(imputed)
-}
-
-#' \strong{MICE rf} imputation.
-#'
-#' Multiple Imputation by Chained Equations.
-#'
-#' A function to replace \code{NA} in the data frame by random forest
-#' imputations (rf) used [mice::mice()].
-#'
-#' @importFrom mice mice.impute.rf
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by rf used [mice::mice()].
-#'
-#' @seealso [mice::mice()], [mice::mice.impute.rf()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#'
-#' impute_mice_rf(idf)
-#' }
-#'
-#' @export
-
-impute_mice_rf <- function(missdf) {
-  imputed <- mice::mice(missdf,
-                        method = 'rf',
-                        m = 5,
-                        maxit = 100,
-                        printFlag = FALSE,
-                        predictorMatrix = mice::quickpred(missdf))
-  mice::complete(imputed)
-}
 
 
 
