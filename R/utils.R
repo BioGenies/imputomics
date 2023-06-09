@@ -1,3 +1,18 @@
+#' Extend lists of arguments
+#' @param dots_args named list from ellipsis
+#' @param obligatory_args arguments that have to be added to the function call
+#' (e.g., dataset)
+#' @param voluntary_args arguments that we would like to add if they are not
+#' explicitly declared
+#' @noRd
+extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
+  
+  argnames_to_be_added <- setdiff(names(voluntary_args), c(names(dots_args), names(obligatory_args)))
+
+  c(dots_args, obligatory_args, voluntary_args[argnames_to_be_added])
+}
+
+
 #' Convert an imputing function into its safe version.
 #'
 #' @inheritParams impute_zero
@@ -9,7 +24,6 @@
 #' \strong{missdf} if the imputing function failed to converge.
 #'
 #' @keywords internal
-
 safe_impute <- function(imputing_function, missdf) {
   imputed <- structure(structure(list(), class = "try-error"))
   n <- 1
@@ -32,7 +46,6 @@ safe_impute <- function(imputing_function, missdf) {
 #' @noRd
 #' @keywords internal
 #' @importFrom checkmate testDataFrame testNumeric
-#' 
 check_missdf <- function(missdf, above_zero = FALSE) {
   if(!testDataFrame(missdf))
     stop("'missdf' must be a data.frame or tibble.")
