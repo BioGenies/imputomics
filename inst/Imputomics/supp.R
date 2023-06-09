@@ -26,16 +26,21 @@ ui_content_about <- function() {
 
 
 plot_mv_segment <- function(tmp_dat) {
+
   level_order <- tmp_dat %>%
     arrange(`% Missing`) %>%
     pull(Variable)
 
+  tmp_dat <- tmp_dat %>%
+    mutate(above_limit = `% Missing` > 20,
+           colors_legend = ifelse(above_limit, "tomato", "black"))
+
   tmp_dat %>%
-    mutate() %>%
     ggplot(Variable = factor(Variable, levels = Variable)) +
     geom_segment(aes(y = Variable, yend = Variable,
-                     x = 0, xend = `% Missing`),
+                     x = 0, xend = `% Missing`, col = above_limit),
                  size = 1.5) +
+    scale_color_manual(values = sort(unique(pull(tmp_dat, colors_legend)))) +
     geom_segment(aes(y = Variable, yend = Variable,
                      xend = 100, x = `% Missing`),
                  size = 1.5, col = "grey") +
@@ -45,7 +50,8 @@ plot_mv_segment <- function(tmp_dat) {
     theme_minimal() +
     theme(axis.text = element_text(size = 12),
           axis.title = element_text(size = 14),
-          title = element_text(size = 18)) +
+          title = element_text(size = 18),
+          legend.position = "none") +
     ggtitle("Percentage of missing values") +
     scale_y_discrete(limits = level_order) +
     xlab("% Missing")
@@ -58,7 +64,7 @@ plot_mv_heatmap <- function(tmp_dat) {
 
   tmp_dat %>%
     mutate(Sample = 1:n()) %>%
-    gather(Variable, Value, gathercols) %>%
+    gather(Variable, Value, all_of(gathercols)) %>%
     mutate(`Is missing` = is.na(Value)) %>%
     ggplot(aes(x = Sample, y = Variable, fill = `Is missing`)) +
     geom_tile() +
@@ -70,4 +76,25 @@ plot_mv_heatmap <- function(tmp_dat) {
     ggtitle("Missing values pattern")
 }
 
+
+
+get_variables_table <- function(missing_data) {
+  mv_summary <- data.frame(
+    Variable = colnames(missing_data),
+    Percentage_Missing = 100*colMeans(is.na(missing_data))
+  )%>%
+    arrange(-Percentage_Missing) %>%
+    rename(`% Missing` = Percentage_Missing)
+
+  variables_table <- mv_summary %>%
+    mutate(missing = `% Missing` > 0) %>%
+    mutate(missing = ifelse(missing,
+                            "missing variables",
+                            "complete variables")) %>%
+    group_by(missing) %>%
+    summarise(n = n())
+
+  list(mv_summary = mv_summary,
+       variables_table = variables_table)
+}
 
