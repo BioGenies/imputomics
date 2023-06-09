@@ -4,12 +4,12 @@
 #' @inheritParams impute_zero
 #' @noRd
 #' @keywords internal
-
 impute_constant <- function(missdf, constant_value) {
   
   missdf[is.na(missdf)] <- constant_value
   missdf
 }
+
 
 #' Helper function.
 #' Basic imputation of missing values into dataframe.
@@ -20,6 +20,7 @@ impute_constant <- function(missdf, constant_value) {
 #' @param compute_values one of the basic imputation methods
 #' @noRd
 #' @keywords internal
+
 
 impute_per_column <- function(missdf, compute_values) {
   
@@ -32,6 +33,7 @@ impute_per_column <- function(missdf, compute_values) {
                     imputed_values_vector[[ith_column_id]])
   }))
 }
+
 
 #' \strong{zero} imputation.
 #'
@@ -57,7 +59,6 @@ impute_zero <- function(missdf) {
 }
   
 
-
 #' Helper function. Minimum imputation.
 #'
 #' @inheritParams compute_col_random
@@ -66,11 +67,13 @@ impute_zero <- function(missdf) {
 compute_col_min <- function(x)
   lapply(x, min, na.rm = TRUE)
 
+
 #' Helper function. Mean imputation.
 #' @inheritParams compute_col_random
 #' @noRd
 compute_col_mean <- function(x)
   lapply(x, mean, na.rm = TRUE)
+
 
 #' Helper function. Half-minimum imputation.
 #' @noRd
@@ -79,6 +82,7 @@ compute_col_mean <- function(x)
 #' @keywords internal
 compute_col_halfmin <- function(x)
   lapply(x, function(i) min(i, na.rm = TRUE)/2)
+
 
 #' Helper function. Median imputation.
 #' @noRd
@@ -123,11 +127,8 @@ impute_min <- function(missdf)
 #' @keywords constant
 #'
 #' @export
-impute_mean <- function(missdf) {
-  missdf <- data.frame(missdf)
+impute_mean <- function(missdf) 
   impute_per_column(missdf, compute_col_mean)
-  
-}
 
 
 #' \strong{half-minimum} imputation.
@@ -146,10 +147,8 @@ impute_mean <- function(missdf) {
 #' @keywords constant
 #'
 #' @export
-impute_halfmin <- function(missdf) {
-  missdf <- data.frame(missdf)
+impute_halfmin <- function(missdf) 
   impute_per_column(missdf, compute_col_halfmin)
-}
 
 
 #' \strong{median} imputation.
