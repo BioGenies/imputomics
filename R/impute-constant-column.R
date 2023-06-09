@@ -23,7 +23,6 @@ impute_constant <- function(missdf, constant_value) {
 
 
 impute_per_column <- function(missdf, compute_values) {
-  
   check_missdf(missdf)
   
   imputed_values_vector <- compute_values(missdf)
@@ -52,7 +51,6 @@ impute_per_column <- function(missdf, compute_values) {
 #'
 #' @export
 impute_zero <- function(missdf) {
-  
   check_missdf(missdf)
   
   impute_constant(missdf, constant_value = 0)
