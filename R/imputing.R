@@ -19,6 +19,8 @@ compute_col_random <- function(x)
 #' with method = "em".
 #'
 #' @inheritParams impute_zero
+#' @param ... other parameters of [missMDA::imputePCA()] besides \code{method} and 
+#' \code{X}.
 #'
 #' @returns A \code{data.frame} with imputed values by [missMDA::imputePCA()]
 #' with method = "em".
@@ -34,10 +36,10 @@ compute_col_random <- function(x)
 #'
 #' @export
 
-impute_missmda_em <- function(missdf) {
+impute_missmda_em <- function(missdf, ...) {
   check_missdf(missdf)
   
-  imputed <- missMDA::imputePCA(missdf, method = "EM")
+  imputed <- missMDA::imputePCA(X = missdf, method = "EM")
 
   data.frame(imputed[["completeObs"]])
 }
