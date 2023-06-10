@@ -19,7 +19,10 @@ ui_content_about <- function() {
     h3("Citation:"),
     h4("Imputomics... tratatata citation"),
     br(),
-    img(src='umb_logo.jpg', height="15%", width="15%", align="right")
+    column(11,
+           style = "position:absolute; bottom: 5px;",
+           img(src='umb_logo.jpg', height="15%", width="15%", align="right")
+    )
   )
 }
 
@@ -98,3 +101,14 @@ get_variables_table <- function(missing_data) {
        variables_table = variables_table)
 }
 
+
+get_methods_table <- function(path = "methods_table.RDS") {
+  methods_table <- readRDS(path) %>%
+    mutate(name = paste0(name, " (", full_name, ")"))
+
+  funs_imputomics <- ls("package:imputomics")
+  funs_imputomics <- funs_imputomics[grepl("impute_", funs_imputomics)]
+
+  methods_table %>%
+    filter(imputomics_name %in% funs_imputomics)
+}

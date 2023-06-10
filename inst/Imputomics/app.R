@@ -6,11 +6,13 @@ library(shinyWidgets)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(imputomics)
+library(shinycssloaders)
+library(openxlsx)
 
 source("supp.R")
 
-methods_table <- readRDS("methods_table.RDS") %>%
-  mutate(name = paste0(name, " (", full_name, ")"))
+methods_table <- get_methods_table("methods_table.RDS")
 
 ui <- navbarPage(
   theme = shinytheme("sandstone"),
@@ -41,14 +43,15 @@ ui <- navbarPage(
            column(6,
                   align = "center",
                   offset = 1,
-                  h2("Dataset preview:"),
-                  DT::dataTableOutput("missing_data")
+                  h3("Dataset preview:"),
+                  withSpinner(DT::dataTableOutput("missing_data"),
+                              color = "black")
            )
   ),
   tabPanel("Visualization",
            column(2,
                   h4("Count Table:"),
-                  tableOutput("mv_pctg"),
+                  withSpinner(tableOutput("mv_pctg"), color = "black"),
                   br(),
                   HTML('<hr style="border-color: black;">'),
                   br(),
@@ -68,29 +71,68 @@ ui <- navbarPage(
            column(9,
                   offset = 1,
                   style = 'border-left: 1px solid',
-                  column(12, align = "center", br(), uiOutput("plot_mv_vis"))
+                  column(12,
+                         align = "center",
+                         br(),
+                         withSpinner(uiOutput("plot_mv_vis"), color = "black")
+                  )
            ),
   ),
   tabPanel("Imputation",
-           h2("Let's impute your missing values!"),
-           h3("Select one or more imputation methods from the list below and click impute!"),
+           h3("Let's impute your missing values!"),
+           h4("Select one or more imputation methods from the list below and click impute!"),
            br(),
-           multiInput(
-             inputId = "methods",
-             label = "Select methods:",
-             choices = NULL,
-             selected = NULL,
-             choiceNames = pull(methods_table, name),
-             choiceValues = pull(methods_table, name),
-             width = "50%",
-             options = list(
-               non_selected_header = "Available methods:",
-               selected_header = "You have selected:"
-             )
-
+           column(12,
+                  align = "center",
+                  multiInput(
+                    inputId = "methods",
+                    label = "Select methods:",
+                    choices = NULL,
+                    selected = NULL,
+                    choiceNames = pull(methods_table, name),
+                    choiceValues = pull(methods_table, imputomics_name),
+                    width = "80%",
+                    options = list(
+                      non_selected_header = "Available methods:",
+                      selected_header = "You have selected:"
+                    )
+                  ),
+                  br(),
+                  actionBttn(inputId = "impute_btn",
+                             label = "   Impute! ",
+                             style = "material-flat",
+                             color = "warning",
+                             size = "lg",
+                             icon = icon("pen"))
+           ),
+           column(10, offset = 1, style = "position:absolute; bottom: 5px;",
+                  progressBar(id = "progress_bar",
+                              value = 0,
+                              status = "success",
+                              size = "xs",
+                              display_pct = TRUE)
            )
   ),
-  tabPanel("Summary")
+  tabPanel("Summary",
+           h2("Here you can check the results and download imputed data!"),
+           br(),
+           h3("Imputation summary:"),
+           column(4,
+                  br(),
+                  h4(icon("check"), "Success:"),
+                  withSpinner(uiOutput("success_methods"), color = "black"),
+                  br(),
+                  h4(icon("xmark"), "Error:"),
+                  withSpinner(uiOutput("error_methods"), color = "black"),
+           ),
+           column(4, offset = 1,
+                  align = "center",
+                  downloadBttn("download", "Download results",
+                               color = "success",
+                               style = "material-flat",
+                               size = "lg")
+           )
+  )
 )
 
 
@@ -117,12 +159,6 @@ server <- function(input, output, session) {
 
     if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
 
-    # if(sum(is.na(dat[["missing_data"]])) == 0)
-    #   sendSweetAlert(session = session,
-    #                  title = "Your data coontains no missing values!",
-    #                  text = "Make sure that right missing value denotement is selected!",
-    #                  type = "error")
-
     dat[["missing_data"]] <- uploaded_data
     dat[["raw_data"]] <- raw_data
     dat[["n_cmp"]] <- ncol(raw_data)
@@ -143,8 +179,6 @@ server <- function(input, output, session) {
   })
 
 
-
-
   observeEvent(input[["NA_sign"]], {
     req(input[["NA_sign"]])
     req(dat[["missing_data"]])
@@ -162,7 +196,8 @@ server <- function(input, output, session) {
                   selection = list(selectable = FALSE),
                   options = list(scrollX = TRUE,
                                  pageLength = 15,
-                                 searching = FALSE))
+                                 searching = FALSE)
+    )
   })
 
   ##### data vis
@@ -202,7 +237,7 @@ server <- function(input, output, session) {
     } else {
       tmp_dat <- dat[["missing_data"]]
       if(!show_complete)
-        tmp_dat <- select(tmp_dat, where(function(x) any(is.na(x))))
+        tmp_dat <- dplyr::select(tmp_dat, where(function(x) any(is.na(x))))
 
       plot_mv_heatmap(tmp_dat)
     }
@@ -216,6 +251,108 @@ server <- function(input, output, session) {
 
   # imputation
 
+  observeEvent(input[["impute_btn"]], {
+
+    if(is.null(dat[["missing_data"]])) {
+      sendSweetAlert(session = session,
+                     title = "No data!",
+                     text = "Upload your data before imputation!!",
+                     type = "error")
+      req(dat[["missing_data"]])
+    }
+
+    if(is.null(input[["methods"]])) {
+      sendSweetAlert(session = session,
+                     title = "No methods!",
+                     text = "Select at least one imputation method from the list!",
+                     type = "warning")
+      req(input[["methods"]])
+    }
+
+    methods <- input[["methods"]]
+
+    progress <- 0
+    progress_step <- 100/length(methods)
+
+    results <- lapply(methods, function(ith_method) {
+      ith_fun <- get(ith_method)
+
+      tryCatch({
+        imputed_dat <- ith_fun(dat[["missing_data"]])
+      }, error = data.frame())
+
+      progress <<- progress + progress_step
+      updateProgressBar(session = session,
+                        id = "progress_bar",
+                        value = progress,
+                        title = ith_method)
+      imputed_dat
+    })
+
+    sendSweetAlert(session = session,
+                   title = "Success!",
+                   text = "Imputation is done! Go to Summary and check/download the results!",
+                   type = "success")
+
+    names(results) <- methods
+    dat[["results"]] <- list(results = results, methods = methods)
+  })
+
+  #Summary
+
+  output[["download"]] <- downloadHandler(
+    filename = "results.xlsx",
+    content = function(file) {
+
+      req(dat[["results"]])
+
+      wb_file <- createWorkbook()
+      result_data <- dat[["results"]][["results"]]
+
+      methods <- names(result_data)
+      for (i in 1:length(result_data)) {
+        if(nrow(result_data[[i]]) != 0) {
+          addWorksheet(wb_file, methods[i])
+          writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
+        }
+      }
+      saveWorkbook(wb_file, file, overwrite = TRUE)
+    }
+  )
+
+
+  output[["success_methods"]] <- renderText({
+    req(dat[["results"]])
+
+    result_data <- dat[["results"]][["results"]]
+    methods <- dat[["results"]][["methods"]]
+
+    success <- names(result_data)
+
+    methods_table %>%
+      filter(imputomics_name %in% success) %>%
+      pull(name) %>%
+      paste0(collapse = "<br>")
+
+  })
+
+  output[["error_methods"]] <- renderText({
+    req(dat[["results"]])
+
+    result_data <- dat[["results"]][["results"]]
+    methods <- dat[["results"]][["methods"]]
+
+    error <- setdiff(methods, names(result_data))
+    error_txt <- "none"
+
+    if(length(error) > 0) {
+      error_txt <- methods_table %>%
+        filter(imputomics_name %in% error) %>%
+        pull(name) %>%
+        paste0(collapse = "<br>")
+    }
+    error_txt
+  })
 
 }
 
