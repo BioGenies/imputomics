@@ -35,7 +35,6 @@ compute_col_random <- function(x)
 #' \insertRef{josse_missmda_2016}{imputomics}
 #'
 #' @export
-
 impute_missmda_em <- function(missdf, ...) {
   check_missdf(missdf)
   
@@ -54,26 +53,38 @@ impute_missmda_em <- function(missdf, ...) {
 #' @importFrom Amelia amelia
 #'
 #' @inheritParams impute_zero
+#' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
+#' [Amelia::amelia()].
+#' @param ... other parameters of [Amelia::amelia()] besides \code{x} and 
+#' \code{m}.
 #'
+#' @details
+#' \code{amelia()} allows users to customize the number of imputed datasets to 
+#' create. As one of the aims of the \code{imputomics} is to standardize the 
+#' input and the output, the \code{m} is being set to 1.
+#' 
 #' @returns A \code{data.frame} with imputed values by [Amelia::amelia()].
 #'
 #' @seealso [Amelia::amelia()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_amelia(idf)
-#' }
+#' data(sim_miss)
+#' impute_amelia(sim_miss)
 #'
 #' @references
 #' \insertRef{honaker_amelia_2011}{imputomics}
 #'
 #' @export
 
-impute_amelia <- function(missdf) {
-  capture.output(imputed <- Amelia::amelia(missdf, m = 1))
+impute_amelia <- function(missdf, verbose = FALSE, ...) {
+  check_missdf(missdf)
+  
+  if(verbose) {
+    imputed <- Amelia::amelia(missdf, m = 1, ...)
+  } else {
+    capture.output(imputed <- Amelia::amelia(missdf, m = 1, ...))
+  }
+  
   imputed[["imputations"]][["imp1"]]
 }
 
@@ -106,7 +117,7 @@ impute_amelia <- function(missdf) {
 #' @export
 
 impute_missforest <- function(missdf) {
-  imputed <- missForest::missForest(missdf,
+  imputed <- missForest::missForest(xmis = missdf,
                                     maxiter = 10,
                                     ntree = 500,
                                     replace = TRUE)

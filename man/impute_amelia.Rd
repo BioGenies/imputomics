@@ -4,11 +4,17 @@
 \alias{impute_amelia}
 \title{\strong{Amelia} imputation.}
 \usage{
-impute_amelia(missdf)
+impute_amelia(missdf, verbose = FALSE, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{verbose}{boolean, if \code{TRUE}, prints the typical prompts of
+\code{\link[Amelia:amelia]{Amelia::amelia()}}.}
+
+\item{...}{other parameters of \code{\link[Amelia:amelia]{Amelia::amelia()}} besides \code{x} and
+\code{m}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::amelia()}}.
@@ -16,13 +22,14 @@ A \code{data.frame} with imputed values by \code{\link[Amelia:amelia]{Amelia::am
 \description{
 A function to replace \code{NA} in the data frame by \code{\link[Amelia:amelia]{Amelia::amelia()}}.
 }
-\examples{
-\dontrun{
-idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-values2 = rep(c(21, 32, 48, NA, 59), 10),
-values3 = rep(c(37, NA, 33, 44, 32), 10))
-impute_amelia(idf)
+\details{
+\code{amelia()} allows users to customize the number of imputed datasets to
+create. As one of the aims of the \code{imputomics} is to standardize the
+input and the output, the \code{m} is being set to 1.
 }
+\examples{
+data(sim_miss)
+impute_amelia(sim_miss)
 
 }
 \references{
