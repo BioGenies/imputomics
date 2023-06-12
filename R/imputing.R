@@ -22,7 +22,7 @@ compute_col_random <- function(x)
 #' \code{X}.
 #'
 #' @returns A \code{data.frame} with imputed values by [missMDA::imputePCA()]
-#' with method = "em".
+#' with \code{method = "em"}.
 #'
 #' @seealso [missMDA::imputePCA()]
 #'
@@ -38,7 +38,7 @@ impute_missmda_em <- function(missdf, ...) {
   check_missdf(missdf)
   
   imputed <- missMDA::imputePCA(X = missdf, method = "EM")
-
+  
   data.frame(imputed[["completeObs"]])
 }
 
@@ -75,11 +75,7 @@ impute_missmda_em <- function(missdf, ...) {
 impute_amelia <- function(missdf, verbose = FALSE, ...) {
   check_missdf(missdf)
   
-  if(verbose) {
-    imputed <- Amelia::amelia(missdf, m = 1, ...)
-  } else {
-    capture.output(imputed <- Amelia::amelia(missdf, m = 1, ...))
-  }
+  silence_function(verbose)(imputed <- Amelia::amelia(missdf, m = 1, ...))
   
   imputed[["imputations"]][["imp1"]]
 }
@@ -119,8 +115,7 @@ impute_missforest <- function(missdf, ...) {
 
 #' \strong{Hmisc areg} imputation.
 #'
-#' Multiple Imputation using Additive Regression, Bootstrapping, and Predictive
-#' Mean Matching.
+#' Multiple Imputation using Predictive Mean Matching.
 #'
 #' A function to replace \code{NA} in the data frame by [Hmisc::aregImpute()].
 #'
@@ -128,8 +123,24 @@ impute_missforest <- function(missdf, ...) {
 #' @importFrom Hmisc impute.transcan
 #'
 #' @inheritParams impute_zero
+#' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
+#' [Hmisc::aregImpute()].
+#' @param ... other parameters of [Hmisc::aregImpute()] besides \code{formula}, 
+#' \code{formula}, \code{data} and \code{type}.
+#'
+#' @section Silent defaults: 
+#' \code{burnin = 5} and \code{nk = 0}.
+#' 
+#' @details
+#' \code{aregImpute()} allows users to customize the number of imputed datasets to 
+#' create. As one of the aims of the \code{imputomics} is to standardize the 
+#' input and the output, the \code{n.impute} is being set to 1.
 #'
 #' @returns A \code{data.frame} with imputed values by [Hmisc::aregImpute()].
+#'
+#' @examples
+#' data(sim_miss)
+#' impute_areg(sim_miss)
 #'
 #' @seealso [Hmisc::aregImpute()]
 #'
@@ -137,14 +148,16 @@ impute_missforest <- function(missdf, ...) {
 #' \insertRef{jr_hmisc_2023}{imputomics}
 #'
 #' @export
-
-impute_areg <- function(missdf) {
-  capture.output(imputed <- Hmisc::aregImpute(
-    formula = as.formula(paste0("~ ", paste0(colnames(missdf),
-                                             collapse = " + "))),
-    data = missdf,
-    tlinear = FALSE)
-  )
+impute_areg <- function(missdf, verbose = FALSE, ...) {
+  check_missdf(missdf)
+  
+  all_args <- extend_arglist(list(...),
+                             list(formula = stats::as.formula(paste("~", paste(colnames(missdf), collapse = "+"))),
+                                  data = missdf, n.impute = 1, type = "pmm"),
+                             list(burnin = 5, nk = 0))
+  
+  silence_function(verbose)(imputed <- do.call(Hmisc::aregImpute, all_args))
+  
   data.frame(do.call(cbind,
                      Hmisc::impute.transcan(imputed,
                                             imputation = 1,
@@ -946,7 +959,7 @@ impute_imputation_kNN <- function(missdf){
 #' @export
 
 impute_mNMF <- function(missdf){
-
+  
   # samples in columns and features in rows
   missdf <- t(missdf)
   k_group <- unique(round(seq(1,

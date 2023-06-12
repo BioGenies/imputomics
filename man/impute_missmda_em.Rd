@@ -15,7 +15,7 @@ containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[missMDA:imputePCA]{missMDA::imputePCA()}}
-with method = "em".
+with \code{method = "em"}.
 }
 \description{
 PCA method with EM argument.

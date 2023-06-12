@@ -25,7 +25,7 @@ eval_mice_calls <- function(missdf, method, ...) {
 #' @param ... other parameters of [mice::mice()] besides \code{method} and 
 #' \code{data}.
 #' 
-#' @section Silent parameters:
+#' @section Silent defaults:
 #' If \code{printFlag} is not defined in the function call, it is set to 
 #' \code{FALSE}.
 #' 
@@ -60,7 +60,7 @@ impute_mice_pmm <- function(missdf, ...) {
 #'
 #' @returns A \code{data.frame} with imputed values by cart used [mice::mice()].
 #'
-#' @inheritSection impute_mice_pmm Silent parameters
+#' @inheritSection impute_mice_pmm Silent defaults
 #'
 #' @seealso [mice::mice()], [mice::mice.impute.cart()]
 #'
@@ -85,7 +85,7 @@ impute_mice_cart <- function(missdf, ...) {
 #'
 #' @returns A \code{data.frame} with imputed values by random forest used [mice::mice()].
 #'
-#' @inheritSection impute_mice_pmm Silent parameters
+#' @inheritSection impute_mice_pmm Silent defaults
 #'
 #' @seealso [mice::mice()], [mice::mice.impute.rf()]
 #'

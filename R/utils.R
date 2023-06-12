@@ -1,3 +1,12 @@
+silence_function <- function(verbose) {
+  silencer <- if(verbose) {
+    identity 
+  } else {
+    capture.output
+  }
+}
+
+
 #' Extend lists of arguments
 #' @param dots_args named list from ellipsis
 #' @param obligatory_args arguments that have to be added to the function call

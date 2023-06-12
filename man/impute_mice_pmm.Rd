@@ -23,7 +23,7 @@ Multiple Imputation by Chained Equations.
 A function to replace \code{NA} in the data frame by predictive mean matching
 (pmm) used \code{\link[mice:mice]{mice::mice()}}.
 }
-\section{Silent parameters}{
+\section{Silent defaults}{
 
 If \code{printFlag} is not defined in the function call, it is set to
 \code{FALSE}.

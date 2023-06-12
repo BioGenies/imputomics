@@ -4,21 +4,40 @@
 \alias{impute_areg}
 \title{\strong{Hmisc areg} imputation.}
 \usage{
-impute_areg(missdf)
+impute_areg(missdf, verbose = FALSE, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{verbose}{boolean, if \code{TRUE}, prints the typical prompts of
+\code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.}
+
+\item{...}{other parameters of \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}} besides \code{formula},
+\code{formula}, \code{data} and \code{type}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.
 }
 \description{
-Multiple Imputation using Additive Regression, Bootstrapping, and Predictive
-Mean Matching.
+Multiple Imputation using Predictive Mean Matching.
 }
 \details{
 A function to replace \code{NA} in the data frame by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.
+
+\code{aregImpute()} allows users to customize the number of imputed datasets to
+create. As one of the aims of the \code{imputomics} is to standardize the
+input and the output, the \code{n.impute} is being set to 1.
+}
+\section{Silent defaults}{
+
+\code{burnin = 5} and \code{nk = 0}.
+}
+
+\examples{
+data(sim_miss)
+impute_areg(sim_miss)
+
 }
 \references{
 \insertRef{jr_hmisc_2023}{imputomics}
