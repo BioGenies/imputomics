@@ -1,7 +1,9 @@
 eval_pcaMethods_calls <- function(missdf, method, ...) {
   check_missdf(missdf)
   
-  all_args <- extend_arglist(list(...), list(object = missdf, method = method), list(verbose = FALSE))
+  all_args <- extend_arglist(list(...), 
+                             list(object = missdf, method = method), 
+                             list(verbose = FALSE))
   
   imputed <- do.call(pcaMethods::pca, all_args)
   

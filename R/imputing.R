@@ -3,7 +3,6 @@
 #' @param x list with values.
 #' @noRd
 #' @keywords internal
-
 compute_col_random <- function(x)
   lapply(x, function(ith_col) {
     id_nas <- is.na(ith_col)
@@ -44,8 +43,6 @@ impute_missmda_em <- function(missdf, ...) {
 }
 
 
-
-
 #' \strong{Amelia} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by [Amelia::amelia()].
@@ -75,7 +72,6 @@ impute_missmda_em <- function(missdf, ...) {
 #' \insertRef{honaker_amelia_2011}{imputomics}
 #'
 #' @export
-
 impute_amelia <- function(missdf, verbose = FALSE, ...) {
   check_missdf(missdf)
   
@@ -97,6 +93,7 @@ impute_amelia <- function(missdf, verbose = FALSE, ...) {
 #' @importFrom missForest missForest
 #'
 #' @inheritParams impute_zero
+#' @param ... other parameters of [missForest::missForest()] besides \code{xmis}.
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [missForest::missForest()].
@@ -104,23 +101,17 @@ impute_amelia <- function(missdf, verbose = FALSE, ...) {
 #' @seealso [missForest::missForest()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_missforest(idf)
-#' }
+#' data(sim_miss)
+#' impute_missforest(sim_miss)
 #'
 #' @references
 #' \insertRef{stekhoven_missforest_2012}{imputomics}
 #'
 #' @export
-
-impute_missforest <- function(missdf) {
-  imputed <- missForest::missForest(xmis = missdf,
-                                    maxiter = 10,
-                                    ntree = 500,
-                                    replace = TRUE)
+impute_missforest <- function(missdf, ...) {
+  check_missdf(missdf)
+  
+  imputed <- missForest::missForest(xmis = missdf, ...)
   imputed[["ximp"]]
 }
 

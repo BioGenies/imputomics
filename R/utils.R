@@ -47,22 +47,22 @@ safe_impute <- function(imputing_function, missdf) {
 #' @keywords internal
 #' @importFrom checkmate testDataFrame testNumeric
 check_missdf <- function(missdf, above_zero = FALSE) {
-  if(!testDataFrame(missdf))
+  if(!checkmate::testDataFrame(missdf))
     stop("'missdf' must be a data.frame or tibble.")
   
   if(all(sapply(missdf, function(i) !is.na(i))))
     if(any(sapply(missdf, checkmate::testNumeric, lower = 0, upper = 0))) {
-      warning("No NAs identified, but the data contains zeros.\nMake sure that you are marking missing values with 0.")
+      warning("No NAs identified, but the data contains zeros.\nMake sure that you are not marking missing values with 0.")
     } else {
       message("No NAs identified.")
     }
       
   
   if(above_zero) {
-    if(!all(sapply(missdf, testNumeric, lower = 0)))
+    if(!all(sapply(missdf, checkmate::testNumeric, lower = 0)))
       stop("'missdf' must contain only numeric data above 0.")
   } else {
-    if(!all(sapply(missdf, testNumeric)))
+    if(!all(sapply(missdf, checkmate::testNumeric)))
       stop("'missdf' must contain only numeric data.")
   }
   
