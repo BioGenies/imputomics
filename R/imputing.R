@@ -177,30 +177,32 @@ impute_areg <- function(missdf, verbose = FALSE, ...) {
 #' @importFrom impute impute.knn
 #'
 #' @inheritParams impute_zero
-#'
+#' @param ... other parameters of [impute::impute.knn()] besides \code{data}.
 #' @returns A \code{data.frame} with imputed values by [impute::impute.knn()].
 #'
+#' @section Silent defaults: 
+#' \code{impute.knn} sets its \code{rng.seed} by default to 362436069. To avoid it,
+#' \code{imputomics} by default uses \code{sample(1L:1e9, 1)}.
 #' @seealso [impute::impute.knn()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' set.seed(2137)
-#' impute_knn(idf)
-#' }
+#' data(sim_miss)
+#' impute_knn(sim_miss)
 #'
 #' @references
 #' \insertRef{hastie_impute_2023}{imputomics}
 #'
 #' @export
 
-impute_knn <- function(missdf) {
-  # this function has a default random seed, so we need to sample one
-  imputed <- impute::impute.knn(as.matrix(missdf),
-                                k = 10,
-                                rng.seed = sample(1L:1e9, 1))
+impute_knn <- function(missdf, ...) {
+  check_missdf(missdf)
+
+  all_args <- extend_arglist(list(...),
+                             list(data = missdf),
+                             list(rng.seed = sample(1L:1e9, 1)))
+  
+  imputed <- do.call(impute::impute.knn, all_args)
+
   data.frame(imputed[["data"]])
 }
 

@@ -4,11 +4,13 @@
 \alias{impute_knn}
 \title{\strong{kNN} imputation.}
 \usage{
-impute_knn(missdf)
+impute_knn(missdf, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{...}{other parameters of \code{\link[impute:impute.knn]{impute::impute.knn()}} besides \code{data}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[impute:impute.knn]{impute::impute.knn()}}.
@@ -19,14 +21,15 @@ K Nearest Neighbors.
 \details{
 A function to replace \code{NA} in the data frame by \code{\link[impute:impute.knn]{impute::impute.knn()}}.
 }
-\examples{
-\dontrun{
-idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-values2 = rep(c(21, 32, 48, NA, 59), 10),
-values3 = rep(c(37, NA, 33, 44, 32), 10))
-set.seed(2137)
-impute_knn(idf)
+\section{Silent defaults}{
+
+\code{impute.knn} sets its \code{rng.seed} by default to 362436069. To avoid it,
+\code{imputomics} by default uses \code{sample(1L:1e9, 1)}.
 }
+
+\examples{
+data(sim_miss)
+impute_knn(sim_miss)
 
 }
 \references{
