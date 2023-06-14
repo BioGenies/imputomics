@@ -112,9 +112,8 @@ impute_missforest <- function(missdf, ...) {
 }
 
 
-
 #' \strong{Hmisc areg} imputation.
-#'
+#' 
 #' Multiple Imputation using Predictive Mean Matching.
 #'
 #' A function to replace \code{NA} in the data frame by [Hmisc::aregImpute()].
@@ -193,7 +192,6 @@ impute_areg <- function(missdf, verbose = FALSE, ...) {
 #' \insertRef{hastie_impute_2023}{imputomics}
 #'
 #' @export
-
 impute_knn <- function(missdf, ...) {
   check_missdf(missdf)
 
