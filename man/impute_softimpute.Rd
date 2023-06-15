@@ -4,11 +4,14 @@
 \alias{impute_softimpute}
 \title{\strong{SoftImpute} imputation.}
 \usage{
-impute_softimpute(missdf)
+impute_softimpute(missdf, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{...}{other parameters of \code{\link[softImpute:softImpute]{softImpute::softImpute()}} besides
+\code{x}.}
 }
 \value{
 A \code{data.frame} with imputed values by
@@ -19,12 +22,8 @@ A function to replace \code{NA} in the data frame by
 \code{\link[softImpute:softImpute]{softImpute::softImpute()}}.
 }
 \examples{
-\dontrun{
-idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-values2 = rep(c(21, 32, 48, NA, 59), 10),
-values3 = rep(c(37, NA, 33, 44, 32), 10))
-impute_softimpute(idf)
-}
+data(sim_miss)
+impute_softimpute(sim_miss)
 
 }
 \references{

@@ -214,31 +214,29 @@ impute_knn <- function(missdf, ...) {
 #'
 #' @importFrom imputeLCMD impute.QRILC
 #'
-#' @importFrom imputeLCMD impute.QRILC
-#'
 #' @inheritParams impute_zero
-#'
+#' @param ... other parameters of [imputeLCMD::impute.QRILC()] besides 
+#' \code{dataSet.mvs}.
+#' 
 #' @returns A \code{data.frame} with imputed values by
 #' [imputeLCMD::impute.QRILC()].
 #'
 #' @seealso [imputeLCMD::impute.QRILC()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_qrilc(idf)
-#' }
+#' data(sim_miss)
+#' impute_qrilc(sim_miss)
+#' 
 #' @references
 #' \insertRef{lazar_imputelcmd_2022}{imputomics}
 #'
 #' @export
 #'
-impute_qrilc <- function(missdf) {
-  imputeLCMD::impute.QRILC(missdf)[[1]]
+impute_qrilc <- function(missdf, ...) {
+  check_missdf(missdf)
+  
+  imputeLCMD::impute.QRILC(missdf, ...)[[1]]
 }
-
 
 
 #' \strong{SoftImpute} imputation.
@@ -249,6 +247,8 @@ impute_qrilc <- function(missdf) {
 #' @importFrom softImpute softImpute
 #'
 #' @inheritParams impute_zero
+#' @param ... other parameters of [softImpute::softImpute()] besides 
+#' \code{x}.
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [softImpute::softImpute()].
@@ -256,20 +256,18 @@ impute_qrilc <- function(missdf) {
 #' @seealso [softImpute::softImpute()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_softimpute(idf)
-#' }
+#' data(sim_miss)
+#' impute_softimpute(sim_miss)
 #'
 #' @references
 #' \insertRef{mazumder_softimpute_2021}{imputomics}
 #'
 #' @export
 
-impute_softimpute <- function(missdf) {
-  fit <- softImpute::softImpute(as.matrix(missdf))
+impute_softimpute <- function(missdf, ...) {
+  check_missdf(missdf)
+  
+  fit <- softImpute::softImpute(as.matrix(missdf), ...)
   data.frame(softImpute::complete(as.matrix(missdf), fit))
 }
 
