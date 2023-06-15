@@ -51,6 +51,13 @@
       ],
       "Hash": "98cd82092b5bd523cb58b3e39fcb2636"
     },
+    "BH": {
+      "Package": "BH",
+      "Version": "1.81.0-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "68122010f01c4dcfbe58ce7112f2433d"
+    },
     "Biobase": {
       "Package": "Biobase",
       "Version": "2.60.0",
@@ -895,6 +902,18 @@
         "methods"
       ],
       "Hash": "b01dc0296cc62417991d0afa75aebcdf"
+    },
+    "anytime": {
+      "Package": "anytime",
+      "Version": "0.3.9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "BH",
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "74a64813f17b492da9c6afda6b128e3d"
     },
     "arm": {
       "Package": "arm",
@@ -3805,6 +3824,49 @@
       ],
       "Hash": "c2eae3d8c670fa9dfa35a12066f4a1d5"
     },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.7.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "anytime",
+        "bslib",
+        "grDevices",
+        "htmltools",
+        "jsonlite",
+        "rlang",
+        "sass",
+        "shiny"
+      ],
+      "Hash": "fd889b32caa37b8ed9b1e9e7ef1564bc"
+    },
+    "shinycssloaders": {
+      "Package": "shinycssloaders",
+      "Version": "1.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "glue",
+        "grDevices",
+        "shiny"
+      ],
+      "Hash": "f39bb3c44a9b496723ec7e86f9a771d8"
+    },
+    "shinythemes": {
+      "Package": "shinythemes",
+      "Version": "1.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "shiny"
+      ],
+      "Hash": "30f0ebc41feba25691073626ff5e2cf4"
+    },
     "softImpute": {
       "Package": "softImpute",
       "Version": "1.4-1",
@@ -3930,10 +3992,7 @@
       "RemoteUsername": "NishithPaul",
       "RemoteRef": "HEAD",
       "RemoteSha": "f81458845ad9c979fac75aec51235dc74a39fbc8",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "4ebf4b81ef19dc084b79a78e5dab5d75"
+      "Hash": "1e411e5ae0af613757aefbb5ae52b98e"
     },
     "testthat": {
       "Package": "testthat",

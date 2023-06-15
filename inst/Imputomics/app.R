@@ -9,6 +9,8 @@ library(tidyr)
 library(imputomics)
 library(shinycssloaders)
 library(openxlsx)
+library(ggbeeswarm)
+library(stringr)
 
 source("supp.R")
 
@@ -38,7 +40,10 @@ ui <- navbarPage(
                   selectInput("NA_sign",
                               "How is a missing value marked in your data?",
                               choices = c("zero", "NA"),
-                              selected = "NA")
+                              selected = "NA"),
+                  br(),
+                  h4("Upload example data."),
+                  materialSwitch(inputId = "example_dat")
            ),
            column(6,
                   align = "center",
@@ -110,24 +115,59 @@ ui <- navbarPage(
                               value = 0,
                               status = "success",
                               size = "xs",
-                              display_pct = TRUE)
+                              display_pct = TRUE,
+                              title = "")
            )
   ),
-  tabPanel("Summary",
-           h2("Here you can check the results and download imputed data!"),
-           br(),
-           h3("Imputation summary:"),
-           column(4,
+  tabPanel("Results",
+           h2("Here you can check the results!"),
+           column(3,
+                  style = 'border-right: 1px solid',
+                  h3("Imputation summary:"),
                   br(),
                   h4(icon("check"), "Success:"),
-                  withSpinner(uiOutput("success_methods"), color = "black"),
+                  radioButtons("success_methods",
+                               label = "",
+                               choices = ""),
                   br(),
                   h4(icon("xmark"), "Error:"),
                   withSpinner(uiOutput("error_methods"), color = "black"),
            ),
-           column(4, offset = 1,
-                  align = "center",
-                  downloadBttn("download", "Download results",
+           column(7, offset = 1, align = "center",
+                  h3("Data preview:"),
+                  withSpinner(DT::dataTableOutput("results"),
+                              color = "black")
+
+           )
+  ),
+  tabPanel("Summary",
+           column(3,
+                  style = 'border-right: 1px solid',
+                  pickerInput(inputId = "plot_var",
+                              label = "Select variable:",
+                              choices = "",
+                              multiple = FALSE,
+                              options = list(`live-search` = TRUE)),
+                  pickerInput(inputId = "plot_methods",
+                              label = "Select methods:",
+                              choices = "",
+                              multiple = FALSE,
+                              options = list(`live-search` = TRUE)),
+           ),
+           column(8, offset = 1,
+                  withSpinner(plotOutput("points"))
+           )
+  ),
+  tabPanel("Download",
+           column(5,
+                  h3("Select methods from the list below"),
+                  checkboxGroupInput(inputId = "download_methods",
+                                     label = "Methods:",
+                                     choices = ""),
+           ),
+           column(5,
+                  h3("... and click below to download the results!"),
+                  downloadBttn("download", "Download!",
                                color = "success",
                                style = "material-flat",
                                size = "lg")
@@ -162,6 +202,8 @@ server <- function(input, output, session) {
     dat[["missing_data"]] <- uploaded_data
     dat[["raw_data"]] <- raw_data
     dat[["n_cmp"]] <- ncol(raw_data)
+
+    updateMaterialSwitch(session = session, "example_dat", value = FALSE)
   })
 
   observeEvent(dat[["missing_data"]], {
@@ -195,9 +237,18 @@ server <- function(input, output, session) {
                   editable = FALSE,
                   selection = list(selectable = FALSE),
                   options = list(scrollX = TRUE,
-                                 pageLength = 15,
-                                 searching = FALSE)
+                                 pageLength = 10,
+                                 searching = FALSE),
+                  rownames = NULL
     )
+  })
+
+  observeEvent(input[["example_dat"]], {
+    if(input[["example_dat"]] == TRUE){
+      dat[["missing_data"]] <- read.csv("./test_data/example_set_na.csv")
+      dat[["raw_data"]] <- dat[["missing_data"]]
+      dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
+    }
   })
 
   ##### data vis
@@ -270,22 +321,24 @@ server <- function(input, output, session) {
     }
 
     methods <- input[["methods"]]
-
     progress <- 0
     progress_step <- 100/length(methods)
 
     results <- lapply(methods, function(ith_method) {
       ith_fun <- get(ith_method)
-
-      tryCatch({
-        imputed_dat <- ith_fun(dat[["missing_data"]])
-      }, error = data.frame())
-
+      title <- paste0("In progress ",
+                      str_replace_all(str_remove(ith_method,"impute_"), "_", " "),
+                      " ...")
       progress <<- progress + progress_step
       updateProgressBar(session = session,
                         id = "progress_bar",
                         value = progress,
-                        title = ith_method)
+                        title = title)
+      imputed_dat <- imputomics:::safe_impute(ith_fun, dat[["missing_data"]])
+
+      if(any(is.na(imputed_dat)))
+        imputed_dat <- data.frame()
+
       imputed_dat
     })
 
@@ -294,54 +347,31 @@ server <- function(input, output, session) {
                    text = "Imputation is done! Go to Summary and check/download the results!",
                    type = "success")
 
+    updateProgressBar(session = session,
+                      id = "progress_bar",
+                      value = 100,
+                      title = "Done!")
+
     names(results) <- methods
-    dat[["results"]] <- list(results = results, methods = methods)
+    dat[["results"]] <- list(results = results,
+                             methods = methods)
   })
 
-  #Summary
-
-  output[["download"]] <- downloadHandler(
-    filename = "results.xlsx",
-    content = function(file) {
-
-      req(dat[["results"]])
-
-      wb_file <- createWorkbook()
-      result_data <- dat[["results"]][["results"]]
-
-      methods <- names(result_data)
-      for (i in 1:length(result_data)) {
-        if(nrow(result_data[[i]]) != 0) {
-          addWorksheet(wb_file, methods[i])
-          writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
-        }
-      }
-      saveWorkbook(wb_file, file, overwrite = TRUE)
-    }
-  )
-
-
-  output[["success_methods"]] <- renderText({
-    req(dat[["results"]])
-
-    result_data <- dat[["results"]][["results"]]
-    methods <- dat[["results"]][["methods"]]
-
-    success <- names(result_data)
-
-    methods_table %>%
-      filter(imputomics_name %in% success) %>%
-      pull(name) %>%
-      paste0(collapse = "<br>")
-
+  observeEvent(input[["methods"]], {
+    updateProgressBar(session = session,
+                      id = "progress_bar",
+                      value = 0)
   })
+
+
+
+  # results
 
   output[["error_methods"]] <- renderText({
     req(dat[["results"]])
 
     result_data <- dat[["results"]][["results"]]
     methods <- dat[["results"]][["methods"]]
-
     error <- setdiff(methods, names(result_data))
     error_txt <- "none"
 
@@ -353,6 +383,122 @@ server <- function(input, output, session) {
     }
     error_txt
   })
+
+
+  observeEvent(dat[["results"]], {
+    req(dat[["results"]])
+
+    result_data <- dat[["results"]][["results"]]
+    success <- methods_table %>%
+      filter(imputomics_name %in% names(result_data))
+    dat[["results"]][["success"]] <- success
+
+    vars <- colnames(dat[["results"]][["results"]][[1]])
+
+    updateRadioButtons(session = session,
+                       inputId = "success_methods",
+                       label = "",
+                       choices = pull(success, name),
+                       selected = pull(success, name)[1])
+    updatePickerInput(session = session,
+                      inputId = "plot_var",
+                      choices = vars,
+                      selected = vars[1])
+    updatePickerInput(session = session,
+                      inputId = "plot_methods",
+                      choices = pull(success, name),
+                      selected = pull(success, name)[1])
+    updateCheckboxGroupInput(session = session,
+                             inputId = "download_methods",
+                             choices = pull(success, name),
+                             selected = pull(success, name))
+  })
+
+
+  output[["results"]] <- DT::renderDataTable({
+    req(dat[["results"]])
+
+    method <- dat[["results"]][["success"]] %>%
+      filter(name %in% input[["success_methods"]]) %>%
+      pull(imputomics_name)
+    res <- dat[["results"]][["results"]][[method]]
+
+    DT::datatable(round(res, 4),
+                  editable = FALSE,
+                  selection = list(selectable = FALSE),
+                  options = list(scrollX = TRUE,
+                                 pageLength = 10,
+                                 searching = FALSE),
+                  rownames = NULL)
+  })
+
+
+
+  output[["points"]] <- renderPlot({
+    req(input[["plot_methods"]])
+    req(input[["plot_var"]])
+    req(dat[["missing_data"]])
+    req(dat[["results"]])
+
+    method <- dat[["results"]][["success"]] %>%
+      filter(name %in% input[["plot_methods"]]) %>%
+      pull(imputomics_name)
+
+    res <- dat[["results"]][["results"]]
+    res_var <- res[[method]][, input[["plot_var"]]]
+    miss_var <- dat[["missing_data"]][, input[["plot_var"]]]
+
+    plt_dat <- data.frame(var = res_var,
+                          missing_var = miss_var)
+
+    plt_dat %>%
+      mutate(imputed = is.na(missing_var)) %>%
+      ggplot() +
+      geom_quasirandom(aes(y = var, x = imputed, col = imputed)) +
+      ggtitle(paste0("Variable: ", input[["plot_var"]],
+                     ", Method: ", input[["plot_methods"]])) +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 14),
+            axis.text.x = element_blank(),
+            title = element_text(size = 18)) +
+      xlab("")
+  })
+
+
+
+
+  #Summary
+
+  output[["download"]] <- downloadHandler(
+    filename = "results.xlsx",
+    content = function(file) {
+      req(dat[["results"]])
+      req(input[["download_methods"]])
+
+      wb_file <- createWorkbook()
+      addWorksheet(wb_file, "original_data")
+      writeData(wb_file, "original_data",
+                dat[["missing_data"]], colNames = TRUE)
+
+      result_data <- dat[["results"]][["results"]]
+
+      methods <- dat[["results"]][["success"]] %>%
+        filter(name %in% input[["download_methods"]]) %>%
+        pull(imputomics_name)
+
+      result_data <- result_data[methods]
+      methods <- str_replace_all(str_remove(names(result_data),"impute_"), "_", " ")
+      for (i in 1:length(result_data)) {
+        if(nrow(result_data[[i]]) != 0) {
+          addWorksheet(wb_file, methods[i])
+          writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
+        }
+      }
+      saveWorkbook(wb_file, file, overwrite = TRUE)
+    }
+  )
+
 
 }
 
