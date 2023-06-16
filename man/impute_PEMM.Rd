@@ -4,11 +4,13 @@
 \alias{impute_PEMM}
 \title{\strong{PEMM} imputation.}
 \usage{
-impute_PEMM(missdf)
+impute_PEMM(missdf, phi = 1)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{phi}{See the documentation of \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}.
@@ -20,12 +22,8 @@ Penalized EM Algorithm.
 A function to replace \code{NA} in the data frame by \code{\link[PEMM:PEMM_fun]{PEMM::PEMM_fun()}}.
 }
 \examples{
-\dontrun{
-idf <- runif(100)
-idf[sample(1L:100, round(4, 0))] <- NA
-idf <- data.frame(matrix(idf, nrow = 10))
-impute_PEMM(as.matrix(idf))
-}
+data(sim_miss)
+impute_PEMM(sim_miss)
 
 }
 \references{

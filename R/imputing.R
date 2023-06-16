@@ -263,7 +263,6 @@ impute_qrilc <- function(missdf, ...) {
 #' \insertRef{mazumder_softimpute_2021}{imputomics}
 #'
 #' @export
-
 impute_softimpute <- function(missdf, ...) {
   check_missdf(missdf)
   
@@ -283,103 +282,26 @@ impute_softimpute <- function(missdf, ...) {
 #' @importFrom PEMM PEMM_fun
 #'
 #' @inheritParams impute_zero
+#' @param phi See the documentation of [PEMM::PEMM_fun()].
 #'
 #' @returns A \code{data.frame} with imputed values by [PEMM::PEMM_fun()].
 #'
 #' @seealso [PEMM::PEMM_fun()]
-#'
+#' @export
 #' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_PEMM(as.matrix(idf))
-#' }
+#' data(sim_miss)
+#' impute_PEMM(sim_miss)
 #'
 #' @references
 #' \insertRef{chen_penalized_2014}{imputomics}
 #'
 #' @export
-
-impute_PEMM <- function(missdf) {
-  #PEMM_fun requires matrix
+impute_PEMM <- function(missdf, phi = 1) {
+  check_missdf(missdf)
+  
   missdf <- as.matrix(missdf)
-  imputed <- PEMM::PEMM_fun(missdf,
-                            phi = 1)
+  imputed <- PEMM::PEMM_fun(missdf, phi)
   data.frame(imputed[["Xhat"]])
-}
-
-
-#' \strong{tkNN} imputation.
-#'
-#' Truncated K Nearest Neighbors.
-#'
-#' A function to replace \code{NA} in the data frame by \strong{tkNN} method.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by \strong{tkNN} method.
-#'
-#' @details This function was copied from https://github.com/WandeRum/GSimp and
-#' contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
-#' (https://doi.org/10.1186/s12859-017-1547-6).
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_tknn(idf)
-#' }
-#'
-#' @references
-#' \insertRef{shah_distribution_2017}{imputomics}
-#'
-#' @export
-#'
-#'
-
-impute_tknn <- function(missdf) {
-  imputed <- imputeKNN(as.matrix(missdf),
-                       k = ceiling(nrow(missdf)*0.05) + 1,
-                       distance = "truncation",
-                       rm.na = TRUE,
-                       rm.nan = FALSE,
-                       rm.inf = FALSE)
-  data.frame(imputed)
-}
-
-#' \strong{corkNN} imputation.
-#'
-#' Correlation K Nearest Neighbors.
-#'
-#' A function to replace \code{NA} in the data frame by \strong{corkNN} method.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by \strong{corkNN} method.
-#'
-#' @details This function was copied from https://github.com/WandeRum/GSimp and
-#' contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
-#' (https://doi.org/10.1186/s12859-017-1547-6).
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_tknn(idf)
-#' }
-#'
-#' @export
-impute_corknn <- function(missdf) {
-  imputed <- imputeKNN(as.matrix(missdf),
-                       k = ceiling(nrow(missdf)*0.05) + 1,
-                       distance = "correlation",
-                       rm.na = TRUE,
-                       rm.nan = FALSE,
-                       rm.inf = FALSE)
-  data.frame(imputed)
 }
 
 
