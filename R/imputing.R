@@ -271,8 +271,6 @@ impute_softimpute <- function(missdf, ...) {
 }
 
 
-
-
 #' \strong{PEMM} imputation.
 #'
 #' Penalized EM Algorithm.
@@ -312,7 +310,7 @@ impute_PEMM <- function(missdf, phi = 1) {
 #' A function to replace \code{NA} in the data frame by \strong{GSimp} method.
 #'
 #' @inheritParams impute_zero
-#'
+#' @inheritParams GS_impute_clean
 #' @returns A \code{data.frame} with imputed values by \strong{GSimp} method.
 #'
 #' @details  This function was copied from https://github.com/WandeRum/GSimp and
@@ -332,7 +330,14 @@ impute_PEMM <- function(missdf, phi = 1) {
 #'
 #' @export
 
-impute_gsimp <- function(missdf) {
+impute_gsimp <- function(missdf, 
+                         iters_each = 100,
+                         iters_all = 20,
+                         initial = 'qrilc',
+                         lo = -Inf,
+                         hi = 'min',
+                         imp_model = 'glmnet_pred',
+                         gibbs = data.frame(row = integer(), col=integer())) {
   imputed <- GS_impute_clean(missdf,
                              initial = "lsym",
                              imp_model = 'glmnet_pred')
