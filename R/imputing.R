@@ -318,18 +318,13 @@ impute_PEMM <- function(missdf, phi = 1) {
 #' (10.1371/journal.pcbi.1005973).
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_gsimp(idf)
-#' }
+#' data(sim_miss)
+#' impute_gsimp(sim_miss)
 #'
 #' @references
 #' \insertRef{wei_gsimp_2018}{imputomics}
 #'
 #' @export
-
 impute_gsimp <- function(missdf, 
                          iters_each = 100,
                          iters_all = 20,
@@ -338,6 +333,8 @@ impute_gsimp <- function(missdf,
                          hi = 'min',
                          imp_model = 'glmnet_pred',
                          gibbs = data.frame(row = integer(), col=integer())) {
+  check_missdf(missdf)
+  
   imputed <- GS_impute_clean(missdf,
                              initial = "lsym",
                              imp_model = 'glmnet_pred')
