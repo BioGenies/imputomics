@@ -4,11 +4,14 @@
 \alias{impute_vim_knn}
 \title{\strong{kNN} imputation.}
 \usage{
-impute_vim_knn(missdf)
+impute_vim_knn(missdf, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{...}{other parameters of \code{\link[VIM:kNN]{VIM::kNN()}} besides
+\code{data}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[VIM:kNN]{VIM::kNN()}}.
@@ -18,12 +21,8 @@ K Nearest Neighbors. A function to replace \code{NA} in the data frame by
 \code{\link[VIM:kNN]{VIM::kNN()}}.
 }
 \examples{
-\dontrun{
-idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-values2 = rep(c(21, 32, 48, NA, 59), 10),
-values3 = rep(c(37, NA, 33, 44, 32), 10))
-impute_vim_knn(idf)
-}
+data(sim_miss)
+impute_vim_knn(sim_miss)
 
 }
 \references{

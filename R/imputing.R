@@ -349,26 +349,26 @@ impute_gsimp <- function(missdf,
 #' @importFrom VIM kNN
 #'
 #' @inheritParams impute_zero
+#' @param ... other parameters of [VIM::kNN()] besides 
+#' \code{data}.
 #'
 #' @returns A \code{data.frame} with imputed values by [VIM::kNN()].
 #'
 #' @seealso [VIM::kNN()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- data.frame(values1 = rep(c(11, 22, NA, 44, NA), 10),
-#' values2 = rep(c(21, 32, 48, NA, 59), 10),
-#' values3 = rep(c(37, NA, 33, 44, 32), 10))
-#' impute_vim_knn(idf)
-#' }
+#' data(sim_miss)
+#' impute_vim_knn(sim_miss)
 #'
 #' @references
 #' \insertRef{kowarik_imputation_2016}{imputomics}
 #'
 #' @export
 #'
-impute_vim_knn <- function(missdf) {
-  imputed <- VIM::kNN(missdf, k = 5)[,1:ncol(missdf)]
+impute_vim_knn <- function(missdf, ...) {
+  check_missdf(missdf)
+  
+  imputed <- VIM::kNN(missdf, ...)[,1:ncol(missdf)]
   data.frame(imputed)
 }
 
