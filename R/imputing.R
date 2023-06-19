@@ -335,9 +335,15 @@ impute_gsimp <- function(missdf,
                          gibbs = data.frame(row = integer(), col=integer())) {
   check_missdf(missdf)
   
-  imputed <- GS_impute_clean(missdf,
-                             initial = "lsym",
-                             imp_model = 'glmnet_pred')
+  imputed <- GS_impute_clean(data_miss = missdf,
+                             iters_each = iters_each,
+                             iters_all = iters_all,
+                             initial = initial,
+                             lo = lo,
+                             hi = hi,
+                             imp_model = imp_model,
+                             gibbs = gibbs)
+  
   data.frame(imputed[["data_imp"]])
 }
 
