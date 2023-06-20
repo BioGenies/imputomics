@@ -325,6 +325,7 @@ server <- function(input, output, session) {
     progress_step <- 100/length(methods)
 
     results <- lapply(methods, function(ith_method) {
+
       ith_fun <- get(ith_method)
       title <- paste0("In progress ",
                       str_replace_all(str_remove(ith_method,"impute_"), "_", " "),
@@ -336,21 +337,38 @@ server <- function(input, output, session) {
                         title = title)
       imputed_dat <- imputomics:::safe_impute(ith_fun, dat[["missing_data"]])
 
-      if(any(is.na(imputed_dat)))
-        imputed_dat <- data.frame()
+      if(!any(is.na(imputed_dat)))
+        return(imputed_dat)
 
-      imputed_dat
     })
-
-    sendSweetAlert(session = session,
-                   title = "Success!",
-                   text = "Imputation is done! Go to Summary and check/download the results!",
-                   type = "success")
 
     updateProgressBar(session = session,
                       id = "progress_bar",
                       value = 100,
                       title = "Done!")
+
+    errors <- methods[sapply(results, is.null)]
+    success <- setdiff(methods, errors)
+
+    if(length(success) == 0)
+      sendSweetAlert(session = session,
+                     title = "Error!",
+                     text = "All of the chosen methods failed to impute your data!",
+                     type = "error")
+
+    if(length(errors) == 0)
+      sendSweetAlert(session = session,
+                     title = "Success!",
+                     text = "Imputation is done! You can check and download the results!",
+                     type = "success")
+
+    if(length(errors) > 0 & length(success) > 0)
+      sendSweetAlert(session = session,
+                     title = "Warning!",
+                     text = "Imputation is done! However, some of the chosen methods failed to impute your data!",
+                     type = "warning")
+
+
 
     names(results) <- methods
     dat[["results"]] <- list(results = results,
@@ -372,7 +390,8 @@ server <- function(input, output, session) {
 
     result_data <- dat[["results"]][["results"]]
     methods <- dat[["results"]][["methods"]]
-    error <- setdiff(methods, names(result_data))
+
+    error <- methods[sapply(result_data, is.null)]
     error_txt <- "none"
 
     if(length(error) > 0) {
@@ -389,10 +408,13 @@ server <- function(input, output, session) {
     req(dat[["results"]])
 
     result_data <- dat[["results"]][["results"]]
-    success <- methods_table %>%
-      filter(imputomics_name %in% names(result_data))
-    dat[["results"]][["success"]] <- success
+    methods <- dat[["results"]][["methods"]]
+    success <- methods[!sapply(result_data, is.null)]
 
+    success <- methods_table %>%
+      filter(imputomics_name %in% success)
+
+    dat[["results"]][["success"]] <- success
     vars <- colnames(dat[["results"]][["results"]][[1]])
 
     updateRadioButtons(session = session,
@@ -418,18 +440,23 @@ server <- function(input, output, session) {
   output[["results"]] <- DT::renderDataTable({
     req(dat[["results"]])
 
-    method <- dat[["results"]][["success"]] %>%
-      filter(name %in% input[["success_methods"]]) %>%
-      pull(imputomics_name)
-    res <- dat[["results"]][["results"]][[method]]
+    if(nrow(dat[["results"]][["success"]]) != 0) {
+      method <- dat[["results"]][["success"]] %>%
+        filter(name %in% input[["success_methods"]]) %>%
+        pull(imputomics_name)
 
-    DT::datatable(round(res, 4),
-                  editable = FALSE,
-                  selection = list(selectable = FALSE),
-                  options = list(scrollX = TRUE,
-                                 pageLength = 10,
-                                 searching = FALSE),
-                  rownames = NULL)
+      res <- dat[["results"]][["results"]][[method]]
+
+      DT::datatable(round(res, 4),
+                    editable = FALSE,
+                    selection = list(selectable = FALSE),
+                    options = list(scrollX = TRUE,
+                                   pageLength = 10,
+                                   searching = FALSE),
+                    rownames = NULL)
+    }else{
+      "No data to display!"
+    }
   })
 
 

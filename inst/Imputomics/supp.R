@@ -69,8 +69,9 @@ plot_mv_heatmap <- function(tmp_dat) {
     mutate(Sample = 1:n()) %>%
     gather(Variable, Value, all_of(gathercols)) %>%
     mutate(`Is missing` = is.na(Value)) %>%
-    ggplot(aes(x = Sample, y = Variable, fill = `Is missing`)) +
+    ggplot(aes(x = Sample, y = as.factor(Variable), fill = `Is missing`)) +
     geom_tile() +
+    ylab("Variable") +
     scale_fill_manual(values = c("grey", "black")) +
     theme_minimal() +
     theme(axis.text = element_text(size = 12),
