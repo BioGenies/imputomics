@@ -166,7 +166,7 @@ ui <- navbarPage(
                                      choices = ""),
            ),
            column(5,
-                  h3("... and click below to download the results!"),
+                  h3("... and click to download the results!"),
                   downloadBttn("download", "Download!",
                                color = "success",
                                style = "material-flat",
