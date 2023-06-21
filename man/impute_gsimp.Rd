@@ -42,7 +42,8 @@ Gibbs Sampler Based Left-Censored Missing Value Imputation.
 \details{
 A function to replace \code{NA} in the data frame by \strong{GSimp} method.
 
-This function was copied from https://github.com/WandeRum/GSimp and
+This function and its documentation was copied from
+https://github.com/WandeRum/GSimp and
 contains the GSimp algorithm and related functions developed by Rum Wei
 (10.1371/journal.pcbi.1005973).
 }

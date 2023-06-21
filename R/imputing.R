@@ -313,9 +313,10 @@ impute_PEMM <- function(missdf, phi = 1) {
 #' @inheritParams GS_impute_clean
 #' @returns A \code{data.frame} with imputed values by \strong{GSimp} method.
 #'
-#' @details  This function was copied from https://github.com/WandeRum/GSimp and
+#' @details This function and its documentation was copied from 
+#' https://github.com/WandeRum/GSimp and
 #' contains the GSimp algorithm and related functions developed by Rum Wei
-#' (10.1371/journal.pcbi.1005973).
+#' (10.1371/journal.pcbi.1005973). 
 #'
 #' @examples
 #' data(sim_miss)
@@ -343,8 +344,8 @@ impute_gsimp <- function(missdf,
                              hi = hi,
                              imp_model = imp_model,
                              gibbs = gibbs)
-  
-  data.frame(imputed[["data_imp"]])
+
+  imputed[["data_imp"]]
 }
 
 #' \strong{kNN} imputation.
@@ -370,297 +371,15 @@ impute_gsimp <- function(missdf,
 #' \insertRef{kowarik_imputation_2016}{imputomics}
 #'
 #' @export
-#'
 impute_vim_knn <- function(missdf, ...) {
   check_missdf(missdf)
   
-  imputed <- VIM::kNN(missdf, ...)[,1:ncol(missdf)]
-  data.frame(imputed)
+  # remove columns with indices 
+  VIM::kNN(missdf, ...)[, colnames(missdf)]
 }
 
 
-#' \strong{MetabImpute RF} imputation.
-#'
-#' A function to replace \code{NA} in the data frame using random forest.
-#'
-#' @importFrom MetabImpute imputeMulti
-#' @importFrom MetabImpute Impute
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by [MetabImpute::Impute()]
-#' or [MetabImpute::imputeMulti()].
-#'
-#' @seealso [MetabImpute::Impute()], [MetabImpute::imputeMulti()]]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_RF(idf)
-#' }
-#'
-#' @export
-#'
-impute_MetabImpute_RF <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'RF',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
 
-#' \strong{MetabImpute BPCA} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by Bayesian PCA.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of Bayesian PCA by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_BPCA(idf)
-#' }
-#'
-#' @export
-
-impute_MetabImpute_BPCA <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'BPCA',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute QRILC} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by QRILC.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of QRILC by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_QRILC(idf)
-#' }
-#'
-#' @export
-
-impute_MetabImpute_QRILC <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'QRILC',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute GSIMP} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by GSIMP.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of GSIMP by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_GSIMP(idf)
-#' }
-#'
-#' @export
-
-impute_MetabImpute_GSIMP <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'GSIMP',
-                                 reps = 1,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute minimum} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by minimum.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of minimum by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_min(idf)
-#' }
-#'
-#' @keywords constant
-#'
-#' @export
-
-impute_MetabImpute_min <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'min',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute half-minimum} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by half-minimum from.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of half-minimum by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_halfmin(idf)
-#' }
-#'
-#' @keywords constant
-#'
-#' @export
-
-impute_MetabImpute_halfmin <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'halfmin',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute mean} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by mean.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of mean by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_mean(idf)
-#' }
-#'
-#' @keywords constant
-#'
-#' @export
-
-impute_MetabImpute_mean <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'mean',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute median} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by median.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of median by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_median(idf)
-#' }
-#'
-#' @keywords constant
-#'
-#' @export
-
-impute_MetabImpute_median <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'median',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
-
-#' \strong{MetabImpute zero} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by zero.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values of zero by
-#' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_zero(idf)
-#' }
-#'
-#' @keywords constant
-#'
-#' @export
-
-impute_MetabImpute_zero <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'zero',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
-}
 
 
 #' \strong{Mechanism-Aware} imputation.
