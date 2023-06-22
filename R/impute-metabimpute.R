@@ -12,7 +12,6 @@ eval_MetabImpute_calls <- function(missdf, method, verbose, ...) {
 }
 
 
-
 #' \strong{MetabImpute RF} imputation.
 #'
 #' A function to replace \code{NA} in the data frame using random forest.
@@ -46,34 +45,31 @@ impute_MetabImpute_rf <- function(missdf, verbose = FALSE, ...) {
                          verbose = verbose, ...)
 }
 
+
 #' \strong{MetabImpute BPCA} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by Bayesian PCA.
 #'
 #' @inheritParams impute_zero
-#'
+#' @inheritParams impute_MetabImpute_rf
+#' 
 #' @returns A \code{data.frame} with imputed values of Bayesian PCA by
 #' [MetabImpute::Impute()].
+#' 
+#' @inheritSection impute_MetabImpute_rf No replicates allowed
+#' 
 #'
 #' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' \dontrun{
-#' idf <- runif(100)
-#' idf[sample(1L:100, round(4, 0))] <- NA
-#' idf <- data.frame(matrix(idf, nrow = 10))
-#' impute_MetabImpute_BPCA(idf)
-#' }
+#' data(sim_miss)
+#' impute_MetabImpute_bpca(sim_miss)
 #'
 #' @export
-
-impute_MetabImpute_BPCA <- function(missdf) {
-  imputed <- MetabImpute::Impute(data = missdf,
-                                 method = 'BPCA',
-                                 reps = 5,
-                                 local = TRUE,
-                                 rep_threshold = 2/3)
-  data.frame(imputed)
+impute_MetabImpute_bpca <- function(missdf, ...) {
+  eval_MetabImpute_calls(missdf = missdf, method = "BPCA", 
+                         verbose = verbose, ...)
 }
 
 #' \strong{MetabImpute QRILC} imputation.
