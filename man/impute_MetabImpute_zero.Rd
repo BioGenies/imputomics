@@ -4,11 +4,17 @@
 \alias{impute_MetabImpute_zero}
 \title{\strong{MetabImpute zero} imputation.}
 \usage{
-impute_MetabImpute_zero(missdf)
+impute_MetabImpute_zero(missdf, verbose = FALSE, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{verbose}{boolean, if \code{TRUE}, prints the typical prompts of
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.}
+
+\item{...}{other parameters of \code{\link[MetabImpute:impute]{MetabImpute::Impute()}} besides \code{method} and
+\code{data}.}
 }
 \value{
 A \code{data.frame} with imputed values of zero by
@@ -17,13 +23,17 @@ A \code{data.frame} with imputed values of zero by
 \description{
 A function to replace \code{NA} in the data frame by zero.
 }
-\examples{
-\dontrun{
-idf <- runif(100)
-idf[sample(1L:100, round(4, 0))] <- NA
-idf <- data.frame(matrix(idf, nrow = 10))
-impute_MetabImpute_zero(idf)
+\section{No replicates allowed}{
+
+\code{Impute()} allows users to improve the quality of the imputation by
+providing the number of replications of the experiment. As one of the aims of
+the \code{imputomics} is to standardize the
+input and the output, our wrappers do not allow for this behavior.
 }
+
+\examples{
+data(sim_miss)
+impute_MetabImpute_zero(sim_miss)
 
 }
 \seealso{
