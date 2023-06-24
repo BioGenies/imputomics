@@ -379,9 +379,6 @@ impute_vim_knn <- function(missdf, ...) {
 }
 
 
-
-
-
 #' \strong{Mechanism-Aware} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by [MAI::MAI()] with random
@@ -396,22 +393,23 @@ impute_vim_knn <- function(missdf, ...) {
 #' @seealso [MAI::MAI()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(10000) < 0.1] <- NA
-#' impute_MA(idf)
-#' }
+#' data(sim_miss_large)
+#' impute_mai(sim_miss_large)
 #'
 #' @references
 #' \insertRef{dekermanjian_mechanismaware_2022}{imputomics}
 #'
 #' @export
 
-impute_MA <- function(missdf) {
-  imputed <- MAI::MAI(missdf,
-                      MCAR_algorithm = 'random_forest',
-                      MNAR_algorithm = 'Single')
-  data.frame(imputed[["Imputed_data"]])
+impute_mai <- function(missdf, ...) {
+  check_missdf(missdf)
+  
+  all_args <- extend_arglist(list(...),
+                             list(data_miss = missdf),
+                             list(MCAR_algorithm = "random_forest",
+                                  MNAR_algorithm = "Single"))
+  
+  data.frame(do.call(MAI::MAI, all_args)[["Imputed_data"]])
 }
 
 
