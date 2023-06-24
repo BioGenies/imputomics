@@ -17,6 +17,12 @@ A \code{data.frame} with imputed values by \code{\link[MAI:MAI]{MAI::MAI()}}.
 A function to replace \code{NA} in the data frame by \code{\link[MAI:MAI]{MAI::MAI()}} with random
 forest and single imputation.
 }
+\section{Silent defaults}{
+
+\code{MCAR_algorithm} is set to \code{random_forest} and
+\code{MNAR_algorithm} is set to \code{single}.
+}
+
 \examples{
 data(sim_miss_large)
 impute_mai(sim_miss_large)

@@ -374,7 +374,7 @@ impute_gsimp <- function(missdf,
 impute_vim_knn <- function(missdf, ...) {
   check_missdf(missdf)
   
-  # remove columns with indices 
+  # remove columns with indices of missing values
   VIM::kNN(missdf, ...)[, colnames(missdf)]
 }
 
@@ -390,6 +390,9 @@ impute_vim_knn <- function(missdf, ...) {
 #'
 #' @returns A \code{data.frame} with imputed values by [MAI::MAI()].
 #'
+#' @section Silent defaults: 
+#' \code{MCAR_algorithm} is set to \code{random_forest} and 
+#' \code{MNAR_algorithm} is set to \code{single}.
 #' @seealso [MAI::MAI()]
 #'
 #' @examples
@@ -400,7 +403,6 @@ impute_vim_knn <- function(missdf, ...) {
 #' \insertRef{dekermanjian_mechanismaware_2022}{imputomics}
 #'
 #' @export
-
 impute_mai <- function(missdf, ...) {
   check_missdf(missdf)
   
