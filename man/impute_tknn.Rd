@@ -23,9 +23,7 @@ A function to replace \code{NA} in the data frame by \strong{tkNN} method.
 }
 \section{Source}{
 
-This function was copied from https://github.com/WandeRum/GSimp and
-contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
-(https://doi.org/10.1186/s12859-017-1547-6).
+This function was adapted from https://github.com/WandeRum/GSimp.
 }
 
 \examples{

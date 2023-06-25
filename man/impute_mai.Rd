@@ -9,6 +9,8 @@ impute_mai(missdf, ...)
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{...}{other parameters of \code{\link[MAI:MAI]{MAI::MAI()}} besides \code{data_miss}.}
 }
 \value{
 A \code{data.frame} with imputed values by \code{\link[MAI:MAI]{MAI::MAI()}}.

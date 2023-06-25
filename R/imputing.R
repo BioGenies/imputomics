@@ -387,7 +387,8 @@ impute_vim_knn <- function(missdf, ...) {
 #' @importFrom MAI MAI
 #'
 #' @inheritParams impute_zero
-#'
+#' @param ... other parameters of [MAI::MAI()] besides \code{data_miss}.
+#' 
 #' @returns A \code{data.frame} with imputed values by [MAI::MAI()].
 #'
 #' @section Silent defaults: 
@@ -415,74 +416,6 @@ impute_mai <- function(missdf, ...) {
 }
 
 
-#' \strong{kNN-Euclidean} imputation.
-#'
-#' A function to replace \code{NA} in the data frame based on
-#' \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}.
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by kNN-Euclidean imputation.
-#'
-#' @details This function was copied from https://github.com/WandeRum/GSimp and
-#' contains kNN-TN algorithm and related functions developed by Jasmit S. Shah
-#' (https://doi.org/10.1186/s12859-017-1547-6).
-#'
-#' @seealso \emph{Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6)}
-#'
-#' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(10000) < 0.1] <- NA
-#' impute_eucknn(idf)
-#' }
-#'
-#' @references
-#' \insertRef{shah_distribution_2017}{imputomics}
-#'
-#' @export
-
-impute_eucknn <- function(missdf) {
-  imputed <- KNNEuc(as.matrix(missdf),
-                    k = ceiling(nrow(missdf)*0.05) + 1,
-                    rm.na = TRUE,
-                    rm.nan = TRUE,
-                    rm.inf = TRUE)
-  data.frame(imputed)
-}
-
-#' \strong{mice mixed} imputation.
-#'
-#' A function to replace \code{NA} in the data frame by
-#' [missCompare::impute_data()].
-#'
-#' @importFrom missCompare impute_data
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by
-#' [missCompare::impute_data()].
-#'
-#' @seealso [missCompare::impute_data()]
-#'
-#' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_mice_mixed(idf)
-#' }
-#'
-#' @export
-
-impute_mice_mixed <- function(missdf) {
-  imputed <- missCompare::impute_data(missdf,
-                                      scale = FALSE,
-                                      n.iter = 10,
-                                      sel_method = 11)
-  data.frame(imputed[['mice_mixed_imputation']][[10]])
-}
-
-
 #' \strong{RegImpute} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by imputation using Glmnet
@@ -491,38 +424,25 @@ impute_mice_mixed <- function(missdf) {
 #' @importFrom DreamAI DreamAI
 #'
 #' @inheritParams impute_zero
+#' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
+#' [DreamAI::DreamAI()].
+#' @param ... other parameters of [DreamAI::DreamAI()] besides \code{data} 
+#' and \code{method}.
 #'
 #' @returns A \code{data.frame} with imputed values by RegImpute
 #'
 #' @seealso [DreamAI::DreamAI()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_RegImpute(idf)
-#' }
+#' data(sim_miss)
+#' impute_regimpute(sim_miss)
 #'
 #' @export
-
-impute_RegImpute <- function(missdf) {
-  imputed <- DreamAI::DreamAI(missdf,
-                              k = 10,
-                              maxiter_MF = 10,
-                              ntree = 100,
-                              maxnodes = NULL,
-                              maxiter_ADMIN = 30,
-                              tol = 10^(-2),
-                              gamma_ADMIN = NA,
-                              gamma = 50,
-                              CV = FALSE,
-                              fillmethod = "row_mean",
-                              maxiter_RegImpute = 10,
-                              conv_nrmse = 1e-06,
-                              iter_SpectroFM = 40,
+impute_regimpute <- function(missdf, verbose = FALSE, ...) {
+  imputed <- silence_function(verbose)(DreamAI::DreamAI(data = missdf,
                               method = c("RegImpute"),
-                              out = c("Ensemble"))
-  data.frame(imputed[['Ensemble']])
+                              ...))
+  imputed[['Ensemble']]
 }
 
 

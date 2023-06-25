@@ -97,3 +97,4 @@ impute_mice_cart <- function(missdf, ...) {
 impute_mice_rf <- function(missdf, ...) {
   eval_mice_calls(missdf = missdf, method = "rf", ...)
 }
+
