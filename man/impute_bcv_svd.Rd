@@ -4,11 +4,13 @@
 \alias{impute_bcv_svd}
 \title{\strong{Singular Value Decomposition - SVD} imputation.}
 \usage{
-impute_bcv_svd(missdf)
+impute_bcv_svd(missdf, ...)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
+
+\item{...}{other parameters of \code{\link[bcv:impute.svd]{bcv::impute.svd()}} besides \code{x}.}
 }
 \value{
 A \code{data.frame} with imputed values by SVD.
@@ -18,11 +20,8 @@ A function to replace \code{NA} in the data frame by
 \code{\link[bcv:impute.svd]{bcv::impute.svd()}}.
 }
 \examples{
-\dontrun{
-idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-idf[runif(1000) < 0.1] <- NA
-impute_bcv_svd(idf)
-}
+data(sim_miss)
+impute_bcv_svd(sim_miss)
 
 }
 \seealso{

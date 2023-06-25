@@ -462,23 +462,21 @@ impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean",
 #' @importFrom bcv impute.svd
 #'
 #' @inheritParams impute_zero
+#' @param ... other parameters of [bcv::impute.svd()] besides \code{x}.
 #'
 #' @returns A \code{data.frame} with imputed values by SVD.
 #'
 #' @seealso [bcv::impute.svd()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_bcv_svd(idf)
-#' }
+#' data(sim_miss)
+#' impute_bcv_svd(sim_miss)
 #'
 #' @export
-
-impute_bcv_svd <- function(missdf){
-  imputed <- bcv::impute.svd(missdf)
-  data.frame(imputed[['x']])
+impute_bcv_svd <- function(missdf, ...){
+  imputed <- data.frame(bcv::impute.svd(x = missdf, ...)[["x"]])
+  colnames(imputed) <- colnames(missdf)
+  imputed
 }
 
 
