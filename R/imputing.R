@@ -194,13 +194,13 @@ impute_areg <- function(missdf, verbose = FALSE, ...) {
 #' @export
 impute_knn <- function(missdf, ...) {
   check_missdf(missdf)
-
+  
   all_args <- extend_arglist(list(...),
                              list(data = missdf),
                              list(rng.seed = sample(1L:1e9, 1)))
   
   imputed <- do.call(impute::impute.knn, all_args)
-
+  
   data.frame(imputed[["data"]])
 }
 
@@ -344,7 +344,7 @@ impute_gsimp <- function(missdf,
                              hi = hi,
                              imp_model = imp_model,
                              gibbs = gibbs)
-
+  
   imputed[["data_imp"]]
 }
 
@@ -439,18 +439,15 @@ impute_mai <- function(missdf, ...) {
 #' @export
 impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean", 
                              maxiter_RegImpute = 10, conv_nrmse = 1e-6, ...) {
-  imputed <- silence_function(verbose)(DreamAI::impute.RegImpute(data = as.matrix(sim_miss), 
-                                                                 fillmethod = fillmethod, 
-                                                                 maxiter_RegImpute = maxiter_RegImpute, 
-                                                                 conv_nrmse = conv_nrmse,
-                              ...))
+  check_missdf(missdf)
+  
+  imputed <- silence_function(verbose)(DreamAI::impute.RegImpute(data = as.matrix(missdf), 
+                                                                     fillmethod = fillmethod, 
+                                                                     maxiter_RegImpute = maxiter_RegImpute, 
+                                                                     conv_nrmse = conv_nrmse,
+                                                                     ...))
 
-  raw_imputed_matrix <- do.call(rbind, strsplit(imputed[(2*maxiter_RegImpute + 3):length(imputed)], ",] "))
-  res_imputed <- do.call(rbind, strsplit(raw_imputed_matrix[, 2], " "))
-  storage.mode(res_imputed) <- "numeric"
-
-  colnames(res_imputed) <- colnames(missdf)
-  data.frame(res_imputed)
+  data.frame(imputed)
 }
 
 
@@ -473,7 +470,9 @@ impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean",
 #' impute_bcv_svd(sim_miss)
 #'
 #' @export
-impute_bcv_svd <- function(missdf, ...){
+impute_bcv_svd <- function(missdf, ...) {
+  check_missdf(missdf)
+  
   imputed <- data.frame(bcv::impute.svd(x = missdf, ...)[["x"]])
   colnames(imputed) <- colnames(missdf)
   imputed
@@ -488,64 +487,31 @@ impute_bcv_svd <- function(missdf, ...){
 #' @importFrom imputation kNNImpute
 #'
 #' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by kNN.
+#' @param ... other parameters of [imputation::kNNImpute()] besides \code{x}.
+#' 
+#' @section Silent defaults: 
+#' \code{verbose} is set to \code{FALSE} and \code{k} to 5 or the number of 
+#' columns of \code{x} (whichever is smaller).
+#' @returns A \code{data.frame} with imputed values by k-nearest neighbors.
 #'
 #' @seealso [imputation::kNNImpute()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_imputation_kNN(idf)
-#' }
+#' data(sim_miss)
+#' impute_imputation_knn(sim_miss)
 #'
 #' @export
-
-impute_imputation_kNN <- function(missdf){
-  # kNNImpute needs data to be a matrix
-  missdf <- as.matrix(missdf)
-  imputed <- imputation::kNNImpute(missdf,
-                                   k = min(nrow(missdf),
-                                           ncol(missdf),
-                                           11) - 1)
-  data.frame(imputed[['x']])
-}
-
-#' \strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.
-#'
-#' A function to replace \code{NA} in the data frame based on
-#' \emph{Jingjing Xu (https://doi.org/10.3390/molecules26195787)}.
-#'
-#' @importFrom NMF nmf.getOption
-#'
-#' @inheritParams impute_zero
-#'
-#' @returns A \code{data.frame} with imputed values by mNMF.
-#'
-#' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_mNMF(idf)
-#'}
-#' @export
-
-impute_mNMF <- function(missdf){
+impute_imputation_knn <- function(missdf, ...) {
+  check_missdf(missdf)
   
-  # samples in columns and features in rows
-  missdf <- t(missdf)
-  k_group <- unique(round(seq(1,
-                              min(ncol(missdf),
-                                  nrow(missdf)),
-                              length.out = min(20, ncol(missdf))), 0))
-  imputed <- nmf_opt(IMP = missdf,
-                     M = NMF::nmf.getOption('default.algorithm'),
-                     kgroup = k_group,
-                     initialType = "mean")
-  data.frame(t(imputed))
+  all_args <- extend_arglist(list(...),
+                             list(x = as.matrix(missdf)),
+                             list(verbose = FALSE,
+                                  k = min(ncol(missdf), 5)))
+  
+  imputed <- do.call(imputation::kNNImpute, all_args)
+  data.frame(imputed[["x"]])
 }
-
 
 
 #' \strong{Compound Minimum} imputation.
@@ -553,6 +519,9 @@ impute_mNMF <- function(missdf){
 #' A function to replace \code{NA} in the data frame by [GMSimpute::GMS.Lasso()]
 #'
 #' @inheritParams impute_zero
+#' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
+#' [GMSimpute::GMS.Lasso()]. These prompts contain the information if the algorithm
+#' uses TS.Lasso or minimum per compund to impute, so it might be very relevant.
 #' @importFrom GMSimpute GMS.Lasso
 #'
 #' @returns A \code{data.frame} with imputed values by CM.
@@ -560,23 +529,16 @@ impute_mNMF <- function(missdf){
 #' @seealso [GMSimpute::GMS.Lasso()]
 #'
 #' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_CM(idf)
-#'}
-#'
-#' @keywords constant
+#' data(sim_miss)
+#' impute_cm(sim_miss)
 #'
 #' @export
-
-impute_CM <- function(missdf){
+impute_cm <- function(missdf, verbose = FALSE, ...){
+  check_missdf(missdf)
+  
   # samples in columns and features in rows
-  missdf <- t(missdf)
-  imputed <- GMSimpute::GMS.Lasso(missdf, TS.Lasso = FALSE)
-  data.frame(imputed)
+  data.frame(silence_function(verbose)(GMSimpute::GMS.Lasso(t(as.matrix(missdf)), ...)))
 }
-
 
 
 #' \strong{BayesMetab} imputation.
@@ -588,24 +550,20 @@ impute_CM <- function(missdf){
 #' @importFrom truncnorm rtruncnorm
 #'
 #' @inheritParams impute_zero
+#' @param M number of iterations.
 #'
 #' @returns A \code{data.frame} with imputed values by BayesMetab
 #'
 #' @examples
-#' \dontrun{
-#' idf <- matrix(round(runif(1000, 1000, 5000), 0), ncol =  10)
-#' idf[runif(1000) < 0.1] <- NA
-#' impute_CM(idf)
-#'}
+#' data(sim_miss)
+#' impute_bayesmetab(sim_miss)
 #' @export
-
-impute_BayesMetab <- function(missdf){
-  # MCMC.Factor requires matrix
-  missdf <- as.matrix(missdf)
-  imputed <- MCMC.Factor(missdf,
-                         M = 100,
+impute_bayesmetab <- function(missdf, M = 100) {
+  check_missdf(missdf)
+  
+  imputed <- MCMC.Factor(as.matrix(missdf),
+                         M = M,
                          miss.pattern = !is.na(missdf),
                          K.max = ncol(missdf))
-  data.frame(imputed[[5]])
+  data.frame(imputed[["5"]])
 }
-

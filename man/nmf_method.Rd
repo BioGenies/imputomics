@@ -4,7 +4,7 @@
 \alias{nmf_method}
 \title{Supplementary function for mNMF}
 \usage{
-nmf_method(IMPdata, k, Method, type)
+nmf_method(IMPdata, k, type)
 }
 \arguments{
 \item{IMPdata}{data set to be imputed, where rows = features,
@@ -12,9 +12,9 @@ columns = samples}
 
 \item{k}{factor of matrix decomposition}
 
-\item{Method}{methods used in NMF package}
-
 \item{type}{pre-imputation type (zero, mean, median)}
+
+\item{Method}{methods used in NMF package}
 }
 \description{
 Supplementary function for mNMF

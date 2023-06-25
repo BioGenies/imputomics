@@ -4,17 +4,17 @@
 \alias{nmf_opt}
 \title{Supplementary function for mNMF}
 \usage{
-nmf_opt(IMP, M, kgroup, initialType)
+nmf_opt(IMP, kgroup, initialType)
 }
 \arguments{
 \item{IMP}{data set to be imputed, where rows = features,
 columns = samples}
 
-\item{M}{methods used in NMF package}
-
 \item{kgroup}{the range of k value}
 
 \item{initialType}{pre-imputaion type}
+
+\item{M}{methods used in NMF package}
 }
 \description{
 Supplementary function for mNMF

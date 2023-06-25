@@ -24,7 +24,7 @@
 #'
 #' @keywords internal
 
-nmf_method <- function(IMPdata, k, Method, type){
+nmf_method <- function(IMPdata, k, type){
 
   V <- IMPdata
   V <- as.matrix(V)
@@ -63,7 +63,7 @@ nmf_method <- function(IMPdata, k, Method, type){
   V <- log10(V)
 
   # performing nmf for a given k
-  z1 <- nmf(V,k,method = Method)
+  z1 <- nmf(V,k)
   Basic <- z1@fit@W    # Basic matrix
   Coeff <- z1@fit@H    # Coefficent matrix
   V_recon <- Basic %*% Coeff
@@ -97,7 +97,6 @@ nmf_method <- function(IMPdata, k, Method, type){
 #' @keywords internal
 
 nmf_opt <- function(IMP,
-                    M,
                     kgroup,
                     initialType){
 
@@ -121,7 +120,7 @@ nmf_opt <- function(IMP,
   #calculating weight of each reconstructed matrix
   for (k in kgroup[1]:kgroup[length(kgroup)]) {
 
-    z <- nmf_method(V1,k,M,initialType)
+    z <- nmf_method(V1, k, initialType)
 
     for (i in 1:(m*n)) {
       if(!is.na(IMP[i])){

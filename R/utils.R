@@ -1,8 +1,13 @@
+silent_evaluation <- function(expr) {
+  capture.output(res <- expr)
+  res
+}
+
 silence_function <- function(verbose) {
   silencer <- if(verbose) {
     identity 
   } else {
-    capture.output
+    silent_evaluation
   }
 }
 
