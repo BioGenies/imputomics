@@ -425,24 +425,32 @@ impute_mai <- function(missdf, ...) {
 #'
 #' @inheritParams impute_zero
 #' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
-#' [DreamAI::DreamAI()].
-#' @param ... other parameters of [DreamAI::DreamAI()] besides \code{data} 
-#' and \code{method}.
+#' [DreamAI::impute.RegImpute()].
+#' @inheritParams DreamAI::DreamAI
 #'
-#' @returns A \code{data.frame} with imputed values by RegImpute
+#' @returns A \code{data.frame} with imputed values by RegImpute.
 #'
-#' @seealso [DreamAI::DreamAI()]
+#' @seealso [DreamAI::DreamAI()], [DreamAI::impute.RegImpute()].
 #'
 #' @examples
 #' data(sim_miss)
 #' impute_regimpute(sim_miss)
 #'
 #' @export
-impute_regimpute <- function(missdf, verbose = FALSE, ...) {
-  imputed <- silence_function(verbose)(DreamAI::DreamAI(data = missdf,
-                              method = c("RegImpute"),
+impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean", 
+                             maxiter_RegImpute = 10, conv_nrmse = 1e-6, ...) {
+  imputed <- silence_function(verbose)(DreamAI::impute.RegImpute(data = as.matrix(sim_miss), 
+                                                                 fillmethod = fillmethod, 
+                                                                 maxiter_RegImpute = maxiter_RegImpute, 
+                                                                 conv_nrmse = conv_nrmse,
                               ...))
-  imputed[['Ensemble']]
+
+  raw_imputed_matrix <- do.call(rbind, strsplit(imputed[(2*maxiter_RegImpute + 3):length(imputed)], ",] "))
+  res_imputed <- do.call(rbind, strsplit(raw_imputed_matrix[, 2], " "))
+  storage.mode(res_imputed) <- "numeric"
+
+  colnames(res_imputed) <- colnames(missdf)
+  data.frame(res_imputed)
 }
 
 

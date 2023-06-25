@@ -4,20 +4,30 @@
 \alias{impute_regimpute}
 \title{\strong{RegImpute} imputation.}
 \usage{
-impute_regimpute(missdf, verbose = FALSE, ...)
+impute_regimpute(
+  missdf,
+  verbose = FALSE,
+  fillmethod = "row_mean",
+  maxiter_RegImpute = 10,
+  conv_nrmse = 1e-06,
+  ...
+)
 }
 \arguments{
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
 
 \item{verbose}{boolean, if \code{TRUE}, prints the typical prompts of
-\code{\link[DreamAI:DreamAI]{DreamAI::DreamAI()}}.}
+\code{\link[DreamAI:impute.RegImpute]{DreamAI::impute.RegImpute()}}.}
 
-\item{...}{other parameters of \code{\link[DreamAI:DreamAI]{DreamAI::DreamAI()}} besides \code{data}
-and \code{method}.}
+\item{fillmethod}{a string identifying the method to be used to initially filling the missing values using simple imputation for "RegImpute". That could be "row_mean" or "zeros", with "row_mean" being the default. It throws an warning if "row_median" is used.}
+
+\item{maxiter_RegImpute}{maximum number of iterations to reach convergence in the imputation by "RegImpute"}
+
+\item{conv_nrmse}{convergence threshold for "RegImpute"}
 }
 \value{
-A \code{data.frame} with imputed values by RegImpute
+A \code{data.frame} with imputed values by RegImpute.
 }
 \description{
 A function to replace \code{NA} in the data frame by imputation using Glmnet
@@ -29,5 +39,5 @@ impute_regimpute(sim_miss)
 
 }
 \seealso{
-\code{\link[DreamAI:DreamAI]{DreamAI::DreamAI()}}
+\code{\link[DreamAI:DreamAI]{DreamAI::DreamAI()}}, \code{\link[DreamAI:impute.RegImpute]{DreamAI::impute.RegImpute()}}.
 }
