@@ -288,13 +288,13 @@ impute_softimpute <- function(missdf, ...) {
 #' @export
 #' @examples
 #' data(sim_miss)
-#' impute_PEMM(sim_miss)
+#' impute_pemm(sim_miss)
 #'
 #' @references
 #' \insertRef{chen_penalized_2014}{imputomics}
 #'
 #' @export
-impute_PEMM <- function(missdf, phi = 1) {
+impute_pemm <- function(missdf, phi = 1) {
   check_missdf(missdf)
   
   missdf <- as.matrix(missdf)
@@ -566,4 +566,19 @@ impute_bayesmetab <- function(missdf, M = 100) {
                          miss.pattern = !is.na(missdf),
                          K.max = ncol(missdf))
   data.frame(imputed[["5"]])
+}
+
+#' @describeIn impute_mice_pmm An alias
+#' @section Aliases: 
+#' \code{impute_mice_mixed} is a wrapper of \code{missCompare::impute_data} with
+#' the \code{method} set to \code{11} (which means that mice is automatically 
+#' selecting predictive mean matching for numerical data). 
+impute_mice_mixed <- function(missdf) {
+  check_missdf(missdf)
+  
+  imputed <- missCompare::impute_data(missdf,
+                                      scale = FALSE,
+                                      n.iter = 10,
+                                      sel_method = 11)
+  data.frame(imputed[["mice_mixed_imputation"]][[10]])
 }
