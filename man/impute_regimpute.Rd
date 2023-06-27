@@ -9,8 +9,7 @@ impute_regimpute(
   verbose = FALSE,
   fillmethod = "row_mean",
   maxiter_RegImpute = 10,
-  conv_nrmse = 1e-06,
-  ...
+  conv_nrmse = 1e-06
 )
 }
 \arguments{

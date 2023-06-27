@@ -426,6 +426,7 @@ impute_mai <- function(missdf, ...) {
 #' @inheritParams impute_zero
 #' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
 #' [DreamAI::impute.RegImpute()].
+#' 
 #' @inheritParams DreamAI::DreamAI
 #'
 #' @returns A \code{data.frame} with imputed values by RegImpute.
@@ -438,14 +439,13 @@ impute_mai <- function(missdf, ...) {
 #'
 #' @export
 impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean", 
-                             maxiter_RegImpute = 10, conv_nrmse = 1e-6, ...) {
+                             maxiter_RegImpute = 10, conv_nrmse = 1e-6) {
   check_missdf(missdf)
   
   imputed <- silence_function(verbose)(DreamAI::impute.RegImpute(data = as.matrix(missdf), 
                                                                      fillmethod = fillmethod, 
                                                                      maxiter_RegImpute = maxiter_RegImpute, 
-                                                                     conv_nrmse = conv_nrmse,
-                                                                     ...))
+                                                                     conv_nrmse = conv_nrmse))
 
   data.frame(imputed)
 }
@@ -522,6 +522,8 @@ impute_imputation_knn <- function(missdf, ...) {
 #' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
 #' [GMSimpute::GMS.Lasso()]. These prompts contain the information if the algorithm
 #' uses TS.Lasso or minimum per compund to impute, so it might be very relevant.
+#' @param ... other parameters of [GMSimpute::GMS.Lasso()] besides 
+#' \code{input_data}.
 #' @importFrom GMSimpute GMS.Lasso
 #'
 #' @returns A \code{data.frame} with imputed values by CM.

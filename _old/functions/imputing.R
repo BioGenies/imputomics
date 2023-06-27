@@ -305,6 +305,7 @@ impute_missforest <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{mi} method.
 #' @export
 #' @examples
+#' @importFrom mi complete mi
 #' 
 #' 
 impute_mi <- function(missing_data_set) {
@@ -384,6 +385,7 @@ impute_mle <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{tWLSA} method.
 #' @export
 #' @examples
+#' @importFrom tWLSA wlsMisImp
 #' 
 #' 
 impute_twlsa <- function(missing_data_set) {
@@ -412,7 +414,7 @@ impute_softimpute <- function(missing_data_set) {
 #' @returns A \code{data.frame} with imputed values by \code{IRMI} method.
 #' @export
 #' @examples
-#' 
+#' @importFrom NADIA autotune_VIM_Irmi
 #' 
 impute_irmi <- function(missing_data_set) {
   NADIA::autotune_VIM_Irmi(missing_data_set, col_type = rep("numeric", ncol(missing_data_set)),

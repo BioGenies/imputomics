@@ -64,13 +64,13 @@ Imports:
     truncnorm,
     tWLSA,
     VIM,
-    Rdpack
 Suggests:
     abind,
     knitr,
     testthat,
     matrixStats,
     randomForest,
+    Rdpack,
     spelling
 Language: en-US
 RdMacros: Rdpack
