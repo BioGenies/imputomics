@@ -55,7 +55,7 @@ Imports:
     missForest,
     missMDA,
     NADIA,
-    NMF,
+    NMF (>= 0.30.4.900),
     pcaMethods,
     PEMM,
     SimDesign,

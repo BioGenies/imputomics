@@ -533,17 +533,20 @@
     },
     "NMF": {
       "Package": "NMF",
-      "Version": "0.26",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "0.30.4.900",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "NMF",
+      "RemoteUsername": "renozao",
+      "RemoteRef": "devel",
+      "RemoteSha": "5d062d6f85896ac63b03b04490a6d61c41c78f54",
       "Requirements": [
-        "Biobase",
-        "BiocManager",
         "R",
         "RColorBrewer",
         "cluster",
-        "codetools",
         "colorspace",
+        "dendextend",
         "digest",
         "doParallel",
         "foreach",
@@ -552,15 +555,19 @@
         "graphics",
         "grid",
         "gridBase",
+        "magrittr",
+        "matrixStats",
         "methods",
+        "pkgmaker",
         "registry",
         "reshape2",
         "rngtools",
         "stats",
         "stringr",
-        "utils"
+        "utils",
+        "viridis"
       ],
-      "Hash": "17294aa61048e32ed3d08070624ee26a"
+      "Hash": "65857ddc883c852d2ea5ad4b95d249cc"
     },
     "PEMM": {
       "Package": "PEMM",
@@ -926,6 +933,16 @@
         "sys"
       ],
       "Hash": "e8a22846fff485f0be3770c2da758713"
+    },
+    "assertthat": {
+      "Package": "assertthat",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "tools"
+      ],
+      "Hash": "50c838a310445e954bc13f26f26a6ecf"
     },
     "audio": {
       "Package": "audio",
@@ -1389,6 +1406,22 @@
         "withr"
       ],
       "Hash": "d24305b92db333726aed162a2c23a147"
+    },
+    "dendextend": {
+      "Package": "dendextend",
+      "Version": "1.17.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "datasets",
+        "ggplot2",
+        "magrittr",
+        "stats",
+        "utils",
+        "viridis"
+      ],
+      "Hash": "043fafb791081fc553f29021bd0a9a01"
     },
     "desc": {
       "Package": "desc",
@@ -3146,6 +3179,29 @@
         "withr"
       ],
       "Hash": "6b0c222c5071efe0f3baf3dae9aa40e2"
+    },
+    "pkgmaker": {
+      "Package": "pkgmaker",
+      "Version": "0.32.10",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "assertthat",
+        "codetools",
+        "digest",
+        "grDevices",
+        "graphics",
+        "methods",
+        "registry",
+        "stats",
+        "stringr",
+        "tools",
+        "utils",
+        "withr",
+        "xtable"
+      ],
+      "Hash": "65d3393e200c30a65242e693d00db686"
     },
     "pls": {
       "Package": "pls",
