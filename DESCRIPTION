@@ -49,20 +49,18 @@ Imports:
     MAI,
     MetabImpute,
     methods,
-    mi,
     mice,
     missCompare,
     missForest,
     missMDA,
-    NADIA,
     NMF (>= 0.30.4.900),
     pcaMethods,
     PEMM,
+    Rdpack,
     SimDesign,
     shiny,
     softImpute,
     truncnorm,
-    tWLSA,
     VIM,
 Suggests:
     abind,
@@ -70,7 +68,6 @@ Suggests:
     testthat,
     matrixStats,
     randomForest,
-    Rdpack,
     spelling
 Language: en-US
 RdMacros: Rdpack

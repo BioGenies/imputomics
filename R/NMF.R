@@ -21,7 +21,7 @@
 #' @param k factor of matrix decomposition
 #' @param Method  methods used in NMF package
 #' @param type pre-imputation type (zero, mean, median)
-#'
+#' @noRd
 #' @keywords internal
 
 nmf_method <- function(IMPdata, k, type){

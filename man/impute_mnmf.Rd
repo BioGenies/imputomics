@@ -10,10 +10,10 @@ impute_mnmf(missdf, kgroup = NULL, initialType = "mean")
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
 
+\item{kgroup}{the range of k value.}
+
 \item{initialType}{type of pre-imputation. Possible values are: \code{mean},
 \code{median}, and \code{zero}.}
-
-\item{the}{range of k value.}
 }
 \value{
 A \code{data.frame} with imputed values by mNMF.

@@ -17,5 +17,6 @@
 #' @importFrom stats runif
 #' @importFrom stats sd
 #' @importFrom utils capture.output
+#' @importFrom Rdpack reprompt
 ## usethis namespace: end
 NULL

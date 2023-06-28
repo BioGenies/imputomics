@@ -21,8 +21,9 @@ forest and single imputation.
 }
 \section{Silent defaults}{
 
-\code{MCAR_algorithm} is set to \code{random_forest} and
-\code{MNAR_algorithm} is set to \code{single}.
+\code{MCAR_algorithm} is set to \code{random_forest},
+\code{MNAR_algorithm} is set to \code{single} and \code{verbose} is set to
+\code{FALSE}.
 }
 
 \examples{

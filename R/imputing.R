@@ -196,12 +196,12 @@ impute_knn <- function(missdf, ...) {
   check_missdf(missdf)
   
   all_args <- extend_arglist(list(...),
-                             list(data = missdf),
+                             list(data = t(as.matrix(missdf))),
                              list(rng.seed = sample(1L:1e9, 1)))
   
   imputed <- do.call(impute::impute.knn, all_args)
   
-  data.frame(imputed[["data"]])
+  data.frame(t(imputed[["data"]]))
 }
 
 
@@ -392,8 +392,9 @@ impute_vim_knn <- function(missdf, ...) {
 #' @returns A \code{data.frame} with imputed values by [MAI::MAI()].
 #'
 #' @section Silent defaults: 
-#' \code{MCAR_algorithm} is set to \code{random_forest} and 
-#' \code{MNAR_algorithm} is set to \code{single}.
+#' \code{MCAR_algorithm} is set to \code{random_forest}, 
+#' \code{MNAR_algorithm} is set to \code{single} and \code{verbose} is set to
+#' \code{FALSE}.
 #' @seealso [MAI::MAI()]
 #'
 #' @examples
@@ -410,7 +411,8 @@ impute_mai <- function(missdf, ...) {
   all_args <- extend_arglist(list(...),
                              list(data_miss = missdf),
                              list(MCAR_algorithm = "random_forest",
-                                  MNAR_algorithm = "Single"))
+                                  MNAR_algorithm = "Single",
+                                  verbose = FALSE))
   
   data.frame(do.call(MAI::MAI, all_args)[["Imputed_data"]])
 }
@@ -594,7 +596,7 @@ impute_mice_mixed <- function(missdf) {
 #' @importFrom NMF nmf.getOption
 #'
 #' @inheritParams impute_zero
-#' @param the range of k value.
+#' @param kgroup the range of k value.
 #' @param initialType type of pre-imputation. Possible values are: \code{mean},
 #' \code{median}, and \code{zero}.
 #' 
