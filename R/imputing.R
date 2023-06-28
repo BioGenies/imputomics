@@ -584,3 +584,41 @@ impute_mice_mixed <- function(missdf) {
                                       sel_method = 11)
   data.frame(imputed[["mice_mixed_imputation"]][[10]])
 }
+
+
+#' \strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.
+#'
+#' A function to replace \code{NA} in the data frame based on
+#' \emph{Jingjing Xu (https://doi.org/10.3390/molecules26195787)}.
+#'
+#' @importFrom NMF nmf.getOption
+#'
+#' @inheritParams impute_zero
+#' @param the range of k value.
+#' @param initialType type of pre-imputation. Possible values are: \code{mean},
+#' \code{median}, and \code{zero}.
+#' 
+#' @section k: 
+#' If k is not defined, it becomes a range between 1 and the minimum of 
+#' number of columns and number of rows of \code{missdf}.
+#' @returns A \code{data.frame} with imputed values by mNMF.
+#' @section Original implementation: 
+#' This function was adapted from https://github.com/freeoliver-jing/NMF.
+#' @examples
+#' data(sim_miss)
+#' impute_mnmf(sim_miss + 100)
+#' @export
+impute_mnmf <- function(missdf, kgroup = NULL, initialType = "mean") {
+  check_missdf(missdf, above_one = TRUE)
+  
+  # samples in columns and features in rows
+  
+  
+  if(is.null(kgroup)) {
+    kgroup <- unique(round(seq(1, min(ncol(missdf), nrow(missdf)),
+                               length.out = min(20, nrow(missdf))), 0))
+  }
+  
+  
+  data.frame(t(nmf_opt(IMP = t(as.matrix(missdf)), kgroup = kgroup, initialType = initialType)))
+}

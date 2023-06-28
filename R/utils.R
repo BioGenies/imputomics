@@ -57,10 +57,11 @@ safe_impute <- function(imputing_function, missdf) {
 #'
 #' @param missdf an object.
 #' @param above_zero boolean, if \code{TRUE} checks if all values are above zero
+#' @param above_one boolean, if \code{TRUE} checks if all values are above one
 #' @noRd
 #' @keywords internal
 #' @importFrom checkmate testDataFrame testNumeric
-check_missdf <- function(missdf, above_zero = FALSE) {
+check_missdf <- function(missdf, above_zero = FALSE, above_one = FALSE) {
   if(!checkmate::testDataFrame(missdf))
     stop("'missdf' must be a data.frame or tibble.")
   
@@ -70,16 +71,17 @@ check_missdf <- function(missdf, above_zero = FALSE) {
     } else {
       message("No NAs identified.")
     }
-      
   
-  if(above_zero) {
-    if(!all(sapply(missdf, checkmate::testNumeric, lower = 0)))
-      stop("'missdf' must contain only numeric data above 0.")
+  threshold <- 0 + above_one
+  
+  if(above_zero | above_one) {
+    if(!all(sapply(missdf, checkmate::testNumeric, lower = threshold)))
+      stop(paste0("'missdf' must contain only numeric data above ",  threshold, "."))
   } else {
     if(!all(sapply(missdf, checkmate::testNumeric)))
       stop("'missdf' must contain only numeric data.")
   }
-  
+
 }
 
 # add a function for checking the output

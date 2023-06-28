@@ -91,9 +91,8 @@ nmf_method <- function(IMPdata, k, type){
 #' @param IMP  data set to be imputed, where rows = features,
 #' columns = samples
 #' @param kgroup  the range of k value
-#' @param M  methods used in NMF package
-#' @param initialType pre-imputaion type
-#'
+#' @param initialType pre-imputation type
+#' @noRd
 #' @keywords internal
 
 nmf_opt <- function(IMP,
