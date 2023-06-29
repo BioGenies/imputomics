@@ -590,8 +590,8 @@ impute_mice_mixed <- function(missdf) {
 
 #' \strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.
 #'
-#' A function to replace \code{NA} in the data frame based on
-#' \emph{Jingjing Xu (https://doi.org/10.3390/molecules26195787)}.
+#' A function to replace \code{NA} in the data frame} using 
+#' non-negative Matrix Factorization.
 #'
 #' @importFrom NMF nmf.getOption
 #'
@@ -602,10 +602,13 @@ impute_mice_mixed <- function(missdf) {
 #' 
 #' @section k: 
 #' If k is not defined, it becomes a range between 1 and the minimum of 
-#' number of columns and number of rows of \code{missdf}.
+#' number of columns and number of rows of \code{missdf} as advised in the 
+#' original article (see References).
 #' @returns A \code{data.frame} with imputed values by mNMF.
 #' @section Original implementation: 
 #' This function was adapted from https://github.com/freeoliver-jing/NMF.
+#' @references
+#' \insertRef{xu_nmfbased_2021}{imputomics}
 #' @examples
 #' data(sim_miss)
 #' impute_mnmf(sim_miss + 100)

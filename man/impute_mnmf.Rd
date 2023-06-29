@@ -19,13 +19,13 @@ containing features in columns and samples in rows.}
 A \code{data.frame} with imputed values by mNMF.
 }
 \description{
-A function to replace \code{NA} in the data frame based on
-\emph{Jingjing Xu (https://doi.org/10.3390/molecules26195787)}.
+
 }
 \section{k}{
 
 If k is not defined, it becomes a range between 1 and the minimum of
-number of columns and number of rows of \code{missdf}.
+number of columns and number of rows of \code{missdf} as advised in the
+original article (see References).
 }
 
 \section{Original implementation}{
@@ -36,4 +36,7 @@ This function was adapted from https://github.com/freeoliver-jing/NMF.
 \examples{
 data(sim_miss)
 impute_mnmf(sim_miss + 100)
+}
+\references{
+\insertRef{xu_nmfbased_2021}{imputomics}
 }
