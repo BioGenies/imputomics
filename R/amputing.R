@@ -51,7 +51,7 @@ insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 #' @examples
 #' set.seed(1)
 #' m <- as.data.frame(matrix(rnorm(10), 50, 5))
-#' insert_MAR(m, ratio = 0.3)
+#' insert_MAR(m, ratio = 0.1)
 #'
 #' @export insert_MAR
 #'

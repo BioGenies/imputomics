@@ -25,6 +25,6 @@ This function uses \code{\link[mice]{ampute}}.
 \examples{
 set.seed(1)
 m <- as.data.frame(matrix(rnorm(10), 50, 5))
-insert_MAR(m, ratio = 0.3)
+insert_MAR(m, ratio = 0.1)
 
 }
