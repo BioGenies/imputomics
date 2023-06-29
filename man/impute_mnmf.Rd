@@ -19,7 +19,8 @@ containing features in columns and samples in rows.}
 A \code{data.frame} with imputed values by mNMF.
 }
 \description{
-
+A function to replace \code{NA} in the data frame using
+non-negative Matrix Factorization.
 }
 \section{k}{
 

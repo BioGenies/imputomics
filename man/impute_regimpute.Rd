@@ -33,8 +33,8 @@ A function to replace \code{NA} in the data frame by imputation using Glmnet
 ridge regression (RegImpute) from \code{\link[DreamAI:DreamAI]{DreamAI::DreamAI()}}.
 }
 \examples{
-data(sim_miss)
-impute_regimpute(sim_miss)
+data(sim_miss_large)
+impute_regimpute(sim_miss_large)
 
 }
 \seealso{

@@ -64,11 +64,13 @@ Imports:
     VIM,
 Suggests:
     abind,
+    beeswarm,
     knitr,
     testthat,
     matrixStats,
     randomForest,
-    spelling
+    spelling,
+    openxlsx
 Language: en-US
 RdMacros: Rdpack
 LazyData: true

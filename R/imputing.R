@@ -436,8 +436,8 @@ impute_mai <- function(missdf, ...) {
 #' @seealso [DreamAI::DreamAI()], [DreamAI::impute.RegImpute()].
 #'
 #' @examples
-#' data(sim_miss)
-#' impute_regimpute(sim_miss)
+#' data(sim_miss_large)
+#' impute_regimpute(sim_miss_large)
 #'
 #' @export
 impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean", 
@@ -569,7 +569,8 @@ impute_bayesmetab <- function(missdf, M = 100) {
                          M = M,
                          miss.pattern = !is.na(missdf),
                          K.max = ncol(missdf))
-  data.frame(imputed[["5"]])
+  
+  data.frame(imputed[[5]])
 }
 
 #' @describeIn impute_mice_pmm An alias
@@ -590,7 +591,7 @@ impute_mice_mixed <- function(missdf) {
 
 #' \strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.
 #'
-#' A function to replace \code{NA} in the data frame} using 
+#' A function to replace \code{NA} in the data frame using 
 #' non-negative Matrix Factorization.
 #'
 #' @importFrom NMF nmf.getOption

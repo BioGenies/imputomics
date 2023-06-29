@@ -17,12 +17,11 @@ imp_functions <- all_functions[substr(all_functions, 1, 7) == "impute_"]
 proper_ds <- rep("missing_data_set", length(imp_functions))
 names(proper_ds) <- imp_functions
 
-# because mai needs large data
+# because mai and regimpute needs large data
 proper_ds[["impute_mai"]] <- "missing_data_set_large"
-
+proper_ds[["impute_regimpute"]] <- "missing_data_set_large"
 # calculates result with all methods
 results <- lapply(imp_functions, function(ith_fun) {
-  print(ith_fun)
   try({
     get(ith_fun)(get(proper_ds[ith_fun]))
   }, silent = TRUE)
@@ -67,7 +66,7 @@ context("impute_* functions return output with proper dimension.")
 lapply(imp_functions, function(ith_method) {
   res <- results[[ith_method]]
   test_that(paste0(ith_method, " returns output with proper dimension."), {
-    expect_true(all(dim(res) == dim(missing_data_set)))
+    expect_true(all(dim(res) == dim(get(proper_ds[ith_method]))))
   })
 })
 
@@ -77,11 +76,8 @@ context("impute_* functions do not change the original data.")
 lapply(imp_functions, function(ith_method) {
   res <- results[[ith_method]]
   test_that(paste0(ith_method, " do not change the original data."), {
-    expect_true(all.equal(res[!is.na(missing_data_set)],
-                          missing_data_set[!is.na(missing_data_set)],
+    expect_true(all.equal(res[!is.na(get(proper_ds[ith_method]))],
+                          get(proper_ds[ith_method])[!is.na(get(proper_ds[ith_method]))],
                           check.attributes = FALSE))
   })
 })
-
-
-
