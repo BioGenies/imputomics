@@ -45,6 +45,7 @@ MCAR. It may happen that some of missing values will overlap themselves and
 in the result missing ratio may be slightly smaller.
 }
 \examples{
+set.seed(1)
 m <- as.data.frame(matrix(rnorm(10), 5, 2))
 simulate_miss_value(m, mcar = 0.1, mar = 0.05, mnar = 0.15)
 

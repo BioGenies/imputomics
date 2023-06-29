@@ -29,6 +29,7 @@ values. Thus, each metabolite has different truncation threshold. However,
 all the removed data corresponds to the provided fraction.
 }
 \examples{
+set.seed(1)
 m <- as.data.frame(matrix(rnorm(200), 10, 20))
 insert_MNAR(m, ratio = 0.1)
 

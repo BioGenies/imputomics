@@ -17,12 +17,12 @@
 #' @returns A \code{matrix} with NA values inserted.
 #'
 #' @examples
+#' set.seed(1)
 #' m <- as.data.frame(matrix(rnorm(10), 5, 2))
 #' insert_MCAR(m, ratio = 0.3)
 #'
 #' @export insert_MCAR
 #'
-
 insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 
   tmp_matrix <- matrix(runif(nrow(dat) * ncol(dat)),
@@ -49,20 +49,19 @@ insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 #' @returns A \code{matrix} with NA values inserted.
 #'
 #' @examples
-#' m <- as.data.frame(matrix(rnorm(10), 5, 2))
+#' set.seed(1)
+#' m <- as.data.frame(matrix(rnorm(10), 50, 5))
 #' insert_MAR(m, ratio = 0.3)
 #'
 #' @export insert_MAR
 #'
-
 insert_MAR <- function(dat, ratio = 0) {
-  pattern <- matrix(sample(c(0, 1),
-                           ncol(dat)*2,
-                           replace = TRUE,
-                           prob = c(0.7, 0.3)),
-                    ncol = ncol(dat))
-  mice::ampute(data = dat, prop = ratio, mech = "MAR", bycases = FALSE,
-               patterns = pattern)$amp
+  # pattern <- matrix(sample(c(0, 1),
+  #                          ncol(dat)*2,
+  #                          replace = TRUE,
+  #                          prob = c(0.7, 0.3)),
+  #                   ncol = ncol(dat))
+  mice::ampute(data = dat, prop = ratio, mech = "MAR", bycases = FALSE)[["amp"]]
 }
 
 
@@ -86,6 +85,7 @@ insert_MAR <- function(dat, ratio = 0) {
 #' @returns A \code{matrix} with NA values inserted.
 #'
 #' @examples
+#' set.seed(1)
 #' m <- as.data.frame(matrix(rnorm(200), 10, 20))
 #' insert_MNAR(m, ratio = 0.1)
 #'
@@ -156,12 +156,12 @@ insert_MNAR <- function(dat, ratio = 0.1, thresh = 0.2) {
 #' \code{\link[imputomics]{insert_MNAR}}
 #'
 #' @examples
+#' set.seed(1)
 #' m <- as.data.frame(matrix(rnorm(10), 5, 2))
 #' simulate_miss_value(m, mcar = 0.1, mar = 0.05, mnar = 0.15)
 #'
 #' @export
 #'
-
 simulate_miss_value <- function(data_set,
                                 mcar = 0,
                                 mar = 0,
