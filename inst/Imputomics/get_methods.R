@@ -2,6 +2,7 @@
 library(googlesheets4)
 library(stringr)
 library(imputomics)
+library(dplyr)
 
 sheet_dat <- read_sheet("https://docs.google.com/spreadsheets/d/1NhkV2ZlhDBAkQOpd3CCJbDoUQWf4WnlC9aiOLPcr4KU/edit?usp=sharing",
                         sheet = "hyperparameters", na = "")
