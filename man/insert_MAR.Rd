@@ -20,7 +20,9 @@ This function inserts NA's to the provided matrix according to the
 MNAR (Missing Not At Random) or MAR (Missing At Random) patterns.
 }
 \details{
-This function uses \code{\link[mice]{ampute}}.
+This function uses \code{\link[mice]{ampute}}. It firstly tries to
+ampute missing data by metabolites (columns) and if it fails, it switches to
+introduce missing values by samples (rows).
 }
 \examples{
 set.seed(1)

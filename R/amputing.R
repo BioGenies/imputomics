@@ -44,7 +44,9 @@ insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 #'
 #' @inheritParams insert_MCAR
 #'
-#' @details This function uses \code{\link[mice]{ampute}}.
+#' @details This function uses \code{\link[mice]{ampute}}. It firstly tries to
+#' ampute missing data by metabolites (columns) and if it fails, it switches to
+#' introduce missing values by samples (rows).
 #'
 #' @returns A \code{matrix} with NA values inserted.
 #'
@@ -61,7 +63,15 @@ insert_MAR <- function(dat, ratio = 0) {
   #                          replace = TRUE,
   #                          prob = c(0.7, 0.3)),
   #                   ncol = ncol(dat))
-  mice::ampute(data = dat, prop = ratio, mech = "MAR", bycases = FALSE)[["amp"]]
+  
+  res <- try(mice::ampute(data = dat, prop = ratio, 
+                                         mech = "MAR", bycases = FALSE)[["amp"]], silent = TRUE)
+  
+  if(inherits(res, "try-error"))
+    res <- mice::ampute(data = dat, prop = ratio, 
+                                       mech = "MAR", bycases = TRUE)[["amp"]]
+  
+  res
 }
 
 
