@@ -18,21 +18,44 @@
 #'
 #' @examples
 #' set.seed(1)
-#' m <- as.data.frame(matrix(rnorm(10), 5, 2))
-#' insert_MCAR(m, ratio = 0.3)
+#' m <- as.data.frame(matrix(rnorm(50), ncol = 10))
+#' insert_MCAR(m, ratio = 0.1)
 #'
 #' @export insert_MCAR
 #'
 insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
-
-  tmp_matrix <- matrix(runif(nrow(dat) * ncol(dat)),
-                       nrow = nrow(dat),
-                       ncol = ncol(dat))
-  tmp_vec <- runif(length(dat[tmp_matrix < thresh]))
-  dat[tmp_matrix < thresh] <- ifelse(tmp_vec < ratio/thresh,
-                                     NA,
-                                     dat[tmp_matrix < ratio])
-  dat
+  
+  total_missing <- round(nrow(dat) * ncol(dat) * ratio, 0)
+  
+  thresh_value <- ceiling(thresh * nrow(dat))
+  
+  if(total_missing > thresh_value * ncol(dat)) {
+    stop(paste0("The total number of required missing values (", total_missing,
+                ") is larger than the number of missing values allowed by threshold (",
+                thresh_value * ncol(dat), ")"))
+  }
+  
+  res <- dat
+  
+  missing_per_column <- rmultinom(1, total_missing, rep(1/ncol(dat), ncol(dat)))[, 1]
+  
+  diffs <- missing_per_column - nrow(dat) - thresh_value
+  
+  while(any(diffs > 0)) {
+    random_neg_column <- sample(which(diffs < 0), size = 1)
+    random_pos_column <- sample(which(diffs > 0), size = 1)
+    
+    missing_per_column[random_neg_column] <- missing_per_column[random_neg_column] + 1
+    missing_per_column[random_pos_column] <- missing_per_column[random_pos_column] - 1
+    
+    diffs <- missing_per_column - nrow(dat)
+  }
+  
+  for(i in 1L:ncol(dat)) {
+    res[sample.int(n = nrow(dat), size = missing_per_column[i]), i] <- NA
+  }
+  
+  res
 }
 
 ######## MAR

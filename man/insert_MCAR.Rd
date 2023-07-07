@@ -21,7 +21,7 @@ MCAR (Missing Completely At Random) pattern.
 }
 \examples{
 set.seed(1)
-m <- as.data.frame(matrix(rnorm(10), 5, 2))
-insert_MCAR(m, ratio = 0.3)
+m <- as.data.frame(matrix(rnorm(50), ncol = 10))
+insert_MCAR(m, ratio = 0.1)
 
 }
