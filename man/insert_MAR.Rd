@@ -17,7 +17,7 @@ A \code{matrix} with NA values inserted.
 }
 \description{
 This function inserts NA's to the provided matrix according to the
-MNAR (Missing Not At Random) or MAR (Missing At Random) patterns.
+MAR (Missing At Random) patterns.
 }
 \details{
 This function uses \code{\link[mice]{ampute}}. It firstly tries to

@@ -1,4 +1,28 @@
+get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
+  total_missing <- round(nrow(dat) * ncol(dat) * ratio, 0)
 
+  thresh_value <- ceiling(thresh * nrow(dat))
+
+  if(total_missing > thresh_value * ncol(dat)) {
+    stop(paste0("The total number of required missing values (", total_missing,
+                ") is larger than the number of missing values allowed by threshold (",
+                thresh_value * ncol(dat), ")"))
+  }
+
+  missing_per_column <- rmultinom(1, total_missing, rep(1/ncol(dat), ncol(dat)))[, 1]
+
+  diffs <- missing_per_column - nrow(dat) - thresh_value
+
+  while(any(diffs > 0)) {
+    random_neg_column <- sample(which(diffs < 0), size = 1)
+    random_pos_column <- sample(which(diffs > 0), size = 1)
+
+    missing_per_column[random_neg_column] <- missing_per_column[random_neg_column] + 1
+    missing_per_column[random_pos_column] <- missing_per_column[random_pos_column] - 1
+
+    diffs <- missing_per_column - nrow(dat)
+  }
+}
 
 ######## MCAR
 
@@ -25,31 +49,9 @@
 #'
 insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 
-  total_missing <- round(nrow(dat) * ncol(dat) * ratio, 0)
-
-  thresh_value <- ceiling(thresh * nrow(dat))
-
-  if(total_missing > thresh_value * ncol(dat)) {
-    stop(paste0("The total number of required missing values (", total_missing,
-                ") is larger than the number of missing values allowed by threshold (",
-                thresh_value * ncol(dat), ")"))
-  }
+  missing_per_column <- get_missing_per_column(dat, ratio = dat, thresh = thresh)
 
   res <- dat
-
-  missing_per_column <- rmultinom(1, total_missing, rep(1/ncol(dat), ncol(dat)))[, 1]
-
-  diffs <- missing_per_column - nrow(dat) - thresh_value
-
-  while(any(diffs > 0)) {
-    random_neg_column <- sample(which(diffs < 0), size = 1)
-    random_pos_column <- sample(which(diffs > 0), size = 1)
-
-    missing_per_column[random_neg_column] <- missing_per_column[random_neg_column] + 1
-    missing_per_column[random_pos_column] <- missing_per_column[random_pos_column] - 1
-
-    diffs <- missing_per_column - nrow(dat)
-  }
 
   for(i in 1L:ncol(dat)) {
     res[sample.int(n = nrow(dat), size = missing_per_column[i]), i] <- NA
@@ -63,7 +65,7 @@ insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 #' Inserting missing data of MAR type
 #'
 #' This function inserts NA's to the provided matrix according to the
-#' MNAR (Missing Not At Random) or MAR (Missing At Random) patterns.
+#' MAR (Missing At Random) patterns.
 #'
 #' @inheritParams insert_MCAR
 #'
