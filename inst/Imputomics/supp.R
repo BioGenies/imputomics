@@ -113,3 +113,28 @@ get_methods_table <- function(path = "methods_table.RDS") {
   methods_table %>%
     filter(imputomics_name %in% funs_imputomics)
 }
+
+
+save_excel <- function(dat, file, download_methods) {
+  wb_file <- createWorkbook()
+  addWorksheet(wb_file, "original_data")
+  writeData(wb_file, "original_data",
+            dat[["missing_data"]], colNames = TRUE)
+
+  result_data <- dat[["results"]][["results"]]
+
+  methods <- dat[["results"]][["success"]] %>%
+    filter(name %in% download_methods) %>%
+    pull(imputomics_name)
+
+  result_data <- result_data[methods]
+  methods <- str_replace_all(str_remove(names(result_data),"impute_"), "_", " ")
+  for (i in 1:length(result_data)) {
+    if(nrow(result_data[[i]]) != 0) {
+      addWorksheet(wb_file, methods[i])
+      writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
+    }
+  }
+
+  saveWorkbook(wb_file, file, overwrite = TRUE)
+}
