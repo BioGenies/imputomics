@@ -172,24 +172,16 @@ insert_MAR <- function(dat, ratio = 0, thresh = 0.2) {
 #'
 
 insert_MNAR <- function(dat, ratio = 0.1, thresh = 0.2) {
-  n <- ncol(dat)
-  sum_value <- n * ratio
-  ratio_cols <- runif(n - 1, 0, 0.9)
-  p_vec <- diff(sort(c(ratio_cols, 0, 1))) * sum_value
+  
+  missing_per_column <- get_missing_per_column(dat, ratio = ratio, thresh = thresh)
+  
+  res <- dat  
 
-  while(any(p_vec >= thresh)) {
-    excess <- (sum_value - sum(p_vec[!(p_vec >= thresh)])) / n
-    p_vec[p_vec >= thresh] <- 0
-    p_vec <- p_vec + excess
+  for(i in which(missing_per_column != 0)) {
+    res[order(res[, i])[1L:missing_per_column[i]], i] <- NA
   }
-
-  do.call(cbind,
-          lapply(1L:ncol(dat), function(ith_col_id) {
-            ith_col <- dat[, ith_col_id]
-            ith_col[ith_col < quantile(ith_col, p_vec[[ith_col_id]])] <- NA
-            ith_col
-          })
-  )
+  
+  res
 }
 
 ######## simulate scenario

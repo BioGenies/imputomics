@@ -4,7 +4,7 @@
 \alias{insert_MAR}
 \title{Inserting missing data of MAR type}
 \usage{
-insert_MAR(dat, ratio = 0)
+insert_MAR(dat, ratio = 0, thresh = 0.2)
 }
 \arguments{
 \item{dat}{a matrix or data.frame of data to be filled with some NA's.}
