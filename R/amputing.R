@@ -1,7 +1,10 @@
+sample_indices <- function(x) x[sample(length(x), size = 1)]
+
 get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
   total_missing <- round(nrow(dat) * ncol(dat) * ratio, 0)
   
   thresh_value <- ceiling(thresh * nrow(dat))
+  nonmissing_value <- thresh_value - nrow(dat)
   
   if(total_missing > thresh_value * ncol(dat)) {
     stop(paste0("The total number of required missing values (", total_missing,
@@ -11,17 +14,19 @@ get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
   
   missing_per_column <- rmultinom(1, total_missing, rep(1/ncol(dat), ncol(dat)))[, 1]
   
-  diffs <- missing_per_column - nrow(dat) - thresh_value
+  diffs <- missing_per_column - thresh_value
   
   while(any(diffs > 0)) {
-    random_neg_column <- sample(which(diffs < 0), size = 1)
-    random_pos_column <- sample(which(diffs > 0), size = 1)
+    random_neg_column <- sample_indices(which(diffs < 0 & diffs >= nonmissing_value))
+    random_pos_column <- sample_indices(which(diffs > 0))
     
     missing_per_column[random_neg_column] <- missing_per_column[random_neg_column] + 1
     missing_per_column[random_pos_column] <- missing_per_column[random_pos_column] - 1
     
-    diffs <- missing_per_column - nrow(dat)
+    diffs <- missing_per_column - thresh_value
   }
+  
+  missing_per_column
 }
 
 ######## MCAR
@@ -49,7 +54,7 @@ get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
 #'
 insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
   
-  missing_per_column <- get_missing_per_column(dat, ratio = dat, thresh = thresh)
+  missing_per_column <- get_missing_per_column(dat, ratio = ratio, thresh = thresh)
   
   res <- dat  
     
