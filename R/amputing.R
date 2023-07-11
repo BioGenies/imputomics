@@ -2,7 +2,7 @@ sample_indices <- function(x) x[sample(length(x), size = 1)]
 
 get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
   total_missing <- round(nrow(dat) * ncol(dat) * ratio, 0)
-  
+
   thresh_value <- ceiling(thresh * nrow(dat))
   nonmissing_value <- thresh_value - nrow(dat)
   
@@ -11,7 +11,7 @@ get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
                 ") is larger than the number of missing values allowed by threshold (",
                 thresh_value * ncol(dat), ")"))
   }
-  
+
   missing_per_column <- rmultinom(1, total_missing, rep(1/ncol(dat), ncol(dat)))[, 1]
   
   diffs <- missing_per_column - thresh_value
@@ -24,7 +24,7 @@ get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
     missing_per_column[random_pos_column] <- missing_per_column[random_pos_column] - 1
     
     diffs <- missing_per_column - thresh_value
-  }
+ }
   
   missing_per_column
 }
@@ -53,15 +53,15 @@ get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
 #' @export insert_MCAR
 #'
 insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
-  
+
   missing_per_column <- get_missing_per_column(dat, ratio = ratio, thresh = thresh)
   
   res <- dat  
-    
+
   for(i in 1L:ncol(dat)) {
     res[sample.int(n = nrow(dat), size = missing_per_column[i]), i] <- NA
   }
-  
+
   res
 }
 
@@ -87,21 +87,60 @@ insert_MCAR <- function(dat, ratio = 0, thresh = 0.2) {
 #'
 #' @export insert_MAR
 #'
-insert_MAR <- function(dat, ratio = 0) {
-  # pattern <- matrix(sample(c(0, 1),
-  #                          ncol(dat)*2,
-  #                          replace = TRUE,
-  #                          prob = c(0.7, 0.3)),
-  #                   ncol = ncol(dat))
-  
-  res <- try(mice::ampute(data = dat, prop = ratio, 
-                                         mech = "MAR", bycases = FALSE)[["amp"]], silent = TRUE)
-  
-  if(inherits(res, "try-error"))
-    res <- mice::ampute(data = dat, prop = ratio, 
-                                       mech = "MAR", bycases = TRUE)[["amp"]]
-  
-  res
+insert_MAR <- function(dat, ratio = 0, thresh = 0.2) {
+  n <- nrow(dat)
+  p <- ncol(dat)
+  iter <- 1
+  total_missing <- round(n * p * ratio, 0)
+
+  if(p < 2) {
+    stop(paste0("The data should contain at least two columns!",
+                "Your data contains ", p, "."))
+  }
+
+  if(ratio > thresh) {
+    stop(paste0("The total number of required missing values (", total_missing,
+                ") is larger than the number of missing values allowed by threshold (",
+                thresh * n * p, ")"))
+  }
+
+  tmp_missing_per_column <- rmultinom(1, total_missing, rep(1/ncol(dat), ncol(dat) - 1))[, 1]
+  random_complete_col <- sample(1:ncol(dat), size = 1)
+
+  missing_per_column <- numeric(p)
+  missing_per_column[-random_complete_cols] <- tmp_missing_per_column
+
+  excess <- missing_per_column - thresh*n
+  excess[excess < 0] <- 0
+
+  while(sum(excess) > 0) {
+    nonzero_below_thresh <- missing_per_column < thresh*n & missing_per_column > 0
+    random_below_thresh <- sample(1:sum(nonzero_below_thresh),
+                                  min(sum(excess), sum(nonzero_below_thresh)))
+
+    missing_per_column[nonzero_below_thresh][random_below_thresh] <-
+      missing_per_column[nonzero_below_thresh][random_below_thresh] + 1
+    excess <- missing_per_column - thresh*n
+    excess[excess < 0] <- 0
+  }
+
+  missing_per_column[missing_per_column > thresh*n] <- thresh*n
+  ids_0 <- which(missing_per_column == 0)
+  ids_non_0 <- which(missing_per_column != 0)
+
+  for(i in ids_non_0) {
+
+    n_cols_to_sample <- sample(1:length(ids_0), size = 1)
+    sampled_cols_ind <- sample(ids_0, n_cols_to_sample)
+
+    sampled_cols <- dat[, sampled_cols_ind]
+    sampled_scales <- rnorm(n_cols_to_sample)
+    scaled_sum <- as.matrix(sampled_cols) %*% sampled_scales
+
+    dat[order(scaled_sum)[1:missing_per_column[i]], i] <- NA
+  }
+
+  dat
 }
 
 

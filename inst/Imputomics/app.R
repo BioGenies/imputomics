@@ -434,6 +434,7 @@ server <- function(input, output, session) {
                              inputId = "download_methods",
                              choices = pull(success, name),
                              selected = pull(success, name))
+
   })
 
 
@@ -455,7 +456,9 @@ server <- function(input, output, session) {
                                    searching = FALSE),
                     rownames = NULL)
     }else{
-      "No data to display!"
+      res <- data.frame("No data to display!", row.names = NULL)
+      colnames(res) <- NULL
+      res
     }
   })
 
@@ -494,7 +497,6 @@ server <- function(input, output, session) {
 
 
 
-
   #Summary
 
   output[["download"]] <- downloadHandler(
@@ -503,26 +505,7 @@ server <- function(input, output, session) {
       req(dat[["results"]])
       req(input[["download_methods"]])
 
-      wb_file <- createWorkbook()
-      addWorksheet(wb_file, "original_data")
-      writeData(wb_file, "original_data",
-                dat[["missing_data"]], colNames = TRUE)
-
-      result_data <- dat[["results"]][["results"]]
-
-      methods <- dat[["results"]][["success"]] %>%
-        filter(name %in% input[["download_methods"]]) %>%
-        pull(imputomics_name)
-
-      result_data <- result_data[methods]
-      methods <- str_replace_all(str_remove(names(result_data),"impute_"), "_", " ")
-      for (i in 1:length(result_data)) {
-        if(nrow(result_data[[i]]) != 0) {
-          addWorksheet(wb_file, methods[i])
-          writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
-        }
-      }
-      saveWorkbook(wb_file, file, overwrite = TRUE)
+      save_excel(dat, file, download_methods = input[["download_methods"]])
     }
   )
 
