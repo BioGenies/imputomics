@@ -108,7 +108,7 @@ insert_MAR <- function(dat, ratio = 0, thresh = 0.2) {
   random_complete_col <- sample(1:ncol(dat), size = 1)
 
   missing_per_column <- numeric(p)
-  missing_per_column[-random_complete_cols] <- tmp_missing_per_column
+  missing_per_column[-random_complete_col] <- tmp_missing_per_column
 
   excess <- missing_per_column - thresh*n
   excess[excess < 0] <- 0
@@ -228,15 +228,16 @@ insert_MNAR <- function(dat, ratio = 0.1, thresh = 0.2) {
 #'
 #' @examples
 #' set.seed(1)
-#' m <- as.data.frame(matrix(rnorm(10), 5, 2))
-#' simulate_miss_value(m, mcar = 0.1, mar = 0.05, mnar = 0.15)
+#' m <- as.data.frame(matrix(rnorm(200), ncol = 50))
+#' simulate_miss_value(m, mcar = 0.05, mar = 0.01, mnar = 0.05)
 #'
 #' @export
 #'
 simulate_miss_value <- function(data_set,
                                 mcar = 0,
                                 mar = 0,
-                                mnar = 0){
+                                mnar = 0,
+                                ratio = 0.2){
   if(!("data.frame" %in% class(data_set)))
     stop("Variable data should be a data.frame")
 
@@ -246,11 +247,11 @@ simulate_miss_value <- function(data_set,
   amputed_mar <- amputed_mnar <- amputed_mcar <- data_set
 
   if(mar > 0)
-    amputed_mar <- insert_MAR(data_set, mar)
+    amputed_mar <- insert_MAR(data_set, mar, ratio = ratio)
   if(mnar > 0)
-    amputed_mnar <- insert_MNAR(data_set, mnar)
+    amputed_mnar <- insert_MNAR(data_set, mnar, ratio = ratio)
   if(mcar > 0)
-    amputed_mcar <- insert_MCAR(data_set, mcar)
+    amputed_mcar <- insert_MCAR(data_set, mcar, ratio = ratio)
 
   data_set[is.na(amputed_mar)] <- NA
   data_set[is.na(amputed_mnar)] <- NA

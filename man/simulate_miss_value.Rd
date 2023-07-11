@@ -4,9 +4,12 @@
 \alias{simulate_miss_value}
 \title{Inserting missing data}
 \usage{
-simulate_miss_value(data_set, mcar = 0, mar = 0, mnar = 0)
+simulate_miss_value(data_set, mcar = 0, mar = 0, mnar = 0, ratio = 0.2)
 }
 \arguments{
+\item{ratio}{a number from 0 to 1 denoting the ratio of data to be
+exchanged into NA's}
+
 \item{mcar_ratio}{a number from (0, 1) interval. Ratio of the data missing
 completely at random (MCAR).}
 
