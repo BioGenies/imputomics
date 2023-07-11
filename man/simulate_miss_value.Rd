@@ -4,12 +4,9 @@
 \alias{simulate_miss_value}
 \title{Inserting missing data}
 \usage{
-simulate_miss_value(data_set, mcar = 0, mar = 0, mnar = 0, ratio = 0.2)
+simulate_miss_value(data_set, mcar = 0, mar = 0, mnar = 0, thresh = 0.2)
 }
 \arguments{
-\item{ratio}{a number from 0 to 1 denoting the ratio of data to be
-exchanged into NA's}
-
 \item{mcar_ratio}{a number from (0, 1) interval. Ratio of the data missing
 completely at random (MCAR).}
 
@@ -49,8 +46,8 @@ in the result missing ratio may be slightly smaller.
 }
 \examples{
 set.seed(1)
-m <- as.data.frame(matrix(rnorm(10), 5, 2))
-simulate_miss_value(m, mcar = 0.1, mar = 0.05, mnar = 0.15)
+m <- as.data.frame(matrix(rnorm(200), ncol = 50))
+simulate_miss_value(m, mcar = 0.05, mar = 0.01, mnar = 0.05)
 
 }
 \seealso{

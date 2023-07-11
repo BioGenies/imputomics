@@ -237,7 +237,7 @@ simulate_miss_value <- function(data_set,
                                 mcar = 0,
                                 mar = 0,
                                 mnar = 0,
-                                ratio = 0.2){
+                                thresh = 0.2){
   if(!("data.frame" %in% class(data_set)))
     stop("Variable data should be a data.frame")
 
@@ -247,11 +247,11 @@ simulate_miss_value <- function(data_set,
   amputed_mar <- amputed_mnar <- amputed_mcar <- data_set
 
   if(mar > 0)
-    amputed_mar <- insert_MAR(data_set, mar, ratio = ratio)
+    amputed_mar <- insert_MAR(data_set, mar, thresh = thresh)
   if(mnar > 0)
-    amputed_mnar <- insert_MNAR(data_set, mnar, ratio = ratio)
+    amputed_mnar <- insert_MNAR(data_set, mnar, thresh = thresh)
   if(mcar > 0)
-    amputed_mcar <- insert_MCAR(data_set, mcar, ratio = ratio)
+    amputed_mcar <- insert_MCAR(data_set, mcar, thresh = thresh)
 
   data_set[is.na(amputed_mar)] <- NA
   data_set[is.na(amputed_mnar)] <- NA
