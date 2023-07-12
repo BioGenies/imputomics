@@ -121,7 +121,7 @@ insert_MAR <- function(dat, ratio = 0, thresh = 0.2) {
     missing_per_column[nonzero_below_thresh][random_below_thresh] <-
       missing_per_column[nonzero_below_thresh][random_below_thresh] + 1
 
-    missing_per_column[missing_per_column > thresh_value] <- thresh_value
+    missing_per_column[missing_per_column > thresh_value][1:length(random_below_thresh)] <- thresh_value
     excess <- missing_per_column - thresh_value
     excess[excess < 0] <- 0
   }
