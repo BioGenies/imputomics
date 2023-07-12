@@ -28,5 +28,5 @@ imputomics_gui <- function(){
     stop(paste0("The imputomics GUI requires following packages: ",
                 paste0(imputomics_suggests, collapse = ", ")))
   }
-  runApp(system.file("imputomics", package = "imputomics"))
+  runApp(system.file("Imputomics", package = "imputomics"))
 }

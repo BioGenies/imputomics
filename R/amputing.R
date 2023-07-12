@@ -3,7 +3,7 @@ sample_indices <- function(x) x[sample(length(x), size = 1)]
 get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
   total_missing <- round(nrow(dat) * ncol(dat) * ratio, 0)
 
-  thresh_value <- ceiling(thresh * nrow(dat))
+  thresh_value <- floor(thresh * nrow(dat))
   nonmissing_value <- thresh_value - nrow(dat)
 
   if(total_missing > thresh_value * ncol(dat)) {
@@ -91,7 +91,7 @@ insert_MAR <- function(dat, ratio = 0, thresh = 0.2) {
   n <- nrow(dat)
   p <- ncol(dat)
   total_missing <- round(n * p * ratio, 0)
-  thresh_value <- ceiling(thresh*n)
+  thresh_value <- floor(thresh*n)
 
   if(p < 2) {
     stop(paste0("The data should contain at least two columns!",
