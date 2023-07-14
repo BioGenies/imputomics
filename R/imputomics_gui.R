@@ -16,7 +16,7 @@
 #'   imputomics()
 #' }
 #'
-#' @keywords count Poisson zero-inflated
+#' @keywords 
 #' @export imputomics_gui
 #'
 
