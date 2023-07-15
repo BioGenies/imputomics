@@ -26,7 +26,7 @@ Launches graphical user interface .
 
 \examples{
 if(interactive()) {
-  imputomics()
+  imputomics_gui()
 }
 
 }

@@ -13,10 +13,9 @@
 #'
 #' @examples
 #' if(interactive()) {
-#'   imputomics()
+#'   imputomics_gui()
 #' }
 #'
-#' @keywords 
 #' @export imputomics_gui
 #'
 
