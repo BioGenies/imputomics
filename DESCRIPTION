@@ -1,7 +1,7 @@
 Package: imputomics
 Type: Package
 Title: The Biggest Collection of Methods of Missing Values Imputation for ‘Omics’ Data
-Version: 0.1.1
+Version: 0.1.2
 Author: c(
           person("Michal", "Burdukiewicz",
                email = "michalburdukiewicz@gmail.com",

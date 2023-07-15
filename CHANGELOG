@@ -1,0 +1,4 @@
+Changes from Version 0.1.1 to 0.1.2
+ * fixed impute_cm
+ * fixed impute_amelia
+ * added problematic dataset

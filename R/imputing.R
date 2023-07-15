@@ -77,6 +77,10 @@ impute_amelia <- function(missdf, verbose = FALSE, ...) {
   
   silence_function(verbose)(imputed <- Amelia::amelia(missdf, m = 1, ...))
   
+  if(is.null(imputed)) {
+    stop("For some reason, Amelia failed. To inspect the error, try Amelia::amelia.")
+  }
+  
   imputed[["imputations"]][["imp1"]]
 }
 

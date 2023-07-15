@@ -21,3 +21,11 @@ NULL
 #' df <- data.frame(matrix(runif(3000), ncol = 60))
 #' sim_miss_large <- insert_MCAR(df, ratio = 0.25)
 NULL
+
+#' @name problematic_dataset
+#' @title Tough data to impute
+#' This dataset makes many methods (\code{cm}, \code{amelia}) fail.
+#' @docType data
+#' @usage problematic_dataset
+#' @keywords datasets
+NULL
