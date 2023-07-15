@@ -34,6 +34,3 @@ if(interactive()) {
 "Michał Burdukiewicz", "Krystyna Grzesiak", "Dominik Nowakowski",
 "Jarosław Chilimoniuk"
 }
-\keyword{Poisson}
-\keyword{count}
-\keyword{zero-inflated}

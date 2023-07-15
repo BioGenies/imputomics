@@ -539,9 +539,17 @@ impute_imputation_knn <- function(missdf, ...) {
 #' @export
 impute_cm <- function(missdf, verbose = FALSE, ...){
   check_missdf(missdf)
+
+  # samples in columns and features in rows, so transposition
+  res <- silence_function(verbose)(GMSimpute::GMS.Lasso(t(as.matrix(missdf)), ...))
   
-  # samples in columns and features in rows
-  data.frame(silence_function(verbose)(GMSimpute::GMS.Lasso(t(as.matrix(missdf)), ...)))
+  # if the function switches to TS.Lasso = FALSE, the result needs to be transposed 
+  # below we have replicated test for the automated switch to TS.Lasso = FALSE
+  
+  if(sum(rowSums(is.na(t(missdf))) == 0) >= 5)
+    res <- t(res)
+  
+  data.frame(res)
 }
 
 
