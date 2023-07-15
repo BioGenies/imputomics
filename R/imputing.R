@@ -540,14 +540,20 @@ impute_imputation_knn <- function(missdf, ...) {
 impute_cm <- function(missdf, verbose = FALSE, ...){
   check_missdf(missdf)
 
+  former_rownames <- rownames(missdf)
+  rownames(missdf) <- NULL
+  
   # samples in columns and features in rows, so transposition
   res <- silence_function(verbose)(GMSimpute::GMS.Lasso(t(as.matrix(missdf)), ...))
   
-  # if the function switches to TS.Lasso = FALSE, the result needs to be transposed 
-  # below we have replicated test for the automated switch to TS.Lasso = FALSE
+  # if the function switches to TS.Lasso = TRUE, the result needs to be transposed 
+  # (but not always)
+  # so we detect if the colnames name contains string 'sample'
   
-  if(sum(rowSums(is.na(t(missdf))) == 0) >= 5)
+  if(all(grepl("^sample", colnames(res), fixed = FALSE))) {
     res <- t(res)
+    rownames(res) <- former_rownames
+  }
   
   data.frame(res)
 }
