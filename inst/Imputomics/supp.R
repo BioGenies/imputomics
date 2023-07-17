@@ -14,7 +14,7 @@ ui_content_about <- function() {
     h4(HTML("<b> 6. Secure and Confidential:</b> Your data privacy is our top priority.")),
     br(),
     h3("Authors:"),
-    h4("Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Michał Ciborowski, Adam Krętowski, Michał Burdukiewicz"),
+    h4("Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski,  Michał Burdukiewicz"),
     br(),
     h3("Citation:"),
     h4("Imputomics... tratatata citation"),
