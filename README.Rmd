@@ -57,9 +57,16 @@ To run *imputomics* type the following command into an R console.
 imputomics::imputomics_gui()
 ```
 
-## How to cite
+<!-- # How to cite -->
 
   ```{r echo = FALSE, results = 'asis'}
-source("https://raw.githubusercontent.com/BioGenies/NegativeDatasets/main/docs/rmd_scripts.R")
-cat(negative_sampling_citation())
+source("https://raw.githubusercontent.com/BioGenies/imputomics/main/docs/rmd_scripts.R")
+cat(imputomics_citation())
 ```
+
+  ```{r echo = FALSE, results = 'asis'}
+source("https://raw.githubusercontent.com/BioGenies/imputomics/main/docs/rmd_scripts.R")
+cat(imputomics_contact())
+```
+
+
