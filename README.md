@@ -65,7 +65,7 @@ imputomics::imputomics_gui()
 
 <!-- # How to cite -->
 
-## Citation
+## How to cite
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski,
 Małgorzata Bogdan, Michał Ciborowski, Adam Krętowski, Michał

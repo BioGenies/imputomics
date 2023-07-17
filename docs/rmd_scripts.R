@@ -1,7 +1,7 @@
 imputomics_citation <- function() {
   "
 
-## How to cite
+# How to cite
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski,
 Małgorzata Bogdan, Michał Ciborowski, Adam Krętowski, Michał Burdukiewicz.
@@ -14,7 +14,7 @@ Imputomics: comprehensive missing data imputation for metabolomics data.
 imputomics_links <- function() {
   "
 
-## Links to implemented packages?
+# Links to implemented packages?
 
 
 
@@ -24,7 +24,7 @@ imputomics_links <- function() {
 imputomics_contact <- function() {
   "
 
-## Contact
+# Contact
 
 If you have any questions, suggestions or comments, contact [Michal Burdukiewicz](mailto:michalburdukiewicz@gmail.com).
 
