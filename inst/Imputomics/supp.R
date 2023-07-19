@@ -17,7 +17,7 @@ ui_content_about <- function() {
     h4("Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski,  Michał Burdukiewicz"),
     br(),
     h3("Citation:"),
-    h4("Imputomics... tratatata citation"),
+    h4("Imputomics: comprehensive missing data imputation for metabolomics data... tratatata citation"),
     br(),
     column(11,
            style = "position:absolute; bottom: 5px;",
