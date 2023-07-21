@@ -1,15 +1,3 @@
-#' Helper function. Random imputation of a single column.
-#'
-#' @param x list with values.
-#' @noRd
-#' @keywords internal
-compute_col_random <- function(x)
-  lapply(x, function(ith_col) {
-    id_nas <- is.na(ith_col)
-    sample(x = ith_col[!id_nas], size = sum(id_nas), replace = TRUE)
-  })
-
-
 #' \strong{missMDA EM} imputation.
 #'
 #' PCA method with EM argument.
