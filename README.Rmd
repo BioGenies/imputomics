@@ -62,10 +62,6 @@ imputomics::imputomics_gui()
 ```{r echo = FALSE, results = 'asis'}
 source(system.file("readme_scripts.R", package = "imputomics"))
 cat(imputomics_citation())
-```
-
-```{r echo = FALSE, results = 'asis'}
 cat(imputomics_contact())
+cat(imputomics_funding())
 ```
-
-
