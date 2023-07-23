@@ -40,3 +40,7 @@ We want to thank the Clinical Research Centre (Medical University of Białystok)
 
   "
 }
+
+imputomics_funding_images <- function() {
+  paste0("<img src='", system.file("umb_logo.jpg", package = "imputomics"), "' style='width: 500px'>")
+}

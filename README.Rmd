@@ -64,4 +64,5 @@ source(system.file("readme_scripts.R", package = "imputomics"))
 cat(imputomics_citation())
 cat(imputomics_contact())
 cat(imputomics_funding())
+cat(imputomics_funding_images())
 ```

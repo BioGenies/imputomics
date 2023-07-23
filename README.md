@@ -88,3 +88,5 @@ within the project ‘Excellence Initiative - Research University’. We
 also acknowledge the Center for Artificial Intelligence at the Medical
 University of Białystok (funded by the Ministry of Health of the
 Republic of Poland).
+
+<img src='/home/michbur/.cache/R/renv/library/metabolomics-missing-value-imputation-0c0230ce/R-4.3/x86_64-pc-linux-gnu/imputomics/umb_logo.jpg' style='width: 500px'>
