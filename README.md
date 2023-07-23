@@ -65,12 +65,12 @@ imputomics::imputomics_gui()
 
 <!-- # How to cite -->
 
-# How to cite
+# How to cite?
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski,
 Małgorzata Bogdan, Michał Ciborowski, Adam Krętowski, Michał
-Burdukiewicz. Imputomics: comprehensive missing data imputation for
-metabolomics data. [link](link).
+Burdukiewicz (2023). Imputomics: comprehensive missing data imputation
+for metabolomics data (submitted).
 
 # Contact
 
