@@ -3,5 +3,5 @@ template:
   bootstrap: 5
 
 
-development:
-  mode: auto
+env:
+  RENV_PATHS_ROOT: ~/renv
