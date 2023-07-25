@@ -3,5 +3,7 @@ template:
   bootstrap: 5
 
 
-env:
-  RENV_PATHS_ROOT: ~/renv
+steps:
+- uses: actions/checkout@v3
+- uses: r-lib/actions/setup-r@v2
+- uses: r-lib/actions/setup-renv@v2
