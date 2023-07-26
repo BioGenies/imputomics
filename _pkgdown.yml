@@ -1,3 +1,12 @@
 url: http://biogenies.info/imputomics/
 template:
   bootstrap: 5
+  bootswatch: cosmo
+
+
+home:
+  links:
+  - text: imputomics webserver
+    href:  https://imputomics.umb.edu.pl/
+  - text: imputomics simulations
+    href: https://github.com/BioGenies/imputomics-ws
