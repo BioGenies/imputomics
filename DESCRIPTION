@@ -2,25 +2,27 @@ Package: imputomics
 Type: Package
 Title: The Biggest Collection of Methods of Missing Values Imputation for ‘Omics’ Data
 Version: 0.1.2
-Author: c(
-          person("Michal", "Burdukiewicz",
+Authors@R: c(
+          person("Michał", "Burdukiewicz", ,
                email = "michalburdukiewicz@gmail.com",
                comment = c(ORCID = "0000-0001-8926-582X"),
-               role = c("cre", "aut")),
-          person("Krystyna Grzesiak", 
+               role = c("aut", "cre")),
+          person("Krystyna", "Grzesiak", 
                email = "krygrz11@gmail.com", 
                comment = c(ORCID = "0000-0003-2581-7722"),
-               role = c("cre", "ctb")),
-          person("Dominik Nowakowski", 
+               role = c("aut", "ctb")),
+          person("Dominik", "Nowakowski", 
                email = "nowakowskisf@gmail.com", 
                comment = c(ORCID = "0000-0002-3515-4320"),
-               role = c("cre", "ctb")),
-          person("Jaroslaw", "Chilimoniuk", 
+               role = c("aut", "ctb")),
+          person("Jarosław", "Chilimoniuk", 
                email = "jaroslaw.chilimoniuk@gmail.com", 
                comment = c(ORCID = "0000-0001-5467-018X"),
-               role = c("cre", "ctb"))
+               role = c("aut", "ctb")),
+          person("Jakub", "Kała", 
+               email = "kalajakub96@gmail.com",
+               role = c("aut", "ctb"))
         )
-Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Offers a range of methods for simulating and imputing missing values 
              in different types of omics data such as genomics, transcriptomics, 
              proteomics, and metabolomics. Provides tools for comparing and 
@@ -32,8 +34,8 @@ VignetteBuilder: knitr
 Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/michbur/imputomics, http://biogenies.info/imputomics/
-BugReports: https://github.com/michbur/imputomics/issues
+URL: https://github.com/biogenies/imputomics, http://biogenies.info/imputomics/
+BugReports: https://github.com/biogenies/imputomics/issues
 Imports:
     Amelia,
     bcv,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_bcv_svd}
 \alias{impute_bcv_svd}
-\title{\strong{Singular Value Decomposition - SVD} imputation.}
+\title{\strong{bcv SVD} imputation.}
 \usage{
 impute_bcv_svd(missdf, ...)
 }
