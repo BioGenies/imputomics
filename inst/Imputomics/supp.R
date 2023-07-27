@@ -151,6 +151,88 @@ get_methods_table <- function(path = "methods_table.RDS") {
 }
 
 
+plot_points_density <- function(dat, input) {
+
+  method <- dat[["results"]][["success"]] %>%
+    filter(name %in% input[["plot_methods"]]) %>%
+    pull(imputomics_name)
+
+  res <- dat[["results"]][["results"]]
+
+  res_var <- res[[method]][, input[["plot_var"]]]
+  miss_var <- dat[["missing_data"]][, input[["plot_var"]]]
+
+  plt_dat <- data.frame(var = res_var,
+                        missing_var = miss_var)
+
+  points_plt <- plt_dat %>%
+    mutate(imputed = is.na(missing_var)) %>%
+    ggplot() +
+    geom_quasirandom(aes(y = var, x = imputed, col = imputed)) +
+    theme_minimal() +
+    theme(axis.text = element_text(size = 12),
+          axis.title = element_text(size = 14),
+          axis.text.x = element_blank(),
+          title = element_text(size = 18),
+          legend.position = "bottom") +
+    xlab("") +
+    ylab(input[["plot_var"]]) +
+    scale_color_manual(values=c("#3d3b3c", "#fb5607"))
+
+density_plt_dat <- plt_dat %>%
+  mutate(imputed = is.na(missing_var),
+         missing = ifelse(imputed, var, NA),
+         observed = ifelse(imputed, NA, var))
+
+if(length(unique(density_plt_dat[["missing"]])) < 5) {
+  dens_plt <- plt_dat %>%
+    mutate(imputed = is.na(missing_var),
+           missing = ifelse(imputed, var, NA),
+           observed = ifelse(imputed, NA, var)) %>%
+    ggplot() +
+    geom_density(aes(x = observed), fill = "#3d3b3c", alpha = 0.4) +
+    geom_histogram(aes(x = missing, y = ..density..), alpha = 0.4,
+                   fill = "#fb5607", col = "#fb5607") +
+    theme_minimal() +
+    coord_flip() +
+    theme(axis.text = element_text(size = 12),
+          axis.title = element_text(size = 14),
+          axis.title.x =  element_blank(),
+          axis.text.y = element_blank(),
+          title = element_text(size = 18),
+          legend.position = "none") +
+    xlab("")
+} else {
+  dens_plt <- plt_dat %>%
+    mutate(imputed = is.na(missing_var),
+           missing = ifelse(imputed, var, NA),
+           observed = ifelse(imputed, NA, var)) %>%
+    ggplot() +
+    geom_density(aes(x = var, fill = imputed, col = imputed, alpha = 0.4)) +
+    theme_minimal() +
+    coord_flip() +
+    theme(axis.text = element_text(size = 12),
+          axis.title = element_text(size = 14),
+          axis.title.x =  element_blank(),
+          axis.text.y = element_blank(),
+          title = element_text(size = 18),
+          legend.position = "none") +
+    xlab("") +
+    scale_fill_manual(values=c("#3d3b3c", "#fb5607")) +
+    scale_color_manual(values=c("#3d3b3c", "#fb5607"))
+}
+
+  points_plt + theme(legend.position = "right") + dens_plt +
+    plot_layout(guides = "collect", design = "112") +
+    plot_annotation(title = ggtitle(paste0("Variable: ",
+                                           input[["plot_var"]],
+                                           ",\nMethod: ",
+                                           input[["plot_methods"]])),
+                    caption = "Data imputed vs. observed",
+                    theme = theme(plot.title = element_text(size = 16)))
+}
+
+
 save_excel <- function(dat, file, download_methods) {
   wb_file <- createWorkbook()
   addWorksheet(wb_file, "original_data")
