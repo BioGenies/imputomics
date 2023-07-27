@@ -20,6 +20,8 @@ methods_table <- sheet_dat %>%
          "imputomics_name" = `imputomics function`,
          "name" = name)
 
+#setdiff(funs_imputomics, methods_table[["imputomics_name"]])
+
 saveRDS(methods_table, "./inst/Imputomics/methods_table.RDS")
 
 

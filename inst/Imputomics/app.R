@@ -13,6 +13,7 @@ library(ggbeeswarm)
 library(stringr)
 
 source("supp.R")
+source(system.file("readme_scripts.R", package = "imputomics"))
 
 methods_table <- get_methods_table("methods_table.RDS")
 

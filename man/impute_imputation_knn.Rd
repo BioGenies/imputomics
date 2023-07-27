@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_imputation_knn}
 \alias{impute_imputation_knn}
-\title{\strong{kNN} imputation.}
+\title{\strong{imputation kNN} imputation.}
 \usage{
 impute_imputation_knn(missdf, ...)
 }

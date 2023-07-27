@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_mnmf}
 \alias{impute_mnmf}
-\title{\strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.}
+\title{\strong{mNMF} imputation.}
 \usage{
 impute_mnmf(missdf, kgroup = NULL, initialType = "mean")
 }
@@ -20,7 +20,7 @@ A \code{data.frame} with imputed values by mNMF.
 }
 \description{
 A function to replace \code{NA} in the data frame using
-non-negative Matrix Factorization.
+metabolomic Non-negative Matrix Factorization.
 }
 \section{k}{
 

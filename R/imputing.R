@@ -1,15 +1,3 @@
-#' Helper function. Random imputation of a single column.
-#'
-#' @param x list with values.
-#' @noRd
-#' @keywords internal
-compute_col_random <- function(x)
-  lapply(x, function(ith_col) {
-    id_nas <- is.na(ith_col)
-    sample(x = ith_col[!id_nas], size = sum(id_nas), replace = TRUE)
-  })
-
-
 #' \strong{missMDA EM} imputation.
 #'
 #' PCA method with EM argument.
@@ -352,7 +340,7 @@ impute_gsimp <- function(missdf,
   imputed[["data_imp"]]
 }
 
-#' \strong{kNN} imputation.
+#' \strong{VIM kNN} imputation.
 #'
 #' K Nearest Neighbors. A function to replace \code{NA} in the data frame by
 #' [VIM::kNN()].
@@ -457,7 +445,7 @@ impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean",
 }
 
 
-#' \strong{Singular Value Decomposition - SVD} imputation.
+#' \strong{bcv SVD} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by
 #' [bcv::impute.svd()].
@@ -485,7 +473,7 @@ impute_bcv_svd <- function(missdf, ...) {
 }
 
 
-#' \strong{kNN} imputation.
+#' \strong{imputation kNN} imputation.
 #'
 #' A function to replace \code{NA} in the data frame by
 #' [imputation::kNNImpute()].
@@ -606,10 +594,10 @@ impute_mice_mixed <- function(missdf) {
 }
 
 
-#' \strong{Metabolomic Non-negative Matrix Factorization - mNMF} imputation.
+#' \strong{mNMF} imputation.
 #'
 #' A function to replace \code{NA} in the data frame using
-#' non-negative Matrix Factorization.
+#' metabolomic Non-negative Matrix Factorization.
 #'
 #' @importFrom NMF nmf.getOption
 #'

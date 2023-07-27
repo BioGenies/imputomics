@@ -13,16 +13,10 @@ ui_content_about <- function() {
     h4(HTML("<b> 5. Export and Integration:</b> Export completed datasets and integrate with popular analysis platforms.")),
     h4(HTML("<b> 6. Secure and Confidential:</b> Your data privacy is our top priority.")),
     br(),
-    h3("Authors:"),
-    h4("Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski,  Michał Burdukiewicz"),
-    br(),
-    h3("Citation:"),
-    h4("Imputomics... tratatata citation"),
-    br(),
-    column(11,
-           style = "position:absolute; bottom: 5px;",
-           img(src='umb_logo.jpg', height="15%", width="15%", align="right")
-    )
+    markdown(imputomics_citation()),
+    markdown(imputomics_contact()),
+    markdown(imputomics_funding()),
+    markdown(imputomics_funding_images())
   )
 }
 
@@ -69,15 +63,15 @@ validate_data <- function(uploaded_data, session, input) {
 
 
 plot_mv_segment <- function(tmp_dat) {
-
+  
   level_order <- tmp_dat %>%
     arrange(`% Missing`) %>%
     pull(Variable)
-
+  
   tmp_dat <- tmp_dat %>%
     mutate(above_limit = `% Missing` > 20,
            colors_legend = ifelse(above_limit, "tomato", "black"))
-
+  
   tmp_dat %>%
     ggplot(Variable = factor(Variable, levels = Variable)) +
     geom_segment(aes(y = Variable, yend = Variable,
@@ -102,9 +96,9 @@ plot_mv_segment <- function(tmp_dat) {
 
 
 plot_mv_heatmap <- function(tmp_dat) {
-
+  
   gathercols <- colnames(tmp_dat)
-
+  
   tmp_dat %>%
     mutate(Sample = 1:n()) %>%
     gather(Variable, Value, all_of(gathercols)) %>%
@@ -129,7 +123,7 @@ get_variables_table <- function(missing_data) {
   )%>%
     arrange(-Percentage_Missing) %>%
     rename(`% Missing` = Percentage_Missing)
-
+  
   variables_table <- mv_summary %>%
     mutate(missing = `% Missing` > 0) %>%
     mutate(missing = ifelse(missing,
@@ -137,7 +131,7 @@ get_variables_table <- function(missing_data) {
                             "complete variables")) %>%
     group_by(missing) %>%
     summarise(n = n())
-
+  
   list(mv_summary = mv_summary,
        variables_table = variables_table)
 }
@@ -146,10 +140,10 @@ get_variables_table <- function(missing_data) {
 get_methods_table <- function(path = "methods_table.RDS") {
   methods_table <- readRDS(path) %>%
     mutate(name = paste0(name, " (", full_name, ")"))
-
+  
   funs_imputomics <- ls("package:imputomics")
   funs_imputomics <- funs_imputomics[grepl("impute_", funs_imputomics)]
-
+  
   methods_table %>%
     filter(imputomics_name %in% funs_imputomics)
 }
@@ -160,13 +154,13 @@ save_excel <- function(dat, file, download_methods) {
   addWorksheet(wb_file, "original_data")
   writeData(wb_file, "original_data",
             dat[["missing_data"]], colNames = TRUE)
-
+  
   result_data <- dat[["results"]][["results"]]
-
+  
   methods <- dat[["results"]][["success"]] %>%
     filter(name %in% download_methods) %>%
     pull(imputomics_name)
-
+  
   result_data <- result_data[methods]
   methods <- str_replace_all(str_remove(names(result_data),"impute_"), "_", " ")
   for (i in 1:length(result_data)) {
@@ -175,6 +169,6 @@ save_excel <- function(dat, file, download_methods) {
       writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
     }
   }
-
+  
   saveWorkbook(wb_file, file, overwrite = TRUE)
 }

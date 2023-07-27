@@ -11,8 +11,21 @@ Offers a range of methods for simulating and imputing missing values in differen
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/michbur/imputomics}
-  \item Report bugs at \url{https://github.com/michbur/imputomics/issues}
+  \item \url{https://github.com/biogenies/imputomics}
+  \item \url{http://biogenies.info/imputomics/}
+  \item Report bugs at \url{https://github.com/biogenies/imputomics/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Michał Burdukiewicz \email{michalburdukiewicz@gmail.com} (\href{https://orcid.org/0000-0001-8926-582X}{ORCID})
+
+Authors:
+\itemize{
+  \item Krystyna Grzesiak \email{krygrz11@gmail.com} (\href{https://orcid.org/0000-0003-2581-7722}{ORCID}) [contributor]
+  \item Dominik Nowakowski \email{nowakowskisf@gmail.com} (\href{https://orcid.org/0000-0002-3515-4320}{ORCID}) [contributor]
+  \item Jarosław Chilimoniuk \email{jaroslaw.chilimoniuk@gmail.com} (\href{https://orcid.org/0000-0001-5467-018X}{ORCID}) [contributor]
+  \item Jakub Kała \email{kalajakub96@gmail.com} [contributor]
 }
 
 }

@@ -60,13 +60,9 @@ imputomics::imputomics_gui()
 <!-- # How to cite -->
 
 ```{r echo = FALSE, results = 'asis'}
-source("https://raw.githubusercontent.com/BioGenies/imputomics/main/docs/rmd_scripts.R")
+source(system.file("readme_scripts.R", package = "imputomics"))
 cat(imputomics_citation())
-```
-
-```{r echo = FALSE, results = 'asis'}
-source("https://raw.githubusercontent.com/BioGenies/imputomics/main/docs/rmd_scripts.R")
 cat(imputomics_contact())
+cat(imputomics_funding())
+cat(imputomics_funding_images())
 ```
-
-

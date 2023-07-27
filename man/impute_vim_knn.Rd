@@ -2,7 +2,7 @@
 % Please edit documentation in R/imputing.R
 \name{impute_vim_knn}
 \alias{impute_vim_knn}
-\title{\strong{kNN} imputation.}
+\title{\strong{VIM kNN} imputation.}
 \usage{
 impute_vim_knn(missdf, ...)
 }

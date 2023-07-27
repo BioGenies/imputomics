@@ -166,3 +166,30 @@ impute_halfmin <- function(missdf)
 #' @export
 impute_median <- function(missdf)
   impute_per_column(missdf, compute_col_median)
+
+#' Helper function. Random imputation of a single column.
+#'
+#' @param x list with values.
+#' @noRd
+#' @keywords internal
+compute_col_random <- function(x)
+  lapply(x, function(ith_col) {
+    id_nas <- is.na(ith_col)
+    sample(x = ith_col[!id_nas], size = sum(id_nas), replace = TRUE)
+  })
+
+#' \strong{random} imputation.
+#'
+#' A function to replace \code{NA} in the data frame by  random values.
+#'
+#' @inheritParams impute_zero
+#'
+#' @returns A \code{data.frame} with imputed values by \strong{random} method.
+#'
+#' @examples
+#' data(sim_miss)
+#' impute_random(sim_miss)
+#'
+#' @export
+impute_random <- function(missing_data_set)
+  impute_per_column(missing_data_set, compute_col_random)
