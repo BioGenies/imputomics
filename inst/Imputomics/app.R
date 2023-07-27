@@ -1,16 +1,19 @@
 library(shiny)
 library(shinythemes)
-library(DT)
-library(readxl)
 library(shinyWidgets)
+library(shinycssloaders)
+library(DT)
+
 library(ggplot2)
+library(patchwork)
+library(ggbeeswarm)
+
 library(dplyr)
 library(tidyr)
 library(imputomics)
-library(shinycssloaders)
-library(openxlsx)
-library(ggbeeswarm)
 library(stringr)
+library(readxl)
+library(openxlsx)
 
 source("supp.R")
 source(system.file("readme_scripts.R", package = "imputomics"))
@@ -478,29 +481,8 @@ server <- function(input, output, session) {
     req(dat[["missing_data"]])
     req(dat[["results"]])
 
-    method <- dat[["results"]][["success"]] %>%
-      filter(name %in% input[["plot_methods"]]) %>%
-      pull(imputomics_name)
+    plot_points_density(dat, input)
 
-    res <- dat[["results"]][["results"]]
-    res_var <- res[[method]][, input[["plot_var"]]]
-    miss_var <- dat[["missing_data"]][, input[["plot_var"]]]
-
-    plt_dat <- data.frame(var = res_var,
-                          missing_var = miss_var)
-
-    plt_dat %>%
-      mutate(imputed = is.na(missing_var)) %>%
-      ggplot() +
-      geom_quasirandom(aes(y = var, x = imputed, col = imputed)) +
-      ggtitle(paste0("Variable: ", input[["plot_var"]],
-                     ", Method: ", input[["plot_methods"]])) +
-      theme_minimal() +
-      theme(axis.text = element_text(size = 12),
-            axis.title = element_text(size = 14),
-            axis.text.x = element_blank(),
-            title = element_text(size = 18)) +
-      xlab("")
   })
 
 
