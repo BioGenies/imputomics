@@ -183,6 +183,8 @@ server <- function(input, output, session) {
   observeEvent(input[["users_path"]], {
     req(input[["NA_sign"]])
 
+    raw_data <- NULL
+
     file <- input[["users_path"]]
     req(file)
     path <- file[["datapath"]]
@@ -191,13 +193,18 @@ server <- function(input, output, session) {
       need(ext %in% c("xlsx", "csv", "rds"),
            paste("Please upload an xlsx, csv or rds file! You provided", ext))
     )
-    raw_data <- switch(ext,
-                       xlsx = read_xlsx(path),
-                       csv = read.csv(path),
-                       rds = readRDS(path))
+
+    try({
+      raw_data <- switch(ext,
+                         xlsx = read_xlsx(path),
+                         csv = read.csv(path),
+                         rds = readRDS(path))
+    })
+
     uploaded_data <- raw_data
 
-    if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
+    #data validation
+    uploaded_data <- validate_data(uploaded_data, session, input)
 
     dat[["missing_data"]] <- uploaded_data
     dat[["raw_data"]] <- raw_data
@@ -207,6 +214,7 @@ server <- function(input, output, session) {
   })
 
   observeEvent(dat[["missing_data"]], {
+
     if(sum(is.na(dat[["missing_data"]])) == 0)
       sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",

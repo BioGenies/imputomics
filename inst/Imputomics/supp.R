@@ -26,6 +26,46 @@ ui_content_about <- function() {
   )
 }
 
+validate_data <- function(uploaded_data, session, input) {
+
+  # check if data is empty
+  if(is.null(uploaded_data)){
+    sendSweetAlert(session = session,
+                   title = "No data!",
+                   text = "Make sure that the uploaded file contains dataset  with numeric columns.",
+                   type = "error")
+    req(uploaded_data)
+  }
+
+  if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
+
+  # check if the columns are numeric
+  if(any(!sapply(uploaded_data, is.numeric))) {
+    uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
+
+    if(ncol(uploaded_data) > 0) {
+      showNotification("Your data contains non-numeric columns!
+                       We will ignore them!",
+                       session = session,
+                       type = "warning")
+    }else {
+      sendSweetAlert(session = session,
+                     title = "No numeric columns!",
+                     text = "Make sure that the uploaded file contains dataset with numeric columns.",
+                     type = "error")
+    }
+  }
+
+  if(sum(sapply(uploaded_data, is.numeric)) < 5)
+    showNotification("You provided data with less than 5 numeric columns.
+                             Some methods may not work properly.",
+                     session = session,
+                     type = "error")
+
+
+  uploaded_data
+}
+
 
 
 plot_mv_segment <- function(tmp_dat) {
