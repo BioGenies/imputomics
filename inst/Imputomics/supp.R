@@ -28,34 +28,36 @@ validate_data <- function(uploaded_data, session, input) {
                    title = "No data!",
                    text = "Make sure that the uploaded file contains dataset  with numeric columns.",
                    type = "error")
-    req(uploaded_data)
-  }
+    uploaded_data <- data.frame()
+  } else {
 
-  if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
+    if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
 
-  # check if the columns are numeric
-  if(any(!sapply(uploaded_data, is.numeric))) {
-    uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
+    # check if the columns are numeric
+    if(any(!sapply(uploaded_data, is.numeric))) {
+      uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
 
-    if(ncol(uploaded_data) > 0) {
-      showNotification("Your data contains non-numeric columns!
+      if(ncol(uploaded_data) > 0) {
+        showNotification("Your data contains non-numeric columns!
                        We will ignore them!",
-                       session = session,
-                       type = "warning")
-    }else {
-      sendSweetAlert(session = session,
-                     title = "No numeric columns!",
-                     text = "Make sure that the uploaded file contains dataset with numeric columns.",
-                     type = "error")
+                         session = session,
+                         type = "warning")
+      }else {
+        sendSweetAlert(session = session,
+                       title = "No numeric columns!",
+                       text = "Make sure that the uploaded file contains dataset with numeric columns.",
+                       type = "error")
+        uploaded_data <- data.frame()
+      }
     }
-  }
 
-  if(sum(sapply(uploaded_data, is.numeric)) < 5)
-    showNotification("You provided data with less than 5 numeric columns.
+    if(sum(sapply(uploaded_data, is.numeric)) < 5)
+      showNotification("You provided data with less than 5 numeric columns.
                              Some methods may not work properly.",
-                     session = session,
-                     type = "error")
+                       session = session,
+                       type = "error")
 
+  }
 
   uploaded_data
 }
@@ -63,15 +65,15 @@ validate_data <- function(uploaded_data, session, input) {
 
 
 plot_mv_segment <- function(tmp_dat) {
-  
+
   level_order <- tmp_dat %>%
     arrange(`% Missing`) %>%
     pull(Variable)
-  
+
   tmp_dat <- tmp_dat %>%
     mutate(above_limit = `% Missing` > 20,
            colors_legend = ifelse(above_limit, "tomato", "black"))
-  
+
   tmp_dat %>%
     ggplot(Variable = factor(Variable, levels = Variable)) +
     geom_segment(aes(y = Variable, yend = Variable,
@@ -96,9 +98,9 @@ plot_mv_segment <- function(tmp_dat) {
 
 
 plot_mv_heatmap <- function(tmp_dat) {
-  
+
   gathercols <- colnames(tmp_dat)
-  
+
   tmp_dat %>%
     mutate(Sample = 1:n()) %>%
     gather(Variable, Value, all_of(gathercols)) %>%
@@ -123,7 +125,7 @@ get_variables_table <- function(missing_data) {
   )%>%
     arrange(-Percentage_Missing) %>%
     rename(`% Missing` = Percentage_Missing)
-  
+
   variables_table <- mv_summary %>%
     mutate(missing = `% Missing` > 0) %>%
     mutate(missing = ifelse(missing,
@@ -131,7 +133,7 @@ get_variables_table <- function(missing_data) {
                             "complete variables")) %>%
     group_by(missing) %>%
     summarise(n = n())
-  
+
   list(mv_summary = mv_summary,
        variables_table = variables_table)
 }
@@ -140,10 +142,10 @@ get_variables_table <- function(missing_data) {
 get_methods_table <- function(path = "methods_table.RDS") {
   methods_table <- readRDS(path) %>%
     mutate(name = paste0(name, " (", full_name, ")"))
-  
+
   funs_imputomics <- ls("package:imputomics")
   funs_imputomics <- funs_imputomics[grepl("impute_", funs_imputomics)]
-  
+
   methods_table %>%
     filter(imputomics_name %in% funs_imputomics)
 }
@@ -154,13 +156,13 @@ save_excel <- function(dat, file, download_methods) {
   addWorksheet(wb_file, "original_data")
   writeData(wb_file, "original_data",
             dat[["missing_data"]], colNames = TRUE)
-  
+
   result_data <- dat[["results"]][["results"]]
-  
+
   methods <- dat[["results"]][["success"]] %>%
     filter(name %in% download_methods) %>%
     pull(imputomics_name)
-  
+
   result_data <- result_data[methods]
   methods <- str_replace_all(str_remove(names(result_data),"impute_"), "_", " ")
   for (i in 1:length(result_data)) {
@@ -169,6 +171,6 @@ save_excel <- function(dat, file, download_methods) {
       writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
     }
   }
-  
+
   saveWorkbook(wb_file, file, overwrite = TRUE)
 }

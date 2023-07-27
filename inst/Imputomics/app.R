@@ -185,6 +185,7 @@ server <- function(input, output, session) {
     req(input[["NA_sign"]])
 
     raw_data <- NULL
+    uploaded_data <- NULL
 
     file <- input[["users_path"]]
     req(file)
@@ -195,12 +196,10 @@ server <- function(input, output, session) {
            paste("Please upload an xlsx, csv or rds file! You provided", ext))
     )
 
-    try({
-      raw_data <- switch(ext,
-                         xlsx = read_xlsx(path),
-                         csv = read.csv(path),
-                         rds = readRDS(path))
-    })
+    try({ raw_data <- switch(ext,
+                             xlsx = read_xlsx(path),
+                             csv = read.csv(path),
+                             rds = readRDS(path)) })
 
     uploaded_data <- raw_data
 
