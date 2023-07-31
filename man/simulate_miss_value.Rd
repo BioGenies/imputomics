@@ -7,14 +7,17 @@
 simulate_miss_value(data_set, mcar = 0, mar = 0, mnar = 0, thresh = 0.2)
 }
 \arguments{
-\item{mcar_ratio}{a number from (0, 1) interval. Ratio of the data missing
+\item{mcar}{a number from (0, 1) interval. Ratio of the data missing
 completely at random (MCAR).}
 
-\item{mar_ratio}{a number from (0, 1) interval. Ratio of the data missing
+\item{mar}{a number from (0, 1) interval. Ratio of the data missing
 at random (MAR).}
 
-\item{mnar_ratioa}{number from (0, 1) interval. Ratio of the data missing
+\item{mnar}{number from (0, 1) interval. Ratio of the data missing
 not at random (MCAR).}
+
+\item{thresh}{a value from 0 to 1: limit value indicating maximum ratio of
+missing observations in one column}
 }
 \value{
 A \code{matrix} with NA values inserted.

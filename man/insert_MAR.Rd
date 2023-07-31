@@ -11,6 +11,9 @@ insert_MAR(dat, ratio = 0, thresh = 0.2)
 
 \item{ratio}{a number from 0 to 1 denoting the ratio of data to be
 exchanged into NA's}
+
+\item{thresh}{a value from 0 to 1: limit value indicating maximum ratio of
+missing observations in one column}
 }
 \value{
 A \code{matrix} with NA values inserted.
