@@ -22,6 +22,11 @@ validate_data <- function(uploaded_data, session, input) {
                        We will ignore them!",
                          session = session,
                          type = "warning")
+        if(sum(sapply(uploaded_data, is.numeric)) < 5)
+          showNotification("You provided data with less than 5 numeric columns.
+                             Some methods may not work properly.",
+                           session = session,
+                           type = "error")
       }else {
         sendSweetAlert(session = session,
                        title = "No numeric columns!",
@@ -30,13 +35,6 @@ validate_data <- function(uploaded_data, session, input) {
         uploaded_data <- data.frame()
       }
     }
-
-    if(sum(sapply(uploaded_data, is.numeric)) < 5)
-      showNotification("You provided data with less than 5 numeric columns.
-                             Some methods may not work properly.",
-                       session = session,
-                       type = "error")
-
   }
 
   uploaded_data
