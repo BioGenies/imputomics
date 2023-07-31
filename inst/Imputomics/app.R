@@ -94,7 +94,7 @@ ui <- navbarPage(
            h4("Select one or more imputation methods from the list below and click impute!"),
            br(),
            column(3,
-                  h4("Specify time limit per method below"),
+                  h4("Specify time limit per method below."),
                   helper(
                     numericInput("timeout",
                                  label = "Provide a value between 1 and 300 in seconds",
@@ -108,35 +108,69 @@ ui <- navbarPage(
                                 If a method exceeds the specified time limit,
                                 it will be marked as an error in the summary.
                                 The default value is 300s (5 min)"),
-                    size = "s"
+                    size = "m",
+                    buttonLabel = "Got it!"
+                  ),
+                  br(),
+                  helper(
+                    h4("Filter the fastest/most accurate methods."),
+                    type = "inline",
+                    title = "Fastest or most accurate metods",
+                    content = c("<b>Fastest methods</b> refer to the top 10 missing value
+                         imputation techniques that have demonstrated the shortest execution
+                         time during simulations. These methods are optimized for efficiency
+                         and are well-suited for handling missing data in large datasets or
+                         scenarios where computation speed is crucial.",
+                                "<b>Most accurate</b> are chosen based on their
+                                     performance measured by the Normalized Root Mean
+                                     Squared Error (NRMSE). The 10 best methods
+                                     are those that have shown the lowest NRMSE values,
+                                     indicating their superior ability to impute missing
+                                     values accurately."),
+                    size = "m",
+                    buttonLabel = "Got it!"
                   ),
 
+                  prettySwitch(
+                    inputId = "fastest",
+                    label = "Show the 10 fastest methods",
+                    status = "danger",
+                    value = FALSE,
+                    slim = TRUE
+                  ),
+                  prettySwitch(
+                    inputId = "best",
+                    label = "Show the 10 most accurate methods",
+                    status = "danger",
+                    value = FALSE,
+                    slim = TRUE
+                  ),
+                  br(),
+                  br(),
+                  br(),
 
+                  column(12, align = "center",
+                         actionBttn(inputId = "impute_btn",
+                                    label = "Impute!",
+                                    style = "material-flat",
+                                    color = "warning",
+                                    size = "lg",
+                                    icon = icon("pen"))
+                  ),
            ),
            column(9,
                   align = "center",
                   multiInput(
                     inputId = "methods",
                     label = "Select methods:",
-                    choices = NULL,
                     selected = NULL,
-                    choiceNames = pull(methods_table, name),
-                    choiceValues = pull(methods_table, imputomics_name),
+                    choices = pull(methods_table, name),
                     width = "80%",
                     options = list(
                       non_selected_header = "Available methods:",
                       selected_header = "You have selected:"
                     )
-                  ),
-                  br()
-           ),
-           column(12, align = "center",
-                  actionBttn(inputId = "impute_btn",
-                             label = "   Impute! ",
-                             style = "material-flat",
-                             color = "warning",
-                             size = "lg",
-                             icon = icon("pen"))
+                  )
            ),
            column(10, offset = 1, style = "position:absolute; bottom: 5px;",
                   progressBar(id = "progress_bar",
@@ -339,6 +373,48 @@ server <- function(input, output, session) {
 
   # imputation
 
+  ## filter methods
+
+  observeEvent(input[["best"]], {
+
+    if(input[["best"]]) {
+      updatePrettySwitch(session = session,
+                         inputId = "fastest",
+                         value = FALSE)
+      updateMultiInput(session = session,
+                       inputId = "methods",
+                       choices = pull(filter(methods_table, best), name),
+                       selected = input[["methods"]])
+    }else {
+      if(!input[["fastest"]])
+        updateMultiInput(session = session,
+                         inputId = "methods",
+                         choices = pull(methods_table, name),
+                         selected = input[["methods"]])
+    }
+  }, ignoreInit = TRUE)
+
+  observeEvent(input[["fastest"]], {
+    if(input[["fastest"]]){
+      updatePrettySwitch(session = session,
+                         inputId = "best",
+                         value = FALSE)
+      updateMultiInput(session = session,
+                       inputId = "methods",
+                       choices = pull(filter(methods_table, fastest), name),
+                       selected = input[["methods"]])
+    }else {
+      if(!input[["best"]])
+        updateMultiInput(session = session,
+                         inputId = "methods",
+                         choices = pull(methods_table, name),
+                         selected = input[["methods"]])
+    }
+  }, ignoreInit = TRUE)
+
+
+  ## imputation calc
+
   observeEvent(input[["impute_btn"]], {
     req(input[["timeout"]])
 
@@ -358,7 +434,9 @@ server <- function(input, output, session) {
       req(input[["methods"]])
     }
 
-    methods <- input[["methods"]]
+    methods <- methods_table %>%
+      filter(name %in% input[["methods"]]) %>%
+      pull(imputomics_name)
     progress <- 0
     progress_step <- 100/length(methods)
 

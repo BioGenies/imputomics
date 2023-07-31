@@ -146,8 +146,17 @@ get_methods_table <- function(path = "methods_table.RDS") {
   funs_imputomics <- ls("package:imputomics")
   funs_imputomics <- funs_imputomics[grepl("impute_", funs_imputomics)]
 
+  fastest_methods <- paste0("impute_", c("knn", "zero", "nipals","metabimpute_min",
+                                         "metabimpute_mean", "metabimpute_halfmin",
+                                         "median", "metabimpute_zero", "softimpute",
+                                         "halfmin"))
+  best_methods <- paste0("impute_", c("mai", "mnmf", "missmda_em","missforest",
+                                      "eucknn", "metabimpute_rf", "bpca",
+                                      "corknn", "tknn", "metabimpute_bpca"))
   methods_table %>%
-    filter(imputomics_name %in% funs_imputomics)
+    filter(imputomics_name %in% funs_imputomics) %>%
+    mutate(fastest = ifelse(imputomics_name %in% fastest_methods, TRUE, FALSE),
+           best = ifelse(imputomics_name %in% best_methods, TRUE, FALSE))
 }
 
 
@@ -179,48 +188,48 @@ plot_points_density <- function(dat, input) {
     ylab(input[["plot_var"]]) +
     scale_color_manual(values=c("#3d3b3c", "#fb5607"))
 
-density_plt_dat <- plt_dat %>%
-  mutate(imputed = is.na(missing_var),
-         missing = ifelse(imputed, var, NA),
-         observed = ifelse(imputed, NA, var))
+  density_plt_dat <- plt_dat %>%
+    mutate(imputed = is.na(missing_var),
+           missing = ifelse(imputed, var, NA),
+           observed = ifelse(imputed, NA, var))
 
-if(length(unique(density_plt_dat[["missing"]])) < 5) {
-  dens_plt <- plt_dat %>%
-    mutate(imputed = is.na(missing_var),
-           missing = ifelse(imputed, var, NA),
-           observed = ifelse(imputed, NA, var)) %>%
-    ggplot() +
-    geom_density(aes(x = observed), fill = "#3d3b3c", alpha = 0.4) +
-    geom_histogram(aes(x = missing, y = ..density..), alpha = 0.4,
-                   fill = "#fb5607", col = "#fb5607") +
-    theme_minimal() +
-    coord_flip() +
-    theme(axis.text = element_text(size = 12),
-          axis.title = element_text(size = 14),
-          axis.title.x =  element_blank(),
-          axis.text.y = element_blank(),
-          title = element_text(size = 18),
-          legend.position = "none") +
-    xlab("")
-} else {
-  dens_plt <- plt_dat %>%
-    mutate(imputed = is.na(missing_var),
-           missing = ifelse(imputed, var, NA),
-           observed = ifelse(imputed, NA, var)) %>%
-    ggplot() +
-    geom_density(aes(x = var, fill = imputed, col = imputed, alpha = 0.4)) +
-    theme_minimal() +
-    coord_flip() +
-    theme(axis.text = element_text(size = 12),
-          axis.title = element_text(size = 14),
-          axis.title.x =  element_blank(),
-          axis.text.y = element_blank(),
-          title = element_text(size = 18),
-          legend.position = "none") +
-    xlab("") +
-    scale_fill_manual(values=c("#3d3b3c", "#fb5607")) +
-    scale_color_manual(values=c("#3d3b3c", "#fb5607"))
-}
+  if(length(unique(density_plt_dat[["missing"]])) < 5) {
+    dens_plt <- plt_dat %>%
+      mutate(imputed = is.na(missing_var),
+             missing = ifelse(imputed, var, NA),
+             observed = ifelse(imputed, NA, var)) %>%
+      ggplot() +
+      geom_density(aes(x = observed), fill = "#3d3b3c", alpha = 0.4) +
+      geom_histogram(aes(x = missing, y = ..density..), alpha = 0.4,
+                     fill = "#fb5607", col = "#fb5607") +
+      theme_minimal() +
+      coord_flip() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 14),
+            axis.title.x =  element_blank(),
+            axis.text.y = element_blank(),
+            title = element_text(size = 18),
+            legend.position = "none") +
+      xlab("")
+  } else {
+    dens_plt <- plt_dat %>%
+      mutate(imputed = is.na(missing_var),
+             missing = ifelse(imputed, var, NA),
+             observed = ifelse(imputed, NA, var)) %>%
+      ggplot() +
+      geom_density(aes(x = var, fill = imputed, col = imputed, alpha = 0.4)) +
+      theme_minimal() +
+      coord_flip() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 14),
+            axis.title.x =  element_blank(),
+            axis.text.y = element_blank(),
+            title = element_text(size = 18),
+            legend.position = "none") +
+      xlab("") +
+      scale_fill_manual(values=c("#3d3b3c", "#fb5607")) +
+      scale_color_manual(values=c("#3d3b3c", "#fb5607"))
+  }
 
   points_plt + theme(legend.position = "right") + dens_plt +
     plot_layout(guides = "collect", design = "112") +
