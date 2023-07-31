@@ -317,10 +317,14 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input[["example_dat"]], {
-    if(input[["example_dat"]] == TRUE){
+    if(input[["example_dat"]]){
       dat[["missing_data"]] <- read.csv("./test_data/im_normal.csv")
       dat[["raw_data"]] <- dat[["missing_data"]]
       dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
+    } else {
+      dat[["missing_data"]] <- NULL
+      dat[["raw_data"]] <- NULL
+      dat[["n_cmp"]] <- NULL
     }
   })
 
