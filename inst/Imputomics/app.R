@@ -3,6 +3,7 @@ library(shinythemes)
 library(shinyWidgets)
 library(shinycssloaders)
 library(DT)
+library(shinyhelper)
 
 library(ggplot2)
 library(patchwork)
@@ -16,6 +17,7 @@ library(readxl)
 library(openxlsx)
 
 source("supp.R")
+source("amelia_safe_impute.R")
 source(system.file("readme_scripts.R", package = "imputomics"))
 
 methods_table <- get_methods_table("methods_table.RDS")
@@ -91,7 +93,27 @@ ui <- navbarPage(
            h3("Let's impute your missing values!"),
            h4("Select one or more imputation methods from the list below and click impute!"),
            br(),
-           column(12,
+           column(3,
+                  h4("Specify time limit per method below"),
+                  helper(
+                    numericInput("timeout",
+                                 label = "Provide a value between 1 and 300 in seconds",
+                                 value = 300, min = 1, max = 300),
+                    type = "inline",
+                    title = "How to set time limit?",
+                    content = c("The <b>timeout</b> parameter allows users to set a time limit
+                                for each missing value imputation method.
+                                This duration determines the maximum time each
+                                method has to complete the calculation.
+                                If a method exceeds the specified time limit,
+                                it will be marked as an error in the summary.
+                                The default value is 300s (5 min)"),
+                    size = "s"
+                  ),
+
+
+           ),
+           column(9,
                   align = "center",
                   multiInput(
                     inputId = "methods",
@@ -106,7 +128,9 @@ ui <- navbarPage(
                       selected_header = "You have selected:"
                     )
                   ),
-                  br(),
+                  br()
+           ),
+           column(12, align = "center",
                   actionBttn(inputId = "impute_btn",
                              label = "   Impute! ",
                              style = "material-flat",
@@ -182,6 +206,8 @@ ui <- navbarPage(
 
 server <- function(input, output, session) {
   dat <- reactiveValues()
+
+  observe_helpers()
 
   ##### loading data
   observeEvent(input[["users_path"]], {
@@ -314,6 +340,7 @@ server <- function(input, output, session) {
   # imputation
 
   observeEvent(input[["impute_btn"]], {
+    req(input[["timeout"]])
 
     if(is.null(dat[["missing_data"]])) {
       sendSweetAlert(session = session,
@@ -346,11 +373,20 @@ server <- function(input, output, session) {
                         id = "progress_bar",
                         value = progress,
                         title = title)
-      imputed_dat <- imputomics:::safe_impute(ith_fun, dat[["missing_data"]])
+      if(ith_method == "impute_amelia") {
+        imputed_dat <- safe_impute_amelia(ith_fun,
+                                          dat[["missing_data"]],
+                                          timeout = input[["timeout"]])
+      } else {
+        imputed_dat <- imputomics:::safe_impute(ith_fun,
+                                                dat[["missing_data"]],
+                                                timeout = input[["timeout"]])
+      }
 
-      if(!any(is.na(imputed_dat)))
+      if(!any(is.na(imputed_dat)) & !inherits(imputed_dat, "try-error"))
         return(imputed_dat)
-
+      else
+        return(NULL)
     })
 
     updateProgressBar(session = session,
@@ -364,7 +400,8 @@ server <- function(input, output, session) {
     if(length(success) == 0)
       sendSweetAlert(session = session,
                      title = "Error!",
-                     text = "All of the chosen methods failed to impute your data!",
+                     text = "All of the chosen methods failed to impute your data in provided time!
+                     Try to increase the time limit or validate your dataset.",
                      type = "error")
 
     if(length(errors) == 0)

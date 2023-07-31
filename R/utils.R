@@ -29,7 +29,6 @@ extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
 
 #' Convert an imputing function into its safe version.
 #'
-#' @importFrom callr r
 #' @importFrom R.utils withTimeout
 #'
 #' @inheritParams impute_zero
@@ -37,27 +36,30 @@ extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
 #' @param imputing_function a function (imputation method) that takes
 #' missdf as an input
 #' @param timeout a numeric value specifying the limit of time evaluation in
-#' seconds. Default to 10h.
+#' seconds. Default to 5min.
 #'
 #' @return A \code{data.frame} with imputed values or the
 #' \strong{missdf} if the imputing function failed to converge.
 #'
 #' @keywords internal
-safe_impute <- function(imputing_function, missing_data_set, timeout = 36000) {
+safe_impute <- function(imputing_function, missing_data_set, timeout = 300) {
   imputed <- structure(structure(list(), class = "try-error"))
   n <- 1
   while(inherits(imputed, "try-error") & n < 3) {
-    imputed <- try(callr::r(function(imputing_function, missing_data_set) {
+    imputed <- try({
       R.utils::withTimeout(imputing_function(missing_data_set),
                            timeout = timeout, onTimeout = "error")
-    }, args = list(imputing_function = imputing_function, missing_data_set = missing_data_set),
-    package = "imputomics"), silent = TRUE)
-
+    }, silent = TRUE)
     n <- n + 1
   }
-
   imputed
 }
+
+
+
+
+
+
 
 #' Checks (asserts) if an object is a data.frame
 #'

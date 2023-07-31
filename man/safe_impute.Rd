@@ -4,14 +4,14 @@
 \alias{safe_impute}
 \title{Convert an imputing function into its safe version.}
 \usage{
-safe_impute(imputing_function, missing_data_set, timeout = 36000)
+safe_impute(imputing_function, missing_data_set, timeout = 300)
 }
 \arguments{
 \item{imputing_function}{a function (imputation method) that takes
 missdf as an input}
 
 \item{timeout}{a numeric value specifying the limit of time evaluation in
-seconds. Default to 10h.}
+seconds. Default to 5min.}
 }
 \value{
 A \code{data.frame} with imputed values or the
