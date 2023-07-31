@@ -16,8 +16,10 @@ library(stringr)
 library(readxl)
 library(openxlsx)
 
-source("supp.R")
-source("amelia_safe_impute.R")
+source("app_supplementary/data_operations.R")
+source("app_supplementary/plots.R")
+source("app_supplementary/ui_supp.R")
+source("app_supplementary/amelia_safe_impute.R")
 source(system.file("readme_scripts.R", package = "imputomics"))
 
 methods_table <- get_methods_table("methods_table.RDS")
