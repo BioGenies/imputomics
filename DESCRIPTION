@@ -39,6 +39,7 @@ BugReports: https://github.com/biogenies/imputomics/issues
 Imports:
     Amelia,
     bcv,
+    callr,
     DreamAI,
     glmnet,
     GMSimpute,
@@ -59,6 +60,7 @@ Imports:
     pcaMethods,
     PEMM,
     Rdpack,
+    R.utils,
     SimDesign,
     shiny,
     softImpute,
