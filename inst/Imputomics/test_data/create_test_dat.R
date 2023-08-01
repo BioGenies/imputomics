@@ -34,7 +34,7 @@ example_set_na <- dat
 colnames(example_set_na) <- paste0("variable_", letters[1:26])
 example_set_na <- cbind(data.frame(example_set_na), categorical = c("a", "b"))
 example_set_na <- cbind(example_set_na, i_missed_the_amputation = runif(100))
-example_set_na <- as.character(example_set_na)
+example_set_na <- sapply(example_set_na, as.character)
 write.csv(example_set_na, "./inst/Imputomics/test_data/im_character.csv", row.names = FALSE)
 
 
