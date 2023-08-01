@@ -406,7 +406,10 @@ impute_mai <- function(missdf, ...) {
                                   MNAR_algorithm = "Single",
                                   verbose = FALSE))
 
-  data.frame(do.call(MAI::MAI, all_args)[["Imputed_data"]])
+  imputed <- data.frame(do.call(MAI::MAI, all_args)[["Imputed_data"]])
+  colnames(imputed) <- colnames(missdf)
+
+  imputed
 }
 
 
