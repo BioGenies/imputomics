@@ -281,7 +281,7 @@ server <- function(input, output, session) {
   observeEvent(dat[["missing_data"]], {
     req(dat[["missing_data"]])
 
-    if(sum(is.na(dat[["missing_data"]])) == 0)
+    if(sum(is.na(dat[["missing_data"]])) == 0) {}
       sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "Make sure that right missing value denotement is selected!",

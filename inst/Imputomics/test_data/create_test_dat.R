@@ -29,12 +29,10 @@ write.csv(example_set_na, "./inst/Imputomics/test_data/i_have_some_letters.csv",
 
 
 #set with only character columns
-dat <- matrix(rnorm(2600, mean = 1000, sd = 20), ncol = 26)
-example_set_na <- dat
-colnames(example_set_na) <- paste0("variable_", letters[1:26])
-example_set_na <- cbind(data.frame(example_set_na), categorical = c("a", "b"))
-example_set_na <- cbind(example_set_na, i_missed_the_amputation = runif(100))
-example_set_na <- sapply(example_set_na, as.character)
+
+dat_char <- matrix(sample(letters, 1000, replace = TRUE), ncol = 10)
+
+example_set_na <- as.data.frame(dat_char)
 write.csv(example_set_na, "./inst/Imputomics/test_data/im_character.csv", row.names = FALSE)
 
 
@@ -46,6 +44,12 @@ example_set_na <- dat
 example_set_na[runif(2600) < 0.2] <- NA
 example_set_na <- example_set_na[, 1:3]
 write.csv(example_set_na, "./inst/Imputomics/test_data/im_smol.csv", row.names = FALSE)
+
+example_set_na <- dat
+example_set_na[runif(2600) < 0.2] <- NA
+example_set_na <- example_set_na[1:3, 1:3]
+write.csv(example_set_na, "./inst/Imputomics/test_data/im_very_smol.csv",
+          row.names = FALSE)
 
 
 # set small and character

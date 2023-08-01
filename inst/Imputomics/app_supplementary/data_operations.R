@@ -12,35 +12,44 @@ validate_data <- function(uploaded_data, session, input) {
   } else {
 
     # check if the columns are numeric
-    if(any(!sapply(uploaded_data, is.numeric))) {
-      uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
+    non_numeric_cols <- !sapply(uploaded_data, is.numeric)
+    if(any(non_numeric_cols)) {
 
-      if(ncol(uploaded_data) > 0) {
-        showNotification("Your data contains non-numeric columns!
-                       We will ignore them!",
-                         session = session,
-                         type = "warning",
-                         duration = 20)
-      }else {
-        sendSweetAlert(session = session,
-                       title = "No numeric columns!",
-                       text = "Make sure that the uploaded file contains dataset with numeric columns.",
-                       type = "error")
-        uploaded_data <- NULL
-      }
-    }
-    if(sum(sapply(uploaded_data, is.numeric)) < 5)
-      showNotification("You provided data with less than 5 numeric columns.
-                             Some methods may not work properly.",
+      uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
+      showNotification(paste0("Your data contains ", sum(non_numeric_cols),
+                              " non-numeric columns! We will ignore them!"),
                        session = session,
-                       type = "error",
+                       type = "warning",
                        duration = 20)
+    }
+
+    if(ncol(uploaded_data) == 0) {
+      sendSweetAlert(session = session,
+                     title = "No numeric columns!",
+                     text = "Make sure that the uploaded file contains dataset with numeric columns.",
+                     type = "error")
+      uploaded_data <- NULL
+    } else {
+
+      ncol_numeric <- sum(sapply(uploaded_data, is.numeric))
+      if(ncol_numeric < 5)
+        showNotification(paste0("You provided data with only ", ncol_numeric,
+                                " numeric columns. Some methods may not work properly."),
+                         session = session,
+                         type = "error",
+                         duration = 20)
+
+      if(nrow(uploaded_data) < 5)
+        showNotification(paste0("Your data has only ", nrow(uploaded_data), " rows.",
+                                "Some methods may not work properly."),
+                         session = session,
+                         type = "error",
+                         duration = 20)
+    }
   }
 
   uploaded_data
 }
-
-
 
 
 get_variables_table <- function(missing_data) {
