@@ -39,26 +39,36 @@ ui <- navbarPage(
                   h2("Here you can upload your data!"),
                   br(),
                   h4("1. Select your metabolomics dataset in CSV or Excel:"),
-                  fileInput(inputId = 'users_path',
-                            label = "Upload file with missing values.",
-                            multiple = FALSE,
-                            accept = c(".csv", ".xlsx", ".rds")),
+                  fileInput(
+                    inputId = 'users_path',
+                    label = "Upload file with missing values.",
+                    multiple = FALSE,
+                    accept = c(".csv", ".xlsx", ".rds")
+                  ),
                   br(),
                   h4("2. Select missing value denotement:"),
-                  selectInput("NA_sign",
-                              "How is a missing value marked in your data?",
-                              choices = c("zero", "NA"),
-                              selected = "NA"),
+                  selectInput(
+                    "NA_sign",
+                    "How is a missing value marked in your data?",
+                    choices = c("zero", "NA"),
+                    selected = "NA"
+                  ),
                   br(),
-                  h4("Upload example data."),
-                  materialSwitch(inputId = "example_dat")
+                  h4("Click below to upload example data!"),
+                  actionBttn(
+                    inputId = "example_dat",
+                    label = "Example data",
+                    style = "material-flat",
+                    color = "success",
+                    icon = HTML("<i class='fa-solid fa-upload fa-bounce'></i>")
+                  ),
+
            ),
            column(6,
                   align = "center",
                   offset = 1,
                   h3("Dataset preview:"),
-                  withSpinner(DT::dataTableOutput("missing_data"),
-                              color = "black")
+                  withSpinner(DT::dataTableOutput("missing_data"), color = "black")
            )
   ),
   tabPanel("Visualization",
@@ -77,9 +87,11 @@ ui <- navbarPage(
                   HTML('<hr style="border-color: black;">'),
                   br(),
                   h5(HTML("<b>Click below to see all the variables from the data!</b>")),
-                  awesomeCheckbox(inputId = "show_non_miss",
-                                  label = "Show variables without missing values.",
-                                  value = FALSE),
+                  awesomeCheckbox(
+                    inputId = "show_non_miss",
+                    label = "Show variables without missing values.",
+                    value = FALSE
+                  ),
            ),
            column(9,
                   offset = 1,
@@ -98,9 +110,11 @@ ui <- navbarPage(
            column(3,
                   h4("Specify time limit per method below."),
                   helper(
-                    numericInput("timeout",
-                                 label = "Provide a value between 1 and 300 in seconds",
-                                 value = 300, min = 1, max = 300),
+                    numericInput(
+                      "timeout",
+                      label = "Provide a value between 1 and 300 in seconds",
+                      value = 300, min = 1, max = 300
+                    ),
                     type = "inline",
                     title = "How to set time limit?",
                     content = c("The <b>timeout</b> parameter allows users to set a time limit
@@ -249,11 +263,6 @@ server <- function(input, output, session) {
   observeEvent(input[["users_path"]], {
     req(input[["NA_sign"]])
 
-    updateMaterialSwitch(session = session, "example_dat", value = FALSE)
-
-    raw_data <- NULL
-    uploaded_data <- NULL
-
     file <- input[["users_path"]]
     req(file)
     path <- file[["datapath"]]
@@ -282,10 +291,10 @@ server <- function(input, output, session) {
     req(dat[["missing_data"]])
 
     if(sum(is.na(dat[["missing_data"]])) == 0) {}
-      sendSweetAlert(session = session,
-                     title = "Your data contains no missing values!",
-                     text = "Make sure that right missing value denotement is selected!",
-                     type = "warning")
+    sendSweetAlert(session = session,
+                   title = "Your data contains no missing values!",
+                   text = "Make sure that right missing value denotement is selected!",
+                   type = "warning")
 
     if(sum(is.na(dat[["missing_data"]])) > 0)
       sendSweetAlert(session = session,
@@ -298,6 +307,7 @@ server <- function(input, output, session) {
   observeEvent(input[["NA_sign"]], {
     req(input[["NA_sign"]])
     req(dat[["missing_data"]])
+
     if(input[["NA_sign"]] == "zero")
       dat[["missing_data"]][dat[["raw_data"]] == 0] <- NA
     else
@@ -318,16 +328,10 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input[["example_dat"]], {
-    if(input[["example_dat"]]){
-      dat[["missing_data"]] <- read.csv("./test_data/im_normal.csv")
-      dat[["raw_data"]] <- dat[["missing_data"]]
-      dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
-    } else {
-      dat[["missing_data"]] <- NULL
-      dat[["raw_data"]] <- NULL
-      dat[["n_cmp"]] <- NULL
-    }
-  })
+    dat[["missing_data"]] <- read.csv("./test_data/im_normal.csv")
+    dat[["raw_data"]] <- dat[["missing_data"]]
+    dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
+  }, ignoreInit = TRUE)
 
   ##### data vis
 
