@@ -6,7 +6,8 @@ validate_data <- function(uploaded_data, session, input) {
   if(is.null(uploaded_data)){
     sendSweetAlert(session = session,
                    title = "No data!",
-                   text = "Make sure that the uploaded file contains dataset  with numeric columns.",
+                   text = "Your data is empty or the file is broken.
+                   Make sure that the uploaded file contains dataset with numeric columns.",
                    type = "error")
     uploaded_data <- NULL
   } else {

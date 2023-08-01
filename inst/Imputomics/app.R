@@ -253,6 +253,8 @@ ui <- navbarPage(
   )
 )
 
+################################################################################
+
 
 server <- function(input, output, session) {
   dat <- reactiveValues()
@@ -262,6 +264,9 @@ server <- function(input, output, session) {
   ##### loading data
   observeEvent(input[["users_path"]], {
     req(input[["NA_sign"]])
+
+    raw_data <- NULL
+    uploaded_data <- NULL
 
     file <- input[["users_path"]]
     req(file)
@@ -278,7 +283,6 @@ server <- function(input, output, session) {
                              rds = readRDS(path)) })
 
     uploaded_data <- raw_data
-
     #data validation
     uploaded_data <- validate_data(uploaded_data, session, input)
 
