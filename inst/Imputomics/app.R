@@ -301,6 +301,8 @@ server <- function(input, output, session) {
                      title = "Success !",
                      text = "Your data is correct!",
                      type = "success")
+
+    dat[["mv_summary"]]  <- get_variables_table(dat[["missing_data"]])
   })
 
 
@@ -338,10 +340,7 @@ server <- function(input, output, session) {
   output[["mv_pctg"]] <- renderTable({
     req(dat[["missing_data"]])
 
-    summary_dat <- get_variables_table(dat[["missing_data"]])
-    dat[["mv_summary"]] <- summary_dat[["mv_summary"]]
-
-    summary_dat[["variables_table"]]
+    dat[["mv_summary"]][["variables_table"]]
 
   }, colnames = FALSE)
 
@@ -362,7 +361,7 @@ server <- function(input, output, session) {
     }
 
     if(input[["plot_type"]] == "Percentage") {
-      tmp_dat <- dat[["mv_summary"]]
+      tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
       if(!show_complete)
         tmp_dat <- filter(tmp_dat, `% Missing` > 0)
       plot_mv_segment(tmp_dat)
@@ -552,7 +551,13 @@ server <- function(input, output, session) {
       filter(imputomics_name %in% success)
 
     dat[["results"]][["success"]] <- success
-    vars <- colnames(dat[["results"]][["results"]][[1]])
+
+    complete_cols <- dat[["mv_summary"]][["mv_summary"]] %>%
+      filter(`% Missing` == 0) %>%
+      pull(Variable)
+
+    vars <- setdiff(colnames(dat[["results"]][["results"]][[1]]),
+                    complete_cols)
 
     updateRadioButtons(session = session,
                        inputId = "success_methods",
