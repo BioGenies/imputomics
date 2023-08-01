@@ -8,10 +8,8 @@ validate_data <- function(uploaded_data, session, input) {
                    title = "No data!",
                    text = "Make sure that the uploaded file contains dataset  with numeric columns.",
                    type = "error")
-    uploaded_data <- data.frame()
+    uploaded_data <- NULL
   } else {
-
-    if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
 
     # check if the columns are numeric
     if(any(!sapply(uploaded_data, is.numeric))) {
@@ -21,20 +19,22 @@ validate_data <- function(uploaded_data, session, input) {
         showNotification("Your data contains non-numeric columns!
                        We will ignore them!",
                          session = session,
-                         type = "warning")
-        if(sum(sapply(uploaded_data, is.numeric)) < 5)
-          showNotification("You provided data with less than 5 numeric columns.
-                             Some methods may not work properly.",
-                           session = session,
-                           type = "error")
+                         type = "warning",
+                         duration = 20)
       }else {
         sendSweetAlert(session = session,
                        title = "No numeric columns!",
                        text = "Make sure that the uploaded file contains dataset with numeric columns.",
                        type = "error")
-        uploaded_data <- data.frame()
+        uploaded_data <- NULL
       }
     }
+    if(sum(sapply(uploaded_data, is.numeric)) < 5)
+      showNotification("You provided data with less than 5 numeric columns.
+                             Some methods may not work properly.",
+                       session = session,
+                       type = "error",
+                       duration = 20)
   }
 
   uploaded_data

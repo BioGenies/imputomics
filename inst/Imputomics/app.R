@@ -249,6 +249,8 @@ server <- function(input, output, session) {
   observeEvent(input[["users_path"]], {
     req(input[["NA_sign"]])
 
+    updateMaterialSwitch(session = session, "example_dat", value = FALSE)
+
     raw_data <- NULL
     uploaded_data <- NULL
 
@@ -274,25 +276,22 @@ server <- function(input, output, session) {
     dat[["missing_data"]] <- uploaded_data
     dat[["raw_data"]] <- raw_data
     dat[["n_cmp"]] <- ncol(raw_data)
-
-    updateMaterialSwitch(session = session, "example_dat", value = FALSE)
   })
 
   observeEvent(dat[["missing_data"]], {
+    req(dat[["missing_data"]])
 
-    if(nrow(dat[["missing_data"]]) > 0) {
-      if(sum(is.na(dat[["missing_data"]])) == 0)
-        sendSweetAlert(session = session,
-                       title = "Your data contains no missing values!",
-                       text = "Make sure that right missing value denotement is selected!",
-                       type = "warning")
+    if(sum(is.na(dat[["missing_data"]])) == 0)
+      sendSweetAlert(session = session,
+                     title = "Your data contains no missing values!",
+                     text = "Make sure that right missing value denotement is selected!",
+                     type = "warning")
 
-      if(sum(is.na(dat[["missing_data"]])) > 0)
-        sendSweetAlert(session = session,
-                       title = "Success !",
-                       text = "Your data is correct!",
-                       type = "success")
-    }
+    if(sum(is.na(dat[["missing_data"]])) > 0)
+      sendSweetAlert(session = session,
+                     title = "Success !",
+                     text = "Your data is correct!",
+                     type = "success")
   })
 
 
