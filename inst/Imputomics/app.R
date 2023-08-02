@@ -164,7 +164,9 @@ ui <- navbarPage(
                     value = FALSE,
                     slim = TRUE
                   ),
+                  br(),
                   textOutput("n_methods"),
+                  br(),
                   br(),
                   br(),
 
