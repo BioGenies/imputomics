@@ -5,7 +5,7 @@
 #' @noRd
 #' @keywords internal
 impute_constant <- function(missdf, constant_value) {
-  
+
   missdf[is.na(missdf)] <- constant_value
   missdf
 }
@@ -24,9 +24,9 @@ impute_constant <- function(missdf, constant_value) {
 
 impute_per_column <- function(missdf, compute_values) {
   check_missdf(missdf)
-  
+
   imputed_values_vector <- compute_values(missdf)
-  
+
   do.call(cbind, lapply(1L:ncol(missdf), function(ith_column_id) {
     impute_constant(missdf[ith_column_id],
                     imputed_values_vector[[ith_column_id]])
@@ -52,10 +52,10 @@ impute_per_column <- function(missdf, compute_values) {
 #' @export
 impute_zero <- function(missdf) {
   check_missdf(missdf)
-  
+
   impute_constant(missdf, constant_value = 0)
 }
-  
+
 
 #' Helper function. Minimum imputation.
 #'
@@ -125,7 +125,7 @@ impute_min <- function(missdf)
 #' @keywords constant
 #'
 #' @export
-impute_mean <- function(missdf) 
+impute_mean <- function(missdf)
   impute_per_column(missdf, compute_col_mean)
 
 
@@ -145,7 +145,7 @@ impute_mean <- function(missdf)
 #' @keywords constant
 #'
 #' @export
-impute_halfmin <- function(missdf) 
+impute_halfmin <- function(missdf)
   impute_per_column(missdf, compute_col_halfmin)
 
 
@@ -191,5 +191,5 @@ compute_col_random <- function(x)
 #' impute_random(sim_miss)
 #'
 #' @export
-impute_random <- function(missing_data_set)
-  impute_per_column(missing_data_set, compute_col_random)
+impute_random <- function(missdf)
+  impute_per_column(missdf, compute_col_random)

@@ -1,18 +1,25 @@
 library(shiny)
 library(shinythemes)
-library(DT)
-library(readxl)
 library(shinyWidgets)
+library(shinycssloaders)
+library(DT)
+library(shinyhelper)
+
 library(ggplot2)
+library(patchwork)
+library(ggbeeswarm)
+
 library(dplyr)
 library(tidyr)
 library(imputomics)
-library(shinycssloaders)
-library(openxlsx)
-library(ggbeeswarm)
 library(stringr)
+library(readxl)
+library(openxlsx)
 
-source("supp.R")
+source("app_supplementary/data_operations.R")
+source("app_supplementary/plots.R")
+source("app_supplementary/ui_supp.R")
+source("app_supplementary/amelia_safe_impute.R")
 source(system.file("readme_scripts.R", package = "imputomics"))
 
 methods_table <- get_methods_table("methods_table.RDS")
@@ -32,26 +39,36 @@ ui <- navbarPage(
                   h2("Here you can upload your data!"),
                   br(),
                   h4("1. Select your metabolomics dataset in CSV or Excel:"),
-                  fileInput(inputId = 'users_path',
-                            label = "Upload file with missing values.",
-                            multiple = FALSE,
-                            accept = c(".csv", ".xlsx", ".rds")),
+                  fileInput(
+                    inputId = 'users_path',
+                    label = "Upload file with missing values.",
+                    multiple = FALSE,
+                    accept = c(".csv", ".xlsx", ".rds")
+                  ),
                   br(),
                   h4("2. Select missing value denotement:"),
-                  selectInput("NA_sign",
-                              "How is a missing value marked in your data?",
-                              choices = c("zero", "NA"),
-                              selected = "NA"),
+                  selectInput(
+                    "NA_sign",
+                    "How is a missing value marked in your data?",
+                    choices = c("zero", "NA"),
+                    selected = "NA"
+                  ),
                   br(),
-                  h4("Upload example data."),
-                  materialSwitch(inputId = "example_dat")
+                  h4("Click below to upload example data!"),
+                  actionBttn(
+                    inputId = "example_dat",
+                    label = "Example data",
+                    style = "material-flat",
+                    color = "success",
+                    icon = HTML("<i class='fa-solid fa-upload fa-bounce'></i>")
+                  ),
+
            ),
            column(6,
                   align = "center",
                   offset = 1,
                   h3("Dataset preview:"),
-                  withSpinner(DT::dataTableOutput("missing_data"),
-                              color = "black")
+                  withSpinner(DT::dataTableOutput("missing_data"), color = "black")
            )
   ),
   tabPanel("Visualization",
@@ -70,9 +87,11 @@ ui <- navbarPage(
                   HTML('<hr style="border-color: black;">'),
                   br(),
                   h5(HTML("<b>Click below to see all the variables from the data!</b>")),
-                  awesomeCheckbox(inputId = "show_non_miss",
-                                  label = "Show variables without missing values.",
-                                  value = FALSE),
+                  awesomeCheckbox(
+                    inputId = "show_non_miss",
+                    label = "Show variables without missing values.",
+                    value = FALSE
+                  ),
            ),
            column(9,
                   offset = 1,
@@ -88,28 +107,86 @@ ui <- navbarPage(
            h3("Let's impute your missing values!"),
            h4("Select one or more imputation methods from the list below and click impute!"),
            br(),
-           column(12,
+           column(3,
+                  h4("Specify time limit per method below."),
+                  helper(
+                    numericInput(
+                      "timeout",
+                      label = "Provide a value between 1 and 300 in seconds",
+                      value = 300, min = 1, max = 300
+                    ),
+                    type = "inline",
+                    title = "How to set time limit?",
+                    content = c("The <b>timeout</b> parameter allows users to set a time limit
+                                for each missing value imputation method.
+                                This duration determines the maximum time each
+                                method has to complete the calculation.
+                                If a method exceeds the specified time limit,
+                                it will be marked as an error in the summary.
+                                The default value is 300s (5 min)"),
+                    size = "m",
+                    buttonLabel = "Got it!"
+                  ),
+                  br(),
+                  helper(
+                    h4("Filter the fastest/most accurate methods."),
+                    type = "inline",
+                    title = "Fastest or most accurate metods",
+                    content = c("<b>Fastest methods</b> refer to the top 10 missing value
+                         imputation techniques that have demonstrated the shortest execution
+                         time during simulations. These methods are optimized for efficiency
+                         and are well-suited for handling missing data in large datasets or
+                         scenarios where computation speed is crucial.",
+                                "<b>Most accurate</b> are chosen based on their
+                                     performance measured by the Normalized Root Mean
+                                     Squared Error (NRMSE). The 10 best methods
+                                     are those that have shown the lowest NRMSE values,
+                                     indicating their superior ability to impute missing
+                                     values accurately."),
+                    size = "m",
+                    buttonLabel = "Got it!"
+                  ),
+
+                  prettySwitch(
+                    inputId = "fastest",
+                    label = "Show the 10 fastest methods",
+                    status = "danger",
+                    value = FALSE,
+                    slim = TRUE
+                  ),
+                  prettySwitch(
+                    inputId = "best",
+                    label = "Show the 10 most accurate methods",
+                    status = "danger",
+                    value = FALSE,
+                    slim = TRUE
+                  ),
+                  br(),
+                  br(),
+                  br(),
+
+                  column(12, align = "center",
+                         actionBttn(inputId = "impute_btn",
+                                    label = "Impute!",
+                                    style = "material-flat",
+                                    color = "warning",
+                                    size = "lg",
+                                    icon = icon("pen"))
+                  ),
+           ),
+           column(9,
                   align = "center",
                   multiInput(
                     inputId = "methods",
                     label = "Select methods:",
-                    choices = NULL,
                     selected = NULL,
-                    choiceNames = pull(methods_table, name),
-                    choiceValues = pull(methods_table, imputomics_name),
+                    choices = pull(methods_table, name),
                     width = "80%",
                     options = list(
                       non_selected_header = "Available methods:",
                       selected_header = "You have selected:"
                     )
-                  ),
-                  br(),
-                  actionBttn(inputId = "impute_btn",
-                             label = "   Impute! ",
-                             style = "material-flat",
-                             color = "warning",
-                             size = "lg",
-                             icon = icon("pen"))
+                  )
            ),
            column(10, offset = 1, style = "position:absolute; bottom: 5px;",
                   progressBar(id = "progress_bar",
@@ -176,13 +253,20 @@ ui <- navbarPage(
   )
 )
 
+################################################################################
+
 
 server <- function(input, output, session) {
   dat <- reactiveValues()
 
+  observe_helpers()
+
   ##### loading data
   observeEvent(input[["users_path"]], {
     req(input[["NA_sign"]])
+
+    raw_data <- NULL
+    uploaded_data <- NULL
 
     file <- input[["users_path"]]
     req(file)
@@ -192,39 +276,44 @@ server <- function(input, output, session) {
       need(ext %in% c("xlsx", "csv", "rds"),
            paste("Please upload an xlsx, csv or rds file! You provided", ext))
     )
-    raw_data <- switch(ext,
-                       xlsx = read_xlsx(path),
-                       csv = read.csv(path),
-                       rds = readRDS(path))
-    uploaded_data <- raw_data
 
-    if(input[["NA_sign"]] == "zero") uploaded_data[raw_data == 0] <- NA
+    try({ raw_data <- switch(ext,
+                             xlsx = read_xlsx(path),
+                             csv = read.csv(path),
+                             rds = readRDS(path)) })
+
+    uploaded_data <- raw_data
+    #data validation
+    uploaded_data <- validate_data(uploaded_data, session, input)
 
     dat[["missing_data"]] <- uploaded_data
     dat[["raw_data"]] <- raw_data
     dat[["n_cmp"]] <- ncol(raw_data)
-
-    updateMaterialSwitch(session = session, "example_dat", value = FALSE)
   })
 
   observeEvent(dat[["missing_data"]], {
-    if(sum(is.na(dat[["missing_data"]])) == 0)
-      sendSweetAlert(session = session,
-                     title = "Your data contains no missing values!",
-                     text = "Make sure that right missing value denotement is selected!",
-                     type = "warning")
+    req(dat[["missing_data"]])
+
+    if(sum(is.na(dat[["missing_data"]])) == 0) {}
+    sendSweetAlert(session = session,
+                   title = "Your data contains no missing values!",
+                   text = "Make sure that right missing value denotement is selected!",
+                   type = "warning")
 
     if(sum(is.na(dat[["missing_data"]])) > 0)
       sendSweetAlert(session = session,
                      title = "Success !",
                      text = "Your data is correct!",
                      type = "success")
+
+    dat[["mv_summary"]]  <- get_variables_table(dat[["missing_data"]])
   })
 
 
   observeEvent(input[["NA_sign"]], {
     req(input[["NA_sign"]])
     req(dat[["missing_data"]])
+
     if(input[["NA_sign"]] == "zero")
       dat[["missing_data"]][dat[["raw_data"]] == 0] <- NA
     else
@@ -245,22 +334,17 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input[["example_dat"]], {
-    if(input[["example_dat"]] == TRUE){
-      dat[["missing_data"]] <- read.csv("./test_data/example_set_na.csv")
-      dat[["raw_data"]] <- dat[["missing_data"]]
-      dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
-    }
-  })
+    dat[["missing_data"]] <- read.csv("./test_data/im_normal.csv")
+    dat[["raw_data"]] <- dat[["missing_data"]]
+    dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
+  }, ignoreInit = TRUE)
 
   ##### data vis
 
   output[["mv_pctg"]] <- renderTable({
     req(dat[["missing_data"]])
 
-    summary_dat <- get_variables_table(dat[["missing_data"]])
-    dat[["mv_summary"]] <- summary_dat[["mv_summary"]]
-
-    summary_dat[["variables_table"]]
+    dat[["mv_summary"]][["variables_table"]]
 
   }, colnames = FALSE)
 
@@ -281,7 +365,7 @@ server <- function(input, output, session) {
     }
 
     if(input[["plot_type"]] == "Percentage") {
-      tmp_dat <- dat[["mv_summary"]]
+      tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
       if(!show_complete)
         tmp_dat <- filter(tmp_dat, `% Missing` > 0)
       plot_mv_segment(tmp_dat)
@@ -303,7 +387,50 @@ server <- function(input, output, session) {
 
   # imputation
 
+  ## filter methods
+
+  observeEvent(input[["best"]], {
+
+    if(input[["best"]]) {
+      updatePrettySwitch(session = session,
+                         inputId = "fastest",
+                         value = FALSE)
+      updateMultiInput(session = session,
+                       inputId = "methods",
+                       choices = pull(filter(methods_table, best), name),
+                       selected = input[["methods"]])
+    }else {
+      if(!input[["fastest"]])
+        updateMultiInput(session = session,
+                         inputId = "methods",
+                         choices = pull(methods_table, name),
+                         selected = input[["methods"]])
+    }
+  }, ignoreInit = TRUE)
+
+  observeEvent(input[["fastest"]], {
+    if(input[["fastest"]]){
+      updatePrettySwitch(session = session,
+                         inputId = "best",
+                         value = FALSE)
+      updateMultiInput(session = session,
+                       inputId = "methods",
+                       choices = pull(filter(methods_table, fastest), name),
+                       selected = input[["methods"]])
+    }else {
+      if(!input[["best"]])
+        updateMultiInput(session = session,
+                         inputId = "methods",
+                         choices = pull(methods_table, name),
+                         selected = input[["methods"]])
+    }
+  }, ignoreInit = TRUE)
+
+
+  ## imputation calc
+
   observeEvent(input[["impute_btn"]], {
+    req(input[["timeout"]])
 
     if(is.null(dat[["missing_data"]])) {
       sendSweetAlert(session = session,
@@ -321,7 +448,9 @@ server <- function(input, output, session) {
       req(input[["methods"]])
     }
 
-    methods <- input[["methods"]]
+    methods <- methods_table %>%
+      filter(name %in% input[["methods"]]) %>%
+      pull(imputomics_name)
     progress <- 0
     progress_step <- 100/length(methods)
 
@@ -336,11 +465,20 @@ server <- function(input, output, session) {
                         id = "progress_bar",
                         value = progress,
                         title = title)
-      imputed_dat <- imputomics:::safe_impute(ith_fun, dat[["missing_data"]])
+      if(ith_method == "impute_amelia") {
+        imputed_dat <- safe_impute_amelia(ith_fun,
+                                          dat[["missing_data"]],
+                                          timeout = input[["timeout"]])
+      } else {
+        imputed_dat <- imputomics:::safe_impute(ith_fun,
+                                                dat[["missing_data"]],
+                                                timeout = input[["timeout"]])
+      }
 
-      if(!any(is.na(imputed_dat)))
+      if(!any(is.na(imputed_dat)) & !inherits(imputed_dat, "try-error"))
         return(imputed_dat)
-
+      else
+        return(NULL)
     })
 
     updateProgressBar(session = session,
@@ -354,7 +492,8 @@ server <- function(input, output, session) {
     if(length(success) == 0)
       sendSweetAlert(session = session,
                      title = "Error!",
-                     text = "All of the chosen methods failed to impute your data!",
+                     text = "All of the chosen methods failed to impute your data in provided time!
+                     Try to increase the time limit or validate your dataset.",
                      type = "error")
 
     if(length(errors) == 0)
@@ -416,7 +555,13 @@ server <- function(input, output, session) {
       filter(imputomics_name %in% success)
 
     dat[["results"]][["success"]] <- success
-    vars <- colnames(dat[["results"]][["results"]][[1]])
+
+    complete_cols <- dat[["mv_summary"]][["mv_summary"]] %>%
+      filter(`% Missing` == 0) %>%
+      pull(Variable)
+
+    vars <- setdiff(colnames(dat[["results"]][["results"]][[1]]),
+                    complete_cols)
 
     updateRadioButtons(session = session,
                        inputId = "success_methods",
@@ -471,29 +616,8 @@ server <- function(input, output, session) {
     req(dat[["missing_data"]])
     req(dat[["results"]])
 
-    method <- dat[["results"]][["success"]] %>%
-      filter(name %in% input[["plot_methods"]]) %>%
-      pull(imputomics_name)
+    plot_points_density(dat, input)
 
-    res <- dat[["results"]][["results"]]
-    res_var <- res[[method]][, input[["plot_var"]]]
-    miss_var <- dat[["missing_data"]][, input[["plot_var"]]]
-
-    plt_dat <- data.frame(var = res_var,
-                          missing_var = miss_var)
-
-    plt_dat %>%
-      mutate(imputed = is.na(missing_var)) %>%
-      ggplot() +
-      geom_quasirandom(aes(y = var, x = imputed, col = imputed)) +
-      ggtitle(paste0("Variable: ", input[["plot_var"]],
-                     ", Method: ", input[["plot_methods"]])) +
-      theme_minimal() +
-      theme(axis.text = element_text(size = 12),
-            axis.title = element_text(size = 14),
-            axis.text.x = element_blank(),
-            title = element_text(size = 18)) +
-      xlab("")
   })
 
 

@@ -4,7 +4,11 @@
 \alias{impute_random}
 \title{\strong{random} imputation.}
 \usage{
-impute_random(missing_data_set)
+impute_random(missdf)
+}
+\arguments{
+\item{missdf}{a data frame with missing values to be imputed
+containing features in columns and samples in rows.}
 }
 \value{
 A \code{data.frame} with imputed values by \strong{random} method.

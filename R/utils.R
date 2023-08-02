@@ -5,7 +5,7 @@ silent_evaluation <- function(expr) {
 
 silence_function <- function(verbose) {
   silencer <- if(verbose) {
-    identity 
+    identity
   } else {
     silent_evaluation
   }
@@ -20,7 +20,7 @@ silence_function <- function(verbose) {
 #' explicitly declared
 #' @noRd
 extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
-  
+
   argnames_to_be_added <- setdiff(names(voluntary_args), c(names(dots_args), names(obligatory_args)))
 
   c(dots_args, obligatory_args, voluntary_args[argnames_to_be_added])
@@ -29,29 +29,37 @@ extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
 
 #' Convert an imputing function into its safe version.
 #'
+#' @importFrom R.utils withTimeout
+#'
 #' @inheritParams impute_zero
 #'
 #' @param imputing_function a function (imputation method) that takes
 #' missdf as an input
+#' @param timeout a numeric value specifying the limit of time evaluation in
+#' seconds. Default to 5min.
 #'
 #' @return A \code{data.frame} with imputed values or the
 #' \strong{missdf} if the imputing function failed to converge.
 #'
 #' @keywords internal
-safe_impute <- function(imputing_function, missdf) {
+safe_impute <- function(imputing_function, missing_data_set, timeout = 300) {
   imputed <- structure(structure(list(), class = "try-error"))
   n <- 1
-  while(inherits(imputed, "try-error") & n < 101) {
-    imputed <- try(imputing_function(missdf), silent = TRUE)
+  while(inherits(imputed, "try-error") & n < 3) {
+    imputed <- try({
+      R.utils::withTimeout(imputing_function(missing_data_set),
+                           timeout = timeout, onTimeout = "error")
+    }, silent = TRUE)
     n <- n + 1
   }
-  
-  if(inherits(imputed, "try-error")) {
-    missdf
-  } else {
-    imputed
-  }
+  imputed
 }
+
+
+
+
+
+
 
 #' Checks (asserts) if an object is a data.frame
 #'
@@ -64,16 +72,16 @@ safe_impute <- function(imputing_function, missdf) {
 check_missdf <- function(missdf, above_zero = FALSE, above_one = FALSE) {
   if(!checkmate::testDataFrame(missdf))
     stop("'missdf' must be a data.frame or tibble.")
-  
+
   if(all(sapply(missdf, function(i) !is.na(i))))
     if(any(sapply(missdf, checkmate::testNumeric, lower = 0, upper = 0))) {
       warning("No NAs identified, but the data contains zeros.\nMake sure that you are not marking missing values with 0.")
     } else {
       message("No NAs identified.")
     }
-  
+
   threshold <- 0 + above_one
-  
+
   if(above_zero | above_one) {
     if(!all(sapply(missdf, checkmate::testNumeric, lower = threshold)))
       stop(paste0("'missdf' must contain only numeric data above ",  threshold, "."))

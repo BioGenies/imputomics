@@ -41,7 +41,8 @@ get_missing_per_column <- function(dat, ratio = 0, thresh = 0.2) {
 #' @param dat a matrix or data.frame of data to be filled with some NA's.
 #' @param ratio a number from 0 to 1 denoting the ratio of data to be
 #' exchanged into NA's
-#' @inheritParams insert_MCAR
+#' @param thresh a value from 0 to 1: limit value indicating maximum ratio of
+#' missing observations in one column
 #'
 #' @returns A \code{matrix} with NA values inserted.
 #'
@@ -154,9 +155,6 @@ insert_MAR <- function(dat, ratio = 0, thresh = 0.2) {
 #'
 #' @inheritParams insert_MCAR
 #'
-#' @param thresh a value from 0 to 1: limit value indicating maximum ratio of
-#' missing observations in one column
-#'
 #' @details LOD missing data is simulated by sampling possible limit of
 #' detection (LOD) for each metabolite and truncates the observations below this
 #' values. Thus, each metabolite has different truncation threshold. However,
@@ -194,11 +192,11 @@ insert_MNAR <- function(dat, ratio = 0.1, thresh = 0.2) {
 #' (Missing Not At Random) patterns according to provided probabilities.
 #'
 #' @inheritParams insert_MCAR
-#' @param mcar_ratio a number from (0, 1) interval. Ratio of the data missing
+#' @param mcar a number from (0, 1) interval. Ratio of the data missing
 #' completely at random (MCAR).
-#' @param mar_ratio a number from (0, 1) interval. Ratio of the data missing
+#' @param mar a number from (0, 1) interval. Ratio of the data missing
 #' at random (MAR).
-#' @param mnar_ratioa number from (0, 1) interval. Ratio of the data missing
+#' @param mnar number from (0, 1) interval. Ratio of the data missing
 #' not at random (MCAR).
 #'
 #' @details This function uses \code{\link[mice]{ampute}} for simulating
