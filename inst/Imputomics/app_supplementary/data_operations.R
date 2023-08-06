@@ -76,22 +76,14 @@ get_variables_table <- function(missing_data) {
 
 get_methods_table <- function(path = "methods_table.RDS") {
   methods_table <- readRDS(path) %>%
-    mutate(name = paste0(name, " (", full_name, ")"))
+    mutate(name_fun = name,
+           name = paste0(name, " (", full_name, ")"))
 
   funs_imputomics <- ls("package:imputomics")
   funs_imputomics <- funs_imputomics[grepl("impute_", funs_imputomics)]
 
-  fastest_methods <- paste0("impute_", c("knn", "zero", "nipals","metabimpute_min",
-                                         "metabimpute_mean", "metabimpute_halfmin",
-                                         "median", "metabimpute_zero", "softimpute",
-                                         "halfmin"))
-  best_methods <- paste0("impute_", c("mai", "mnmf", "missmda_em","missforest",
-                                      "eucknn", "metabimpute_rf", "bpca",
-                                      "corknn", "tknn", "metabimpute_bpca"))
   methods_table %>%
-    filter(imputomics_name %in% funs_imputomics) %>%
-    mutate(fastest = ifelse(imputomics_name %in% fastest_methods, TRUE, FALSE),
-           best = ifelse(imputomics_name %in% best_methods, TRUE, FALSE))
+    filter(imputomics_name %in% funs_imputomics)
 }
 
 

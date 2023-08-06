@@ -132,35 +132,40 @@ ui <- navbarPage(
                     h4("Filter the fastest/most accurate methods."),
                     type = "inline",
                     title = "Fastest or most accurate metods",
-                    content = c("<b>Fastest methods</b> refer to the top 10 missing value
-                         imputation techniques that have demonstrated the shortest execution
-                         time during simulations. These methods are optimized for efficiency
-                         and are well-suited for handling missing data in large datasets or
-                         scenarios where computation speed is crucial.",
-                                "<b>Most accurate</b> are chosen based on their
-                                     performance measured by the Normalized Root Mean
-                                     Squared Error (NRMSE). The 10 best methods
-                                     are those that have shown the lowest NRMSE values,
-                                     indicating their superior ability to impute missing
-                                     values accurately."),
+                    content = c(
+                      "<b>Fastest methods</b> refer to the top 10
+                    missing value imputation techniques that have demonstrated
+                    the shortest execution time during simulations. These methods
+                    are optimized for efficiency and are well-suited for handling
+                    missing data in large datasets or scenarios where
+                      computation speed is crucial.",
+                      "<b>Most accurate</b> are chosen based on their
+                      performance measured by the Normalized Root Mean Squared
+                      Error (NRMSE). The 10 best methods are those that have
+                      frequency of successful imputation over 80% of the cases
+                      and have shown the lowest NRMSE values, indicating their
+                      superior ability to impute missing values accurately."
+                    ),
                     size = "m",
                     buttonLabel = "Got it!"
                   ),
 
                   prettySwitch(
                     inputId = "fastest",
-                    label = "Show the 10 fastest methods",
+                    label = "Add the 10 fastest methods",
                     status = "danger",
                     value = FALSE,
                     slim = TRUE
                   ),
                   prettySwitch(
                     inputId = "best",
-                    label = "Show the 10 most accurate methods",
+                    label = "Add the 10 most accurate methods",
                     status = "danger",
                     value = FALSE,
                     slim = TRUE
                   ),
+                  br(),
+                  textOutput("n_methods"),
                   br(),
                   br(),
                   br(),
@@ -389,41 +394,37 @@ server <- function(input, output, session) {
 
   ## filter methods
 
-  observeEvent(input[["best"]], {
+  output[["n_methods"]] <- renderText({
+    n <- length(input[["methods"]])
 
-    if(input[["best"]]) {
-      updatePrettySwitch(session = session,
-                         inputId = "fastest",
-                         value = FALSE)
+    paste0("Number of chosen methods: ", n)
+  })
+
+  observeEvent(input[["best"]], {
+    best_methods <- pull(filter(methods_table, best), name)
+
+    if(input[["best"]])
       updateMultiInput(session = session,
                        inputId = "methods",
-                       choices = pull(filter(methods_table, best), name),
-                       selected = input[["methods"]])
-    }else {
-      if(!input[["fastest"]])
-        updateMultiInput(session = session,
-                         inputId = "methods",
-                         choices = pull(methods_table, name),
-                         selected = input[["methods"]])
-    }
+                       selected = c(input[["methods"]], best_methods))
+    else
+      updateMultiInput(session = session,
+                       inputId = "methods",
+                       selected = setdiff(input[["methods"]], best_methods))
   }, ignoreInit = TRUE)
 
+
   observeEvent(input[["fastest"]], {
-    if(input[["fastest"]]){
-      updatePrettySwitch(session = session,
-                         inputId = "best",
-                         value = FALSE)
+
+    fastest_methods <- pull(filter(methods_table, fastest), name)
+    if(input[["fastest"]])
       updateMultiInput(session = session,
                        inputId = "methods",
-                       choices = pull(filter(methods_table, fastest), name),
-                       selected = input[["methods"]])
-    }else {
-      if(!input[["best"]])
+                       selected = c(input[["methods"]], fastest_methods))
+    else
         updateMultiInput(session = session,
                          inputId = "methods",
-                         choices = pull(methods_table, name),
-                         selected = input[["methods"]])
-    }
+                         selected = setdiff(input[["methods"]], fastest_methods))
   }, ignoreInit = TRUE)
 
 
