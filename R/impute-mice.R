@@ -25,6 +25,8 @@ eval_mice_calls <- function(missdf, method, ...) {
 #' @param ... other parameters of [mice::mice()] besides \code{method} and 
 #' \code{data}.
 #' 
+#' 
+#' 
 #' @section Silent defaults:
 #' If \code{printFlag} is not defined in the function call, it is set to 
 #' \code{FALSE}.
@@ -96,4 +98,18 @@ impute_mice_cart <- function(missdf, ...) {
 #' @export
 impute_mice_rf <- function(missdf, ...) {
   eval_mice_calls(missdf = missdf, method = "rf", ...)
+}
+
+#' @describeIn impute_mice_pmm An alias from the \code{missCompare} package.
+#' @section Aliases:
+#' \code{impute_mice_mixed} is a wrapper of [missCompare::impute_data()] with
+#' the \code{method} set to \code{11} (which means that mice is automatically
+#' selecting predictive mean matching for numerical data).
+impute_mice_mixed <- function(missdf) {
+  check_missdf(missdf)
+  
+  imputed <- missCompare::impute_data(missdf,
+                                      n.iter = 10,
+                                      sel_method = 11)
+  data.frame(imputed[["mice_mixed_imputation"]][[10]])
 }
