@@ -1,3 +1,7 @@
+Changes from Version 0.1.2 to 0.1.3
+ * added impute_mice_mixed
+ * added list_imputations()
+
 Changes from Version 0.1.1 to 0.1.2
  * fixed impute_cm
  * fixed impute_amelia

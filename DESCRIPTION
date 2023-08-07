@@ -1,7 +1,7 @@
 Package: imputomics
 Type: Package
-Title: The Biggest Collection of Methods of Missing Values Imputation for ‘Omics’ Data
-Version: 0.1.2
+Title: The Most Robust Wrapper for Missing Values Imputation in ‘Omics’ Data
+Version: 0.1.3
 Authors@R: c(
           person("Michał", "Burdukiewicz", ,
                email = "michalburdukiewicz@gmail.com",
@@ -34,7 +34,7 @@ VignetteBuilder: knitr
 Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/biogenies/imputomics, http://biogenies.info/imputomics/
+URL: https://biogenies.info/imputomics/
 BugReports: https://github.com/biogenies/imputomics/issues
 Imports:
     Amelia,

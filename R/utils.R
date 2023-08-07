@@ -1,3 +1,14 @@
+#' List MVIAs
+#' 
+#' Returns the character vector of missing value imputation algorithms (MVIA) 
+#' implemented in the \code{imputomics} package.
+#' @export
+#' @examples
+#' list_imputations()
+#' 
+list_imputations <- function()
+  ls("package:imputomics")[grep(pattern = "impute_", x = ls("package:imputomics"))]
+
 silent_evaluation <- function(expr) {
   capture.output(res <- expr)
   res
