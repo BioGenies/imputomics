@@ -104,12 +104,14 @@ impute_mice_rf <- function(missdf, ...) {
 #' @section Aliases:
 #' \code{impute_mice_mixed} is a wrapper of [missCompare::impute_data()] with
 #' the \code{method} set to \code{11} (which means that mice is automatically
-#' selecting predictive mean matching for numerical data).
+#' selecting predictive mean matching for numerical data). The amount of iterations
+#' \code{n.iter} is changed to 1 from default 10.
+#' @export
 impute_mice_mixed <- function(missdf) {
   check_missdf(missdf)
   
   imputed <- missCompare::impute_data(missdf,
-                                      n.iter = 10,
+                                      n.iter = 1,
                                       sel_method = 11)
-  data.frame(imputed[["mice_mixed_imputation"]][[10]])
+  data.frame(imputed[["mice_mixed_imputation"]][[1]])
 }

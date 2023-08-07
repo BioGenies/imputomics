@@ -44,7 +44,8 @@ If \code{predictorMatrix} is not defined in the function call, it is set to
 
 \code{impute_mice_mixed} is a wrapper of \code{\link[missCompare:impute_data]{missCompare::impute_data()}} with
 the \code{method} set to \code{11} (which means that mice is automatically
-selecting predictive mean matching for numerical data).
+selecting predictive mean matching for numerical data). The amount of iterations
+\code{n.iter} is changed to 1 from default 10.
 }
 
 \examples{
