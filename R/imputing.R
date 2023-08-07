@@ -582,19 +582,7 @@ impute_bayesmetab <- function(missdf, M = 100) {
   data.frame(imputed[[5]])
 }
 
-#' @describeIn impute_mice_pmm An alias
-#' @section Aliases:
-#' \code{impute_mice_mixed} is a wrapper of \code{missCompare::impute_data} with
-#' the \code{method} set to \code{11} (which means that mice is automatically
-#' selecting predictive mean matching for numerical data).
-impute_mice_mixed <- function(missdf) {
-  check_missdf(missdf)
 
-  imputed <- missCompare::impute_data(missdf,
-                                      n.iter = 10,
-                                      sel_method = 11)
-  data.frame(imputed[["mice_mixed_imputation"]][[10]])
-}
 
 
 #' \strong{mNMF} imputation.
