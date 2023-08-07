@@ -18,7 +18,10 @@ methods_table <- sheet_dat %>%
                                 "_", " ")) %>%
   rename("full_name" = `full name`,
          "imputomics_name" = `imputomics function`,
-         "name" = name)
+         "name" = name) %>%
+  filter(!(imputomics_name %in% c("impute_gsimp",
+                                  "impute_metabimpute_gsimp",
+                                  "impute_mai")))
 
 
 # performance:

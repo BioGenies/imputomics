@@ -167,9 +167,11 @@ ui <- navbarPage(
                   br(),
                   textOutput("n_methods"),
                   br(),
+                  "*The most resource demanding tools (MAI and Gibbs Sampler
+                     based methods) are available only in the R package.",
                   br(),
                   br(),
-
+                  br(),
                   column(12, align = "center",
                          actionBttn(inputId = "impute_btn",
                                     label = "Impute!",
