@@ -1,5 +1,5 @@
 
-# imputomics <img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/imputomics_logo.png' align="right" height="139" />
+# imputomics <img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/imputomics_logo.png' align="right" height="150"/>
 
 Imputomics is a software package and a web server designed to simulate
 and impute missing values in omics datasets. It is a comprehensive
