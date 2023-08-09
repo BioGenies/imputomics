@@ -2,8 +2,15 @@
 
 ui_content_about <- function() {
   tagList(
-    h2("Welcome to Imputomics!"),
-    h3("Improve your metabolomics analysis by addressing missing values with ease."),
+    fluidRow(
+      column(1,
+             HTML("<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/imputomics_logo.png' style='height: 110px'>")
+      ),
+      column(10,
+             h2("Welcome to Imputomics!"),
+             h3("Improve your metabolomics analysis by addressing missing values with ease."),
+      ),
+    ),
     HTML('<hr style="border-color: black;">'),
     h3("Our app offers:"),
     h4(HTML("<b> 1. Seamless Integration:</b> Import datasets in various formats, such as Excel, CSV.")),
@@ -12,7 +19,6 @@ ui_content_about <- function() {
     h4(HTML("<b> 4. Performance Evaluation:</b> Compare imputation strategies for optimal results.")),
     h4(HTML("<b> 5. Export and Integration:</b> Export completed datasets and integrate with popular analysis platforms.")),
     h4(HTML("<b> 6. Secure and Confidential:</b> Your data privacy is our top priority.")),
-    br(),
     markdown(imputomics_citation()),
     markdown(imputomics_contact()),
     markdown(imputomics_funding()),

@@ -1,5 +1,5 @@
 
-# imputomics
+# imputomics <img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/imputomics_logo.png' align="right" height="139" />
 
 Imputomics is a software package and a web server designed to simulate
 and impute missing values in omics datasets. It is a comprehensive
@@ -65,19 +65,19 @@ imputomics::imputomics_gui()
 
 <!-- # How to cite -->
 
-## How to cite?
+### How to cite?
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski,
 Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski,
 Michał Burdukiewicz (2023). Imputomics: comprehensive missing data
 imputation for metabolomics data (submitted).
 
-# Contact
+### Contact
 
 If you have any questions, suggestions or comments, contact [Michal
 Burdukiewicz](mailto:michalburdukiewicz@gmail.com).
 
-## Funding and acknowledgements
+### Funding and acknowledgements
 
 We want to thank the Clinical Research Centre (Medical University of
 Białystok) members for fruitful discussions. K.G. wants to acknowledge
@@ -89,4 +89,4 @@ also acknowledge the Center for Artificial Intelligence at the Medical
 University of Białystok (funded by the Ministry of Health of the
 Republic of Poland).
 
-<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/umb_logo.jpg' style='width: 200px'><br><img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/ncn_logo.png' style='width: 500px'>
+<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/logo.png' style='height: 110px'>
