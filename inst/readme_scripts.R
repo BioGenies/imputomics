@@ -42,5 +42,5 @@ We want to thank the Clinical Research Centre (Medical University of Białystok)
 }
 
 imputomics_funding_images <- function() {
-  "<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/logo.png' style='height: 110px'>"
+  "<img src='man/figures/funding.png' style='height: 110px'>"
 }
