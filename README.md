@@ -1,5 +1,5 @@
 
-# imputomics <img src='man/figures/logo.png' align="right" height="150"/>
+# imputomics <img src='https://github.com/BioGenies/imputomics/blob/main/man/figures/logo.png' align="right" height="150"/>
 
 Imputomics is a software package and a web server designed to simulate
 and impute missing values in omics datasets. It is a comprehensive
@@ -89,4 +89,4 @@ also acknowledge the Center for Artificial Intelligence at the Medical
 University of Białystok (funded by the Ministry of Health of the
 Republic of Poland).
 
-<img src='man/figures/funding.png' style='height: 110px'>
+<img src='https://github.com/BioGenies/imputomics/blob/main/man/figures/funding.png' style='height: 110px'>
