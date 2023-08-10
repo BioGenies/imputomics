@@ -93,27 +93,27 @@ input and the output, our wrappers do not allow for this behavior.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_miss</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">impute_metabimpute_gsimp</span><span class="op">(</span><span class="va">sim_miss</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              X1          X2         X3           X4          X5          X6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.550508e-01 0.881156767 0.15607726 1.194841e-01 0.600405471 0.002010157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  9.683788e-01 0.607484067 0.63377903 6.181195e-01 0.008132938 0.752073002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  4.682631e-01 0.574529562 0.24760893 3.983779e-14 0.370125689 0.002291511</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  7.768197e-01 0.803133289 0.55133933 1.459775e-01 0.724248714 0.847776059</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  4.078857e-01 0.799116918 0.23476108 1.897136e-01 0.418270750 0.708734973</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  5.387971e-01 0.801862649 0.25861469 5.754945e-01 0.238248518 0.005478080</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  8.300830e-01 0.752073002 0.95288810 1.881735e-04 0.887881226 0.488335246</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.871036e-01 0.575461327 0.85687457 3.283283e-01 0.577775384 0.347228474</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  7.799697e-01 0.944218290 0.04555832 7.827804e-02 0.739950257 0.203048012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.939439e-01 0.218987358 0.55452418 6.041722e-01 0.160679622 0.739950257</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 4.342312e-01 0.477997912 0.87694381 3.267991e-01 0.529571799 0.893697520</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2.274518e-03 0.044668789 0.80186265 7.904526e-01 0.574529562 0.574529562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 8.346921e-01 0.168485713 0.54673734 8.300830e-01 0.960086967 0.084448704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 5.410596e-07 0.368280872 0.23275320 8.100511e-01 0.398616886 0.148258333</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 9.569678e-01 0.563311366 0.60226778 2.027530e-01 0.408468068 0.370281282</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 9.484971e-01 0.006427679 0.71253911 5.060450e-01 0.613321482 0.861177622</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 6.007300e-01 0.734327573 0.64890360 5.206680e-01 0.706590850 0.836681799</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 2.618074e-01 0.703656773 0.18756242 8.426808e-02 0.799116918 0.740547051</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 6.430343e-01 0.736824060 0.23839289 2.687654e-01 0.161331222 0.985765802</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 5.262335e-01 0.033031759 0.07683840 8.147157e-01 0.885932416 0.032081822</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              X1         X2        X3           X4          X5           X6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.550508e-01 0.88115677 0.1254883 0.1194841210 0.600405471 2.174750e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  9.683788e-01 0.60748407 0.6337790 0.6181194666 0.008132938 7.520730e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  4.682631e-01 0.57452956 0.2476089 0.0001046874 0.370125689 2.868737e-06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  7.768197e-01 0.80313329 0.5513393 0.1459775318 0.724248714 8.477761e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  4.078857e-01 0.79911692 0.2347611 0.1897135850 0.418270750 7.087350e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  5.387971e-01 0.80186265 0.2586147 0.5754945197 0.238248518 2.077298e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  8.300830e-01 0.75207300 0.9528881 0.0001881735 0.887881226 4.883352e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.871036e-01 0.57546133 0.8568746 0.3283282877 0.577775384 3.472285e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  7.799697e-01 0.94421829 0.1185581 0.0782780354 0.739950257 2.030480e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.939439e-01 0.21898736 0.5545242 0.6041721753 0.160679622 7.399503e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 4.342312e-01 0.47799791 0.8769438 0.3267990556 0.529571799 8.936975e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2.274518e-03 0.04466879 0.8018626 0.7904525734 0.574529562 5.745296e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 8.346921e-01 0.16848571 0.5467373 0.8300829662 0.960086967 8.444870e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 8.723869e-05 0.36828087 0.2327532 0.8100510929 0.398616886 1.482583e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 9.569678e-01 0.56331137 0.6022678 0.2027530000 0.408468068 3.702813e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 9.484971e-01 0.00692231 0.7125391 0.5060450307 0.613321482 8.611776e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 6.007300e-01 0.73432757 0.6489036 0.5206679751 0.706590850 8.366818e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 2.618074e-01 0.70365677 0.1875624 0.0842680801 0.799116918 7.405471e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 6.430343e-01 0.73682406 0.2383929 0.2687653562 0.161331222 9.857658e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 5.262335e-01 0.00215684 0.1219511 0.8147157354 0.885932416 3.208182e-02</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
