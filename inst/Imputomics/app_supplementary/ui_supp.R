@@ -22,6 +22,6 @@ ui_content_about <- function() {
     markdown(imputomics_citation()),
     markdown(imputomics_contact()),
     markdown(imputomics_funding()),
-    HTML("<img src='funding.png' style='height: 110px'>")
+    markdown(imputomics_funding_images_shinyapp())
   )
 }
