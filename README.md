@@ -51,7 +51,7 @@ server](http://imputomics.umb.edu.pl/).
 [GitHub](https://github.com/BioGenies/imputomics)
 
 ``` r
-devtools::install_github("michbur/imputomics")
+devtools::install_github("BioGenies/imputomics")
 renv::restore()
 ```
 
@@ -89,4 +89,4 @@ also acknowledge the Center for Artificial Intelligence at the Medical
 University of Białystok (funded by the Ministry of Health of the
 Republic of Poland).
 
-<img src='man/figures/funding.png' style='height: 110px'>
+<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/logo.png' style='height: 110px'>

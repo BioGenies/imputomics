@@ -46,7 +46,7 @@ The *imputomics* can be accessed through our [web server](http://imputomics.umb.
 *imputomics* is available on [GitHub](https://github.com/BioGenies/imputomics)
 
 ```R
-devtools::install_github("michbur/imputomics")
+devtools::install_github("BioGenies/imputomics")
 renv::restore()
 ```
 
