@@ -74,7 +74,8 @@ Suggests:
     matrixStats,
     randomForest,
     spelling,
-    openxlsx
+    openxlsx,
+    rmarkdown
 Language: en-US
 RdMacros: Rdpack
 LazyData: true

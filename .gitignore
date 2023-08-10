@@ -5,3 +5,4 @@
 metabolomics-missing-value-imputation.Rproj
 packrat/lib*/
 docs
+inst/doc

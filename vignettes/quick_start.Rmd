@@ -1,0 +1,78 @@
+---
+title: "A Quick Guide on imputomics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{quick_start}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE, echo=FALSE}
+library(imputomics)
+```
+
+
+## Introduction
+
+Welcome to the guide on enhancing your omics data analysis through the power of imputation. This vignette is designed to equip you with the knowledge and tools to effectively address missing data in your omics datasets with *imputomics* package. By employing advanced imputation techniques, you'll be able to harness the full potential of your data, ensuring robust and insightful analysis outcomes.
+
+
+## Getting Started with the Package
+
+Before diving into the world of omics data imputation, let's set up the stage by installing and setting up the imputation package. You can easily install the package using the following command:
+
+
+```{r, eval=FALSE}
+devtools::install_github("BioGenies/imputomics")
+renv::restore()
+```
+
+Once the package is installed, load it into your R environment:
+
+```{r, eval = FALSE}
+library(imputomics)
+```
+
+
+Now, you can access imputation methods via graphical interface using
+
+```{r, eval = FALSE}
+imputomics_gui()
+```
+
+
+... or use the package functions directly.
+
+For the purpose of this guide, we'll use an example dataset that simulates the missingness that may encounter in real-world data. Let's load this example dataset:
+
+```{r}
+data(sim_miss)
+
+sim_miss
+```
+
+
+Congratulations, you're now ready to embark on a journey to conquer missing data and unleash the true potential of your omics analyses! In the upcoming sections, we'll explore the various imputation methods at your disposal, delve into missingness patterns, and provide hands-on examples to seamlessly integrate imputation into your workflow. Let's begin!
+
+
+## Imputation
+
+In the realm of omics data analysis, a variety of imputation techniques are available to address missing values.  The package *imputomics* offers you 43 implementations of missing values imputtaion methods. Each function for missing data imputation starts with *impute_*. You can easily access all the imputation functions by
+
+```{r}
+list_imputations()
+```
+
+Since you're already familiar with the methods we've implemented, there's nothing left but to impute your data! For example, we'll demonstrate how to impute data using the Bayesian Principal Component Analysis (BPCA) method:
+
+```{r}
+impute_bpca(sim_miss)
+```
+
