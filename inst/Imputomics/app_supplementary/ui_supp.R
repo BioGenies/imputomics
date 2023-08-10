@@ -4,7 +4,7 @@ ui_content_about <- function() {
   tagList(
     fluidRow(
       column(1,
-             HTML("<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/imputomics_logo.png' style='height: 110px'>")
+             HTML("<img src='logo.png' height='150px'>")
       ),
       column(10,
              h2("Welcome to Imputomics!"),
@@ -22,6 +22,6 @@ ui_content_about <- function() {
     markdown(imputomics_citation()),
     markdown(imputomics_contact()),
     markdown(imputomics_funding()),
-    markdown(imputomics_funding_images())
+    HTML("<img src='funding.png' style='height: 110px'>")
   )
 }
