@@ -89,4 +89,4 @@ also acknowledge the Center for Artificial Intelligence at the Medical
 University of Białystok (funded by the Ministry of Health of the
 Republic of Poland).
 
-<img src='https://raw.githubusercontent.com/BioGenies/imputomics/main/inst/logo.png' style='height: 110px'>
+<img src='man/figures/funding.png' style='height: 110px'>
