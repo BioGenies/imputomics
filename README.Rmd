@@ -2,7 +2,7 @@
   output: github_document
 ---
 
-# imputomics <img src='https://github.com/BioGenies/imputomics/blob/main/man/figures/logo.png' align="right" height="150"/>
+# imputomics <img src='man/figures/logo.png' align="right" height="150"/>
 
 
 Imputomics is a software package  and a web server designed to simulate and impute 
