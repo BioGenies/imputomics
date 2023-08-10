@@ -51,7 +51,7 @@ server](http://imputomics.umb.edu.pl/).
 [GitHub](https://github.com/BioGenies/imputomics)
 
 ``` r
-devtools::install_github("michbur/imputomics")
+devtools::install_github("BioGenies/imputomics")
 renv::restore()
 ```
 
