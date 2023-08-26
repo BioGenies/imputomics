@@ -3,8 +3,9 @@
 ui_content_about <- function() {
   tagList(
     fluidRow(
-      column(1,
-             HTML("<img src='logo.png' height='150px'>")
+      column(2,
+             align = "center",
+             HTML("<img src='logo.png' height='140px'>"),
       ),
       column(10,
              h2("Welcome to Imputomics!"),
