@@ -18,11 +18,7 @@ methods_table <- sheet_dat %>%
                                 "_", " ")) %>%
   rename("full_name" = `full name`,
          "imputomics_name" = `imputomics function`,
-         "name" = name) %>%
-  filter(!(imputomics_name %in% c("impute_gsimp",
-                                  "impute_metabimpute_gsimp",
-                                  "impute_mai")))
-
+         "name" = name) 
 
 # performance:
 res <- readRDS("./inst/Imputomics/total_median_computed_value.RDS")
