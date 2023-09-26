@@ -4,15 +4,16 @@
 \name{imputomics-package}
 \alias{imputomics}
 \alias{imputomics-package}
-\title{imputomics: The Biggest Collection of Methods of Missing Values Imputation for ‘Omics’ Data}
+\title{imputomics: The Most Robust Wrapper for Missing Values Imputation in ‘Omics’ Data}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Offers a range of methods for simulating and imputing missing values in different types of omics data such as genomics, transcriptomics, proteomics, and metabolomics. Provides tools for comparing and evaluating the performance of imputation methods in the terms of accuracy and computation time.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/biogenies/imputomics}
-  \item \url{http://biogenies.info/imputomics/}
+  \item \url{https://biogenies.info/imputomics/}
   \item Report bugs at \url{https://github.com/biogenies/imputomics/issues}
 }
 
