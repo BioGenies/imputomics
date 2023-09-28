@@ -125,7 +125,7 @@ plot_mv_segment <- function(dat) {
 #' sim_miss_large_imputed <- impute_knn(sim_miss_large)
 #' plot_points_density(sim_miss_large, sim_miss_large_imputed)
 #'
-#' @export plot_mv_segment
+#' @export plot_points_density
 #'
 
 plot_points_density <- function(dat, dat_imputed, variable = colnames(dat)[1]) {
