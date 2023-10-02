@@ -1,35 +1,34 @@
 
 # imputomics <img src='man/figures/logo.png' align="right" height="150"/>
 
-imputomics is a R package and a shiny web server designed to simulate
-and impute missing values in omics datasets. It is a comprehensive
-package that offers a range of methods for simulating and imputing
-missing values in different types of omics data such as genomics,
-transcriptomics, proteomics, and metabolomics. Imputomics provides a
+*imputomics* is an R package and a shiny web server designed to simulate
+and impute missing values. It offers 42 algorithms for imputing missing
+values, especially in different types of ‘-omics’ data such as genomics,
+transcriptomics, proteomics, and metabolomics. imputomics provides a
 user-friendly interface that allows users to simulate missing values
 based on different distributions and impute missing values using
 state-of-the-art methods.
 
 ## Key Features:
 
-1.  Simulation of missing values: imputomics provides a variety of
-    options for simulating missing values, including missing completely
-    at random (MCAR), missing at random (MAR), and missing not at random
-    (MNAR) mechanisms. Users can specify the percentage of missing
-    values and the distribution from which the missing values are
-    generated.
-
-2.  Imputation methods: imputomics offers the biggest collection of
+1.  Imputation methods: imputomics offers the biggest collection of
     imputation methods for different types of omics data, including
     k-nearest neighbors (KNN), random forests, expectation-maximization
     (EM) algorithm, and principal components analysis (PCA) and many
     others.
 
-3.  Performance evaluation: imputomics facilitates evaluating the
+2.  Performance evaluation: imputomics facilitates evaluating the
     performance of imputation methods. Users can evaluate imputation
     accuracy and compare different methods using metrics such as root
     mean squared error (RMSE), mean absolute error (MAE), and
     coefficient of determination (R-squared).
+
+3.  Simulation of missing values: imputomics provides a variety of
+    options for simulating missing values, including missing completely
+    at random (MCAR), missing at random (MAR), and missing not at random
+    (MNAR) mechanisms. Users can specify the percentage of missing
+    values and the distribution from which the missing values are
+    generated.
 
 # Getting started
 
