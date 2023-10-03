@@ -14,7 +14,7 @@
 #' data(sim_miss)
 #' plot_mv_heatmap(sim_miss)
 #'
-#' @export plot_mv_heatmap
+#' @export 
 #'
 
 
@@ -46,7 +46,7 @@ plot_mv_heatmap <- function(dat) {
 #' data(sim_miss)
 #' get_variables_table(sim_miss)
 #'
-#' @export get_variables_table
+#' @export 
 #'
 
 get_variables_table <- function(missing_data) {
@@ -73,7 +73,7 @@ get_variables_table <- function(missing_data) {
 #' data(sim_miss)
 #' plot_mv_segment(sim_miss)
 #'
-#' @export plot_mv_segment
+#' @export 
 #'
 
 
@@ -125,7 +125,7 @@ plot_mv_segment <- function(dat) {
 #' sim_miss_large_imputed <- impute_knn(sim_miss_large)
 #' plot_points_density(sim_miss_large, sim_miss_large_imputed)
 #'
-#' @export plot_points_density
+#' @export 
 #'
 
 plot_points_density <- function(dat, dat_imputed, variable = colnames(dat)[1]) {
