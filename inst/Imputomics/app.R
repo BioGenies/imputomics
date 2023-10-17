@@ -50,7 +50,7 @@ ui <- navbarPage(
                   selectInput(
                     "NA_sign",
                     "How is a missing value marked in your data?",
-                    choices = c("zero", "NA"),
+                    choices = c("0", "1", "NA"),
                     selected = "NA"
                   ),
                   br(),
@@ -321,10 +321,15 @@ server <- function(input, output, session) {
     req(input[["NA_sign"]])
     req(dat[["missing_data"]])
 
-    if(input[["NA_sign"]] == "zero")
+    if(input[["NA_sign"]] == "0")
       dat[["missing_data"]][dat[["raw_data"]] == 0] <- NA
-    else
+
+    if(input[["NA_sign"]] == "1")
+      dat[["missing_data"]][dat[["raw_data"]] == 1] <- NA
+
+    if(input[["NA_sign"]] == "NA")
       dat[["missing_data"]] <- dat[["raw_data"]]
+
   })
 
   output[["missing_data"]] <- DT::renderDataTable({
@@ -424,9 +429,9 @@ server <- function(input, output, session) {
                        inputId = "methods",
                        selected = c(input[["methods"]], fastest_methods))
     else
-        updateMultiInput(session = session,
-                         inputId = "methods",
-                         selected = setdiff(input[["methods"]], fastest_methods))
+      updateMultiInput(session = session,
+                       inputId = "methods",
+                       selected = setdiff(input[["methods"]], fastest_methods))
   }, ignoreInit = TRUE)
 
 

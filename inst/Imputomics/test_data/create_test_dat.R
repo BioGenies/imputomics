@@ -10,6 +10,13 @@ colnames(example_set_0) <- paste0("variable_", letters[1:10])
 example_set_0 <- cbind(example_set_0, i_missed_the_amputation = runif(100))
 write.csv(round(example_set_0, 4), "./inst/Imputomics/test_data/i_have_zeros.csv", row.names = FALSE)
 
+# set with ones
+example_set_1 <- dat
+example_set_1[runif(1000) < 0.3] <- 1
+colnames(example_set_1) <- paste0("variable_", letters[1:10])
+example_set_1 <- cbind(example_set_1, i_missed_the_amputation = runif(100))
+write.csv(round(example_set_1, 4), "./inst/Imputomics/test_data/i_have_ones.csv", row.names = FALSE)
+
 dat <- matrix(rnorm(2600, mean = 1000, sd = 20), ncol = 26)
 
 #set with NA
