@@ -106,6 +106,7 @@ ui <- navbarPage(
   tabPanel("Imputation",
            h3("Let's impute your missing values!"),
            h4("Select one or more imputation methods from the list below and click impute!"),
+           h5("Check the references panel for the references of all imputations methods."),
            br(),
            column(3,
                   h4("Specify time limit per method below."),
