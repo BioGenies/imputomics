@@ -257,6 +257,11 @@ ui <- navbarPage(
                                style = "material-flat",
                                size = "lg")
            )
+  ),
+  tabPanel("References",
+           column(8, offset = 1,
+           includeMarkdown("citations.md"),
+           ),
   )
 )
 

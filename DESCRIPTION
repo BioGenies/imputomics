@@ -63,6 +63,7 @@ Imports:
     patchwork,
     pcaMethods,
     PEMM,
+    tidyr,
     Rdpack,
     R.utils,
     SimDesign,

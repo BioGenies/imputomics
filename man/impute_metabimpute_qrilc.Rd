@@ -23,11 +23,22 @@ A \code{data.frame} with imputed values of QRILC by
 \description{
 A function to replace \code{NA} in the data frame by QRILC.
 }
+\section{No replicates allowed}{
+
+\code{Impute()} allows users to improve the quality of the imputation by
+providing the number of replications of the experiment. As one of the aims of
+the \code{imputomics} is to standardize the
+input and the output, our wrappers do not allow for this behavior.
+}
+
 \examples{
 data(sim_miss)
 impute_metabimpute_qrilc(sim_miss)
 
 }
+\references{
+\insertRef{davis_addressing_2022}{imputomics}
+}
 \seealso{
-\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }

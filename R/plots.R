@@ -4,7 +4,7 @@
 #'
 #' @import ggplot2
 #' @import dplyr
-#' @import tidyr
+#' @importFrom tidyr gather
 #'
 #' @param dat a data.frame containing missing values denoted by NA.
 #'

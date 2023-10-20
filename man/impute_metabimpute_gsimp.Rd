@@ -36,6 +36,9 @@ data(sim_miss)
 impute_metabimpute_gsimp(sim_miss)
 
 }
+\references{
+\insertRef{davis_addressing_2022}{imputomics}
+}
 \seealso{
-\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}
+\code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.
 }

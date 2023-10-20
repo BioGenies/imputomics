@@ -34,6 +34,9 @@ eval_MetabImpute_calls <- function(missdf, method, verbose, ...) {
 #' input and the output, our wrappers do not allow for this behavior.
 #'
 #' @seealso [MetabImpute::Impute()].
+#' 
+#' @references
+#' \insertRef{davis_addressing_2022}{imputomics}
 #'
 #' @examples
 #' data(sim_miss)
@@ -52,14 +55,11 @@ impute_metabimpute_rf <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #' 
 #' @returns A \code{data.frame} with imputed values of Bayesian PCA by
 #' [MetabImpute::Impute()].
-#' 
-#' @inheritSection impute_metabimpute_rf No replicates allowed
-#' 
-#'
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -78,11 +78,11 @@ impute_metabimpute_bpca <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #'
 #' @returns A \code{data.frame} with imputed values of QRILC by
 #' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -101,11 +101,11 @@ impute_metabimpute_qrilc <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #'
 #' @returns A \code{data.frame} with imputed values of GSIMP by
 #' [MetabImpute::Impute()].
-#' @inheritSection impute_metabimpute_rf No replicates allowed
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -124,11 +124,11 @@ impute_metabimpute_gsimp <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #'
 #' @returns A \code{data.frame} with imputed values of minimum by
 #' [MetabImpute::Impute()].
-#' @inheritSection impute_metabimpute_rf No replicates allowed
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -149,11 +149,11 @@ impute_metabimpute_min <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #'
 #' @returns A \code{data.frame} with imputed values of half-minimum by
 #' [MetabImpute::Impute()].
-#' @inheritSection impute_metabimpute_rf No replicates allowed
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -174,11 +174,11 @@ impute_metabimpute_halfmin <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
 #' @inheritSection impute_metabimpute_rf No replicates allowed
+#' 
 #' @returns A \code{data.frame} with imputed values of mean by
 #' [MetabImpute::Impute()].
-#'
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -199,11 +199,11 @@ impute_metabimpute_mean <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #'
 #' @returns A \code{data.frame} with imputed values of median by
 #' [MetabImpute::Impute()].
-#' @inheritSection impute_metabimpute_rf No replicates allowed
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
@@ -224,11 +224,11 @@ impute_metabimpute_median <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_metabimpute_rf
+#' @inherit impute_metabimpute_rf references seealso
+#' @inheritSection impute_metabimpute_rf No replicates allowed
 #'
 #' @returns A \code{data.frame} with imputed values of zero by
 #' [MetabImpute::Impute()].
-#' @inheritSection impute_metabimpute_rf No replicates allowed
-#' @seealso [MetabImpute::Impute()]
 #'
 #' @examples
 #' data(sim_miss)
