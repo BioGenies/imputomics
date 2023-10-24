@@ -3,7 +3,7 @@ imputomics_citation <- function() {
 
 ### How to cite?
 
-Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski, Michał Burdukiewicz (2023).
+Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Michał Ciborowski, Michał Burdukiewicz (2023).
 Imputomics: comprehensive missing data imputation for metabolomics data (submitted).
 
   "

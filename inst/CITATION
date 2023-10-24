@@ -2,7 +2,7 @@ citHeader("To cite imputomics in publications, please use:")
 
 
 citEntry(entry = "Article",
-  author = "Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski, Michał Burdukiewicz",
+  author = "Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Michał Ciborowski, Michał Burdukiewicz",
   title = "Imputomics: comprehensive missing data imputation for metabolomics data (submitted)",
   year = 2023,
   issn = {},
