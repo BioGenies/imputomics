@@ -88,7 +88,7 @@ compute_col_halfmin <- function(x)
 #'
 #' @keywords internal
 compute_col_median <- function(x)
-  lapply(x, mean, na.rm = TRUE)
+  lapply(x, median, na.rm = TRUE)
 
 
 #' \strong{minimum} imputation.
