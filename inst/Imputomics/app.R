@@ -239,6 +239,10 @@ ui <- navbarPage(
                               choices = "",
                               multiple = FALSE,
                               options = list(`live-search` = TRUE)),
+                  br(),
+                  h5("Dear User,"),
+                  h5(" Selecting imputation methods based solely on preconceived notions can compromise data integrity. Resist the urge to cherry-pick. Instead, explore a variety of techniques to ensure robust handling of missing data."),
+                  h5(HTML("Best,<br>imputomics team"))
            ),
            column(8, offset = 1,
                   withSpinner(plotOutput("points"))
@@ -261,7 +265,7 @@ ui <- navbarPage(
   ),
   tabPanel("References",
            column(8, offset = 1,
-           includeMarkdown("citations.md"),
+                  includeMarkdown("citations.md"),
            ),
   )
 )
