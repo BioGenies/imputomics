@@ -74,69 +74,61 @@ ui <- navbarPage(
   ),
   navbarMenu("Missing values analysis",
              tabPanel("Data menagement",
-                      column(4,
-                             column(9,
-                                    style = 'border-right: 1px solid',
-                                    helper(
-                                      h3("Non-informative variables removal"),
-                                      type = "inline",
-                                      title = "Variables removal using groups.",
-                                      content = "Only variables exceeding the specified missing
+                      column(3,
+                             style = 'border-right: 1px solid',
+                             helper(
+                               h4("Non-informative variables removal"),
+                               type = "inline",
+                               title = "Variables removal using groups.",
+                               content = "Only variables exceeding the specified missing
                                value ratio threshold within each group will be removed.
                                When choosing a group for variable removal, please note
                                that only character variables without missing values
                                will be available for selection.",
-                                      size = "m",
-                                      buttonLabel = "Got it!"
-                                    ),
-                                    br(),
-                                    h4("1. Set threshold for missing values ratio"),
-                                    sliderInput("remove_threshold",
-                                                label = "Select maximum ratio allowed for each variable.",
-                                                min = 0,
-                                                max = 100,
-                                                value = 20,
-                                                step = 1,
-                                                width = '100%'),
-                                    br(),
-                                    h4("2. Set groups (optional)"),
-                                    selectInput("group",
-                                                label = "Select grouping variable",
-                                                choices = NULL,
-                                                selected = NULL,
-                                                multiple = FALSE),
-                                    br(),
-                                    h4("3. Click Remove!"),
-                                    fluidRow(
-                                      column(2,
-                                             align = "center",
-                                             offset = 2,
-                                             actionButton("remove_btn", label = "Remove", icon = icon("trash"))),
-                                      column(2,
-                                             offset = 1,
-                                             align = "center",
-                                             actionButton("undo_btn",label = "Undo", icon = icon("rotate-left")))
-                                    ),
-                                    HTML('<hr style="border-color: black;">'),
-                                    br(),
-                                    h4("The following variables will be removed:"),
-                                    htmlOutput("to_remove_names"),
+                               size = "m",
+                               buttonLabel = "Got it!"
                              ),
-                             column(2)
-                      ),
-                      column(3,
+                             h4("1. Set threshold for missing values ratio"),
+                             sliderInput("remove_threshold",
+                                         label = "Select maximum ratio allowed for each variable.",
+                                         min = 0,
+                                         max = 100,
+                                         value = 20,
+                                         step = 1,
+                                         width = '100%'),
+                             h4("2. Set groups (optional)"),
+                             selectInput("group",
+                                         label = "Select grouping variable",
+                                         choices = NULL,
+                                         selected = NULL,
+                                         multiple = FALSE),
+                             h4("3. Click Remove!"),
+                             fluidRow(
+                               column(3,
+                                      align = "center",
+                                      offset = 1,
+                                      actionButton("remove_btn", label = "Remove", icon = icon("trash"))),
+                               column(3,
+                                      offset = 1,
+                                      align = "center",
+                                      actionButton("undo_btn",label = "Undo", icon = icon("rotate-left")))
+                             ),
+                             HTML('<hr style="border-color: black;">'),
                              br(),
-                             h3("Ratio of missing data per group [%]"),
+                             h4("The following variables will be removed:"),
+                             htmlOutput("to_remove_names"),
+                      ),
+                      column(4,
+                             h4("Ratio of missing data per group [%]"),
                              br(),
                              withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
                       ),
 
                       column(5,
                              br(),
-                             br(),
                              withSpinner(plotOutput("venna_diagram",
-                                                    width = 700,
-                                                    height = 600),
+                                                    width = '100%',
+                                                    height = 500),
                                          color = "black")
                       )
              ),
@@ -522,7 +514,7 @@ server <- function(input, output, session) {
     req(dat[["missing_data"]])
     plotOutput("plot_segment",
                height = max(dat[["n_cmp"]] * 22, 400),
-               width = 1000)
+               width = 800)
   })
 
 
@@ -552,7 +544,7 @@ server <- function(input, output, session) {
   output[["plot_heatmap_ui"]] <- renderUI({
     plotOutput("plot_heatmap",
                height = max(dat[["n_cmp"]] * 22, 400),
-               width = 1000)
+               width = 800)
   })
 
   ratio_table <- reactive({
@@ -639,7 +631,7 @@ server <- function(input, output, session) {
       })
       names(grouped_variables) <- groups
 
-      if(!(length(groups) > 4 | length(groups) < 2)) {
+      if(!(length(groups) > 4 )) {
         return(ggvenn(grouped_variables))
       } else {
         return(NULL)
