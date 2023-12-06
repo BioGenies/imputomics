@@ -4,6 +4,7 @@ library(shinyWidgets)
 library(shinycssloaders)
 library(DT)
 library(shinyhelper)
+library(colourpicker)
 
 library(ggplot2)
 library(patchwork)
@@ -34,7 +35,7 @@ ui <- navbarPage(
            ui_content_about()
   ),
   tabPanel("Load data",
-           column(4,
+           column(3,
                   style = 'border-right: 1px solid',
                   h2("Here you can upload your data!"),
                   br(),
@@ -64,42 +65,91 @@ ui <- navbarPage(
                   ),
 
            ),
-           column(6,
-                  align = "center",
+           column(8,
                   offset = 1,
                   h3("Dataset preview:"),
-                  withSpinner(DT::dataTableOutput("missing_data"), color = "black")
+                  br(),
+                  tabsetPanel(
+                    tabPanel("Numeric features",
+                             br(),
+                             withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
+                    ),
+                    tabPanel("Full data",
+                             br(),
+                             withSpinner(DT::dataTableOutput("missing_data"), color = "black")
+                    )
+                  )
            )
   ),
   tabPanel("Visualization",
            column(2,
+                  br(),
                   h4("Count Table:"),
                   withSpinner(tableOutput("mv_pctg"), color = "black"),
                   br(),
                   HTML('<hr style="border-color: black;">'),
                   br(),
-                  radioButtons(inputId = "plot_type",
-                               label = "Select plot:",
-                               choices = c("Percentage",
-                                           "Heatmap"),
-                               inline = TRUE),
-                  br(),
-                  HTML('<hr style="border-color: black;">'),
-                  br(),
-                  h5(HTML("<b>Click below to see all the variables from the data!</b>")),
                   awesomeCheckbox(
                     inputId = "show_non_miss",
                     label = "Show variables without missing values.",
                     value = FALSE
                   ),
            ),
-           column(9,
-                  offset = 1,
+           column(10,
                   style = 'border-left: 1px solid',
-                  column(12,
-                         align = "center",
-                         br(),
-                         withSpinner(uiOutput("plot_mv_vis"), color = "black")
+                  br(),
+                  tabsetPanel(
+                    tabPanel(
+                      "Missing value percentage",
+                      br(),
+                      br(),
+                      column(1,
+                             dropdownButton(
+                               tags$h3("Plot settings:"),
+                               br(),
+                               sliderInput("thresh",
+                                           "Select threshold for misisng values ratio [%].",
+                                           value = 20, min = 0, max = 100),
+                               colourInput("above_threshold_col",
+                                           "Above threshold color",
+                                           "tomato"),
+                               colourInput("below_threshold_col",
+                                           "Below threshold color",
+                                           "black"),
+                               circle = TRUE, status = "danger",
+                               icon = icon("gear"), width = "350px",
+                               tooltip = tooltipOptions(title = "Settings")
+                             ),
+                      ),
+                      column(10,
+                             align = "center",
+                             withSpinner(uiOutput("plot_segment_ui"), color = "black")
+                      )
+                    ),
+                    tabPanel(
+                      "Missing value pattern heatmap",
+                      br(),
+                      br(),
+                      column(1,
+                             dropdownButton(
+                               tags$h3("Plot settings:"),
+                               br(),
+                               colourInput("missing_col",
+                                           "Missing color",
+                                           "black"),
+                               colourInput("nonmissing_col",
+                                           "Non-missing color",
+                                           "gray"),
+                               circle = TRUE, status = "danger",
+                               icon = icon("gear"), width = "350px",
+                               tooltip = tooltipOptions(title = "Settings")
+                             ),
+                      ),
+                      column(10,
+                             align = "center",
+                             withSpinner(uiOutput("plot_heatmap_ui"), color = "black")
+                      )
+                    )
                   )
            ),
   ),
@@ -301,9 +351,10 @@ server <- function(input, output, session) {
 
     uploaded_data <- raw_data
     #data validation
-    uploaded_data <- validate_data(uploaded_data, session, input)
+    checked_data <- validate_data(uploaded_data, session, input)
 
-    dat[["missing_data"]] <- uploaded_data
+    dat[["missing_data"]] <- checked_data[["uploaded_data"]]
+    dat[["full_data"]] <- checked_data[["full_data"]]
     dat[["raw_data"]] <- raw_data
     dat[["n_cmp"]] <- ncol(raw_data)
   })
@@ -342,10 +393,10 @@ server <- function(input, output, session) {
 
   })
 
-  output[["missing_data"]] <- DT::renderDataTable({
+  output[["missing_num_data"]] <- DT::renderDataTable({
     req(dat[["missing_data"]])
 
-    DT::datatable(dat[["missing_data"]],
+    DT::datatable(round_numeric(dat[["missing_data"]]),
                   editable = FALSE,
                   selection = list(selectable = FALSE),
                   options = list(scrollX = TRUE,
@@ -355,8 +406,24 @@ server <- function(input, output, session) {
     )
   })
 
+
+  output[["missing_data"]] <- DT::renderDataTable({
+    req(dat[["full_data"]])
+
+    DT::datatable(round_numeric(dat[["full_data"]]),
+                  editable = FALSE,
+                  selection = list(selectable = FALSE),
+                  options = list(scrollX = TRUE,
+                                 pageLength = 10,
+                                 searching = FALSE),
+                  rownames = NULL
+    )
+  })
+
+
   observeEvent(input[["example_dat"]], {
     dat[["missing_data"]] <- read.csv("./test_data/im_normal.csv")
+    dat[["full_data"]] <- dat[["missing_data"]]
     dat[["raw_data"]] <- dat[["missing_data"]]
     dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
   }, ignoreInit = TRUE)
@@ -365,16 +432,20 @@ server <- function(input, output, session) {
 
   output[["mv_pctg"]] <- renderTable({
     req(dat[["missing_data"]])
-
     dat[["mv_summary"]][["variables_table"]]
-
   }, colnames = FALSE)
 
 
   output[["mv_vis"]] <- renderPlot({
-    req(dat[["mv_summary"]])
-    req(dat[["missing_data"]])
 
+  })
+
+
+  output[["plot_segment"]] <- renderPlot({
+    req(dat[["mv_summary"]])
+    req(input[["thresh"]])
+    req(input[["below_threshold_col"]])
+    req(input[["above_threshold_col"]])
     show_complete <- input[["show_non_miss"]]
 
     #check if there are missing values in the data
@@ -386,23 +457,49 @@ server <- function(input, output, session) {
       show_complete <- TRUE
     }
 
-    if(input[["plot_type"]] == "Percentage") {
-      tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
-      if(!show_complete)
-        tmp_dat <- filter(tmp_dat, `% Missing` > 0)
-      plot_mv_segment(tmp_dat)
-
-    } else {
-      tmp_dat <- dat[["missing_data"]]
-      if(!show_complete)
-        tmp_dat <- dplyr::select(tmp_dat, where(function(x) any(is.na(x))))
-
-      plot_mv_heatmap(tmp_dat)
-    }
+    tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
+    if(!show_complete)
+      tmp_dat <- filter(tmp_dat, `% Missing` > 0)
+    plot_mv_segment(tmp_dat,
+                    thresh = input[["thresh"]],
+                    below_col = input[["below_threshold_col"]],
+                    above_col = input[["above_threshold_col"]])
   })
 
-  output[["plot_mv_vis"]] <- renderUI({
-    plotOutput("mv_vis",
+
+  output[["plot_segment_ui"]] <- renderUI({
+    req(dat[["mv_summary"]])
+    req(dat[["missing_data"]])
+    plotOutput("plot_segment",
+               height = max(dat[["n_cmp"]] * 22, 400),
+               width = 1000)
+  })
+
+  output[["plot_heatmap"]] <- renderPlot({
+    req(dat[["missing_data"]])
+    show_complete <- input[["show_non_miss"]]
+
+    #check if there are missing values in the data
+    if(sum(is.na(dat[["missing_data"]])) == 0) {
+      sendSweetAlert(session = session,
+                     title = "Your data contains no missing values!",
+                     text = "We will plot all the variables!",
+                     type = "warning")
+      show_complete <- TRUE
+    }
+
+    tmp_dat <- dat[["missing_data"]]
+    if(!show_complete)
+      tmp_dat <- dplyr::select(tmp_dat, where(function(x) any(is.na(x))))
+
+    plot_mv_heatmap(tmp_dat,
+                    missing_col = input[["missing_col"]],
+                    nonmissing_col = input[["nonmissing_col"]])
+  })
+
+
+  output[["plot_heatmap_ui"]] <- renderUI({
+    plotOutput("plot_heatmap",
                height = max(dat[["n_cmp"]] * 22, 400),
                width = 1000)
   })

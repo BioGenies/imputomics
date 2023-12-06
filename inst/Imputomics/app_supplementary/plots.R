@@ -1,5 +1,5 @@
 
-plot_mv_heatmap <- function(tmp_dat) {
+plot_mv_heatmap <- function(tmp_dat, missing_col, nonmissing_col) {
 
   gathercols <- colnames(tmp_dat)
 
@@ -10,7 +10,7 @@ plot_mv_heatmap <- function(tmp_dat) {
     ggplot(aes(x = Sample, y = as.factor(Variable), fill = `Is missing`)) +
     geom_tile() +
     ylab("Variable") +
-    scale_fill_manual(values = c("grey", "black")) +
+    scale_fill_manual(values = c(nonmissing_col, missing_col)) +
     theme_minimal() +
     theme(axis.text = element_text(size = 12),
           axis.title = element_text(size = 14),
@@ -19,22 +19,26 @@ plot_mv_heatmap <- function(tmp_dat) {
 }
 
 
-plot_mv_segment <- function(tmp_dat) {
-
+plot_mv_segment <- function(tmp_dat,
+                            thresh,
+                            below_col = "black",
+                            above_col = "tomato") {
   level_order <- tmp_dat %>%
     arrange(`% Missing`) %>%
-    pull(Variable)
+    pull(Variable) %>%
+    as.factor()
 
   tmp_dat <- tmp_dat %>%
-    mutate(above_limit = `% Missing` > 20,
-           colors_legend = ifelse(above_limit, "tomato", "black"))
+    arrange(`% Missing`) %>%
+    mutate(above_limit = `% Missing` > thresh,
+           colors_legend = ifelse(above_limit, above_col, below_col))
 
   tmp_dat %>%
     ggplot(Variable = factor(Variable, levels = Variable)) +
     geom_segment(aes(y = Variable, yend = Variable,
                      x = 0, xend = `% Missing`, col = above_limit),
                  size = 1.5) +
-    scale_color_manual(values = sort(unique(pull(tmp_dat, colors_legend)))) +
+    scale_color_manual(values = unique(pull(tmp_dat, colors_legend))) +
     geom_segment(aes(y = Variable, yend = Variable,
                      xend = 100, x = `% Missing`),
                  size = 1.5, col = "grey") +

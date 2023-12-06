@@ -1,6 +1,15 @@
 
+round_numeric <- function(dat) {
+  dat %>%
+    mutate_if(is.numeric, round, digits = 3) %>%
+    relocate(where(is.numeric), .after = last_col())
+}
+
+
 
 validate_data <- function(uploaded_data, session, input) {
+
+  full_data <- uploaded_data
 
   # check if data is empty
   if(is.null(uploaded_data)){
@@ -15,10 +24,9 @@ validate_data <- function(uploaded_data, session, input) {
     # check if the columns are numeric
     non_numeric_cols <- !sapply(uploaded_data, is.numeric)
     if(any(non_numeric_cols)) {
-
       uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
       showNotification(paste0("Your data contains ", sum(non_numeric_cols),
-                              " non-numeric columns! We will ignore them!"),
+                              " non-numeric columns! We will ignore them during imputation!"),
                        session = session,
                        type = "warning",
                        duration = 20)
@@ -49,7 +57,10 @@ validate_data <- function(uploaded_data, session, input) {
     }
   }
 
-  uploaded_data
+  list(
+    full_data = full_data,
+    uploaded_data = uploaded_data
+  )
 }
 
 
