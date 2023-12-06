@@ -6,6 +6,11 @@ round_numeric <- function(dat) {
 }
 
 
+greater_eq_than_thresh <- function(column, thresh) {
+  column >= thresh
+}
+
+
 
 validate_data <- function(uploaded_data, session, input) {
 
@@ -66,7 +71,7 @@ validate_data <- function(uploaded_data, session, input) {
 
 get_variables_table <- function(missing_data) {
   mv_summary <- data.frame(
-    Variable = colnames(missing_data),
+    variable = colnames(missing_data),
     Percentage_Missing = 100*colMeans(is.na(missing_data))
   )%>%
     arrange(-Percentage_Missing) %>%

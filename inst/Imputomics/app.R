@@ -9,6 +9,7 @@ library(colourpicker)
 library(ggplot2)
 library(patchwork)
 library(ggbeeswarm)
+library(ggvenn)
 
 library(dplyr)
 library(tidyr)
@@ -63,95 +64,140 @@ ui <- navbarPage(
                     color = "success",
                     icon = HTML("<i class='fa-solid fa-upload fa-bounce'></i>")
                   ),
-
            ),
-           column(8,
+           column(7,
                   offset = 1,
                   h3("Dataset preview:"),
                   br(),
-                  tabsetPanel(
-                    tabPanel("Numeric features",
-                             br(),
-                             withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
-                    ),
-                    tabPanel("Full data",
-                             br(),
-                             withSpinner(DT::dataTableOutput("missing_data"), color = "black")
-                    )
-                  )
+                  withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
            )
   ),
-  tabPanel("Visualization",
-           column(2,
-                  br(),
-                  h4("Count Table:"),
-                  withSpinner(tableOutput("mv_pctg"), color = "black"),
-                  br(),
-                  HTML('<hr style="border-color: black;">'),
-                  br(),
-                  awesomeCheckbox(
-                    inputId = "show_non_miss",
-                    label = "Show variables without missing values.",
-                    value = FALSE
-                  ),
-           ),
-           column(10,
-                  style = 'border-left: 1px solid',
-                  br(),
-                  tabsetPanel(
-                    tabPanel(
-                      "Missing value percentage",
-                      br(),
-                      br(),
-                      column(1,
-                             dropdownButton(
-                               tags$h3("Plot settings:"),
-                               br(),
-                               sliderInput("thresh",
-                                           "Select threshold for misisng values ratio [%].",
-                                           value = 20, min = 0, max = 100),
-                               colourInput("above_threshold_col",
-                                           "Above threshold color",
-                                           "tomato"),
-                               colourInput("below_threshold_col",
-                                           "Below threshold color",
-                                           "black"),
-                               circle = TRUE, status = "danger",
-                               icon = icon("gear"), width = "350px",
-                               tooltip = tooltipOptions(title = "Settings")
+  navbarMenu("Missing values analysis",
+             tabPanel("Data menagement",
+                      column(4,
+                             column(9,
+                                    style = 'border-right: 1px solid',
+                                    helper(
+                                      h3("Non-informative variables removal"),
+                                      type = "inline",
+                                      title = "Variables removal using groups.",
+                                      content = "Only variables exceeding the specified missing
+                               value ratio threshold within each group will be removed.
+                               When choosing a group for variable removal, please note
+                               that only character variables without missing values
+                               will be available for selection.",
+                                      size = "m",
+                                      buttonLabel = "Got it!"
+                                    ),
+                                    br(),
+                                    h4("1. Set threshold for missing values ratio"),
+                                    sliderInput("remove_threshold",
+                                                label = "Select maximum ratio allowed for each variable.",
+                                                min = 0,
+                                                max = 100,
+                                                value = 20,
+                                                step = 1,
+                                                width = '100%'),
+                                    br(),
+                                    h4("2. Set groups (optional)"),
+                                    selectInput("group",
+                                                label = "Select grouping variable",
+                                                choices = NULL,
+                                                selected = NULL,
+                                                multiple = FALSE),
+                                    br(),
+                                    h4("3. Click Remove!"),
+                                    fluidRow(
+                                      column(2,
+                                             align = "center",
+                                             offset = 2,
+                                             actionButton("remove_btn", label = "Remove", icon = icon("trash"))),
+                                      column(2,
+                                             offset = 1,
+                                             align = "center",
+                                             actionButton("undo_btn",label = "Undo", icon = icon("rotate-left")))
+                                    ),
+                                    HTML('<hr style="border-color: black;">'),
+                                    br(),
+                                    h4("The following variables will be removed:"),
+                                    htmlOutput("to_remove_names"),
                              ),
+                             column(2)
                       ),
-                      column(10,
-                             align = "center",
-                             withSpinner(uiOutput("plot_segment_ui"), color = "black")
-                      )
-                    ),
-                    tabPanel(
-                      "Missing value pattern heatmap",
-                      br(),
-                      br(),
-                      column(1,
-                             dropdownButton(
-                               tags$h3("Plot settings:"),
-                               br(),
-                               colourInput("missing_col",
-                                           "Missing color",
-                                           "black"),
-                               colourInput("nonmissing_col",
-                                           "Non-missing color",
-                                           "gray"),
-                               circle = TRUE, status = "danger",
-                               icon = icon("gear"), width = "350px",
-                               tooltip = tooltipOptions(title = "Settings")
-                             ),
+                      column(3,
+                             br(),
+                             h3("Ratio of missing data per group [%]"),
+                             br(),
+                             withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
                       ),
-                      column(10,
-                             align = "center",
-                             withSpinner(uiOutput("plot_heatmap_ui"), color = "black")
+
+                      column(5,
+                             br(),
+                             br(),
+                             withSpinner(plotOutput("venna_diagram",
+                                                    width = 700,
+                                                    height = 600),
+                                         color = "black")
                       )
-                    )
-                  )
-           ),
+             ),
+             tabPanel("Visualization",
+                      tabsetPanel(
+                        tabPanel("Missing values percentage",
+                                 br(),
+                                 column(3,
+                                        style = 'border-right: 1px solid',
+                                        h3("Plot settings:"),
+                                        br(),
+                                        sliderInput("thresh",
+                                                    "Select threshold for misisng values ratio [%].",
+                                                    value = 20, min = 0, max = 100),
+                                        br(),
+                                        colourInput("above_threshold_col",
+                                                    "Above threshold color",
+                                                    "tomato"),
+                                        colourInput("below_threshold_col",
+                                                    "Below threshold color",
+                                                    "black"),
+                                        br(),
+                                        awesomeCheckbox(
+                                          inputId = "show_non_miss",
+                                          label = "Show variables without missing values.",
+                                          value = FALSE
+                                        )
+                                 ),
+                                 column(8,
+                                        offset = 1,
+                                        withSpinner(uiOutput("plot_segment_ui"),
+                                                    color = "black")
+                                 ),
+                        ),
+                        tabPanel("Missing values pattern heatmap",
+                                 br(),
+                                 column(3,
+                                        style = 'border-right: 1px solid',
+                                        h3("Plot settings:"),
+                                        br(),
+                                        colourInput("missing_col",
+                                                    "Missing color",
+                                                    "black"),
+                                        colourInput("nonmissing_col",
+                                                    "Non-missing color",
+                                                    "gray"),
+                                        br(),
+                                        awesomeCheckbox(
+                                          inputId = "show_non_miss",
+                                          label = "Show variables without missing values.",
+                                          value = FALSE
+                                        )
+                                 ),
+                                 column(8,
+                                        offset = 1,
+                                        withSpinner(uiOutput("plot_heatmap_ui"),
+                                                    color = "black")
+                                 )
+                        )
+                      ),
+             )
   ),
   tabPanel("Imputation",
            h3("Let's impute your missing values!"),
@@ -273,7 +319,6 @@ ui <- navbarPage(
                   h3("Data preview:"),
                   withSpinner(DT::dataTableOutput("results"),
                               color = "black")
-
            )
   ),
   tabPanel("Summary",
@@ -357,22 +402,29 @@ server <- function(input, output, session) {
     dat[["full_data"]] <- checked_data[["full_data"]]
     dat[["raw_data"]] <- raw_data
     dat[["n_cmp"]] <- ncol(raw_data)
+
+    updateSelectInput(session,
+                      inputId = "group",
+                      choices = c("none",
+                                  setdiff(colnames(dat[["full_data"]]),
+                                          colnames(dat[["missing_data"]]))),
+                      selected = "none")
   })
 
   observeEvent(dat[["missing_data"]], {
     req(dat[["missing_data"]])
 
-    if(sum(is.na(dat[["missing_data"]])) == 0) {}
-    sendSweetAlert(session = session,
-                   title = "Your data contains no missing values!",
-                   text = "Make sure that right missing value denotement is selected!",
-                   type = "warning")
-
-    if(sum(is.na(dat[["missing_data"]])) > 0)
+    if(sum(is.na(dat[["missing_data"]])) == 0)
       sendSweetAlert(session = session,
-                     title = "Success !",
-                     text = "Your data is correct!",
-                     type = "success")
+                     title = "Your data contains no missing values!",
+                     text = "Make sure that right missing value denotement is selected!",
+                     type = "warning")
+
+    # if(sum(is.na(dat[["missing_data"]])) > 0)
+    #   sendSweetAlert(session = session,
+    #                  title = "Success !",
+    #                  text = "Your data is correct!",
+    #                  type = "success")
 
     dat[["mv_summary"]]  <- get_variables_table(dat[["missing_data"]])
   })
@@ -422,24 +474,22 @@ server <- function(input, output, session) {
 
 
   observeEvent(input[["example_dat"]], {
-    dat[["missing_data"]] <- read.csv("./test_data/im_normal.csv")
-    dat[["full_data"]] <- dat[["missing_data"]]
+    dat[["full_data"]] <- read.csv("./test_data/example_dat.csv")
+    dat[["missing_data"]] <-  dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)]
     dat[["raw_data"]] <- dat[["missing_data"]]
     dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
+
+    updateSelectInput(session,
+                      inputId = "group",
+                      choices = c("none",
+                                  setdiff(colnames(dat[["full_data"]]),
+                                          colnames(dat[["missing_data"]]))),
+                      selected = "none")
+
   }, ignoreInit = TRUE)
 
+
   ##### data vis
-
-  output[["mv_pctg"]] <- renderTable({
-    req(dat[["missing_data"]])
-    dat[["mv_summary"]][["variables_table"]]
-  }, colnames = FALSE)
-
-
-  output[["mv_vis"]] <- renderPlot({
-
-  })
-
 
   output[["plot_segment"]] <- renderPlot({
     req(dat[["mv_summary"]])
@@ -449,7 +499,7 @@ server <- function(input, output, session) {
     show_complete <- input[["show_non_miss"]]
 
     #check if there are missing values in the data
-    if(sum(is.na(dat[["missing_data"]])) == 0) {
+    if(sum(is.na(dat[["full_data"]])) == 0) {
       sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "We will plot all the variables!",
@@ -475,12 +525,13 @@ server <- function(input, output, session) {
                width = 1000)
   })
 
+
   output[["plot_heatmap"]] <- renderPlot({
-    req(dat[["missing_data"]])
+    req(dat[["full_data"]])
     show_complete <- input[["show_non_miss"]]
 
     #check if there are missing values in the data
-    if(sum(is.na(dat[["missing_data"]])) == 0) {
+    if(sum(is.na(dat[["full_data"]])) == 0) {
       sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "We will plot all the variables!",
@@ -488,7 +539,7 @@ server <- function(input, output, session) {
       show_complete <- TRUE
     }
 
-    tmp_dat <- dat[["missing_data"]]
+    tmp_dat <- dat[["full_data"]]
     if(!show_complete)
       tmp_dat <- dplyr::select(tmp_dat, where(function(x) any(is.na(x))))
 
@@ -504,6 +555,101 @@ server <- function(input, output, session) {
                width = 1000)
   })
 
+  ratio_table <- reactive({
+    req(dat[["missing_data"]])
+    req(dat[["full_data"]])
+    req(dat[["mv_summary"]])
+
+    numeric_vars <- colnames(dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)])
+
+    if(input[["group"]] == "none")
+      ratio_table <- dat[["mv_summary"]][["mv_summary"]]
+    else
+      ratio_table <- dat[["missing_data"]] %>%
+      mutate(group = pull(dat[["full_data"]], input[["group"]])) %>%
+      gather(variable, measurement, -group) %>%
+      group_by(group, variable) %>%
+      summarise(missing_ratio = mean(is.na(measurement)) * 100) %>%
+      spread(group, missing_ratio)
+
+    ratio_table
+  })
+
+
+  output[["mv_ratio"]] <- DT::renderDataTable({
+    ratios <- ratio_table()
+    colnames(ratios)[1] <- "Variable"
+    DT::datatable(round_numeric(ratios),
+                  editable = FALSE,
+                  selection = list(selectable = FALSE),
+                  options = list(scrollX = TRUE,
+                                 paging = FALSE,
+                                 scrollY = 500,
+                                 searching = FALSE),
+                  rownames = NULL
+    )
+  })
+
+
+  to_remove <- reactive({
+    req(input[["remove_threshold"]])
+
+    ratio_table() %>%
+      mutate(to_remove = rowSums(across(where(is.numeric)) >= input[["remove_threshold"]]) == (ncol(.) - 1)) %>%
+      filter(to_remove) %>%
+      pull(variable)
+  })
+
+
+  output[["to_remove_names"]] <- renderUI({
+    get_remove_html_content(to_remove())
+  })
+
+
+  observeEvent(input[["remove_btn"]], {
+    req(dat[["missing_data"]])
+
+    dat[["missing_data"]] <- dat[["missing_data"]] %>%
+      select(-to_remove())
+
+  })
+
+
+  observeEvent(input[["undo_btn"]], {
+    req(dat[["full_data"]])
+    dat[["missing_data"]] <- dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)]
+  })
+
+
+  output[["venna_diagram"]] <- renderPlot({
+    req(input[["remove_threshold"]])
+    req(input[["group"]])
+    req(dat[["full_data"]])
+
+    if(input[["group"]] != "none") {
+      groups <- unique(dat[["full_data"]][, input[["group"]]])
+
+      ratios <- ratio_table() %>%
+        mutate(across(groups, greater_eq_than_thresh, thresh = input[["remove_threshold"]]))
+
+      grouped_variables <- lapply(groups, function(ith_group) {
+        ratios %>%
+          filter(get(ith_group)) %>%
+          pull(variable)
+      })
+      names(grouped_variables) <- groups
+
+      if(!(length(groups) > 4 | length(groups) < 2)) {
+        return(ggvenn(grouped_variables))
+      } else {
+        return(NULL)
+      }
+    } else {
+      return(NULL)
+    }
+  })
+
+
   # imputation
 
   ## filter methods
@@ -513,6 +659,7 @@ server <- function(input, output, session) {
 
     paste0("Number of chosen methods: ", n)
   })
+
 
   observeEvent(input[["best"]], {
     best_methods <- pull(filter(methods_table, best), name)
@@ -529,7 +676,6 @@ server <- function(input, output, session) {
 
 
   observeEvent(input[["fastest"]], {
-
     fastest_methods <- pull(filter(methods_table, fastest), name)
     if(input[["fastest"]])
       updateMultiInput(session = session,
@@ -630,12 +776,12 @@ server <- function(input, output, session) {
                              methods = methods)
   })
 
+
   observeEvent(input[["methods"]], {
     updateProgressBar(session = session,
                       id = "progress_bar",
                       value = 0)
   })
-
 
 
   # results

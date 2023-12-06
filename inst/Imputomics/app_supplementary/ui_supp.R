@@ -26,3 +26,13 @@ ui_content_about <- function() {
     markdown(imputomics_funding_images_shinyapp())
   )
 }
+
+
+get_remove_html_content <- function(to_remove)
+  HTML(ifelse(length(to_remove) > 0,
+              paste0(paste(to_remove, collapse = ", "),
+                     "<br/><br/> Total: ",
+                     length(to_remove),
+                     " variables."),
+              "none"))
+
