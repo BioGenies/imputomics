@@ -26,6 +26,16 @@ colnames(example_set_na) <- paste0("variable_", letters[1:26])
 example_set_na <- cbind(example_set_na, i_missed_the_amputation = runif(100))
 write.csv(example_set_na, "./inst/Imputomics/test_data/im_normal.csv", row.names = FALSE)
 
+# set with group
+example_set_na <- dat
+example_set_na[runif(2600) < 0.21] <- NA
+tmp_dat <- data.frame(example_set_na)
+colnames(tmp_dat) <- paste0("variable_", letters[1:26])
+example_set_na <- cbind(tmp_dat,
+                        group = sample(c("A", "B", "C"), size = nrow(example_set_na), replace = TRUE),
+                        i_missed_the_amputation = runif(100))
+write.csv(example_set_na, "./inst/Imputomics/test_data/example_dat.csv", row.names = FALSE)
+
 #set with character column
 example_set_na <- dat
 example_set_na[runif(2600) < 0.2] <- NA
