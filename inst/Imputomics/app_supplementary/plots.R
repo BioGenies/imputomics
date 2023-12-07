@@ -82,7 +82,8 @@ plot_points_density <- function(dat, input) {
           legend.position = "bottom") +
     xlab("") +
     ylab(input[["plot_var"]]) +
-    scale_color_manual(values=c("#3d3b3c", "#fb5607"))
+    scale_color_manual(values = c(input[["nonmissing_col_res"]],
+                                  input[["missing_col_res"]]))
 
   density_plt_dat <- plt_dat %>%
     mutate(imputed = is.na(missing_var),
@@ -95,9 +96,9 @@ plot_points_density <- function(dat, input) {
              missing = ifelse(imputed, var, NA),
              observed = ifelse(imputed, NA, var)) %>%
       ggplot() +
-      geom_density(aes(x = observed), fill = "#3d3b3c", alpha = 0.4) +
+      geom_density(aes(x = observed), fill = input[["nonmissing_col_res"]], alpha = 0.4) +
       geom_histogram(aes(x = missing, y = ..density..), alpha = 0.4,
-                     fill = "#fb5607", col = "#fb5607") +
+                     fill = input[["missing_col_res"]], col = input[["missing_col_res"]]) +
       theme_minimal() +
       coord_flip() +
       theme(axis.text = element_text(size = 12),
@@ -123,8 +124,8 @@ plot_points_density <- function(dat, input) {
             title = element_text(size = 18),
             legend.position = "none") +
       xlab("") +
-      scale_fill_manual(values=c("#3d3b3c", "#fb5607")) +
-      scale_color_manual(values=c("#3d3b3c", "#fb5607"))
+      scale_fill_manual(values=c(input[["nonmissing_col_res"]], input[["missing_col_res"]])) +
+      scale_color_manual(values=c(input[["nonmissing_col_res"]], input[["missing_col_res"]]))
   }
 
   points_plt + theme(legend.position = "right") + dens_plt +

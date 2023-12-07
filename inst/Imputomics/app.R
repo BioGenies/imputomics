@@ -322,17 +322,24 @@ ui <- navbarPage(
                               multiple = FALSE,
                               options = list(`live-search` = TRUE)),
                   pickerInput(inputId = "plot_methods",
-                              label = "Select methods:",
+                              label = "Select method:",
                               choices = "",
                               multiple = FALSE,
                               options = list(`live-search` = TRUE)),
+                  br(),
+                  colourInput("missing_col_res",
+                              "Imputed data color:",
+                              "tomato"),
+                  colourInput("nonmissing_col_res",
+                              "Observed data color:",
+                              "black"),
                   br(),
                   h5("Dear User,"),
                   h5(" Selecting imputation methods based solely on preconceived notions can compromise data integrity. Resist the urge to cherry-pick. Instead, explore a variety of techniques to ensure robust handling of missing data."),
                   h5(HTML("Best,<br>imputomics team"))
            ),
-           column(8, offset = 1,
-                  withSpinner(plotOutput("points"))
+           column(7, offset = 1,
+                  withSpinner(plotOutput("points", height = 500))
            )
   ),
   tabPanel("Download",
@@ -707,7 +714,6 @@ server <- function(input, output, session) {
     progress_step <- 100/length(methods)
 
     results <- lapply(methods, function(ith_method) {
-
       ith_fun <- get(ith_method)
       title <- paste0("In progress ",
                       str_replace_all(str_remove(ith_method,"impute_"), "_", " "),
@@ -717,15 +723,15 @@ server <- function(input, output, session) {
                         id = "progress_bar",
                         value = progress,
                         title = title)
-      if(ith_method == "impute_amelia") {
+
+      if(ith_method == "impute_amelia")
         imputed_dat <- safe_impute_amelia(ith_fun,
                                           dat[["missing_data"]],
                                           timeout = input[["timeout"]])
-      } else {
+      else
         imputed_dat <- imputomics:::safe_impute(ith_fun,
                                                 dat[["missing_data"]],
                                                 timeout = input[["timeout"]])
-      }
 
       if(!any(is.na(imputed_dat)) & !inherits(imputed_dat, "try-error"))
         return(imputed_dat)
@@ -759,8 +765,6 @@ server <- function(input, output, session) {
                      title = "Warning!",
                      text = "Imputation is done! However, some of the chosen methods failed to impute your data!",
                      type = "warning")
-
-
 
     names(results) <- methods
     dat[["results"]] <- list(results = results,
@@ -832,7 +836,6 @@ server <- function(input, output, session) {
                              inputId = "download_methods",
                              choices = pull(success, name),
                              selected = pull(success, name))
-
   })
 
 
@@ -853,7 +856,7 @@ server <- function(input, output, session) {
                                    pageLength = 10,
                                    searching = FALSE),
                     rownames = NULL)
-    }else{
+    } else{
       res <- data.frame("No data to display!", row.names = NULL)
       colnames(res) <- NULL
       res
