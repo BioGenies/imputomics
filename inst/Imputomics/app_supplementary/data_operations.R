@@ -71,7 +71,7 @@ validate_data <- function(uploaded_data, session, input) {
 
 get_variables_table <- function(missing_data) {
   mv_summary <- data.frame(
-    variable = colnames(missing_data),
+    Variable = colnames(missing_data),
     Percentage_Missing = 100*colMeans(is.na(missing_data))
   )%>%
     arrange(-Percentage_Missing) %>%

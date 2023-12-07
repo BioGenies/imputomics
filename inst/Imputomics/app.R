@@ -498,6 +498,7 @@ server <- function(input, output, session) {
                      type = "warning")
       show_complete <- TRUE
     }
+    browser()
 
     tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
     if(!show_complete)
@@ -559,8 +560,8 @@ server <- function(input, output, session) {
     else
       ratio_table <- dat[["missing_data"]] %>%
       mutate(group = pull(dat[["full_data"]], input[["group"]])) %>%
-      gather(variable, measurement, -group) %>%
-      group_by(group, variable) %>%
+      gather(Variable, measurement, -group) %>%
+      group_by(group, Variable) %>%
       summarise(missing_ratio = mean(is.na(measurement)) * 100) %>%
       spread(group, missing_ratio)
 
@@ -585,11 +586,10 @@ server <- function(input, output, session) {
 
   to_remove <- reactive({
     req(input[["remove_threshold"]])
-
     ratio_table() %>%
       mutate(to_remove = rowSums(across(where(is.numeric)) >= input[["remove_threshold"]]) == (ncol(.) - 1)) %>%
       filter(to_remove) %>%
-      pull(variable)
+      pull(Variable)
   })
 
 
@@ -602,7 +602,7 @@ server <- function(input, output, session) {
     req(dat[["missing_data"]])
 
     dat[["missing_data"]] <- dat[["missing_data"]] %>%
-      select(-to_remove())
+      dplyr::select(-to_remove())
 
   })
 
@@ -627,7 +627,7 @@ server <- function(input, output, session) {
       grouped_variables <- lapply(groups, function(ith_group) {
         ratios %>%
           filter(get(ith_group)) %>%
-          pull(variable)
+          pull(Variable)
       })
       names(grouped_variables) <- groups
 

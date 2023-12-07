@@ -25,7 +25,7 @@ plot_mv_segment <- function(tmp_dat,
                             above_col = "tomato") {
   level_order <- tmp_dat %>%
     arrange(`% Missing`) %>%
-    pull(variable) %>%
+    pull(Variable) %>%
     as.factor()
 
   tmp_dat <- tmp_dat %>%
@@ -34,16 +34,16 @@ plot_mv_segment <- function(tmp_dat,
            colors_legend = ifelse(above_limit, above_col, below_col))
 
   tmp_dat %>%
-    ggplot(variable = factor(variable, levels = variable)) +
-    geom_segment(aes(y = variable, yend = variable,
+    ggplot(Variable = factor(Variable, levels = Variable)) +
+    geom_segment(aes(y = Variable, yend = Variable,
                      x = 0, xend = `% Missing`, col = above_limit),
                  size = 1.5) +
     scale_color_manual(values = unique(pull(tmp_dat, colors_legend))) +
-    geom_segment(aes(y = variable, yend = variable,
+    geom_segment(aes(y = Variable, yend = Variable,
                      xend = 100, x = `% Missing`),
                  size = 1.5, col = "grey") +
-    geom_point(mapping = aes(y = variable, x = `% Missing`), size = 2) +
-    geom_label(mapping = aes(y = variable, x = `% Missing`,
+    geom_point(mapping = aes(y = Variable, x = `% Missing`), size = 2) +
+    geom_label(mapping = aes(y = Variable, x = `% Missing`,
                              label = paste0(`% Missing`, "%"))) +
     theme_minimal() +
     theme(axis.text = element_text(size = 12),
