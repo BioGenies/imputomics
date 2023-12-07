@@ -19,6 +19,7 @@ library(readxl)
 library(openxlsx)
 
 source("app_supplementary/data_operations.R")
+source("app_supplementary/download_plot_module.R")
 source("app_supplementary/plots.R")
 source("app_supplementary/ui_supp.R")
 source("app_supplementary/amelia_safe_impute.R")
@@ -77,7 +78,7 @@ ui <- navbarPage(
                       column(3,
                              style = 'border-right: 1px solid',
                              helper(
-                               h4("Non-informative variables removal"),
+                               h3("Variables removal"),
                                type = "inline",
                                title = "Variables removal using groups.",
                                content = "Only variables exceeding the specified missing
@@ -88,6 +89,7 @@ ui <- navbarPage(
                                size = "m",
                                buttonLabel = "Got it!"
                              ),
+                             br(),
                              h4("1. Set threshold for missing values ratio"),
                              sliderInput("remove_threshold",
                                          label = "Select maximum ratio allowed for each variable.",
@@ -119,12 +121,14 @@ ui <- navbarPage(
                              htmlOutput("to_remove_names"),
                       ),
                       column(4,
+                             style = 'border-right: 1px solid',
                              h4("Ratio of missing data per group [%]"),
                              br(),
                              withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
                       ),
 
                       column(5,
+                             h4("Venna diagram (from 2 to 4 groups):"),
                              br(),
                              withSpinner(plotOutput("venna_diagram",
                                                     width = '100%',
@@ -134,59 +138,63 @@ ui <- navbarPage(
              ),
              tabPanel("Visualization",
                       tabsetPanel(
-                        tabPanel("Missing values percentage",
+                        tabPanel(
+                          "Missing values percentage",
+                          br(),
+                          column(3,
+                                 style = 'border-right: 1px solid',
+                                 h3("Plot settings:"),
                                  br(),
-                                 column(3,
-                                        style = 'border-right: 1px solid',
-                                        h3("Plot settings:"),
-                                        br(),
-                                        sliderInput("thresh",
-                                                    "Select threshold for misisng values ratio [%].",
-                                                    value = 20, min = 0, max = 100),
-                                        br(),
-                                        colourInput("above_threshold_col",
-                                                    "Above threshold color",
-                                                    "tomato"),
-                                        colourInput("below_threshold_col",
-                                                    "Below threshold color",
-                                                    "black"),
-                                        br(),
-                                        awesomeCheckbox(
-                                          inputId = "show_non_miss",
-                                          label = "Show variables without missing values.",
-                                          value = FALSE
-                                        )
-                                 ),
-                                 column(8,
-                                        offset = 1,
-                                        withSpinner(uiOutput("plot_segment_ui"),
-                                                    color = "black")
-                                 ),
-                        ),
-                        tabPanel("Missing values pattern heatmap",
+                                 sliderInput("thresh",
+                                             "Select threshold for misisng values ratio [%].",
+                                             value = 20, min = 0, max = 100),
                                  br(),
-                                 column(3,
-                                        style = 'border-right: 1px solid',
-                                        h3("Plot settings:"),
-                                        br(),
-                                        colourInput("missing_col",
-                                                    "Missing color",
-                                                    "black"),
-                                        colourInput("nonmissing_col",
-                                                    "Non-missing color",
-                                                    "gray"),
-                                        br(),
-                                        awesomeCheckbox(
-                                          inputId = "show_non_miss",
-                                          label = "Show variables without missing values.",
-                                          value = FALSE
-                                        )
-                                 ),
-                                 column(8,
-                                        offset = 1,
-                                        withSpinner(uiOutput("plot_heatmap_ui"),
-                                                    color = "black")
+                                 colourInput("above_threshold_col",
+                                             "Above threshold color",
+                                             "tomato"),
+                                 colourInput("below_threshold_col",
+                                             "Below threshold color",
+                                             "black"),
+                                 br(),
+                                 awesomeCheckbox(
+                                   inputId = "show_non_miss",
+                                   label = "Show variables without missing values.",
+                                   value = FALSE
                                  )
+                          ),
+                          column(7,
+                                 offset = 1,
+                                 withSpinner(uiOutput("plot_segment_ui"),
+                                             color = "black"),
+                          ),
+                          download_plot_UI("segment"),
+                        ),
+                        tabPanel(
+                          "Missing values pattern heatmap",
+                          br(),
+                          column(3,
+                                 style = 'border-right: 1px solid',
+                                 h3("Plot settings:"),
+                                 br(),
+                                 colourInput("missing_col",
+                                             "Missing color",
+                                             "black"),
+                                 colourInput("nonmissing_col",
+                                             "Non-missing color",
+                                             "gray"),
+                                 br(),
+                                 awesomeCheckbox(
+                                   inputId = "show_non_miss",
+                                   label = "Show variables without missing values.",
+                                   value = FALSE
+                                 )
+                          ),
+                          column(7,
+                                 offset = 1,
+                                 withSpinner(uiOutput("plot_heatmap_ui"),
+                                             color = "black")
+                          ),
+                          download_plot_UI("heatmap")
                         )
                       ),
              )
@@ -314,32 +322,38 @@ ui <- navbarPage(
            )
   ),
   tabPanel("Summary",
-           column(3,
-                  style = 'border-right: 1px solid',
-                  pickerInput(inputId = "plot_var",
-                              label = "Select variable:",
-                              choices = "",
-                              multiple = FALSE,
-                              options = list(`live-search` = TRUE)),
-                  pickerInput(inputId = "plot_methods",
-                              label = "Select method:",
-                              choices = "",
-                              multiple = FALSE,
-                              options = list(`live-search` = TRUE)),
-                  br(),
-                  colourInput("missing_col_res",
-                              "Imputed data color:",
-                              "tomato"),
-                  colourInput("nonmissing_col_res",
-                              "Observed data color:",
-                              "black"),
-                  br(),
-                  h5("Dear User,"),
-                  h5(" Selecting imputation methods based solely on preconceived notions can compromise data integrity. Resist the urge to cherry-pick. Instead, explore a variety of techniques to ensure robust handling of missing data."),
-                  h5(HTML("Best,<br>imputomics team"))
+           fluidRow(
+             column(3,
+                    style = 'border-right: 1px solid',
+                    h3("Plot settings:"),
+                    br(),
+                    pickerInput(inputId = "plot_var",
+                                label = "Select variable:",
+                                choices = "",
+                                multiple = FALSE,
+                                options = list(`live-search` = TRUE)),
+                    pickerInput(inputId = "plot_methods",
+                                label = "Select method:",
+                                choices = "",
+                                multiple = FALSE,
+                                options = list(`live-search` = TRUE)),
+                    br(),
+                    colourInput("missing_col_res",
+                                "Imputed data color:",
+                                "tomato"),
+                    colourInput("nonmissing_col_res",
+                                "Observed data color:",
+                                "black"),
+                    br(),
+             ),
+             column(7, offset = 1,
+                    withSpinner(plotOutput("points", height = 500))
+             ),
+             download_plot_UI("points"),
            ),
-           column(7, offset = 1,
-                  withSpinner(plotOutput("points", height = 500))
+           column(11,
+                  style = "position:absolute; bottom: 5px;",
+                  h5("Dear User! Selecting imputation methods based solely on preconceived notions can compromise data integrity. Resist the urge to cherry-pick. Instead, explore a variety of techniques to ensure robust handling of missing data."),
            )
   ),
   tabPanel("Download",
@@ -441,8 +455,8 @@ server <- function(input, output, session) {
 
     if(input[["NA_sign"]] == "NA")
       dat[["missing_data"]] <- dat[["raw_data"]]
-
   })
+
 
   output[["missing_num_data"]] <- DT::renderDataTable({
     req(dat[["missing_data"]])
@@ -490,7 +504,8 @@ server <- function(input, output, session) {
 
   ##### data vis
 
-  output[["plot_segment"]] <- renderPlot({
+
+  plot_segment <- reactive({
     req(dat[["mv_summary"]])
     req(input[["thresh"]])
     req(input[["below_threshold_col"]])
@@ -505,7 +520,6 @@ server <- function(input, output, session) {
                      type = "warning")
       show_complete <- TRUE
     }
-
     tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
     if(!show_complete)
       tmp_dat <- filter(tmp_dat, `% Missing` > 0)
@@ -514,6 +528,14 @@ server <- function(input, output, session) {
                     below_col = input[["below_threshold_col"]],
                     above_col = input[["above_threshold_col"]])
   })
+
+
+  output[["plot_segment"]] <- renderPlot({
+    plot_segment()
+  })
+
+
+  download_plot_SERVER("segment", plot_reactive = plot_segment)
 
 
   output[["plot_segment_ui"]] <- renderUI({
@@ -525,7 +547,7 @@ server <- function(input, output, session) {
   })
 
 
-  output[["plot_heatmap"]] <- renderPlot({
+  plot_heatmap <- reactive({
     req(dat[["full_data"]])
     show_complete <- input[["show_non_miss"]]
 
@@ -548,17 +570,25 @@ server <- function(input, output, session) {
   })
 
 
+  output[["plot_heatmap"]] <- renderPlot({
+    plot_heatmap()
+  })
+
+
+  download_plot_SERVER("heatmap", plot_reactive = plot_heatmap)
+
+
   output[["plot_heatmap_ui"]] <- renderUI({
     plotOutput("plot_heatmap",
                height = max(dat[["n_cmp"]] * 22, 400),
                width = 800)
   })
 
+
   ratio_table <- reactive({
     req(dat[["missing_data"]])
     req(dat[["full_data"]])
     req(dat[["mv_summary"]])
-
     numeric_vars <- colnames(dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)])
 
     if(input[["group"]] == "none")
@@ -606,10 +636,8 @@ server <- function(input, output, session) {
 
   observeEvent(input[["remove_btn"]], {
     req(dat[["missing_data"]])
-
     dat[["missing_data"]] <- dat[["missing_data"]] %>%
       dplyr::select(-to_remove())
-
   })
 
 
@@ -619,7 +647,7 @@ server <- function(input, output, session) {
   })
 
 
-  output[["venna_diagram"]] <- renderPlot({
+  venna_diagram <- reactive({
     req(input[["remove_threshold"]])
     req(input[["group"]])
     req(dat[["full_data"]])
@@ -645,6 +673,11 @@ server <- function(input, output, session) {
     } else {
       return(NULL)
     }
+  })
+
+
+  output[["venna_diagram"]] <- renderPlot({
+    venna_diagram()
   })
 
 
@@ -863,18 +896,31 @@ server <- function(input, output, session) {
     }
   })
 
-
-
-  output[["points"]] <- renderPlot({
+  plot_points <- reactive({
     req(input[["plot_methods"]])
     req(input[["plot_var"]])
     req(dat[["missing_data"]])
     req(dat[["results"]])
 
     plot_points_density(dat, input)
-
   })
 
+
+  output[["points"]] <- renderPlot({
+    plot_points()
+  })
+
+
+  point_plot_dat <- reactive({
+    req(input[["plot_var"]])
+    req(input[["plot_methods"]])
+    paste0(input[["plot_var"]], "_", input[["plot_methods"]])
+  })
+
+
+  download_plot_SERVER("points",
+                       plot_reactive = plot_points,
+                       point_plot_dat = point_plot_dat)
 
 
   #Summary
