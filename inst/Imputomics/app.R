@@ -498,7 +498,6 @@ server <- function(input, output, session) {
                      type = "warning")
       show_complete <- TRUE
     }
-    browser()
 
     tmp_dat <- dat[["mv_summary"]][["mv_summary"]]
     if(!show_complete)
