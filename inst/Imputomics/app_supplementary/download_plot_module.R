@@ -18,12 +18,10 @@ download_plot_UI <- function(id) {
                downloadBttn(ns("download_plot"),
                             block = TRUE,
                             label = "Download",
-                            color = "primary")
-        ),
+                            color = "primary")),
         br(),
         br()
       ),
-
       circle = TRUE, status = "primary", right = TRUE,
       icon = icon("download"), width = "300px",
       tooltip = tooltipOptions(title = "Click to download!",

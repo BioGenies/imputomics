@@ -346,10 +346,8 @@ ui <- navbarPage(
                                 "black"),
                     br(),
              ),
-             column(7, offset = 1,
-                    withSpinner(plotOutput("points", height = 500))
-             ),
-             download_plot_UI("points"),
+             column(7, offset = 1, withSpinner(plotOutput("points", height = 500))),
+             column(1, download_plot_UI("points"))
            ),
            column(11,
                   style = "position:absolute; bottom: 5px;",
