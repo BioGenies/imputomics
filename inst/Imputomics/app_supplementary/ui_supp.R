@@ -2,6 +2,11 @@
 
 ui_content_about <- function() {
   tagList(
+    tags$footer(
+      align = "right",
+      style = "position:absolute; bottom:0; width:99%; height:30px; padding: 0px 0px 100px 100px;",
+      HTML("<img src='funding.png' style='height: 100px'>"),
+    ),
     fluidRow(
       column(2,
              align = "center",
@@ -22,8 +27,7 @@ ui_content_about <- function() {
     h4(HTML("<b> 6. Secure and Confidential:</b> Your data privacy is our top priority.")),
     markdown(imputomics_citation()),
     markdown(imputomics_contact()),
-    markdown(imputomics_funding()),
-    markdown(imputomics_funding_images_shinyapp())
+    markdown(imputomics_funding())
   )
 }
 
