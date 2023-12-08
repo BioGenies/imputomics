@@ -66,12 +66,53 @@ ui <- navbarPage(
                     icon = HTML("<i class='fa-solid fa-upload fa-bounce'></i>")
                   ),
            ),
-           column(7,
-                  offset = 1,
-                  h3("Dataset preview:"),
-                  br(),
-                  withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
-           )
+           column(8,
+                  tabsetPanel(
+                    tabPanel(
+                      "Entire dataset",
+                      br(),
+                      br(),
+                      column(
+                        10, offset = 1,
+                        withSpinner(DT::dataTableOutput("full_data"), color = "black")
+                      )
+                    ),
+                    tabPanel(
+                      "Imputation dataset",
+                      br(),
+                      br(),
+                      column(
+                        10, offset = 1,
+                        withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
+                      )
+                    ),
+                    tabPanel(
+                      "Manage Variables",
+                      h3("Exclude variables from imputation data."),
+                      h4("Choose from the numeric columns which ones to exclude.
+                         Categorical/text columns will be automatically ignored."),
+                      column(6, offset = 1,
+                             multiInput(
+                               inputId = "columns",
+                               label = "",
+                               selected = NULL,
+                               choices = character(0),
+                               width = "90%",
+                               options = list(
+                                 non_selected_header = "Numeric columns:",
+                                 selected_header = "Categorical columns:"
+                               )
+                             )
+                      ),
+                      column(4,
+                             br(),
+                             br(),
+                             h4("Columns to be ignored during imputation:"),
+                             htmlOutput("nonnumeric_cols_ui")
+                      )
+                    ),
+                  )
+           ),
   ),
   navbarMenu("Missing values analysis",
              tabPanel("Data menagement",
@@ -346,7 +387,8 @@ ui <- navbarPage(
                                 "black"),
                     br(),
              ),
-             column(7, offset = 1, withSpinner(plotOutput("points", height = 500))),
+             column(7, offset = 1, br(),
+                    withSpinner(plotOutput("points", height = 500))),
              column(1, download_plot_UI("points"))
            ),
            column(11,
@@ -388,8 +430,8 @@ server <- function(input, output, session) {
   observeEvent(input[["users_path"]], {
     req(input[["NA_sign"]])
 
-    raw_data <- NULL
     uploaded_data <- NULL
+    raw_data <- NULL
 
     file <- input[["users_path"]]
     req(file)
@@ -399,28 +441,43 @@ server <- function(input, output, session) {
       need(ext %in% c("xlsx", "csv", "rds"),
            paste("Please upload an xlsx, csv or rds file! You provided", ext))
     )
+    try({ uploaded_data <- switch(ext,
+                                  xlsx = read_xlsx(path),
+                                  csv = read.csv(path),
+                                  rds = readRDS(path)) })
 
-    try({ raw_data <- switch(ext,
-                             xlsx = read_xlsx(path),
-                             csv = read.csv(path),
-                             rds = readRDS(path)) })
+    dat[["raw_data"]] <- uploaded_data
+    dat[["uploaded_data"]] <- uploaded_data
+    dat[["missing_data"]] <- validate_data(uploaded_data, session, input)
 
-    uploaded_data <- raw_data
-    #data validation
-    checked_data <- validate_data(uploaded_data, session, input)
+    if(!is.null(dat[["missing_data"]])) {
+      dat[["n_cmp"]] <- ncol(uploaded_data)
+      dat[["all_cols"]] <- colnames(dat[["uploaded_data"]])
+      dat[["nonnumeric_cols_raw"]] <- colnames(select_if(dat[["uploaded_data"]], ~ !is.numeric(.)))
+      dat[["nonnumeric_cols"]] <- dat[["nonnumeric_cols_raw"]]
 
-    dat[["missing_data"]] <- checked_data[["uploaded_data"]]
-    dat[["full_data"]] <- checked_data[["full_data"]]
-    dat[["raw_data"]] <- raw_data
-    dat[["n_cmp"]] <- ncol(raw_data)
+      if(!(length(dat[["nonnumeric_cols"]]) == 0)) {
+        grouping_cols <- dat[["uploaded_data"]] %>%
+          dplyr::select(dat[["nonnumeric_cols"]]) %>%
+          select_if(~ !any(is.na(.))) %>%
+          colnames()
+      } else {
+        grouping_cols <- character(0)
+      }
 
-    updateSelectInput(session,
-                      inputId = "group",
-                      choices = c("none",
-                                  setdiff(colnames(dat[["full_data"]]),
-                                          colnames(dat[["missing_data"]]))),
-                      selected = "none")
+      updateMultiInput(session,
+                       inputId = "columns",
+                       choices = colnames(dat[["missing_data"]]))
+      updateSelectInput(session,
+                        inputId = "group",
+                        choices = c("none", grouping_cols),
+                        selected = "none")
+    } else {
+      dat[["uploaded_data"]] <- NULL
+      dat[["raw_data"]] <- NULL
+    }
   })
+
 
   observeEvent(dat[["missing_data"]], {
     req(dat[["missing_data"]])
@@ -436,44 +493,88 @@ server <- function(input, output, session) {
     #                  title = "Success !",
     #                  text = "Your data is correct!",
     #                  type = "success")
-
     dat[["mv_summary"]]  <- get_variables_table(dat[["missing_data"]])
   })
 
 
+  output[["nonnumeric_cols_ui"]] <- renderUI({
+        HTML(ifelse(length(dat[["nonnumeric_cols"]]) > 0,
+                paste0(paste(dat[["nonnumeric_cols"]], collapse = ", <br/>"),
+                       "<br/><br/> Total: ",
+                       length(dat[["nonnumeric_cols"]]),
+                       " variables."),
+                "none"))
+  })
+
+
+  observeEvent(input[["columns"]], {
+    req(dat[["uploaded_data"]])
+    req(dat[["uploaded_data"]])
+
+    dat[["nonnumeric_cols"]] <- union(dat[["nonnumeric_cols_raw"]], input[["columns"]])
+    dat[["missing_data"]] <- dat[["uploaded_data"]] %>%
+      dplyr::select(-dat[["nonnumeric_cols"]])
+    if(ncol(dat[["missing_data"]]) == 0) {
+      sendSweetAlert(session = session,
+                     title = "No numeric columns!",
+                     text = "Make sure that the uploaded file contains dataset with numeric columns.",
+                     type = "error")
+      dat[["missing_data"]] <- NULL
+    }
+  }, ignoreNULL = FALSE)
+
+
   observeEvent(input[["NA_sign"]], {
     req(input[["NA_sign"]])
+    req(dat[["uploaded_data"]])
+    req(dat[["raw_data"]])
     req(dat[["missing_data"]])
 
-    if(input[["NA_sign"]] == "0")
-      dat[["missing_data"]][dat[["raw_data"]] == 0] <- NA
+    tmp_missing_data <- dat[["raw_data"]][, colnames(dat[["missing_data"]])]
 
-    if(input[["NA_sign"]] == "1")
-      dat[["missing_data"]][dat[["raw_data"]] == 1] <- NA
+    if(input[["NA_sign"]] == "0") {
+      dat[["missing_data"]][tmp_missing_data == 0] <- NA
+      dat[["uploaded_data"]][dat[["raw_data"]] == 0] <- NA
+    }
+    if(input[["NA_sign"]] == "1") {
+      dat[["missing_data"]][tmp_missing_data == 1] <- NA
+      dat[["uploaded_data"]][dat[["raw_data"]] == 1] <- NA
+    }
+    if(input[["NA_sign"]] == "NA") {
+      dat[["missing_data"]][is.na(tmp_missing_data)] <- NA
+      dat[["uploaded_data"]][is.na(dat[["raw_data"]])] <- NA
+    }
+  })
 
-    if(input[["NA_sign"]] == "NA")
-      dat[["missing_data"]] <- dat[["raw_data"]]
+
+  output[["full_data"]] <- DT::renderDataTable({
+    req(dat[["uploaded_data"]])
+    DT::datatable(round_numeric(dat[["uploaded_data"]]),
+                  editable = FALSE,
+                  selection = list(selectable = FALSE),
+                  options = list(scrollX = TRUE,
+                                 pageLength = 10,
+                                 searching = FALSE),
+                  rownames = NULL)
   })
 
 
   output[["missing_num_data"]] <- DT::renderDataTable({
     req(dat[["missing_data"]])
-
     DT::datatable(round_numeric(dat[["missing_data"]]),
                   editable = FALSE,
                   selection = list(selectable = FALSE),
                   options = list(scrollX = TRUE,
                                  pageLength = 10,
                                  searching = FALSE),
-                  rownames = NULL
-    )
+                  rownames = NULL)
   })
 
 
   output[["missing_data"]] <- DT::renderDataTable({
-    req(dat[["full_data"]])
+    req(dat[["uploaded_data"]])
 
-    DT::datatable(round_numeric(dat[["full_data"]]),
+    DT::datatable(round_numeric(dat[["uploaded_data"]]),
                   editable = FALSE,
                   selection = list(selectable = FALSE),
                   options = list(scrollX = TRUE,
@@ -485,16 +586,25 @@ server <- function(input, output, session) {
 
 
   observeEvent(input[["example_dat"]], {
-    dat[["full_data"]] <- read.csv("./test_data/example_dat.csv")
-    dat[["missing_data"]] <-  dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)]
-    dat[["raw_data"]] <- dat[["missing_data"]]
+    dat[["uploaded_data"]] <- read.csv("./test_data/example_dat.csv")
+    dat[["missing_data"]] <-  dat[["uploaded_data"]][, sapply(dat[["uploaded_data"]], is.numeric)]
     dat[["n_cmp"]] <- ncol(dat[["missing_data"]])
 
+    dat[["all_cols"]] <- colnames(dat[["uploaded_data"]])
+    dat[["nonnumeric_cols_raw"]] <- colnames(select_if(dat[["uploaded_data"]], ~ !is.numeric(.)))
+    dat[["nonnumeric_cols"]] <- dat[["nonnumeric_cols_raw"]]
+
+    grouping_cols <- dat[["uploaded_data"]] %>%
+      dplyr::select(dat[["nonnumeric_cols"]]) %>%
+      select_if(~ !any(is.na(.))) %>%
+      colnames()
+
+    updateMultiInput(session,
+                     inputId = "columns",
+                     choices = colnames(dat[["missing_data"]]))
     updateSelectInput(session,
                       inputId = "group",
-                      choices = c("none",
-                                  setdiff(colnames(dat[["full_data"]]),
-                                          colnames(dat[["missing_data"]]))),
+                      choices = c("none", grouping_cols),
                       selected = "none")
 
   }, ignoreInit = TRUE)
@@ -511,7 +621,7 @@ server <- function(input, output, session) {
     show_complete <- input[["show_non_miss"]]
 
     #check if there are missing values in the data
-    if(sum(is.na(dat[["full_data"]])) == 0) {
+    if(sum(is.na(dat[["uploaded_data"]])) == 0) {
       sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "We will plot all the variables!",
@@ -546,11 +656,12 @@ server <- function(input, output, session) {
 
 
   plot_heatmap <- reactive({
-    req(dat[["full_data"]])
+    req(dat[["uploaded_data"]])
+    req(dat[["uploaded_data"]])
     show_complete <- input[["show_non_miss"]]
 
     #check if there are missing values in the data
-    if(sum(is.na(dat[["full_data"]])) == 0) {
+    if(sum(is.na(dat[["uploaded_data"]])) == 0) {
       sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "We will plot all the variables!",
@@ -558,7 +669,7 @@ server <- function(input, output, session) {
       show_complete <- TRUE
     }
 
-    tmp_dat <- dat[["full_data"]]
+    tmp_dat <- dat[["uploaded_data"]]
     if(!show_complete)
       tmp_dat <- dplyr::select(tmp_dat, where(function(x) any(is.na(x))))
 
@@ -585,15 +696,15 @@ server <- function(input, output, session) {
 
   ratio_table <- reactive({
     req(dat[["missing_data"]])
-    req(dat[["full_data"]])
+    req(dat[["uploaded_data"]])
     req(dat[["mv_summary"]])
-    numeric_vars <- colnames(dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)])
+    numeric_vars <- colnames(dat[["uploaded_data"]][, sapply(dat[["uploaded_data"]], is.numeric)])
 
     if(input[["group"]] == "none")
       ratio_table <- dat[["mv_summary"]][["mv_summary"]]
     else
       ratio_table <- dat[["missing_data"]] %>%
-      mutate(group = pull(dat[["full_data"]], input[["group"]])) %>%
+      mutate(group = pull(dat[["uploaded_data"]], input[["group"]])) %>%
       gather(Variable, measurement, -group) %>%
       group_by(group, Variable) %>%
       summarise(missing_ratio = mean(is.na(measurement)) * 100) %>%
@@ -634,24 +745,26 @@ server <- function(input, output, session) {
 
   observeEvent(input[["remove_btn"]], {
     req(dat[["missing_data"]])
+    dat[["removed"]] <- to_remove()
     dat[["missing_data"]] <- dat[["missing_data"]] %>%
       dplyr::select(-to_remove())
   })
 
 
   observeEvent(input[["undo_btn"]], {
-    req(dat[["full_data"]])
-    dat[["missing_data"]] <- dat[["full_data"]][, sapply(dat[["full_data"]], is.numeric)]
+    req(dat[["uploaded_data"]])
+    dat[["missing_data"]] <- dat[["uploaded_data"]][, sapply(dat[["uploaded_data"]], is.numeric)]
+    dat[["removed"]] <- character(0)
   })
 
 
   venna_diagram <- reactive({
     req(input[["remove_threshold"]])
     req(input[["group"]])
-    req(dat[["full_data"]])
+    req(dat[["uploaded_data"]])
 
     if(input[["group"]] != "none") {
-      groups <- unique(dat[["full_data"]][, input[["group"]]])
+      groups <- unique(dat[["uploaded_data"]][, input[["group"]]])
 
       ratios <- ratio_table() %>%
         mutate(across(groups, greater_eq_than_thresh, thresh = input[["remove_threshold"]]))
@@ -836,10 +949,8 @@ server <- function(input, output, session) {
 
     result_data <- dat[["results"]][["results"]]
     methods <- dat[["results"]][["methods"]]
-    success <- methods[!sapply(result_data, is.null)]
-
     success <- methods_table %>%
-      filter(imputomics_name %in% success)
+      filter(imputomics_name %in% methods[!sapply(result_data, is.null)])
 
     dat[["results"]][["success"]] <- success
 
@@ -894,12 +1005,12 @@ server <- function(input, output, session) {
     }
   })
 
+
   plot_points <- reactive({
     req(input[["plot_methods"]])
     req(input[["plot_var"]])
     req(dat[["missing_data"]])
     req(dat[["results"]])
-
     plot_points_density(dat, input)
   })
 
@@ -928,7 +1039,6 @@ server <- function(input, output, session) {
     content = function(file) {
       req(dat[["results"]])
       req(input[["download_methods"]])
-
       save_excel(dat, file, download_methods = input[["download_methods"]])
     }
   )
