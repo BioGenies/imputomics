@@ -49,10 +49,22 @@ server](http://imputomics.umb.edu.pl/).
 *imputomics* is available on
 [GitHub](https://github.com/BioGenies/imputomics)
 
+To install *imputomics* you need to have *R* version >= 4.3.0 and installed proper RTools.
+
+1) Clone the repository.
 ``` r
-devtools::install_github("BioGenies/imputomics")
+git clone https://github.com/BioGenies/imputomics.git
+```
+2) Change the directory to newly cloned imputomics.
+3) Run renv to restore proper versions of packages.
+``` r
 renv::restore()
 ```
+4) Install imputomics by running the code below. When asked do not upgrade any packages.
+``` r
+devtools::install(".")
+```
+Downloading all required packages will take some time.
 
 ## Run imputomics
 
@@ -67,7 +79,7 @@ imputomics::imputomics_gui()
 ### How to cite?
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski,
-Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski,
+Adam Krętowski, Rafał Kolenda, Michał Ciborowski,
 Michał Burdukiewicz (2023). Imputomics: comprehensive missing data
 imputation for metabolomics data (submitted).
 
