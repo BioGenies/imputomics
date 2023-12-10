@@ -60,11 +60,12 @@ git clone https://github.com/BioGenies/imputomics.git
 ``` r
 renv::restore()
 ```
+Downloading all required packages using renv will take some time.
+
 4) Install imputomics by running the code below. When asked do not upgrade any packages.
 ``` r
 devtools::install(".")
 ```
-Downloading all required packages will take some time.
 
 ## Run imputomics
 
