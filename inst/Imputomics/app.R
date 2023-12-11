@@ -116,21 +116,20 @@ ui <- navbarPage(
   ),
   navbarMenu("Missing values analysis",
              tabPanel("Data menagement",
-                      column(3,
-                             style = 'border-right: 1px solid',
-                             helper(
-                               h3("Variables removal"),
-                               type = "inline",
-                               title = "Variables removal using groups.",
-                               content = "Only variables exceeding the specified missing
+                      helper(
+                        h2("Variables removal"),
+                        type = "inline",
+                        title = "Variables removal using groups.",
+                        content = "Only variables exceeding the specified missing
                                value ratio threshold within each group will be removed.
                                When choosing a group for variable removal, please note
                                that only character variables without missing values
                                will be available for selection.",
-                               size = "m",
-                               buttonLabel = "Got it!"
-                             ),
-                             br(),
+                        size = "m",
+                        buttonLabel = "Got it!"
+                      ),
+                      br(),
+                      column(3,
                              h4("1. Set threshold for missing values ratio"),
                              sliderInput("remove_threshold",
                                          label = "Select maximum ratio allowed for each variable.",
@@ -162,7 +161,7 @@ ui <- navbarPage(
                              htmlOutput("to_remove_names"),
                       ),
                       column(4,
-                             style = 'border-right: 1px solid',
+                             style = 'border-right: 1px solid;border-left: 1px solid',
                              h4("Ratio of missing data per group [%]"),
                              br(),
                              withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
@@ -390,10 +389,6 @@ ui <- navbarPage(
              column(7, offset = 1, br(),
                     withSpinner(plotOutput("points", height = 500))),
              column(1, download_plot_UI("points"))
-           ),
-           column(11,
-                  style = "position:absolute; bottom: 5px;",
-                  h5("Dear User! Selecting imputation methods based solely on preconceived notions can compromise data integrity. Resist the urge to cherry-pick. Instead, explore a variety of techniques to ensure robust handling of missing data."),
            )
   ),
   tabPanel("Download",
