@@ -25,6 +25,9 @@ ui_content_about <- function() {
     h4(HTML("<b> 4. Performance Evaluation:</b> Compare imputation strategies for optimal results.")),
     h4(HTML("<b> 5. Export and Integration:</b> Export completed datasets and integrate with popular analysis platforms.")),
     h4(HTML("<b> 6. Secure and Confidential:</b> Your data privacy is our top priority.")),
+    br(),
+    h4(HTML("The application incorporates R package <em>imputomics</em>. If you prefer to
+       directly access R functions, the package is available"), a("on GitHub.", href = "https://github.com/BioGenies/imputomics")),
     markdown(imputomics_citation()),
     markdown(imputomics_contact()),
     markdown(imputomics_funding())
