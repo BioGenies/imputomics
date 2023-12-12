@@ -23,6 +23,7 @@ source("app_supplementary/download_plot_module.R")
 source("app_supplementary/plots.R")
 source("app_supplementary/ui_supp.R")
 source("app_supplementary/amelia_safe_impute.R")
+source("app_supplementary/pattern_switch_module.R")
 source(system.file("readme_scripts.R", package = "imputomics"))
 
 methods_table <- get_methods_table("methods_table.RDS")
@@ -286,21 +287,12 @@ ui <- navbarPage(
                     size = "m",
                     buttonLabel = "Got it!"
                   ),
-
-                  prettySwitch(
-                    inputId = "fastest",
-                    label = "Add the 10 fastest methods",
-                    status = "danger",
-                    value = FALSE,
-                    slim = TRUE
-                  ),
-                  prettySwitch(
-                    inputId = "best",
-                    label = "Add the 10 most accurate methods",
-                    status = "danger",
-                    value = FALSE,
-                    slim = TRUE
-                  ),
+                  add_methods_UI("fastest"),
+                  add_methods_UI("best"),
+                  br(),
+                  add_methods_UI("MCAR"),
+                  add_methods_UI("MAR"),
+                  add_methods_UI("MNAR"),
                   br(),
                   textOutput("n_methods"),
                   br(),
@@ -493,7 +485,7 @@ server <- function(input, output, session) {
 
 
   output[["nonnumeric_cols_ui"]] <- renderUI({
-        HTML(ifelse(length(dat[["nonnumeric_cols"]]) > 0,
+    HTML(ifelse(length(dat[["nonnumeric_cols"]]) > 0,
                 paste0(paste(dat[["nonnumeric_cols"]], collapse = ", <br/>"),
                        "<br/><br/> Total: ",
                        length(dat[["nonnumeric_cols"]]),
@@ -797,32 +789,11 @@ server <- function(input, output, session) {
     paste0("Number of chosen methods: ", n)
   })
 
-
-  observeEvent(input[["best"]], {
-    best_methods <- pull(filter(methods_table, best), name)
-
-    if(input[["best"]])
-      updateMultiInput(session = session,
-                       inputId = "methods",
-                       selected = c(input[["methods"]], best_methods))
-    else
-      updateMultiInput(session = session,
-                       inputId = "methods",
-                       selected = setdiff(input[["methods"]], best_methods))
-  }, ignoreInit = TRUE)
-
-
-  observeEvent(input[["fastest"]], {
-    fastest_methods <- pull(filter(methods_table, fastest), name)
-    if(input[["fastest"]])
-      updateMultiInput(session = session,
-                       inputId = "methods",
-                       selected = c(input[["methods"]], fastest_methods))
-    else
-      updateMultiInput(session = session,
-                       inputId = "methods",
-                       selected = setdiff(input[["methods"]], fastest_methods))
-  }, ignoreInit = TRUE)
+  add_methods_SERVER("fastest", input, session, methods_table)
+  add_methods_SERVER("best", input, session, methods_table)
+  add_methods_SERVER("MCAR", input, session, methods_table)
+  add_methods_SERVER("MAR", input, session, methods_table)
+  add_methods_SERVER("MNAR", input, session, methods_table)
 
 
   ## imputation calc
@@ -871,18 +842,13 @@ server <- function(input, output, session) {
         imputed_dat <- imputomics:::safe_impute(ith_fun,
                                                 dat[["missing_data"]],
                                                 timeout = input[["timeout"]])
-
       if(!any(is.na(imputed_dat)) & !inherits(imputed_dat, "try-error"))
         return(imputed_dat)
       else
         return(NULL)
     })
 
-    updateProgressBar(session = session,
-                      id = "progress_bar",
-                      value = 100,
-                      title = "Done!")
-
+    updateProgressBar(session = session, id = "progress_bar", value = 100, title = "Done!")
     errors <- methods[sapply(results, is.null)]
     success <- setdiff(methods, errors)
 
@@ -892,30 +858,25 @@ server <- function(input, output, session) {
                      text = "All of the chosen methods failed to impute your data in provided time!
                      Try to increase the time limit or validate your dataset.",
                      type = "error")
-
     if(length(errors) == 0)
       sendSweetAlert(session = session,
                      title = "Success!",
                      text = "Imputation is done! You can check and download the results!",
                      type = "success")
-
     if(length(errors) > 0 & length(success) > 0)
       sendSweetAlert(session = session,
                      title = "Warning!",
                      text = "Imputation is done! However, some of the chosen methods failed to impute your data!",
                      type = "warning")
-
     names(results) <- methods
     dat[["results"]] <- list(results = results,
                              methods = methods)
   })
 
 
-  observeEvent(input[["methods"]], {
-    updateProgressBar(session = session,
-                      id = "progress_bar",
-                      value = 0)
-  })
+  observeEvent(input[["methods"]], {updateProgressBar(session = session,
+                                                      id = "progress_bar",
+                                                      value = 0) })
 
 
   # results
@@ -925,7 +886,6 @@ server <- function(input, output, session) {
 
     result_data <- dat[["results"]][["results"]]
     methods <- dat[["results"]][["methods"]]
-
     error <- methods[sapply(result_data, is.null)]
     error_txt <- "none"
 
