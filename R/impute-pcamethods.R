@@ -1,12 +1,12 @@
 eval_pcaMethods_calls <- function(missdf, method, ...) {
   check_missdf(missdf)
-  
-  all_args <- extend_arglist(list(...), 
-                             list(object = missdf, method = method), 
+
+  all_args <- extend_arglist(list(...),
+                             list(object = missdf, method = method),
                              list(verbose = FALSE))
-  
+
   imputed <- do.call(pcaMethods::pca, all_args)
-  
+
   data.frame(pcaMethods::completeObs(imputed))
 }
 
@@ -25,9 +25,9 @@ eval_pcaMethods_calls <- function(missdf, method, ...) {
 #' \code{object}.
 #'
 #' @section Silent verbose:
-#' If \code{verbose} is not defined in the function call, it is set to 
+#' If \code{verbose} is not defined in the function call, it is set to
 #' \code{FALSE}.
-#' 
+#'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "svdImpute".
 #'
@@ -41,7 +41,7 @@ eval_pcaMethods_calls <- function(missdf, method, ...) {
 #' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 #' @export
-impute_svd <- function(missdf, ...) 
+impute_svd <- function(missdf, ...)
   eval_pcaMethods_calls(missdf, method = "svdImpute", ...)
 
 
@@ -57,7 +57,7 @@ impute_svd <- function(missdf, ...)
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()] with
 #' method = "ppca".
-#' 
+#'
 #' @inheritSection impute_svd Silent verbose
 #'
 #' @seealso [pcaMethods::pca()]
@@ -70,7 +70,7 @@ impute_svd <- function(missdf, ...)
 #' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 #' @export
-impute_ppca <- function(missdf, ...) 
+impute_ppca <- function(missdf, ...)
   eval_pcaMethods_calls(missdf, method = "ppca", ...)
 
 
@@ -79,18 +79,18 @@ impute_ppca <- function(missdf, ...)
 #' Bayesian Principal Component Analysis.
 #'
 #' A function to replace \code{NA} in the data frame by [pcaMethods::pca()]
-#' with method = "bpca". 
+#' with method = "bpca".
 #'
 #' @inheritParams impute_zero
 #' @inheritParams impute_svd
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "bpca".
-#' 
+#'
 #' @inheritSection impute_svd Silent verbose
-#' 
-#' @section Silent maxSteps: 
-#' 
+#'
+#' @section Silent maxSteps:
+#'
 #' If \code{maxSteps} is not declared, it is automatically
 #' set to 500 (in contrast to default 100).
 #'
@@ -99,7 +99,7 @@ impute_ppca <- function(missdf, ...)
 #' @examples
 #' data(sim_miss)
 #' impute_bpca(sim_miss)
-#' 
+#'
 #' # bring back the default maximum number of steps
 #' impute_bpca(sim_miss, maxSteps = 100)
 #' @references
@@ -107,8 +107,9 @@ impute_ppca <- function(missdf, ...)
 #'
 #' @export
 impute_bpca <- function(missdf, ...) {
-  all_args <- extend_arglist(list(...), list(missdf = missdf, method = "bpca"), list(maxSteps = 500))
-  
+  all_args <- extend_arglist(list(...), list(missdf = missdf, method = "bpca"),
+                             list(maxSteps = 500))
+
   do.call(eval_pcaMethods_calls, all_args)
 }
 
@@ -125,7 +126,7 @@ impute_bpca <- function(missdf, ...) {
 #'
 #' @returns A \code{data.frame} with imputed values by [pcaMethods::pca()]
 #' with method = "nipals".
-#' 
+#'
 #' @inheritSection impute_svd Silent verbose
 #'
 #' @seealso [pcaMethods::pca()]
@@ -138,5 +139,5 @@ impute_bpca <- function(missdf, ...) {
 #' \insertRef{stacklies_pcamethods_2007}{imputomics}
 #'
 #' @export
-impute_nipals <- function(missdf, ...) 
+impute_nipals <- function(missdf, ...)
   eval_pcaMethods_calls(missdf, method = "nipals", ...)

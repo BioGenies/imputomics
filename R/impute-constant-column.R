@@ -5,7 +5,6 @@
 #' @noRd
 #' @keywords internal
 impute_constant <- function(missdf, constant_value) {
-
   missdf[is.na(missdf)] <- constant_value
   missdf
 }

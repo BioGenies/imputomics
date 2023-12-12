@@ -1,13 +1,14 @@
 #' List MVIAs
-#' 
-#' Returns the character vector of missing value imputation algorithms (MVIA) 
+#'
+#' Returns the character vector of missing value imputation algorithms (MVIA)
 #' implemented in the \code{imputomics} package.
 #' @export
 #' @examples
 #' list_imputations()
-#' 
+#'
 list_imputations <- function()
-  ls("package:imputomics")[grep(pattern = "impute_", x = ls("package:imputomics"))]
+  ls("package:imputomics")[grep(pattern = "impute_",
+                                x = ls("package:imputomics"))]
 
 silent_evaluation <- function(expr) {
   capture.output(res <- expr)
@@ -32,7 +33,8 @@ silence_function <- function(verbose) {
 #' @noRd
 extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
 
-  argnames_to_be_added <- setdiff(names(voluntary_args), c(names(dots_args), names(obligatory_args)))
+  argnames_to_be_added <- setdiff(names(voluntary_args),
+                                  c(names(dots_args), names(obligatory_args)))
 
   c(dots_args, obligatory_args, voluntary_args[argnames_to_be_added])
 }
@@ -44,8 +46,8 @@ extend_arglist <- function(dots_args, obligatory_args, voluntary_args) {
 #'
 #' @inheritParams impute_zero
 #'
-#' @param imputing_function a function (imputation method) that takes
-#' missdf as an input
+#' @param imputing_function a function (imputation method) that takes missdf as
+#' an input
 #' @param timeout a numeric value specifying the limit of time evaluation in
 #' seconds. Default to 5min.
 #'

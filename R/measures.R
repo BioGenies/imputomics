@@ -43,10 +43,8 @@ calculate_measures <- function(X_observed,
 #'
 #' @noRd
 #' @keywords internal
-
 mae <- function(observed, imputed)
   mean(abs(observed - imputed))
-
 
 
 #' Root Mean Square Error
@@ -54,10 +52,8 @@ mae <- function(observed, imputed)
 #'
 #' @noRd
 #' @keywords internal
-
 rmse <- function(observed, imputed)
   sqrt(mean((observed - imputed)^2))
-
 
 
 #' Normalized Root Mean Square Error
@@ -65,10 +61,8 @@ rmse <- function(observed, imputed)
 #' @inheritParams mae
 #' @noRd
 #' @keywords internal
-
 nrmse <- function(observed, imputed)
   sqrt(mean((observed - imputed)^2) / var(observed))
-
 
 
 #' Mean Percentage Error
@@ -76,10 +70,8 @@ nrmse <- function(observed, imputed)
 #'
 #' @noRd
 #' @keywords internal
-
 mpe <- function(observed, imputed)
   mean((observed - imputed)/observed) * 100
-
 
 
 #' Mean Absolute Percentage Error
@@ -87,10 +79,8 @@ mpe <- function(observed, imputed)
 #'
 #' @noRd
 #' @keywords internal
-
 mape <- function(observed, imputed)
   mean(abs((observed - imputed)/observed)) * 100
-
 
 
 #' R-squared
@@ -98,10 +88,8 @@ mape <- function(observed, imputed)
 #'
 #' @noRd
 #' @keywords internal
-
 rsq <- function(observed, imputed)
   cor(observed, imputed)^2
-
 
 
 #' Concordance Correlation Coefficient
@@ -109,7 +97,6 @@ rsq <- function(observed, imputed)
 #'
 #' @noRd
 #' @keywords internal
-
 ccc <- function(observed, imputed) {
   sd_obs <- sd(observed)
   sd_imp <- sd(imputed)

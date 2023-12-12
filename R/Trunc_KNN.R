@@ -1,11 +1,11 @@
-##################################################################################
+################################################################################
 #### MLE for the Truncated Normal
 #### Creating a Function that Returns the Log Likelihood, Gradient and
 #### Hessian Functions
 #### This function was copied from https://github.com/WandeRum/GSimp
 #### and contains kNN-TN algorithm and related functions developed by
 #### Jasmit S. Shah (https://doi.org/10.1186/s12859-017-1547-6).
-##################################################################################
+################################################################################
 
 ## data = numeric vector
 ## t    = truncation limits
@@ -87,13 +87,15 @@ mklhood <- function(data, t, ...) {
     return(H)
   }
 
-
-  return(list(ll.tnorm2 = ll.tnorm2, grad.tnorm = grad.tnorm, hessian.tnorm = hessian.tnorm))
+  return(list(ll.tnorm2 = ll.tnorm2,
+              grad.tnorm = grad.tnorm,
+              hessian.tnorm = hessian.tnorm))
 }
-##################################################################################
+
+################################################################################
 ###### Newton Raphson Function
 ###### This takes in the Objects Returned from mklhood Function above
-##################################################################################
+################################################################################
 
 NewtonRaphsonLike <- function(lhood, p, tol = 1e-07, maxit = 100) {
 
@@ -116,11 +118,11 @@ NewtonRaphsonLike <- function(lhood, p, tol = 1e-07, maxit = 100) {
   return(list(estimate = new, value= lhood$ll.tnorm2(new), iter = i))
 }
 
-##################################################################################
+################################################################################
 ###### Based on the MLE Functions (mklhood) and NewtonRaphson Function
 ###### (NewtonRaphsonLike), This function estimates the MEAN and SD from the
 ###### Truncated using Newton Raphson.
-##################################################################################
+################################################################################
 
 ## missingdata = matrix where rows = features, columns = samples
 ## perc = if %MVs > perc then just sample mean / SD
@@ -323,9 +325,9 @@ imputeKNN <- function (data, k , distance = "correlation",
   return(imp.knn)
 }
 
-##################################################################################
+################################################################################
 #### Root Mean Squared Error Function
-##################################################################################
+################################################################################
 Rmse <- function(imp, mis, true, norm = FALSE) {
   imp <- as.matrix(imp)
   mis <- as.matrix(mis)
@@ -338,9 +340,9 @@ Rmse <- function(imp, mis, true, norm = FALSE) {
   }
   return(rmse)
 }
-##################################################################################
+################################################################################
 #### Compute the Errors for the Different Imputation Methods
-##################################################################################
+################################################################################
 ErrorsComputation <- function(trunc, corr, euc, miss, complete) {
 
   ImputeErrors <- NULL

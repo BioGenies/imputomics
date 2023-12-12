@@ -6,8 +6,8 @@
 #' with method = "em".
 #'
 #' @inheritParams impute_zero
-#' @param ... other parameters of [missMDA::imputePCA()] besides \code{method} and
-#' \code{X}.
+#' @param ... other parameters of [missMDA::imputePCA()] besides \code{method}
+#' and \code{X}.
 #'
 #' @returns A \code{data.frame} with imputed values by [missMDA::imputePCA()]
 #' with \code{method = "em"}.
@@ -66,7 +66,8 @@ impute_amelia <- function(missdf, verbose = FALSE, ...) {
   silence_function(verbose)(imputed <- Amelia::amelia(missdf, m = 1, ...))
 
   if(is.null(imputed[["imputations"]][["imp1"]])) {
-    stop(paste0("Amelia failed to impute missing values. Error code: ", imputed[["code"]], "."))
+    stop(paste0("Amelia failed to impute missing values. Error code: ",
+                imputed[["code"]], "."))
   }
 
   imputed[["imputations"]][["imp1"]]
@@ -123,8 +124,8 @@ impute_missforest <- function(missdf, ...) {
 #' \code{burnin = 5} and \code{nk = 0}.
 #'
 #' @details
-#' \code{aregImpute()} allows users to customize the number of imputed datasets to
-#' create. As one of the aims of the \code{imputomics} is to standardize the
+#' \code{aregImpute()} allows users to customize the number of imputed datasets
+#' to create. As one of the aims of the \code{imputomics} is to standardize the
 #' input and the output, the \code{n.impute} is being set to 1.
 #'
 #' @returns A \code{data.frame} with imputed values by [Hmisc::aregImpute()].
@@ -142,10 +143,13 @@ impute_missforest <- function(missdf, ...) {
 impute_areg <- function(missdf, verbose = FALSE, ...) {
   check_missdf(missdf)
 
-  all_args <- extend_arglist(list(...),
-                             list(formula = stats::as.formula(paste("~", paste(colnames(missdf), collapse = "+"))),
-                                  data = missdf, n.impute = 1, type = "pmm"),
-                             list(burnin = 5, nk = 0))
+  all_args <- extend_arglist(
+    list(...),
+    list(formula = stats::as.formula(paste("~", paste(colnames(missdf),
+                                                      collapse = "+"))),
+         data = missdf, n.impute = 1, type = "pmm"),
+    list(burnin = 5, nk = 0)
+  )
 
   silence_function(verbose)(imputed <- do.call(Hmisc::aregImpute, all_args))
 
@@ -172,8 +176,8 @@ impute_areg <- function(missdf, verbose = FALSE, ...) {
 #' @returns A \code{data.frame} with imputed values by [impute::impute.knn()].
 #'
 #' @section Silent defaults:
-#' \code{impute.knn} sets its \code{rng.seed} by default to 362436069. To avoid it,
-#' \code{imputomics} by default uses \code{sample(1L:1e9, 1)}.
+#' \code{impute.knn} sets its \code{rng.seed} by default to 362436069. To avoid
+#' it, \code{imputomics} by default uses \code{sample(1L:1e9, 1)}.
 #' @seealso [impute::impute.knn()]
 #'
 #' @examples
@@ -239,8 +243,7 @@ impute_qrilc <- function(missdf, ...) {
 #' @importFrom softImpute softImpute
 #'
 #' @inheritParams impute_zero
-#' @param ... other parameters of [softImpute::softImpute()] besides
-#' \code{x}.
+#' @param ... other parameters of [softImpute::softImpute()] besides \code{x}.
 #'
 #' @returns A \code{data.frame} with imputed values by
 #' [softImpute::softImpute()].
@@ -439,10 +442,12 @@ impute_regimpute <- function(missdf, verbose = FALSE, fillmethod = "row_mean",
                              maxiter_RegImpute = 10, conv_nrmse = 1e-6) {
   check_missdf(missdf)
 
-  imputed <- silence_function(verbose)(DreamAI::impute.RegImpute(data = as.matrix(missdf),
-                                                                     fillmethod = fillmethod,
-                                                                     maxiter_RegImpute = maxiter_RegImpute,
-                                                                     conv_nrmse = conv_nrmse))
+  imputed <- silence_function(verbose)(
+    DreamAI::impute.RegImpute(data = as.matrix(missdf),
+                              fillmethod = fillmethod,
+                              maxiter_RegImpute = maxiter_RegImpute,
+                              conv_nrmse = conv_nrmse)
+  )
 
   data.frame(imputed)
 }
@@ -517,8 +522,9 @@ impute_imputation_knn <- function(missdf, ...) {
 #'
 #' @inheritParams impute_zero
 #' @param verbose boolean, if \code{TRUE}, prints the typical prompts of
-#' [GMSimpute::GMS.Lasso()]. These prompts contain the information if the algorithm
-#' uses TS.Lasso or minimum per compund to impute, so it might be very relevant.
+#' [GMSimpute::GMS.Lasso()]. These prompts contain the information if the
+#' algorithm uses TS.Lasso or minimum per compund to impute, so it might be very
+#' relevant.
 #' @param ... other parameters of [GMSimpute::GMS.Lasso()] besides
 #' \code{input_data}.
 #' @importFrom GMSimpute GMS.Lasso
@@ -539,10 +545,12 @@ impute_cm <- function(missdf, verbose = FALSE, ...){
   rownames(missdf) <- NULL
 
   # samples in columns and features in rows, so transposition
-  res <- silence_function(verbose)(GMSimpute::GMS.Lasso(t(as.matrix(missdf)), ...))
+  res <- silence_function(verbose)(
+    GMSimpute::GMS.Lasso(t(as.matrix(missdf)), ...)
+  )
 
-  # if the function switches to TS.Lasso = TRUE, the result needs to be transposed
-  # (but not always)
+  # if the function switches to TS.Lasso = TRUE, the result needs to be
+  # transposed (but not always)
   # so we detect if the colnames name contains string 'sample'
 
   if(all(grepl("^sample", colnames(res), fixed = FALSE))) {
@@ -614,13 +622,13 @@ impute_mnmf <- function(missdf, kgroup = NULL, initialType = "mean") {
   check_missdf(missdf, above_one = TRUE)
 
   # samples in columns and features in rows
-
-
   if(is.null(kgroup)) {
     kgroup <- unique(round(seq(1, min(ncol(missdf), nrow(missdf)),
                                length.out = min(20, nrow(missdf))), 0))
   }
 
 
-  data.frame(t(nmf_opt(IMP = t(as.matrix(missdf)), kgroup = kgroup, initialType = initialType)))
+  data.frame(t(nmf_opt(IMP = t(as.matrix(missdf)),
+                       kgroup = kgroup,
+                       initialType = initialType)))
 }
