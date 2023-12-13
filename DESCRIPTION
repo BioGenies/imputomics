@@ -39,9 +39,8 @@ BugReports: https://github.com/biogenies/imputomics/issues
 Imports:
     Amelia,
     bcv,
-    callr,
-    DreamAI,
     glmnet,
+    pcaMethods (>= 1.94.0),
     GMSimpute,
     checkmate,
     dplyr,
@@ -49,11 +48,11 @@ Imports:
     ggplot2,
     graphics,
     Hmisc,
-    imputation,
-    impute,
+    imputation (>= 2.0.3),
+    impute (>= 1.76.0),
     imputeLCMD,
-    MAI,
-    MetabImpute,
+    MAI (>= 1.3.0),
+    MetabImpute (>= 0.1.0),
     methods,
     mice,
     missCompare,
@@ -61,8 +60,7 @@ Imports:
     missMDA,
     NMF (>= 0.30.4.900),
     patchwork,
-    pcaMethods,
-    PEMM,
+    PEMM (>= 1.0),
     tidyr,
     Rdpack,
     R.utils,
@@ -71,6 +69,9 @@ Imports:
     softImpute,
     truncnorm,
     VIM,
+    Biobase (>= 2.60.0),
+    TimeProjection (>= 0.2.0),
+    DreamAI (>= 0.1.0)
 Suggests:
     abind,
     beeswarm,
@@ -80,7 +81,19 @@ Suggests:
     randomForest,
     spelling,
     openxlsx,
-    rmarkdown
+    rmarkdown,
+    callr
 Language: en-US
 RdMacros: Rdpack
 LazyData: true
+Remotes:  
+    bioc::release/Biobase,
+    url::https://cran.r-project.org/src/contrib/Archive/PEMM/PEMM_1.0.tar.gz,
+    bioc::release/impute,
+    url::https://cran.r-project.org/src/contrib/Archive/TimeProjection/TimeProjection_0.2.0.tar.gz,
+    github::jeffwong/imputation,
+    github::WangLab-MSSM/DreamAI/Code,
+    bioc::release/pcaMethods,
+    github::KechrisLab/MAI,
+    github::BeanLabASU/metabimpute,
+    github::renozao/NMF@devel
