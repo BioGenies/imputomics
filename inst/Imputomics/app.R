@@ -309,9 +309,10 @@ ui <- navbarPage(
                   br(),
                   textOutput("n_methods"),
                   br(),
-                  h5(HTML("<b> Usage note: </b> Searching for methods based on fitting a predefined hypothesis is
-           associated with the issue of multiple comparisons and may lead to
-           significant overfitting. When choosing an imputation method, prioritize the structure of
+                  h4("Usage note:"),
+                  h5(HTML("Searching for methods based on fitting a predefined hypothesis is
+           associated with the issue of <b>multiple comparisons</b> and may lead to
+           significant <b>overfitting</b>. When choosing an imputation method, prioritize the structure of
               your data over preconceived notions. The effectiveness of analytical
               methods varies depending on dataset characteristics. Consider
               nuances such as distribution, scale, missing value patterns, and

@@ -43,36 +43,36 @@ methods_table <- methods_table %>%
          fastest = name %in% fastest_methods)
 
 
-best_MCAR <- readRDS("./inst/Imputomics/res_amputation.RDS") %>%
+best_MCAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
   filter(frac_computed > 0.80) %>%
   filter(method != "softimpute") %>%
   filter(MAR == 0, MNAR == 0) %>%
   group_by(method) %>%
-  summarise(mean_NRMSE = mean(median_nrmse)) %>%
+  summarise(mean_NRMSE = mean(median_NRMSE)) %>%
   arrange(mean_NRMSE) %>%
   slice_head(n = 5) %>%
   mutate(method = paste0("impute_", method)) %>%
   pull(method)
 
-best_MAR <- readRDS("./inst/Imputomics/res_amputation.RDS") %>%
-  filter(frac_computed > 0.80) %>%
+best_MAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
+  filter(frac_computed >= 0.80) %>%
   filter(method != "softimpute") %>%
   filter(MCAR == 0, MNAR == 0) %>%
   group_by(method) %>%
-  summarise(mean_NRMSE = mean(median_nrmse)) %>%
+  summarise(mean_NRMSE = mean(median_NRMSE)) %>%
   arrange(mean_NRMSE) %>%
   slice_head(n = 5) %>%
   mutate(method = paste0("impute_", method)) %>%
   pull(method)
 
-best_MNAR <- readRDS("./inst/Imputomics/res_amputation.RDS") %>%
+best_MNAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
   filter(frac_computed > 0.80) %>%
   filter(method != "softimpute") %>%
   filter(MCAR == 0, MAR == 0) %>%
   group_by(method) %>%
-  summarise(mean_NRMSE = mean(median_nrmse)) %>%
+  summarise(mean_NRMSE = mean(median_NRMSE)) %>%
   arrange(mean_NRMSE) %>%
-  slice_head(n = 5) %>%
+  slice_head(n = 6) %>%
   mutate(method = paste0("impute_", method)) %>%
   pull(method)
 
@@ -81,9 +81,8 @@ methods_table <- methods_table %>%
          MAR = imputomics_name %in% best_MAR,
          MNAR = imputomics_name %in% best_MNAR)
 
-methods_table %>%
-  filter(MAR)
-
-
 # saving
 saveRDS(methods_table, "./inst/Imputomics/methods_table.RDS")
+
+
+
