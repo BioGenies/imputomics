@@ -244,15 +244,10 @@ ui <- navbarPage(
            h3("Let's impute your missing values!"),
            h4("Select one or more imputation methods from the list below and click impute!"),
            h5("Check the references panel for the references of all imputations methods."),
-           br(),
-           column(3,
-                  h4("Specify time limit per method below."),
+           column(4,
+                  br(),
                   helper(
-                    numericInput(
-                      "timeout",
-                      label = "Provide a value between 1 and 300 in seconds",
-                      value = 300, min = 1, max = 300
-                    ),
+                    h4("Specify time limit per method below."),
                     type = "inline",
                     title = "How to set time limit?",
                     content = c("The <b>timeout</b> parameter allows users to set a time limit
@@ -265,9 +260,14 @@ ui <- navbarPage(
                     size = "m",
                     buttonLabel = "Got it!"
                   ),
+                  numericInput(
+                    "timeout",
+                    label = "Provide a value between 1 and 300 in seconds",
+                    value = 300, min = 1, max = 300
+                  ),
                   br(),
                   helper(
-                    h4("Filter the fastest/most accurate methods."),
+                    add_methods_UI("fastest"),
                     type = "inline",
                     title = "Fastest or most accurate metods",
                     content = c(
@@ -277,28 +277,42 @@ ui <- navbarPage(
                     are optimized for efficiency and are well-suited for handling
                     missing data in large datasets or scenarios where
                       computation speed is crucial.",
-                      "<b>Most accurate</b> are chosen based on their
+                      "<b>Most accurate (generally/for MCAR/for MAR/for MNAR)</b>
+                      are chosen based on their
                       performance measured by the Normalized Root Mean Squared
-                      Error (NRMSE). The 10 best methods are those that have
+                      Error (NRMSE). The best methods are those that have
                       frequency of successful imputation over 80% of the cases
                       and have shown the lowest NRMSE values, indicating their
-                      superior ability to impute missing values accurately."
+                      superior ability to impute missing values accurately.",
+                      "<b>MCAR (Missing Completely At Random): </b> missing values
+                      are due to random errors and stochastic fluctuations during
+                      the data acquisition process, such as incomplete derivation
+                      or ionization.",
+                      "<b>MAR (Missing At Random):</b> assumes that other observed
+                      variables determine the possibility of missingness.",
+                      "<b>MNAR (Missing Not At Random):</b> is considered for
+                      censored missing values, that are caused by the limit of
+                      detection (LOD) of a device",
+                      "For more details see "
                     ),
                     size = "m",
                     buttonLabel = "Got it!"
                   ),
-                  add_methods_UI("fastest"),
                   add_methods_UI("best"),
-                  br(),
                   add_methods_UI("MCAR"),
                   add_methods_UI("MAR"),
                   add_methods_UI("MNAR"),
                   br(),
                   textOutput("n_methods"),
                   br(),
-                  "*The most resource demanding tools (MAI and Gibbs Sampler
-                     based methods) are available only in the R package.",
-                  br(),
+                  h5(HTML("<b> Usage note: </b> Searching for methods based on fitting a predefined hypothesis is
+           associated with the issue of multiple comparisons and may lead to
+           significant overfitting. When choosing an imputation method, prioritize the structure of
+              your data over preconceived notions. The effectiveness of analytical
+              methods varies depending on dataset characteristics. Consider
+              nuances such as distribution, scale, missing value patterns, and
+              relationships for a more accurate and reliable outcome, adhering
+              to best practices in data analysis.")),
                   br(),
                   br(),
                   column(12, align = "center",
@@ -307,10 +321,10 @@ ui <- navbarPage(
                                     style = "material-flat",
                                     color = "warning",
                                     size = "lg",
-                                    icon = icon("pen"))
+                                    icon = icon("pen")),
                   ),
            ),
-           column(9,
+           column(8,
                   align = "center",
                   multiInput(
                     inputId = "methods",
@@ -322,7 +336,9 @@ ui <- navbarPage(
                       non_selected_header = "Available methods:",
                       selected_header = "You have selected:"
                     )
-                  )
+                  ),
+                  "*The most resource demanding tools (MAI and Gibbs Sampler
+                     based methods) are available only in the R package.",
            ),
            column(10, offset = 1, style = "position:absolute; bottom: 5px;",
                   progressBar(id = "progress_bar",
