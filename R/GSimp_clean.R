@@ -1,8 +1,8 @@
-##################################################################################
+################################################################################
 #### This function was copied from https://github.com/WandeRum/GSimp
 #### and contains the GSimp algorithm and related functions developed by
 #### Rum Wei (10.1371/journal.pcbi.1005973).
-##################################################################################
+################################################################################
 
 #require(missForest)
 #require(imputeLCMD)
@@ -27,7 +27,8 @@ rnorm_trunc <- function (n, mu, std, lo = -Inf, hi = Inf) {
 
 #' Supplementary function for GSimp
 #' Initialize the missing data
-#' lsym will draw samples from the right tail of the distribution and transformed to the left tail
+#' lsym will draw samples from the right tail of the distribution and
+#' transformed to the left tail
 #'
 #' @inheritParams GS_impute_clean
 #'
@@ -144,7 +145,8 @@ GS_impute_clean <- function(data_miss,
                             lo = -Inf,
                             hi = 'min',
                             imp_model = 'glmnet_pred',
-                            gibbs = data.frame(row = integer(), col=integer())) {
+                            gibbs = data.frame(row = integer(),
+                                               col=integer())) {
 
   ## Make vector for iters_each ##
   if (length(iters_each) == 1) {
@@ -159,7 +161,7 @@ GS_impute_clean <- function(data_miss,
   miss_col_idx_temp <- order(miss_count, decreasing = TRUE)
   miss_col_idx <- rev(miss_col_idx_temp[1:sum(miss_count!=0)])
 
-  # if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')} # tutaj pozbyc się %in% ale jak
+  # if (!all(gibbs$col %in% miss_col_idx)) {stop('improper argument: gibbs')}
   if (!all(setdiff(gibbs$col, miss_col_idx))) {stop('improper argument: gibbs')}
   gibbs_sort <- gibbs
   if (nrow(gibbs_sort)>0) {
@@ -213,7 +215,8 @@ GS_impute_clean <- function(data_miss,
       y_miss <- data_miss[, j]
       y_imp_res <- single_impute_iters(data_imp[, -j], data_imp[, j], y_miss,
                                        imp_model = imp_model, lo = lo_vec[j],
-                                       hi = hi_vec[j], iters_each = iters_each[i],
+                                       hi = hi_vec[j],
+                                       iters_each = iters_each[i],
                                        gibbs = gibbs_sort_temp$row)
       y_imp <- y_imp_res$y_imp
       gibbs_res_j <- abind::abind(gibbs_res_j, y_imp_res$gibbs_res, along=2)

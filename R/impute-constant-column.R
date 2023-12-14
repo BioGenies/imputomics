@@ -5,7 +5,6 @@
 #' @noRd
 #' @keywords internal
 impute_constant <- function(missdf, constant_value) {
-
   missdf[is.na(missdf)] <- constant_value
   missdf
 }
@@ -88,7 +87,7 @@ compute_col_halfmin <- function(x)
 #'
 #' @keywords internal
 compute_col_median <- function(x)
-  lapply(x, mean, na.rm = TRUE)
+  lapply(x, median, na.rm = TRUE)
 
 
 #' \strong{minimum} imputation.

@@ -1,12 +1,13 @@
 eval_mice_calls <- function(missdf, method, ...) {
   check_missdf(missdf)
-  
-  all_args <- extend_arglist(list(...), 
-                             list(data = missdf, method = method), 
-                             list(printFlag = FALSE, predictorMatrix = mice::quickpred(missdf)))
-  
+
+  all_args <- extend_arglist(list(...),
+                             list(data = missdf, method = method),
+                             list(printFlag = FALSE,
+                                  predictorMatrix = mice::quickpred(missdf)))
+
   imputed <- do.call(mice::mice, all_args)
-  
+
   mice::complete(imputed)
 }
 
@@ -22,16 +23,16 @@ eval_mice_calls <- function(missdf, method, ...) {
 #' @importFrom mice quickpred
 #'
 #' @inheritParams impute_zero
-#' @param ... other parameters of [mice::mice()] besides \code{method} and 
+#' @param ... other parameters of [mice::mice()] besides \code{method} and
 #' \code{data}.
-#' 
-#' 
-#' 
+#'
+#'
+#'
 #' @section Silent defaults:
-#' If \code{printFlag} is not defined in the function call, it is set to 
+#' If \code{printFlag} is not defined in the function call, it is set to
 #' \code{FALSE}.
-#' 
-#' If \code{predictorMatrix} is not defined in the function call, it is set to 
+#'
+#' If \code{predictorMatrix} is not defined in the function call, it is set to
 #' [mice::quickpred].
 #'
 #' @returns A \code{data.frame} with imputed values by pmm used [mice::mice()].
@@ -85,7 +86,8 @@ impute_mice_cart <- function(missdf, ...) {
 #' @inheritParams impute_zero
 #' @inheritParams impute_mice_pmm
 #'
-#' @returns A \code{data.frame} with imputed values by random forest used [mice::mice()].
+#' @returns A \code{data.frame} with imputed values by random forest used
+#' [mice::mice()].
 #'
 #' @inheritSection impute_mice_pmm Silent defaults
 #'
@@ -104,12 +106,13 @@ impute_mice_rf <- function(missdf, ...) {
 #' @section Aliases:
 #' \code{impute_mice_mixed} is a wrapper of [missCompare::impute_data()] with
 #' the \code{method} set to \code{11} (which means that mice is automatically
-#' selecting predictive mean matching for numerical data). The amount of iterations
+#' selecting predictive mean matching for numerical data). The amount of
+#' iterations
 #' \code{n.iter} is changed to 1 from default 10.
 #' @export
 impute_mice_mixed <- function(missdf) {
   check_missdf(missdf)
-  
+
   imputed <- missCompare::impute_data(missdf,
                                       n.iter = 1,
                                       sel_method = 11)

@@ -1,4 +1,16 @@
 
+round_numeric <- function(dat) {
+  dat %>%
+    mutate_if(is.numeric, round, digits = 3) %>%
+    relocate(where(is.numeric), .after = last_col())
+}
+
+
+greater_eq_than_thresh <- function(column, thresh) {
+  column >= thresh
+}
+
+
 
 validate_data <- function(uploaded_data, session, input) {
 
@@ -14,11 +26,11 @@ validate_data <- function(uploaded_data, session, input) {
 
     # check if the columns are numeric
     non_numeric_cols <- !sapply(uploaded_data, is.numeric)
-    if(any(non_numeric_cols)) {
+    uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
 
-      uploaded_data <- uploaded_data[, sapply(uploaded_data, is.numeric)]
+    if(any(non_numeric_cols) & !ncol(uploaded_data) == 0) {
       showNotification(paste0("Your data contains ", sum(non_numeric_cols),
-                              " non-numeric columns! We will ignore them!"),
+                              " non-numeric columns! We will ignore them during imputation!"),
                        session = session,
                        type = "warning",
                        duration = 20)
@@ -31,7 +43,6 @@ validate_data <- function(uploaded_data, session, input) {
                      type = "error")
       uploaded_data <- NULL
     } else {
-
       ncol_numeric <- sum(sapply(uploaded_data, is.numeric))
       if(ncol_numeric < 5)
         showNotification(paste0("You provided data with only ", ncol_numeric,
@@ -48,7 +59,6 @@ validate_data <- function(uploaded_data, session, input) {
                          duration = 20)
     }
   }
-
   uploaded_data
 }
 
@@ -87,14 +97,10 @@ get_methods_table <- function(path = "methods_table.RDS") {
 }
 
 
-
-
-
 save_excel <- function(dat, file, download_methods) {
   wb_file <- createWorkbook()
   addWorksheet(wb_file, "original_data")
-  writeData(wb_file, "original_data",
-            dat[["missing_data"]], colNames = TRUE)
+  writeData(wb_file, "original_data", dat[["uploaded_data"]], colNames = TRUE)
 
   result_data <- dat[["results"]][["results"]]
 
@@ -107,9 +113,11 @@ save_excel <- function(dat, file, download_methods) {
   for (i in 1:length(result_data)) {
     if(nrow(result_data[[i]]) != 0) {
       addWorksheet(wb_file, methods[i])
-      writeData(wb_file, methods[i], result_data[[i]], colNames = TRUE)
+      method_i_full_data <- dat[["uploaded_data"]]
+      method_i_full_data[, colnames(result_data[[i]])] <- result_data[[i]]
+      method_i_full_data <- method_i_full_data %>% dplyr::select(-dat[["removed"]])
+      writeData(wb_file, methods[i], method_i_full_data, colNames = TRUE)
     }
   }
-
   saveWorkbook(wb_file, file, overwrite = TRUE)
 }

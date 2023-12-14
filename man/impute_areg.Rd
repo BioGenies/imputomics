@@ -25,8 +25,8 @@ Multiple Imputation using Predictive Mean Matching.
 \details{
 A function to replace \code{NA} in the data frame by \code{\link[Hmisc:aregImpute]{Hmisc::aregImpute()}}.
 
-\code{aregImpute()} allows users to customize the number of imputed datasets to
-create. As one of the aims of the \code{imputomics} is to standardize the
+\code{aregImpute()} allows users to customize the number of imputed datasets
+to create. As one of the aims of the \code{imputomics} is to standardize the
 input and the output, the \code{n.impute} is being set to 1.
 }
 \section{Silent defaults}{

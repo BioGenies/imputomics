@@ -4,13 +4,15 @@
 \alias{miss_init}
 \title{Supplementary function for GSimp
 Initialize the missing data
-lsym will draw samples from the right tail of the distribution and transformed to the left tail}
+lsym will draw samples from the right tail of the distribution and
+transformed to the left tail}
 \usage{
 miss_init(miss_data, method = c("lsym", "qrilc", "rsym")[1])
 }
 \description{
 Supplementary function for GSimp
 Initialize the missing data
-lsym will draw samples from the right tail of the distribution and transformed to the left tail
+lsym will draw samples from the right tail of the distribution and
+transformed to the left tail
 }
 \keyword{internal}

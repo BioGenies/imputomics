@@ -23,8 +23,8 @@ A function to replace \code{NA} in the data frame by \code{\link[impute:impute.k
 }
 \section{Silent defaults}{
 
-\code{impute.knn} sets its \code{rng.seed} by default to 362436069. To avoid it,
-\code{imputomics} by default uses \code{sample(1L:1e9, 1)}.
+\code{impute.knn} sets its \code{rng.seed} by default to 362436069. To avoid
+it, \code{imputomics} by default uses \code{sample(1L:1e9, 1)}.
 }
 
 \examples{

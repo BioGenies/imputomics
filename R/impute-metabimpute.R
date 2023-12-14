@@ -1,13 +1,13 @@
 eval_MetabImpute_calls <- function(missdf, method, verbose, ...) {
   check_missdf(missdf)
-  
-  all_args <- extend_arglist(list(...), 
-                             list(data = missdf, method = method, 
-                                  local = FALSE, reps = NULL), 
+
+  all_args <- extend_arglist(list(...),
+                             list(data = missdf, method = method,
+                                  local = FALSE, reps = NULL),
                              list())
-  
+
   silence_function(verbose)(imputed <- do.call(MetabImpute::Impute, all_args))
-  
+
   imputed
 }
 
@@ -20,21 +20,21 @@ eval_MetabImpute_calls <- function(missdf, method, verbose, ...) {
 #' @importFrom MetabImpute Impute
 #'
 #' @inheritParams impute_zero
-#' @param verbose boolean, if \code{TRUE}, prints the typical prompts of 
+#' @param verbose boolean, if \code{TRUE}, prints the typical prompts of
 #' [MetabImpute::Impute()].
-#' @param ... other parameters of [MetabImpute::Impute()] besides \code{method} and
-#' \code{data}.
+#' @param ... other parameters of [MetabImpute::Impute()] besides \code{method}
+#' and \code{data}.
 #'
 #' @returns A \code{data.frame} with imputed values by [MetabImpute::Impute()].
 #'
 #' @section No replicates allowed:
-#' \code{Impute()} allows users to improve the quality of the imputation by 
-#' providing the number of replications of the experiment. As one of the aims of 
-#' the \code{imputomics} is to standardize the 
+#' \code{Impute()} allows users to improve the quality of the imputation by
+#' providing the number of replications of the experiment. As one of the aims of
+#' the \code{imputomics} is to standardize the
 #' input and the output, our wrappers do not allow for this behavior.
 #'
 #' @seealso [MetabImpute::Impute()].
-#' 
+#'
 #' @references
 #' \insertRef{davis_addressing_2022}{imputomics}
 #'
@@ -44,7 +44,7 @@ eval_MetabImpute_calls <- function(missdf, method, verbose, ...) {
 #'
 #' @export
 impute_metabimpute_rf <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "RF", 
+  eval_MetabImpute_calls(missdf = missdf, method = "RF",
                          verbose = verbose, ...)
 }
 
@@ -57,7 +57,7 @@ impute_metabimpute_rf <- function(missdf, verbose = FALSE, ...) {
 #' @inheritParams impute_metabimpute_rf
 #' @inherit impute_metabimpute_rf references seealso
 #' @inheritSection impute_metabimpute_rf No replicates allowed
-#' 
+#'
 #' @returns A \code{data.frame} with imputed values of Bayesian PCA by
 #' [MetabImpute::Impute()].
 #'
@@ -67,7 +67,7 @@ impute_metabimpute_rf <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_bpca <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "BPCA", 
+  eval_MetabImpute_calls(missdf = missdf, method = "BPCA",
                          verbose = verbose, ...)
 }
 
@@ -90,7 +90,7 @@ impute_metabimpute_bpca <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_qrilc <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "QRILC", 
+  eval_MetabImpute_calls(missdf = missdf, method = "QRILC",
                          verbose = verbose, ...)
 }
 
@@ -113,7 +113,7 @@ impute_metabimpute_qrilc <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_gsimp <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "GSIMP", 
+  eval_MetabImpute_calls(missdf = missdf, method = "GSIMP",
                          verbose = verbose, ...)
 }
 
@@ -138,7 +138,7 @@ impute_metabimpute_gsimp <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_min <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "min", 
+  eval_MetabImpute_calls(missdf = missdf, method = "min",
                          verbose = verbose, ...)
 }
 
@@ -163,7 +163,7 @@ impute_metabimpute_min <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_halfmin <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "halfmin", 
+  eval_MetabImpute_calls(missdf = missdf, method = "halfmin",
                          verbose = verbose, ...)
 }
 
@@ -176,7 +176,7 @@ impute_metabimpute_halfmin <- function(missdf, verbose = FALSE, ...) {
 #' @inheritParams impute_metabimpute_rf
 #' @inherit impute_metabimpute_rf references seealso
 #' @inheritSection impute_metabimpute_rf No replicates allowed
-#' 
+#'
 #' @returns A \code{data.frame} with imputed values of mean by
 #' [MetabImpute::Impute()].
 #'
@@ -188,7 +188,7 @@ impute_metabimpute_halfmin <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_mean <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "mean", 
+  eval_MetabImpute_calls(missdf = missdf, method = "mean",
                          verbose = verbose, ...)
 }
 
@@ -213,7 +213,7 @@ impute_metabimpute_mean <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_median <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "median", 
+  eval_MetabImpute_calls(missdf = missdf, method = "median",
                          verbose = verbose, ...)
 }
 
@@ -238,6 +238,6 @@ impute_metabimpute_median <- function(missdf, verbose = FALSE, ...) {
 #'
 #' @export
 impute_metabimpute_zero <- function(missdf, verbose = FALSE, ...) {
-  eval_MetabImpute_calls(missdf = missdf, method = "zero", 
+  eval_MetabImpute_calls(missdf = missdf, method = "zero",
                          verbose = verbose, ...)
 }

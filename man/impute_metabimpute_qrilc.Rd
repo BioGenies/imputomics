@@ -13,8 +13,8 @@ containing features in columns and samples in rows.}
 \item{verbose}{boolean, if \code{TRUE}, prints the typical prompts of
 \code{\link[MetabImpute:impute]{MetabImpute::Impute()}}.}
 
-\item{...}{other parameters of \code{\link[MetabImpute:impute]{MetabImpute::Impute()}} besides \code{method} and
-\code{data}.}
+\item{...}{other parameters of \code{\link[MetabImpute:impute]{MetabImpute::Impute()}} besides \code{method}
+and \code{data}.}
 }
 \value{
 A \code{data.frame} with imputed values of QRILC by
