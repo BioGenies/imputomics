@@ -79,15 +79,6 @@ ui <- navbarPage(
                       )
                     ),
                     tabPanel(
-                      "Imputation dataset",
-                      br(),
-                      br(),
-                      column(
-                        10, offset = 1,
-                        withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
-                      )
-                    ),
-                    tabPanel(
                       "Manage Variables",
                       h3("Exclude variables from imputation data."),
                       h4("Choose from the numeric columns which ones to exclude.
@@ -112,71 +103,19 @@ ui <- navbarPage(
                              htmlOutput("nonnumeric_cols_ui")
                       )
                     ),
+                    tabPanel(
+                      "Imputation dataset",
+                      br(),
+                      br(),
+                      column(
+                        10, offset = 1,
+                        withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
+                      )
+                    ),
                   )
            ),
   ),
   navbarMenu("Missing values analysis",
-             tabPanel("Data menagement",
-                      helper(
-                        h2("Variables removal"),
-                        type = "inline",
-                        title = "Variables removal using groups.",
-                        content = "Only variables exceeding the specified missing
-                               value ratio threshold within each group will be removed.
-                               When choosing a group for variable removal, please note
-                               that only character variables without missing values
-                               will be available for selection.",
-                        size = "m",
-                        buttonLabel = "Got it!"
-                      ),
-                      br(),
-                      column(3,
-                             h4("1. Set threshold for missing values ratio"),
-                             sliderInput("remove_threshold",
-                                         label = "Select maximum ratio allowed for each variable.",
-                                         min = 0,
-                                         max = 100,
-                                         value = 20,
-                                         step = 1,
-                                         width = '100%'),
-                             h4("2. Set groups (optional)"),
-                             selectInput("group",
-                                         label = "Select grouping variable",
-                                         choices = NULL,
-                                         selected = NULL,
-                                         multiple = FALSE),
-                             h4("3. Click Remove!"),
-                             fluidRow(
-                               column(3,
-                                      align = "center",
-                                      offset = 1,
-                                      actionButton("remove_btn", label = "Remove", icon = icon("trash"))),
-                               column(3,
-                                      offset = 1,
-                                      align = "center",
-                                      actionButton("undo_btn",label = "Undo", icon = icon("rotate-left")))
-                             ),
-                             HTML('<hr style="border-color: black;">'),
-                             br(),
-                             h4("The following variables will be removed:"),
-                             htmlOutput("to_remove_names"),
-                      ),
-                      column(4,
-                             style = 'border-right: 1px solid;border-left: 1px solid',
-                             h4("Ratio of missing data per group [%]"),
-                             br(),
-                             withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
-                      ),
-
-                      column(5,
-                             h4("Venna diagram (from 2 to 4 groups):"),
-                             br(),
-                             withSpinner(plotOutput("venna_diagram",
-                                                    width = '100%',
-                                                    height = 500),
-                                         color = "black")
-                      )
-             ),
              tabPanel("Visualization",
                       tabsetPanel(
                         tabPanel(
@@ -238,7 +177,68 @@ ui <- navbarPage(
                           download_plot_UI("heatmap")
                         )
                       ),
-             )
+             ),
+             tabPanel("Data menagement",
+                      helper(
+                        h2("Variables removal"),
+                        type = "inline",
+                        title = "Variables removal using groups.",
+                        content = "Only variables exceeding the specified missing
+                               value ratio threshold within each group will be removed.
+                               When choosing a group for variable removal, please note
+                               that only character variables without missing values
+                               will be available for selection.",
+                        size = "m",
+                        buttonLabel = "Got it!"
+                      ),
+                      br(),
+                      column(3,
+                             h4("1. Set threshold for missing values ratio"),
+                             sliderInput("remove_threshold",
+                                         label = "Select maximum ratio allowed for each variable.",
+                                         min = 0,
+                                         max = 100,
+                                         value = 20,
+                                         step = 1,
+                                         width = '100%'),
+                             h4("2. Set groups (optional)"),
+                             selectInput("group",
+                                         label = "Select grouping variable",
+                                         choices = NULL,
+                                         selected = NULL,
+                                         multiple = FALSE),
+                             h4("3. Click Remove!"),
+                             fluidRow(
+                               column(3,
+                                      align = "center",
+                                      offset = 1,
+                                      actionButton("remove_btn", label = "Remove", icon = icon("trash"))),
+                               column(3,
+                                      offset = 1,
+                                      align = "center",
+                                      actionButton("undo_btn",label = "Undo", icon = icon("rotate-left")))
+                             ),
+                             HTML('<hr style="border-color: black;">'),
+                             br(),
+                             h4("The following variables will be removed:"),
+                             htmlOutput("to_remove_names"),
+                      ),
+                      column(4,
+                             style = 'border-right: 1px solid;border-left: 1px solid',
+                             h4("Ratio of missing data per group [%]"),
+                             br(),
+                             withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
+                      ),
+
+                      column(5,
+                             h4("Venna diagram (from 2 to 4 groups):"),
+                             br(),
+                             withSpinner(plotOutput("venna_diagram",
+                                                    width = '100%',
+                                                    height = 500),
+                                         color = "black")
+                      )
+             ),
   ),
   tabPanel("Imputation",
            h3("Let's impute your missing values!"),
