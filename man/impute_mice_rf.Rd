@@ -14,7 +14,8 @@ containing features in columns and samples in rows.}
 \code{data}.}
 }
 \value{
-A \code{data.frame} with imputed values by random forest used \code{\link[mice:mice]{mice::mice()}}.
+A \code{data.frame} with imputed values by random forest used
+\code{\link[mice:mice]{mice::mice()}}.
 }
 \description{
 Multiple Imputation by Chained Equations.

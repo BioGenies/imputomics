@@ -11,8 +11,9 @@ impute_cm(missdf, verbose = FALSE, ...)
 containing features in columns and samples in rows.}
 
 \item{verbose}{boolean, if \code{TRUE}, prints the typical prompts of
-\code{\link[GMSimpute:GMS.Lasso]{GMSimpute::GMS.Lasso()}}. These prompts contain the information if the algorithm
-uses TS.Lasso or minimum per compund to impute, so it might be very relevant.}
+\code{\link[GMSimpute:GMS.Lasso]{GMSimpute::GMS.Lasso()}}. These prompts contain the information if the
+algorithm uses TS.Lasso or minimum per compund to impute, so it might be very
+relevant.}
 
 \item{...}{other parameters of \code{\link[GMSimpute:GMS.Lasso]{GMSimpute::GMS.Lasso()}} besides
 \code{input_data}.}

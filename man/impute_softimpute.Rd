@@ -10,8 +10,7 @@ impute_softimpute(missdf, ...)
 \item{missdf}{a data frame with missing values to be imputed
 containing features in columns and samples in rows.}
 
-\item{...}{other parameters of \code{\link[softImpute:softImpute]{softImpute::softImpute()}} besides
-\code{x}.}
+\item{...}{other parameters of \code{\link[softImpute:softImpute]{softImpute::softImpute()}} besides \code{x}.}
 }
 \value{
 A \code{data.frame} with imputed values by
