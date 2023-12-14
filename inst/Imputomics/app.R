@@ -292,8 +292,12 @@ ui <- navbarPage(
                       variables determine the possibility of missingness.",
                       "<b>MNAR (Missing Not At Random):</b> is considered for
                       censored missing values, that are caused by the limit of
-                      detection (LOD) of a device",
-                      "For more details see "
+                      detection (LOD) of a device </br> ",
+                      "For more details see:  Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała,
+                      Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Michał
+                      Ciborowski, Michał Burdukiewicz (2023). imputomics: web
+                      server and R package for missing values imputation in
+                      metabolomics data"
                     ),
                     size = "m",
                     buttonLabel = "Got it!"
