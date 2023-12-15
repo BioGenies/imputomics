@@ -179,18 +179,7 @@ ui <- navbarPage(
                       ),
              ),
              tabPanel("Data menagement",
-                      helper(
-                        h2("Variables removal"),
-                        type = "inline",
-                        title = "Variables removal using groups.",
-                        content = "Only variables exceeding the specified missing
-                               value ratio threshold within each group will be removed.
-                               When choosing a group for variable removal, please note
-                               that only character variables without missing values
-                               will be available for selection.",
-                        size = "m",
-                        buttonLabel = "Got it!"
-                      ),
+                      h2("Variables removal"),
                       br(),
                       column(3,
                              h4("1. Set threshold for missing values ratio"),
@@ -201,7 +190,18 @@ ui <- navbarPage(
                                          value = 20,
                                          step = 1,
                                          width = '100%'),
-                             h4("2. Set groups (optional)"),
+                             helper(
+                               h4("2. Set groups (optional)"),
+                               type = "inline",
+                               title = "Variables removal using groups.",
+                               content = "Only variables exceeding the specified missing
+                               value ratio threshold within each group will be removed.
+                               When choosing a group for variable removal, please note
+                               that only character variables without missing values
+                               will be available for selection.",
+                               size = "m",
+                               buttonLabel = "Got it!"
+                             ),
                              selectInput("group",
                                          label = "Select grouping variable",
                                          choices = NULL,
