@@ -71,7 +71,14 @@ Imports:
     VIM,
     Biobase (>= 2.60.0),
     TimeProjection (>= 0.2.0),
-    DreamAI (>= 0.1.0)
+    DreamAI (>= 0.1.0),
+    shinythemes,
+    shinyWidgets,
+    shinycssloaders,
+    DT,
+    shinyhelper,
+    colourpicker,
+    ggvenn
 Suggests:
     abind,
     beeswarm,
@@ -82,22 +89,18 @@ Suggests:
     spelling,
     openxlsx,
     rmarkdown,
-    callr,
-    shinythemes,
-    shinyWidgets,
-    shinycssloaders,
-    DT,
-    shinyhelper,
-    colourpicker,
-    ggvenn
+    callr
 Language: en-US
 RdMacros: Rdpack
 LazyData: true
 Remotes: 
+    bioc::release/Biobase,
     url::https://cran.r-project.org/src/contrib/Archive/PEMM/PEMM_1.0.tar.gz,
+    bioc::release/impute,
     url::https://cran.r-project.org/src/contrib/Archive/TimeProjection/TimeProjection_0.2.0.tar.gz,
     github::jeffwong/imputation,
     github::WangLab-MSSM/DreamAI/Code,
+    bioc::release/pcaMethods,
     github::KechrisLab/MAI,
     github::BeanLabASU/metabimpute,
     github::renozao/NMF@devel
