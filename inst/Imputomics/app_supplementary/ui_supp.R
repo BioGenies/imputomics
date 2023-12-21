@@ -10,7 +10,7 @@ ui_content_about <- function() {
     fluidRow(
       column(2,
              align = "center",
-             HTML("<img src='logo.png' height='110px'>"),
+             HTML("<img src='logo.png' height='120px'>"),
       ),
       column(10,
              h2("Welcome to Imputomics!", style = "font-size:23px;"),
