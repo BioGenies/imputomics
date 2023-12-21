@@ -40,7 +40,7 @@ Imports:
     Amelia,
     bcv,
     glmnet,
-    pcaMethods (>= 1.94.0),
+    pcaMethods (>= 1.92.0),
     GMSimpute,
     checkmate,
     dplyr,
@@ -49,7 +49,7 @@ Imports:
     graphics,
     Hmisc,
     imputation (>= 2.0.3),
-    impute (>= 1.76.0),
+    impute (>= 1.74.0),
     imputeLCMD,
     MAI (>= 1.3.0),
     MetabImpute (>= 0.1.0),
@@ -82,18 +82,22 @@ Suggests:
     spelling,
     openxlsx,
     rmarkdown,
-    callr
+    callr,
+    shinythemes,
+    shinyWidgets,
+    shinycssloaders,
+    DT,
+    shinyhelper,
+    colourpicker,
+    ggvenn
 Language: en-US
 RdMacros: Rdpack
 LazyData: true
-Remotes:  
-    bioc::release/Biobase,
+Remotes: 
     url::https://cran.r-project.org/src/contrib/Archive/PEMM/PEMM_1.0.tar.gz,
-    bioc::release/impute,
     url::https://cran.r-project.org/src/contrib/Archive/TimeProjection/TimeProjection_0.2.0.tar.gz,
     github::jeffwong/imputation,
     github::WangLab-MSSM/DreamAI/Code,
-    bioc::release/pcaMethods,
     github::KechrisLab/MAI,
     github::BeanLabASU/metabimpute,
     github::renozao/NMF@devel
