@@ -13,20 +13,21 @@ ui_content_about <- function() {
              HTML("<img src='logo.png' height='140px'>"),
       ),
       column(10,
-             h2("Welcome to Imputomics!"),
-             h3("Improve your metabolomics analysis by addressing missing values with ease.")
+             br(),
+             h3("Welcome to Imputomics!"),
+             h4("Improve your metabolomics analysis by addressing missing values with ease.")
       ),
     ),
     HTML('<hr style="border-color: black;">'),
     column(11,
-           h3("About"),
+           h4("About"),
            h5(HTML("This application incorporates R package <em>imputomics</em>. If you
             prefer to directly access R functions, the package is available"),
               a("on GitHub.", href = "https://github.com/BioGenies/imputomics")),
            h5("We appreciate your choice to use our application. If you have any
        questions, feedback, or suggestions, please submit them as an issue on
        GitHub. Your input is valuable to us!"),
-           h3("Our app offers:"),
+           h4("Our app offers:"),
            h5(HTML("<b> 1. Seamless Integration:</b> Import datasets in various formats, such as Excel, CSV.")),
            h5(HTML("<b> 2. Visualize Missingness:</b> Gain insights into missing data patterns.")),
            h5(HTML("<b> 3. Customizable Imputation:</b> Choose from the largest set of imputation methods.")),
