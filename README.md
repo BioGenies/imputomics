@@ -57,7 +57,9 @@ devtools::install_github("BioGenies/imputomics")
 
 Due to the implementation of packages from various sources, the first
 installation might fail. The re-run of the code should finish the
-process. \## Run imputomics
+process.
+
+## Run imputomics
 
 To run *imputomics* type the following command into an R console.
 
