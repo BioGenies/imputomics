@@ -4,18 +4,18 @@ ui_content_about <- function() {
   tagList(
     tags$footer(
       align = "right",
-      style = "position:absolute; bottom:0; width:99%; height:30px; padding: 0px 0px 100px 100px;",
-      HTML("<img src='funding.png' style='height: 100px'>"),
+      style = "position:absolute; bottom:0; width:95%; height:20px; padding: 0px 0px 100px 100px;",
+      HTML("<img src='funding.png' style='height: 90px'>"),
     ),
     fluidRow(
       column(2,
              align = "center",
-             HTML("<img src='logo.png' height='140px'>"),
+             HTML("<img src='logo.png' height='110px'>"),
       ),
       column(10,
-             br(),
-             h3("Welcome to Imputomics!"),
-             h4("Improve your metabolomics analysis by addressing missing values with ease.")
+             h2("Welcome to Imputomics!", style = "font-size:23px;"),
+             h3("Improve your metabolomics analysis by addressing missing values with ease.",
+                 style = "font-size:20px;")
       ),
     ),
     HTML('<hr style="border-color: black;">'),
