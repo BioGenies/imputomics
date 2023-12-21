@@ -40,17 +40,18 @@ ui <- navbarPage(
   tabPanel("Load data",
            column(3,
                   style = 'border-right: 1px solid',
-                  h2("Here you can upload your data!"),
+                  h3("Here you can upload your data!", style = "font-size:20px;"),
                   br(),
-                  h4("1. Select your metabolomics dataset in CSV or Excel:"),
+                  h5("1. Select your metabolomics dataset in CSV, Excel or RDS:",
+                     style = "font-size:15px;"),
                   fileInput(
                     inputId = 'users_path',
                     label = "Upload file with missing values.",
                     multiple = FALSE,
                     accept = c(".csv", ".xlsx", ".rds")
                   ),
-                  br(),
-                  h4("2. Select missing value denotement:"),
+                  h5("2. Select missing value denotement:",
+                     style = "font-size:15px;"),
                   selectInput(
                     "NA_sign",
                     "How is a missing value marked in your data?",
@@ -58,7 +59,8 @@ ui <- navbarPage(
                     selected = "NA"
                   ),
                   br(),
-                  h4("Click below to upload example data!"),
+                  h5("Click below to upload example data!",
+                     style = "font-size:15px;"),
                   actionBttn(
                     inputId = "example_dat",
                     label = "Example data",
@@ -179,10 +181,10 @@ ui <- navbarPage(
                       ),
              ),
              tabPanel("Data menagement",
-                      h2("Variables removal"),
-                      br(),
+                      h3("Variables removal"),
                       column(3,
-                             h4("1. Set threshold for missing values ratio"),
+                             h4("1. Set threshold for missing values ratio",
+                                style = "font-size:15px;"),
                              sliderInput("remove_threshold",
                                          label = "Select maximum ratio allowed for each variable.",
                                          min = 0,
@@ -190,8 +192,10 @@ ui <- navbarPage(
                                          value = 20,
                                          step = 1,
                                          width = '100%'),
+                             br(),
                              helper(
-                               h4("2. Set groups (optional)"),
+                               h4("2. Set groups (optional)",
+                                  style = "font-size:15px;"),
                                type = "inline",
                                title = "Variables removal using groups.",
                                content = "Only variables exceeding the specified missing
@@ -207,7 +211,9 @@ ui <- navbarPage(
                                          choices = NULL,
                                          selected = NULL,
                                          multiple = FALSE),
-                             h4("3. Click Remove!"),
+                             br(),
+                             h4("3. Click Remove!",
+                                style = "font-size:15px;"),
                              fluidRow(
                                column(3,
                                       align = "center",
@@ -220,7 +226,7 @@ ui <- navbarPage(
                              ),
                              HTML('<hr style="border-color: black;">'),
                              br(),
-                             h4("The following variables will be removed:"),
+                             h5("The following variables will be removed:"),
                              htmlOutput("to_remove_names"),
                       ),
                       column(4,
@@ -241,13 +247,14 @@ ui <- navbarPage(
              ),
   ),
   tabPanel("Imputation",
-           h3("Let's impute your missing values!"),
-           h4("Select one or more imputation methods from the list below and click impute!"),
-           h5("Check the references panel for the references of all imputations methods."),
-           column(4,
+           column(5,
+                  h3("Let's impute your missing values!", style = "font-size:22px;"),
+                  h5("Select one or more imputation methods from the list below and click impute!",
+                     style = "font-size:15px;"),
+                  h5("Check the references panel for the references of all imputations methods."),
                   br(),
                   helper(
-                    h4("Specify time limit per method below."),
+                    h4("Specify time limit per method below.", style = "font-size:15px;"),
                     type = "inline",
                     title = "How to set time limit?",
                     content = c("The <b>timeout</b> parameter allows users to set a time limit
@@ -306,19 +313,7 @@ ui <- navbarPage(
                   add_methods_UI("MCAR"),
                   add_methods_UI("MAR"),
                   add_methods_UI("MNAR"),
-                  br(),
                   textOutput("n_methods"),
-                  br(),
-                  h4("Usage note:"),
-                  h5(HTML("Searching for methods based on fitting a predefined hypothesis is
-           associated with the issue of <b>multiple comparisons</b> and may lead to
-           significant <b>overfitting</b>. When choosing an imputation method, prioritize the structure of
-              your data over preconceived notions. The effectiveness of analytical
-              methods varies depending on dataset characteristics. Consider
-              nuances such as distribution, scale, missing value patterns, and
-              relationships for a more accurate and reliable outcome, adhering
-              to best practices in data analysis.")),
-                  br(),
                   br(),
                   column(12, align = "center",
                          actionBttn(inputId = "impute_btn",
@@ -328,9 +323,20 @@ ui <- navbarPage(
                                     size = "lg",
                                     icon = icon("pen")),
                   ),
+                  h4("Usage note:", style = "font-size:15px;"),
+                  h5(HTML("Searching for methods based on fitting a predefined hypothesis is
+           associated with the issue of <b>multiple comparisons</b> and may lead to
+           significant <b>overfitting</b>. When choosing an imputation method, prioritize the structure of
+              your data over preconceived notions. Consider
+              nuances such as distribution, scale, missing value patterns, and
+              relationships for a more accurate and reliable outcome, adhering
+              to best practices in data analysis."), style = "font-size:12px;"),
            ),
-           column(8,
+           column(7,
                   align = "center",
+                  br(),
+                  br(),
+                  br(),
                   multiInput(
                     inputId = "methods",
                     label = "Select methods:",
@@ -355,7 +361,7 @@ ui <- navbarPage(
            )
   ),
   tabPanel("Results",
-           h2("Here you can check the results!"),
+           h3("Here you can check the results!"),
            column(3,
                   style = 'border-right: 1px solid',
                   h3("Imputation summary:"),
@@ -730,7 +736,7 @@ server <- function(input, output, session) {
                   selection = list(selectable = FALSE),
                   options = list(scrollX = TRUE,
                                  paging = FALSE,
-                                 scrollY = 500,
+                                 scrollY = 400,
                                  searching = FALSE),
                   rownames = NULL
     )
