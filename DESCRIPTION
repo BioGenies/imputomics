@@ -71,14 +71,7 @@ Imports:
     VIM,
     Biobase (>= 2.60.0),
     TimeProjection (>= 0.2.0),
-    DreamAI (>= 0.1.0),
-    shinythemes,
-    shinyWidgets,
-    shinycssloaders,
-    DT,
-    shinyhelper,
-    colourpicker,
-    ggvenn
+    DreamAI (>= 0.1.0)
 Suggests:
     abind,
     beeswarm,
@@ -89,7 +82,14 @@ Suggests:
     spelling,
     openxlsx,
     rmarkdown,
-    callr
+    callr,
+    shinythemes,
+    shinyWidgets,
+    shinycssloaders,
+    DT,
+    shinyhelper,
+    colourpicker,
+    ggvenn
 Language: en-US
 RdMacros: Rdpack
 LazyData: true
