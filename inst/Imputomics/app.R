@@ -237,9 +237,10 @@ ui <- navbarPage(
                       ),
 
                       column(5,
-                             h4("Venna diagram (from 2 to 4 groups):"),
+                             h4("Venn diagram:"),
                              br(),
-                             withSpinner(plotOutput("venna_diagram",
+                             htmlOutput("venn_info"),
+                             withSpinner(plotOutput("venn_diagram",
                                                     width = '100%',
                                                     height = 500),
                                          color = "black")
@@ -479,6 +480,8 @@ server <- function(input, output, session) {
         grouping_cols <- character(0)
       }
 
+      dat[["grouping_cols"]] <- grouping_cols
+
       updateMultiInput(session,
                        inputId = "columns",
                        choices = colnames(dat[["missing_data"]]))
@@ -524,6 +527,13 @@ server <- function(input, output, session) {
   observeEvent(input[["columns"]], {
     req(dat[["uploaded_data"]])
     req(dat[["uploaded_data"]])
+
+    dat[["grouping_cols"]] <- c(dat[["grouping_cols"]], input[["columns"]])
+
+    updateSelectInput(session,
+                      inputId = "group",
+                      choices = c("none", dat[["grouping_cols"]]),
+                      selected = "none")
 
     dat[["nonnumeric_cols"]] <- union(dat[["nonnumeric_cols_raw"]], input[["columns"]])
     dat[["missing_data"]] <- dat[["uploaded_data"]] %>%
@@ -612,6 +622,8 @@ server <- function(input, output, session) {
       dplyr::select(dat[["nonnumeric_cols"]]) %>%
       select_if(~ !any(is.na(.))) %>%
       colnames()
+
+    dat[["grouping_cols"]] <- grouping_cols
 
     updateMultiInput(session,
                      inputId = "columns",
@@ -772,7 +784,7 @@ server <- function(input, output, session) {
   })
 
 
-  venna_diagram <- reactive({
+  venn_diagram <- reactive({
     req(input[["remove_threshold"]])
     req(input[["group"]])
     req(dat[["uploaded_data"]])
@@ -780,17 +792,16 @@ server <- function(input, output, session) {
     if(input[["group"]] != "none") {
       groups <- unique(dat[["uploaded_data"]][, input[["group"]]])
 
-      ratios <- ratio_table() %>%
-        mutate(across(groups, greater_eq_than_thresh, thresh = input[["remove_threshold"]]))
-
-      grouped_variables <- lapply(groups, function(ith_group) {
-        ratios %>%
-          filter(get(ith_group)) %>%
-          pull(Variable)
-      })
-      names(grouped_variables) <- groups
-
       if(!(length(groups) > 4 )) {
+        ratios <- ratio_table() %>%
+          mutate(across(groups, greater_eq_than_thresh, thresh = input[["remove_threshold"]]))
+
+        grouped_variables <- lapply(groups, function(ith_group) {
+          ratios %>%
+            filter(get(ith_group)) %>%
+            pull(Variable)
+        })
+        names(grouped_variables) <- groups
         return(ggvenn(grouped_variables))
       } else {
         return(NULL)
@@ -801,8 +812,15 @@ server <- function(input, output, session) {
   })
 
 
-  output[["venna_diagram"]] <- renderPlot({
-    venna_diagram()
+  output[["venn_diagram"]] <- renderPlot({
+    venn_diagram()
+  })
+
+  output[["venn_info"]] <- renderUI({
+    if(is.null(venn_diagram()))
+      "Venn diagram will be plotted for 2-4 groups!"
+    else
+      NULL
   })
 
 
