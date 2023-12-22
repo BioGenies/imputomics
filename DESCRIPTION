@@ -34,7 +34,8 @@ VignetteBuilder: knitr
 Depends: R (>= 4.2)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
-URL: https://biogenies.info/imputomics/
+URL: https://biogenies.info/imputomics/,
+    http://biogenies.info/imputomics/
 BugReports: https://github.com/biogenies/imputomics/issues
 Imports:
     Amelia,

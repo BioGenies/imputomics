@@ -14,6 +14,7 @@ Offers a range of methods for simulating and imputing missing values in differen
 Useful links:
 \itemize{
   \item \url{https://biogenies.info/imputomics/}
+  \item \url{http://biogenies.info/imputomics/}
   \item Report bugs at \url{https://github.com/biogenies/imputomics/issues}
 }
 

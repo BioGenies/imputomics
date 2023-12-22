@@ -2,24 +2,38 @@ url: http://biogenies.info/imputomics/
 template:
   bootstrap: 5
   bootswatch: cosmo
-
 home:
   sidebar:
-    structure: [links, license, community, citation, authors, dev]
+    structure:
+    - links
+    - license
+    - community
+    - citation
+    - authors
+    - dev
   links:
   - text: imputomics webserver
-    href:  https://imputomics.umb.edu.pl/
+    href: https://imputomics.umb.edu.pl/
   - text: imputomics simulations
     href: https://github.com/BioGenies/imputomics-ws
-
+  authors: ~
+  Michał Burdukiewicz:
+    href: https://github.com/michbur
+  Krystyna Grzesiak:
+    href: https://github.com/KrystynaGrzesiak
+  Jarosław Chilimoniuk:
+    href: https://github.com/jarochi
+  Jakub Kała:
+    href: https://github.com/jakubkala
+  Dominik Nowakowski:
+    href: https://github.com/DomMedicine
 reference:
 - title: GUI
 - contents:
   - imputomics_gui
   - list_imputations
 - title: Imputation functions
-- contents:
-  - starts_with("impute_")
+- contents: starts_with("impute_")
 - title: Amputation functions
 - contents:
   - starts_with("insert_")
@@ -29,16 +43,10 @@ reference:
   - problematic_dataset
   - sim_miss
   - sim_miss_large
+- title: internal
+- contents:
+  - get_variables_table
+  - plot_mv_heatmap
+  - plot_mv_segment
+  - plot_points_density
 
-authors:
-  Michał Burdukiewicz:
-    href: https://github.com/michbur
-    # html: <img src='https://avatars.githubusercontent.com/u/5267317?v=4' alt='michbur' width='72' />
-  Krystyna Grzesiak:
-    href: https://github.com/KrystynaGrzesiak
-  Jarosław Chilimoniuk:
-    href: https://github.com/jarochi
-  Jakub Kała:
-    href: https://github.com/jakubkala
-  Dominik Nowakowski:
-    href: https://github.com/DomMedicine

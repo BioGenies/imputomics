@@ -31,7 +31,6 @@ Before diving into the world of omics data imputation, let's set up the stage by
 
 ```{r, eval=FALSE}
 devtools::install_github("BioGenies/imputomics")
-renv::restore()
 ```
 
 Once the package is installed, load it into your R environment:
