@@ -1,3 +1,10 @@
+---
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # imputomics <img src='man/figures/logo.png' align="right" height="150"/>
 
@@ -56,6 +63,7 @@ devtools::install_github("BioGenies/imputomics")
 ```
 
 Due to the implementation of packages from various sources, the first installation might fail. The re-run of the code should finish the process.
+
 ## Run imputomics
 
 To run *imputomics* type the following command into an R console.

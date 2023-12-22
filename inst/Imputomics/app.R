@@ -180,7 +180,7 @@ ui <- navbarPage(
                         )
                       ),
              ),
-             tabPanel("Data menagement",
+             tabPanel("Data management",
                       h3("Variables removal"),
                       column(3,
                              h4("1. Set threshold for missing values ratio",
