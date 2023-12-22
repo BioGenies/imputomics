@@ -34,13 +34,24 @@ If everything went fine you can run the app with:
 imputomics_gui()
 ```
 
+![](app/about.png)
+
 ## Load your data
 
 In the **Load data** tab you can upload your dataset. 
 You need to choose how missing values are marked in your file. It can be either **NA**, **0**, **1**.
 You can preview uploaded data in the **Entire dataset** tab.
+
+![](app/load_data.png)
+
 **imputomics** app automatically detects columns with values and groups. You can see them in the **Manage variables** tab. Here you can also manually set which columns are numeric or categorical. The categorical will be ignored during imputation.
+
+![](app/manage_variables.png)
+
 In the **Imputation dataset** you can see which columns will be imputed.
+
+![](app/imputation_dataset.png)
+
 
 ## Missing values analysis
 
@@ -49,8 +60,17 @@ Moreover, you can set groups by the grouping variable set automatically or manua
 On the Venn diagram you can see how many variables exceed set threshold in each group and how many are of the are in both groups.
 Click remove to remove variables. You can also restore data by clicking undo.
 
+![](app/mv_analysis.png)
+
 In the **Visualization** you can draw a bar plot with the percentages of missing values in each variable that exceed set threshold. 
-On the heatmap you can preview in which samples missing values have appeared. You can download both plots clicking in a button in top right corner.
+
+![](app/vis1.png)
+
+On the heatmap you can preview in which samples missing values have appeared. 
+
+![](app/vis2.png)
+
+You can download both plots clicking in a button in top right corner.
 
 ## Imputation
 
@@ -59,16 +79,22 @@ Remember to analyse your data and pick methods that are most suited to the struc
 
 Clicking the **Impute** button will start the imputation process. On the bottom is progress bar.
 
+![](app/impute.png)
+
 ## Results
 
 Here you can check the results of imputation and which methods failed to impute.
+
+![](app/res.png)
 
 ## Summary
 
 Here you can observe the distribution of your data and the distribution of imputed missing values depending on used method. You can download plot clicking in a button in top right corner
 
+![](app/summary.png)
+
 ## Download
 
 You can download your data imputed by selected methods. Each MVIA will be in separate spreadsheet.
 
-
+![](app/download.png)
