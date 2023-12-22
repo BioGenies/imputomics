@@ -21,6 +21,13 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/group_analysis.html">A Quick Guide for the imputomics shiny app</a>
+    <a class="dropdown-item" href="../articles/quick_start.html">A Quick Guide on imputomics</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -64,8 +71,8 @@ containing features in columns and samples in rows.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>other parameters of <code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code> besides <code>method</code> and
-<code>data</code>.</p></dd>
+<dd><p>other parameters of <code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code> besides <code>method</code>
+and <code>data</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -85,8 +92,16 @@ the <code>imputomics</code> is to standardize the
 input and the output, our wrappers do not allow for this behavior.</p>
     </div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Davis TJ, Firzli TR, Higgins Keppler EA, Richardson M, Bean HD (2022).
+“Addressing Missing Data in GC × GC Metabolomics: Identifying Missingness Type and Evaluating the Impact of Imputation Methods on Experimental Replication.”
+<em>Analytical Chemistry</em>, <b>94</b>(31), 10912--10920.
+ISSN 0003-2700, <a href="https://doi.org/10.1021/acs.analchem.1c04093" class="external-link">doi:10.1021/acs.analchem.1c04093</a>
+.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code>.</p></div>
     </div>
 
     <div class="section level2">
@@ -122,7 +137,7 @@ input and the output, our wrappers do not allow for this behavior.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/michbur" class="external-link">Michał Burdukiewicz</a>, <a href="https://github.com/KrystynaGrzesiak" class="external-link">Krystyna Grzesiak</a>, <a href="https://github.com/jarochi" class="external-link">Jarosław Chilimoniuk</a>, <a href="https://github.com/jakubkala" class="external-link">Jakub Kała</a>, <a href="https://github.com/DomMedicine" class="external-link">Dominik Nowakowski</a>.</p>
+  <p></p><p>Developed by Michał Burdukiewicz, Krystyna Grzesiak, Jarosław Chilimoniuk, Jakub Kała, Dominik Nowakowski.</p>
 </div>
 
 <div class="pkgdown-footer-right">

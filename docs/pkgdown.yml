@@ -1,9 +1,0 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
-pkgdown_sha: ~
-articles: {}
-last_built: 2023-07-26T19:54Z
-urls:
-  reference: http://biogenies.info/imputomics/, https://imputomics.umb.edu.pl/, https://github.com/BioGenies/imputomics-ws/reference
-  article: http://biogenies.info/imputomics/, https://imputomics.umb.edu.pl/, https://github.com/BioGenies/imputomics-ws/articles
-

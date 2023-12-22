@@ -4,6 +4,9 @@
     <loc>http://biogenies.info/imputomics/404.html</loc>
   </url>
   <url>
+    <loc>http://biogenies.info/imputomics/articles/group_analysis.html</loc>
+  </url>
+  <url>
     <loc>http://biogenies.info/imputomics/articles/index.html</loc>
   </url>
   <url>
@@ -17,6 +20,9 @@
   </url>
   <url>
     <loc>http://biogenies.info/imputomics/reference/cbind_abind.html</loc>
+  </url>
+  <url>
+    <loc>http://biogenies.info/imputomics/reference/get_variables_table.html</loc>
   </url>
   <url>
     <loc>http://biogenies.info/imputomics/reference/glmnet_pred.html</loc>
@@ -173,6 +179,15 @@
   </url>
   <url>
     <loc>http://biogenies.info/imputomics/reference/miss_init.html</loc>
+  </url>
+  <url>
+    <loc>http://biogenies.info/imputomics/reference/plot_mv_heatmap.html</loc>
+  </url>
+  <url>
+    <loc>http://biogenies.info/imputomics/reference/plot_mv_segment.html</loc>
+  </url>
+  <url>
+    <loc>http://biogenies.info/imputomics/reference/plot_points_density.html</loc>
   </url>
   <url>
     <loc>http://biogenies.info/imputomics/reference/problematic_dataset.html</loc>

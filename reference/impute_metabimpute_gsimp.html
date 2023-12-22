@@ -21,6 +21,13 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/group_analysis.html">A Quick Guide for the imputomics shiny app</a>
+    <a class="dropdown-item" href="../articles/quick_start.html">A Quick Guide on imputomics</a>
+  </div>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -64,8 +71,8 @@ containing features in columns and samples in rows.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>other parameters of <code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code> besides <code>method</code> and
-<code>data</code>.</p></dd>
+<dd><p>other parameters of <code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code> besides <code>method</code>
+and <code>data</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -85,35 +92,43 @@ the <code>imputomics</code> is to standardize the
 input and the output, our wrappers do not allow for this behavior.</p>
     </div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Davis TJ, Firzli TR, Higgins Keppler EA, Richardson M, Bean HD (2022).
+“Addressing Missing Data in GC × GC Metabolomics: Identifying Missingness Type and Evaluating the Impact of Imputation Methods on Experimental Replication.”
+<em>Analytical Chemistry</em>, <b>94</b>(31), 10912--10920.
+ISSN 0003-2700, <a href="https://doi.org/10.1021/acs.analchem.1c04093" class="external-link">doi:10.1021/acs.analchem.1c04093</a>
+.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/MetabImpute/man/impute.html" class="external-link">MetabImpute::Impute()</a></code>.</p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sim_miss</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">impute_metabimpute_gsimp</span><span class="op">(</span><span class="va">sim_miss</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              X1         X2        X3           X4          X5           X6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.550508e-01 0.88115677 0.1254883 0.1194841210 0.600405471 2.174750e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  9.683788e-01 0.60748407 0.6337790 0.6181194666 0.008132938 7.520730e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  4.682631e-01 0.57452956 0.2476089 0.0001046874 0.370125689 2.868737e-06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  7.768197e-01 0.80313329 0.5513393 0.1459775318 0.724248714 8.477761e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  4.078857e-01 0.79911692 0.2347611 0.1897135850 0.418270750 7.087350e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  5.387971e-01 0.80186265 0.2586147 0.5754945197 0.238248518 2.077298e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  8.300830e-01 0.75207300 0.9528881 0.0001881735 0.887881226 4.883352e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.871036e-01 0.57546133 0.8568746 0.3283282877 0.577775384 3.472285e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  7.799697e-01 0.94421829 0.1185581 0.0782780354 0.739950257 2.030480e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.939439e-01 0.21898736 0.5545242 0.6041721753 0.160679622 7.399503e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 4.342312e-01 0.47799791 0.8769438 0.3267990556 0.529571799 8.936975e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 2.274518e-03 0.04466879 0.8018626 0.7904525734 0.574529562 5.745296e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 8.346921e-01 0.16848571 0.5467373 0.8300829662 0.960086967 8.444870e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 8.723869e-05 0.36828087 0.2327532 0.8100510929 0.398616886 1.482583e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 9.569678e-01 0.56331137 0.6022678 0.2027530000 0.408468068 3.702813e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 9.484971e-01 0.00692231 0.7125391 0.5060450307 0.613321482 8.611776e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 6.007300e-01 0.73432757 0.6489036 0.5206679751 0.706590850 8.366818e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 2.618074e-01 0.70365677 0.1875624 0.0842680801 0.799116918 7.405471e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 6.430343e-01 0.73682406 0.2383929 0.2687653562 0.161331222 9.857658e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 5.262335e-01 0.00215684 0.1219511 0.8147157354 0.885932416 3.208182e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              X1           X2        X3           X4          X5         X6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.1550508332 8.811568e-01 0.1090372 1.194841e-01 0.600405471 0.00122896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.9683788088 6.074841e-01 0.6337790 6.181195e-01 0.008132938 0.75207300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.4682630859 5.745296e-01 0.2476089 3.758005e-05 0.370125689 0.02388347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.7768196517 8.031333e-01 0.5513393 1.459775e-01 0.724248714 0.84777606</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.4078857412 7.991169e-01 0.2347611 1.897136e-01 0.418270750 0.70873497</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.5387971485 8.018626e-01 0.2586147 5.754945e-01 0.238248518 0.02951992</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  0.8300829662 7.520730e-01 0.9528881 1.881735e-04 0.887881226 0.48833525</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.1871035553 5.754613e-01 0.8568746 3.283283e-01 0.577775384 0.34722847</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.7799696880 9.442183e-01 0.1859789 7.827804e-02 0.739950257 0.20304801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 0.1939439271 2.189874e-01 0.5545242 6.041722e-01 0.160679622 0.73995026</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 0.4342311784 4.779979e-01 0.8769438 3.267991e-01 0.529571799 0.89369752</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 0.0022745181 4.466879e-02 0.8018626 7.904526e-01 0.574529562 0.57452956</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 0.8346921387 1.684857e-01 0.5467373 8.300830e-01 0.960086967 0.08444870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 0.0004041247 3.682809e-01 0.2327532 8.100511e-01 0.398616886 0.14825833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 0.9569678179 5.633114e-01 0.6022678 2.027530e-01 0.408468068 0.37028128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 0.9484970730 1.458286e-09 0.7125391 5.060450e-01 0.613321482 0.86117762</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 0.6007299756 7.343276e-01 0.6489036 5.206680e-01 0.706590850 0.83668180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 0.2618074049 7.036568e-01 0.1875624 8.426808e-02 0.799116918 0.74054705</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 0.6430342507 7.368241e-01 0.2383929 2.687654e-01 0.161331222 0.98576580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 0.5262335071 4.291254e-05 0.1574008 8.147157e-01 0.885932416 0.03208182</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -122,7 +137,7 @@ input and the output, our wrappers do not allow for this behavior.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/michbur" class="external-link">Michał Burdukiewicz</a>, <a href="https://github.com/KrystynaGrzesiak" class="external-link">Krystyna Grzesiak</a>, <a href="https://github.com/jarochi" class="external-link">Jarosław Chilimoniuk</a>, <a href="https://github.com/jakubkala" class="external-link">Jakub Kała</a>, <a href="https://github.com/DomMedicine" class="external-link">Dominik Nowakowski</a>.</p>
+  <p></p><p>Developed by Michał Burdukiewicz, Krystyna Grzesiak, Jarosław Chilimoniuk, Jakub Kała, Dominik Nowakowski.</p>
 </div>
 
 <div class="pkgdown-footer-right">

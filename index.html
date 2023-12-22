@@ -56,6 +56,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/group_analysis.html">A Quick Guide for the imputomics shiny app</a>
     <a class="dropdown-item" href="articles/quick_start.html">A Quick Guide on imputomics</a>
   </div>
 </li>
@@ -83,21 +84,21 @@
 <img src="logo.svg" class="logo" alt=""><h1 id="imputomics-">imputomics <a class="anchor" aria-label="anchor" href="#imputomics-"></a>
 </h1>
 </div>
-<p>Imputomics is a software package and a web server designed to simulate and impute missing values in omics datasets. It is a comprehensive package that offers a range of methods for simulating and imputing missing values in different types of omics data such as genomics, transcriptomics, proteomics, and metabolomics. Imputomics provides a user-friendly interface that allows users to simulate missing values based on different distributions and impute missing values using state-of-the-art methods.</p>
+<p><em>imputomics</em> is an R package and a shiny web server designed to simulate and impute missing values. It offers 42 algorithms for imputing missing values, especially in different types of ‘-omics’ data such as genomics, transcriptomics, proteomics, and metabolomics. imputomics provides a user-friendly interface that allows users to simulate missing values based on different distributions and impute missing values using state-of-the-art methods.</p>
 <div class="section level2">
 <h2 id="key-features">Key Features:<a class="anchor" aria-label="anchor" href="#key-features"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li><p>Simulation of missing values: Imputomics provides a variety of options for simulating missing values, including missing completely at random (MCAR), missing at random (MAR), and missing not at random (MNAR) mechanisms. Users can specify the percentage of missing values and the distribution from which the missing values are generated.</p></li>
-<li><p>Imputation methods: Imputomics offers the biggest collection of imputation methods for different types of omics data, including k-nearest neighbors (KNN), random forests, expectation-maximization (EM) algorithm, and principal components analysis (PCA) and many others.</p></li>
-<li><p>Performance evaluation: Imputomics facilitates evaluating the performance of imputation methods. Users can evaluate imputation accuracy and compare different methods using metrics such as root mean squared error (RMSE), mean absolute error (MAE), and coefficient of determination (R-squared).</p></li>
+<li><p>Imputation methods: imputomics offers the biggest collection of imputation methods for different types of omics data, including k-nearest neighbors (KNN), random forests, expectation-maximization (EM) algorithm, and principal components analysis (PCA) and many others.</p></li>
+<li><p>Performance evaluation: imputomics facilitates evaluating the performance of imputation methods. Users can evaluate imputation accuracy and compare different methods using metrics such as root mean squared error (RMSE), mean absolute error (MAE), and coefficient of determination (R-squared).</p></li>
+<li><p>Simulation of missing values: imputomics provides a variety of options for simulating missing values, including missing completely at random (MCAR), missing at random (MAR), and missing not at random (MNAR) mechanisms. Users can specify the percentage of missing values and the distribution from which the missing values are generated.</p></li>
 </ol>
 </div>
 </div>
 <div class="section level1">
 <h1 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h1>
-<p>This repository contains the data and code necessary to reproduce the results from the paper <em>Imputomics: comprehensive missing data imputation for metabolomics data</em>. It uses <a href="https://CRAN.R-project.org/package=renv" class="external-link">renv</a> package to assure the reproducibility. As <em>imputomics</em> implements lots of missing value imputations methods from other R packages.</p>
+<p>This repository contains the data and code necessary to reproduce the results from the paper <em>imputomics: comprehensive missing data imputation for metabolomics data</em>. It uses <a href="https://CRAN.R-project.org/package=renv" class="external-link">renv</a> package to assure the reproducibility. As <em>imputomics</em> implements lots of missing value imputations methods from other R packages.</p>
 <div class="section level2">
 <h2 id="webserver">Webserver<a class="anchor" aria-label="anchor" href="#webserver"></a>
 </h2>
@@ -107,9 +108,10 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p><em>imputomics</em> is available on <a href="https://github.com/BioGenies/imputomics" class="external-link">GitHub</a></p>
+<p>To install <em>imputomics</em> you need to have <em>R</em> version &gt;= 4.2.0.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BioGenies/imputomics"</span><span class="op">)</span></span>
-<span><span class="fu">renv</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/renv/reference/restore.html" class="external-link">restore</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BioGenies/imputomics"</span><span class="op">)</span></span></code></pre></div>
+<p>Due to the implementation of packages from various sources, the first installation might fail. The re-run of the code should finish the process.</p>
 </div>
 <div class="section level2">
 <h2 id="run-imputomics">Run imputomics<a class="anchor" aria-label="anchor" href="#run-imputomics"></a>
@@ -121,7 +123,7 @@
 <div class="section level3">
 <h3 id="how-to-cite">How to cite?<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
 </h3>
-<p>Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Małgorzata Bogdan, Michał Ciborowski, Michał Burdukiewicz (2023). Imputomics: comprehensive missing data imputation for metabolomics data (submitted).</p>
+<p>Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Michał Ciborowski, Michał Burdukiewicz (2023). Imputomics: comprehensive missing data imputation for metabolomics data (submitted).</p>
 </div>
 <div class="section level3">
 <h3 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
@@ -165,16 +167,11 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://github.com/michbur" class="external-link">Michał Burdukiewicz</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8926-582X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="https://github.com/KrystynaGrzesiak" class="external-link">Krystyna Grzesiak</a> <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-2581-7722" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="https://github.com/jarochi" class="external-link">Jarosław Chilimoniuk</a> <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0001-5467-018X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="https://github.com/jakubkala" class="external-link">Jakub Kała</a> <br><small class="roles"> Author, contributor </small>  </li>
-<li>
-<a href="https://github.com/DomMedicine" class="external-link">Dominik Nowakowski</a> <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-3515-4320" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Michał Burdukiewicz <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8926-582X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Krystyna Grzesiak <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0003-2581-7722" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jarosław Chilimoniuk <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0001-5467-018X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jakub Kała <br><small class="roles"> Author, contributor </small>  </li>
+<li>Dominik Nowakowski <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-3515-4320" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -186,7 +183,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://github.com/michbur" class="external-link">Michał Burdukiewicz</a>, <a href="https://github.com/KrystynaGrzesiak" class="external-link">Krystyna Grzesiak</a>, <a href="https://github.com/jarochi" class="external-link">Jarosław Chilimoniuk</a>, <a href="https://github.com/jakubkala" class="external-link">Jakub Kała</a>, <a href="https://github.com/DomMedicine" class="external-link">Dominik Nowakowski</a>.</p>
+<p>Developed by Michał Burdukiewicz, Krystyna Grzesiak, Jarosław Chilimoniuk, Jakub Kała, Dominik Nowakowski.</p>
 </div>
 
 <div class="pkgdown-footer-right">
