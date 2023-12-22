@@ -55,9 +55,30 @@ To install *imputomics* you need to have *R* version \>= 4.2.0.
 devtools::install_github("BioGenies/imputomics")
 ```
 
-Due to the implementation of packages from various sources, the first
-installation might fail. The re-run of the code should finish the
-process.
+Sometimes, not all packages can be installed on the first try. In this
+case, consider re-running the *install_github* function.
+
+## Reproducibility
+
+To reproduce our environment you need to git clone our repo and activate
+renv.
+
+``` bash
+git clone https://github.com/BioGenies/imputomics.git
+```
+
+``` r
+renv::activate()
+renv::restore()
+```
+
+### Troubleshooting
+
+Q: I am receiving the following error message: “Error: HTTP error 403.
+API rate limit exceeded for \[my IP\]”. A: Due to its comprehensiveness,
+*imputomics* downloads many packages from GitHub, which may lead to
+exceeding the limit of GitHub API queries. Please consider setting the
+GitHub API token with usethis::create_github_token().
 
 ## Run imputomics
 

@@ -36,6 +36,8 @@ state-of-the-art methods.
     (MNAR) mechanisms. Users can specify the percentage of missing
     values and the distribution from which the missing values are
     generated.
+    
+
 
 # Getting started
 
@@ -63,6 +65,18 @@ devtools::install_github("BioGenies/imputomics")
 ```
 
 Sometimes, not all packages can be installed on the first try. In this case, consider re-running the *install_github* function.
+
+## Reproducibility
+
+To reproduce our environment you need to git clone our repo and activate renv.
+
+``` bash 
+git clone https://github.com/BioGenies/imputomics.git
+```
+``` r
+renv::activate()
+renv::restore()
+```
 
 ### Troubleshooting
 
