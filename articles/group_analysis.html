@@ -96,6 +96,7 @@ environment:</p>
 <p>If everything went fine you can run the app with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/imputomics_gui.html">imputomics_gui</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="app/about.png"></p>
 </div>
 <div class="section level2">
 <h2 id="load-your-data">Load your data<a class="anchor" aria-label="anchor" href="#load-your-data"></a>
@@ -103,13 +104,18 @@ environment:</p>
 <p>In the <strong>Load data</strong> tab you can upload your dataset.
 You need to choose how missing values are marked in your file. It can be
 either <strong>NA</strong>, <strong>0</strong>, <strong>1</strong>. You
-can preview uploaded data in the <strong>Entire dataset</strong> tab.
-<strong>imputomics</strong> app automatically detects columns with
+can preview uploaded data in the <strong>Entire dataset</strong>
+tab.</p>
+<p><img src="app/load_data.png"></p>
+<p><strong>imputomics</strong> app automatically detects columns with
 values and groups. You can see them in the <strong>Manage
 variables</strong> tab. Here you can also manually set which columns are
 numeric or categorical. The categorical will be ignored during
-imputation. In the <strong>Imputation dataset</strong> you can see which
-columns will be imputed.</p>
+imputation.</p>
+<p><img src="app/manage_variables.png"></p>
+<p>In the <strong>Imputation dataset</strong> you can see which columns
+will be imputed.</p>
+<p><img src="app/imputation_dataset.png"></p>
 </div>
 <div class="section level2">
 <h2 id="missing-values-analysis">Missing values analysis<a class="anchor" aria-label="anchor" href="#missing-values-analysis"></a>
@@ -123,11 +129,16 @@ only those variables, that exceed the set threshold. On the Venn diagram
 you can see how many variables exceed set threshold in each group and
 how many are of the are in both groups. Click remove to remove
 variables. You can also restore data by clicking undo.</p>
+<p><img src="app/mv_analysis.png"></p>
 <p>In the <strong>Visualization</strong> you can draw a bar plot with
 the percentages of missing values in each variable that exceed set
-threshold. On the heatmap you can preview in which samples missing
-values have appeared. You can download both plots clicking in a button
-in top right corner.</p>
+threshold.</p>
+<p><img src="app/vis1.png"></p>
+<p>On the heatmap you can preview in which samples missing values have
+appeared.</p>
+<p><img src="app/vis2.png"></p>
+<p>You can download both plots clicking in a button in top right
+corner.</p>
 </div>
 <div class="section level2">
 <h2 id="imputation">Imputation<a class="anchor" aria-label="anchor" href="#imputation"></a>
@@ -144,12 +155,14 @@ more accurate and reliable outcome, adhering to best practices in data
 analysis.</p>
 <p>Clicking the <strong>Impute</strong> button will start the imputation
 process. On the bottom is progress bar.</p>
+<p><img src="app/impute.png"></p>
 </div>
 <div class="section level2">
 <h2 id="results">Results<a class="anchor" aria-label="anchor" href="#results"></a>
 </h2>
 <p>Here you can check the results of imputation and which methods failed
 to impute.</p>
+<p><img src="app/res.png"></p>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
@@ -157,12 +170,14 @@ to impute.</p>
 <p>Here you can observe the distribution of your data and the
 distribution of imputed missing values depending on used method. You can
 download plot clicking in a button in top right corner</p>
+<p><img src="app/summary.png"></p>
 </div>
 <div class="section level2">
 <h2 id="download">Download<a class="anchor" aria-label="anchor" href="#download"></a>
 </h2>
 <p>You can download your data imputed by selected methods. Each MVIA
 will be in separate spreadsheet.</p>
+<p><img src="app/download.png"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
