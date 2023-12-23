@@ -1,7 +1,9 @@
 url: http://biogenies.info/imputomics/
 template:
   bootstrap: 5
-  bootswatch: cosmo
+  bootswatch: sandstone
+navbar:
+  bg: dark
 home:
   sidebar:
     structure:
