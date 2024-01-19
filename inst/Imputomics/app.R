@@ -325,13 +325,7 @@ ui <- navbarPage(
                                     icon = icon("pen")),
                   ),
                   h4("Usage note:", style = "font-size:15px;"),
-                  h5(HTML("Searching for methods based on fitting a predefined hypothesis is
-           associated with the issue of <b>multiple comparisons</b> and may lead to
-           significant <b>overfitting</b>. When choosing an imputation method, prioritize the structure of
-              your data over preconceived notions. Consider
-              nuances such as distribution, scale, missing value patterns, and
-              relationships for a more accurate and reliable outcome, adhering
-              to best practices in data analysis."), style = "font-size:12px;"),
+                  h5(includeText("./texts/overfitting.txt"), style = "font-size:12px;"),
            ),
            column(7,
                   align = "center",
