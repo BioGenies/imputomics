@@ -44,7 +44,7 @@ methods_table <- methods_table %>%
 
 
 best_MCAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
-  filter(frac_computed > 0.80) %>%
+  filter(frac_computed > 0.99) %>%
   filter(method != "softimpute") %>%
   filter(MAR == 0, MNAR == 0) %>%
   group_by(method) %>%
@@ -55,7 +55,7 @@ best_MCAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
   pull(method)
 
 best_MAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
-  filter(frac_computed >= 0.80) %>%
+  filter(frac_computed >= 0.99) %>%
   filter(method != "softimpute") %>%
   filter(MCAR == 0, MNAR == 0) %>%
   group_by(method) %>%
@@ -66,7 +66,7 @@ best_MAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
   pull(method)
 
 best_MNAR <- readRDS("./inst/Imputomics/res_app.RDS") %>%
-  filter(frac_computed > 0.80) %>%
+  filter(frac_computed > 0.99) %>%
   filter(method != "softimpute") %>%
   filter(MCAR == 0, MAR == 0) %>%
   group_by(method) %>%

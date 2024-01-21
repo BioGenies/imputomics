@@ -343,8 +343,9 @@ ui <- navbarPage(
                       selected_header = "You have selected:"
                     )
                   ),
-                  "*The most resource demanding tools (MAI and Gibbs Sampler
-                     based methods) are available only in the R package.",
+                  HTML('*The most resource demanding tools (MAI and Gibbs Sampler
+                     based methods) are available only in the R package 
+                  (<a href="https://github.com/BioGenies/imputomics" target="_blank">https://github.com/BioGenies/imputomics</a>).'),
            ),
            column(10, offset = 1, style = "position:absolute; bottom: 5px;",
                   progressBar(id = "progress_bar",
