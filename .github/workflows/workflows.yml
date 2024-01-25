@@ -1,7 +1,7 @@
 name: publish
 on: [push]
 jobs:
-publish-hello-docker-image:
+publish-test-docker-image:
 runs-on: ubuntu-latest
 steps:
 - uses: actions/checkout@v2
@@ -11,8 +11,8 @@ with:
 registry: ghcr.io
 username: ${{ github.actor }}
 password: ${{ secrets.GITHUB_TOKEN }}
-- name: Build the hello-docker Docker image
+- name: Build the test-docker Docker image
 run: |
-       docker build . --tag ghcr.io/jarochi/docker_test:latest
-       docker run ghcr.io/jarochi/docker_test:latest
-       docker push ghcr.io/jarochi/docker_test:latest
+       docker build . --tag ghcr.io/BioGenies/imputomics:docker_test
+       docker run ghcr.io/BioGenies/imputomics:docker_test
+       docker push ghcr.io/BioGenies/imputomics:docker_test

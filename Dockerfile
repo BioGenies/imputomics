@@ -9,8 +9,9 @@ RUN [ $(which google-chrome) ] || curl -fsSL -o /tmp/google-chrome.deb https://d
 RUN [ $(which google-chrome) ] || DEBIAN_FRONTEND='noninteractive' apt-get install -y /tmp/google-chrome.deb
 RUN apt-get install -y libcurl4-openssl-dev libssl-dev libicu-dev && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /usr/local/lib/R/etc/ /usr/lib/R/etc/
-RUN echo "options(renv.config.pak.enabled = FALSE, repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl', Ncpus = 4)" | tee /usr/local/lib/R/etc/Rprofile.site | tee /usr/lib/R/etc/Rprofile.site
+RUN echo "options(renv.config.pak.enabled = FALSE, repos = c(CRAN = 'https://cloud.r-project.org'), download.file.method = 'libcurl', Ncpus = 4)" | tee /usr/local/lib/R/etc/Rprofile.site | tee /usr/lib/R/etc/Rprofile.site
 RUN R -e 'install.packages("remotes")'
 RUN R -e 'remotes::install_version("renv", version = "0.17.0")'
+RUN R -e 'remotes::install_version("BiocManager", version = "1.30.20")'
 COPY renv.lock renv.lock
 RUN R -e 'renv::restore()'
