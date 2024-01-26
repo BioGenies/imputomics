@@ -58,6 +58,13 @@ devtools::install_github("BioGenies/imputomics")
 Sometimes, not all packages can be installed on the first try. In this
 case, consider re-running the *install_github* function.
 
+### Docker
+
+To enhance the reproducibility of *imputomics*, we share it also as a
+[rocker-based](https://github.com/rocker-org) container. The docker
+manifest is available in the *imputomics* repository:
+<https://github.com/BioGenies/imputomics/blob/main/Dockerfile_imputomics>.
+
 ## Reproducibility
 
 To reproduce our environment you need to git clone our repo and activate
