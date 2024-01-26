@@ -1,18 +1,22 @@
 name: publish
 on: [push]
 jobs:
-  publish-test-docker-image:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Login to GitHub Container Registry
-    uses: docker/login-action@v1
-    with:
-    registry: ghcr.io
-    username: ${{ github.repository_owner }}
-    password: ${{ secrets.CR_PAT }}
-    - name: Build the test-docker Docker image
-      run: |
+publish-test-docker-image:
+runs-on: ubuntu-latest
+steps:
+- name: Create a Release
+  id: create_release
+  uses: actions/create-release@v1
+  env: GITHUB_TOKEN: ${{ github.token }}
+- name: Login to GitHub Container Registry
+- uses: actions/checkout@v4
+uses: docker/login-action@v1
+with:
+registry: ghcr.io
+username: ${{ github.actor }}
+password: ${{ secrets.GITHUB_TOKEN }}
+- name: Build the test-docker Docker image
+run: |
         docker build . --tag ghcr.io/BioGenies/imputomics:docker_test
         docker run ghcr.io/BioGenies/imputomics:docker_test
         docker push ghcr.io/BioGenies/imputomics:docker_test
