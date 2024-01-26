@@ -64,7 +64,12 @@ To install *imputomics* you need to have *R* version >= 4.2.0.
 devtools::install_github("BioGenies/imputomics")
 ```
 
-Sometimes, not all packages can be installed on the first try. In this case, consider re-running the *install_github* function.
+Sometimes, not all packages can be installed on the first try. In this case, consider re-running the *install_github* function. 
+
+### Docker
+
+To enhance the reproducibility of *imputomics*, we share it also as a [rocker-based](https://github.com/rocker-org) container. The docker manifest is available in the *imputomics* repository: https://github.com/BioGenies/imputomics/blob/main/Dockerfile_imputomics.
+
 
 ## Reproducibility
 
