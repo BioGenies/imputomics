@@ -6,14 +6,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Login to GitHub Container Registry
-    - run: echo "login ${{ github.repository_owner, cr ${{ secrets.CR_PAT }}, ${{ github.actor }} ${{ secrets.GITHUB_TOKEN }} }}"
     uses: docker/login-action@v1
-      with:
-      registry: ghcr.io
-      username: ${{ github.repository_owner }}
-      password: ${{ secrets.CR_PAT }}
-      - name: Build the test-docker Docker image
-        run: |
-          docker build . --tag ghcr.io/BioGenies/imputomics:docker_test
-          docker run ghcr.io/BioGenies/imputomics:docker_test
-          docker push ghcr.io/BioGenies/imputomics:docker_test
+    with:
+    registry: ghcr.io
+    username: ${{ github.repository_owner }}
+    password: ${{ secrets.CR_PAT }}
+    - name: Build the test-docker Docker image
+      run: |
+        docker build . --tag ghcr.io/BioGenies/imputomics:docker_test
+        docker run ghcr.io/BioGenies/imputomics:docker_test
+        docker push ghcr.io/BioGenies/imputomics:docker_test
