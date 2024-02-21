@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   group_analysis: group_analysis.html
   quick_start: quick_start.html
-last_built: 2024-02-21T16:08Z
+last_built: 2024-02-21T16:21Z
 urls:
   reference: http://biogenies.info/imputomics/reference
   article: http://biogenies.info/imputomics/articles
