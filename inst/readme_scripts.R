@@ -4,7 +4,7 @@ imputomics_citation <- function() {
 #### How to cite?
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Michał Ciborowski, Michał Burdukiewicz (2023).
-imputomics: web server and R package for missing values imputation in metabolomics data (submitted).
+imputomics: web server and R package for missing values imputation in metabolomics data, *Bioinformatics*, [10.1093/bioinformatics/btae098](https://doi.org/10.1093/bioinformatics/btae098).
 
   "
 }

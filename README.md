@@ -97,19 +97,20 @@ imputomics::imputomics_gui()
 
 <!-- # How to cite -->
 
-### How to cite?
+#### How to cite?
 
 Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski,
 Adam Krętowski, Rafał Kolenda, Michał Ciborowski, Michał Burdukiewicz
-(2023). Imputomics: comprehensive missing data imputation for
-metabolomics data (submitted).
+(2023). imputomics: web server and R package for missing values
+imputation in metabolomics data, *Bioinformatics*,
+[10.1093/bioinformatics/btae098](https://doi.org/10.1093/bioinformatics/btae098).
 
-### Contact
+#### Contact
 
 If you have any questions, suggestions or comments, contact [Michal
 Burdukiewicz](mailto:michalburdukiewicz@gmail.com).
 
-### Funding and acknowledgements
+#### Funding and acknowledgements
 
 We want to thank the Clinical Research Centre (Medical University of
 Białystok) members for fruitful discussions. K.G. wants to acknowledge
@@ -121,4 +122,4 @@ also acknowledge the Center for Artificial Intelligence at the Medical
 University of Białystok (funded by the Ministry of Health of the
 Republic of Poland).
 
-<img src='man/figures/funding.png' style='height: 110px'>
+<img src='man/figures/funding.png' style='height: 90px'>
