@@ -1,11 +1,14 @@
-citHeader("To cite imputomics in publications, please use:")
+citHeader("To cite imputomics in publications use:")
 
-
-citEntry(entry = "Article",
+citEntry(
+  entry    = "Article",
   author = "Jarosław Chilimoniuk, Krystyna Grzesiak, Jakub Kała, Dominik Nowakowski, Adam Krętowski, Rafał Kolenda, Michał Ciborowski, Michał Burdukiewicz",
-  title = "Imputomics: comprehensive missing data imputation for metabolomics data (submitted)",
-  year = 2023,
-  issn = {},
+  title = "{imputomics}: web server and R package for missing values imputation in metabolomics data",
   journal = "Bioinformatics",
-  url = "https://github.com/BioGenies/imputomics",
+  pages = "btae098",
+  year = 2024,
+  month = 02,
+  issn = "1367-4811",
+  doi = "10.1093/bioinformatics/btae098",
+  url = "https://doi.org/10.1093/bioinformatics/btae098",
 )
