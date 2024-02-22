@@ -15,7 +15,7 @@ home:
     - dev
   links:
   - text: imputomics webserver
-    href: https://imputomics.umb.edu.pl/
+    href: https://biogenies.info/imputomics-ws/
   authors: ~
   Michał Burdukiewicz:
     href: https://github.com/michbur
