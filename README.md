@@ -42,7 +42,7 @@ imputations methods from other R packages.
 ## Webserver
 
 The *imputomics* can be accessed through our [web
-server](http://imputomics.umb.edu.pl/).
+server](https://biogenies.info/imputomics-ws/).
 
 ## Installation
 
