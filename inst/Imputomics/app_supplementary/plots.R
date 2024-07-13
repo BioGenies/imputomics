@@ -1,3 +1,4 @@
+library(ggplot2)
 
 plot_mv_heatmap <- function(tmp_dat, missing_col, nonmissing_col) {
 
@@ -5,7 +6,7 @@ plot_mv_heatmap <- function(tmp_dat, missing_col, nonmissing_col) {
 
   tmp_dat %>%
     mutate(Sample = 1:n()) %>%
-    gather(Variable, Value, all_of(gathercols)) %>%
+    tidyr::gather(Variable, Value, all_of(gathercols)) %>%
     mutate(`Is missing` = is.na(Value)) %>%
     ggplot(aes(x = Sample, y = as.factor(Variable), fill = `Is missing`)) +
     geom_tile() +
@@ -73,7 +74,7 @@ plot_points_density <- function(dat, input) {
   points_plt <- plt_dat %>%
     mutate(imputed = is.na(missing_var)) %>%
     ggplot() +
-    geom_quasirandom(aes(y = var, x = imputed, col = imputed)) +
+    ggbeeswarm::geom_quasirandom(aes(y = var, x = imputed, col = imputed)) +
     theme_minimal() +
     theme(axis.text = element_text(size = 12),
           axis.title = element_text(size = 14),
@@ -129,8 +130,8 @@ plot_points_density <- function(dat, input) {
   }
 
   points_plt + theme(legend.position = "right") + dens_plt +
-    plot_layout(guides = "collect", design = "112") +
-    plot_annotation(title = ggtitle(paste0("Variable: ",
+    patchwork::plot_layout(guides = "collect", design = "112") +
+    patchwork::plot_annotation(title = ggtitle(paste0("Variable: ",
                                            input[["plot_var"]],
                                            ",\nMethod: ",
                                            input[["plot_methods"]])),

@@ -1,22 +1,22 @@
 library(shiny)
-library(shinythemes)
-library(shinyWidgets)
-library(shinycssloaders)
-library(DT)
-library(shinyhelper)
-library(colourpicker)
-
-library(ggplot2)
-library(patchwork)
-library(ggbeeswarm)
-library(ggvenn)
-
+# library(shinythemes)
+# library(shinyWidgets)
+# library(shinycssloaders)
+# library(DT)
+# library(shinyhelper)
+# library(colourpicker)
+#
+# library(ggplot2)
+# library(patchwork)
+# library(ggbeeswarm)
+# library(ggvenn)
+#
 library(dplyr)
-library(tidyr)
-library(imputomics)
-library(stringr)
-library(readxl)
-library(openxlsx)
+# library(tidyr)
+# library(imputomics)
+# library(stringr)
+# library(readxl)
+# library(openxlsx)
 
 source("app_supplementary/data_operations.R")
 source("app_supplementary/download_plot_module.R")
@@ -24,12 +24,13 @@ source("app_supplementary/plots.R")
 source("app_supplementary/ui_supp.R")
 source("app_supplementary/amelia_safe_impute.R")
 source("app_supplementary/pattern_switch_module.R")
-source(system.file("readme_scripts.R", package = "imputomics"))
+# source(system.file("readme_scripts.R", package = "imputomics"))
+source("../readme_scripts.R")
 
 methods_table <- get_methods_table("methods_table.RDS")
 
 ui <- navbarPage(
-  theme = shinytheme("sandstone"),
+  theme = shinythemes::shinytheme("sandstone"),
   title = "Imputomics",
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
@@ -61,7 +62,7 @@ ui <- navbarPage(
                   br(),
                   h5("Click below to upload example data!",
                      style = "font-size:15px;"),
-                  actionBttn(
+                  shinyWidgets::actionBttn(
                     inputId = "example_dat",
                     label = "Example data",
                     style = "material-flat",
@@ -77,7 +78,7 @@ ui <- navbarPage(
                       br(),
                       column(
                         10, offset = 1,
-                        withSpinner(DT::dataTableOutput("full_data"), color = "black")
+                        shinycssloaders::withSpinner(DT::dataTableOutput("full_data"), color = "black")
                       )
                     ),
                     tabPanel(
@@ -86,7 +87,7 @@ ui <- navbarPage(
                       h4("Choose from the numeric columns which ones to exclude.
                          Categorical/text columns will be automatically ignored."),
                       column(6, offset = 1,
-                             multiInput(
+                             shinyWidgets::multiInput(
                                inputId = "columns",
                                label = "",
                                selected = NULL,
@@ -111,7 +112,7 @@ ui <- navbarPage(
                       br(),
                       column(
                         10, offset = 1,
-                        withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
+                        shinycssloaders::withSpinner(DT::dataTableOutput("missing_num_data"), color = "black")
                       )
                     ),
                   )
@@ -131,14 +132,14 @@ ui <- navbarPage(
                                              "Select threshold for misisng values ratio [%].",
                                              value = 20, min = 0, max = 100),
                                  br(),
-                                 colourInput("above_threshold_col",
+                                 colourpicker::colourInput("above_threshold_col",
                                              "Above threshold color",
                                              "tomato"),
-                                 colourInput("below_threshold_col",
+                                 colourpicker::colourInput("below_threshold_col",
                                              "Below threshold color",
                                              "black"),
                                  br(),
-                                 awesomeCheckbox(
+                                 shinyWidgets::awesomeCheckbox(
                                    inputId = "show_non_miss",
                                    label = "Show variables without missing values.",
                                    value = FALSE
@@ -146,7 +147,7 @@ ui <- navbarPage(
                           ),
                           column(7,
                                  offset = 1,
-                                 withSpinner(uiOutput("plot_segment_ui"),
+                                 shinycssloaders::withSpinner(uiOutput("plot_segment_ui"),
                                              color = "black"),
                           ),
                           download_plot_UI("segment"),
@@ -158,14 +159,14 @@ ui <- navbarPage(
                                  style = 'border-right: 1px solid',
                                  h3("Plot settings:"),
                                  br(),
-                                 colourInput("missing_col",
+                                 colourpicker::colourInput("missing_col",
                                              "Missing color",
                                              "black"),
-                                 colourInput("nonmissing_col",
+                                 colourpicker::colourInput("nonmissing_col",
                                              "Non-missing color",
                                              "gray"),
                                  br(),
-                                 awesomeCheckbox(
+                                 shinyWidgets::awesomeCheckbox(
                                    inputId = "show_non_miss",
                                    label = "Show variables without missing values.",
                                    value = FALSE
@@ -173,7 +174,7 @@ ui <- navbarPage(
                           ),
                           column(7,
                                  offset = 1,
-                                 withSpinner(uiOutput("plot_heatmap_ui"),
+                                 shinycssloaders::withSpinner(uiOutput("plot_heatmap_ui"),
                                              color = "black")
                           ),
                           download_plot_UI("heatmap")
@@ -193,7 +194,7 @@ ui <- navbarPage(
                                          step = 1,
                                          width = '100%'),
                              br(),
-                             helper(
+                             shinyhelper::helper(
                                h4("2. Set groups (optional)",
                                   style = "font-size:15px;"),
                                type = "inline",
@@ -233,14 +234,14 @@ ui <- navbarPage(
                              style = 'border-right: 1px solid;border-left: 1px solid',
                              h4("Ratio of missing data per group [%]"),
                              br(),
-                             withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
+                             shinycssloaders::withSpinner(DT::dataTableOutput("mv_ratio"), color = "black"),
                       ),
 
                       column(5,
                              h4("Venn diagram:"),
                              br(),
                              htmlOutput("venn_info"),
-                             withSpinner(plotOutput("venn_diagram",
+                             shinycssloaders::withSpinner(plotOutput("venn_diagram",
                                                     width = '100%',
                                                     height = 500),
                                          color = "black")
@@ -254,7 +255,7 @@ ui <- navbarPage(
                      style = "font-size:15px;"),
                   h5("Check the references panel for the references of all imputations methods."),
                   br(),
-                  helper(
+                  shinyhelper::helper(
                     h4("Specify time limit per method below.", style = "font-size:15px;"),
                     type = "inline",
                     title = "How to set time limit?",
@@ -274,7 +275,7 @@ ui <- navbarPage(
                     value = 300, min = 1, max = 300
                   ),
                   br(),
-                  helper(
+                  shinyhelper::helper(
                     add_methods_UI("fastest"),
                     type = "inline",
                     title = "Fastest or most accurate metods",
@@ -317,7 +318,7 @@ ui <- navbarPage(
                   textOutput("n_methods"),
                   br(),
                   column(12, align = "center",
-                         actionBttn(inputId = "impute_btn",
+                         shinyWidgets::actionBttn(inputId = "impute_btn",
                                     label = "Impute!",
                                     style = "material-flat",
                                     color = "warning",
@@ -332,7 +333,7 @@ ui <- navbarPage(
                   br(),
                   br(),
                   br(),
-                  multiInput(
+                  shinyWidgets::multiInput(
                     inputId = "methods",
                     label = "Select methods:",
                     selected = NULL,
@@ -344,11 +345,11 @@ ui <- navbarPage(
                     )
                   ),
                   HTML('*The most resource demanding tools (MAI and Gibbs Sampler
-                     based methods) are available only in the R package 
+                     based methods) are available only in the R package
                   (<a href="https://github.com/BioGenies/imputomics" target="_blank">https://github.com/BioGenies/imputomics</a>).'),
            ),
            column(10, offset = 1, style = "position:absolute; bottom: 5px;",
-                  progressBar(id = "progress_bar",
+                  shinyWidgets::progressBar(id = "progress_bar",
                               value = 0,
                               status = "success",
                               size = "xs",
@@ -368,11 +369,11 @@ ui <- navbarPage(
                                choices = ""),
                   br(),
                   h4(icon("xmark"), "Error:"),
-                  withSpinner(uiOutput("error_methods"), color = "black"),
+                  shinycssloaders::withSpinner(uiOutput("error_methods"), color = "black"),
            ),
            column(7, offset = 1, align = "center",
                   h3("Data preview:"),
-                  withSpinner(DT::dataTableOutput("results"),
+                  shinycssloaders::withSpinner(DT::dataTableOutput("results"),
                               color = "black")
            )
   ),
@@ -382,27 +383,27 @@ ui <- navbarPage(
                     style = 'border-right: 1px solid',
                     h3("Plot settings:"),
                     br(),
-                    pickerInput(inputId = "plot_var",
+                    shinyWidgets::pickerInput(inputId = "plot_var",
                                 label = "Select variable:",
                                 choices = "",
                                 multiple = FALSE,
                                 options = list(`live-search` = TRUE)),
-                    pickerInput(inputId = "plot_methods",
+                    shinyWidgets::pickerInput(inputId = "plot_methods",
                                 label = "Select method:",
                                 choices = "",
                                 multiple = FALSE,
                                 options = list(`live-search` = TRUE)),
                     br(),
-                    colourInput("missing_col_res",
+                    colourpicker::colourInput("missing_col_res",
                                 "Imputed data color:",
                                 "tomato"),
-                    colourInput("nonmissing_col_res",
+                    colourpicker::colourInput("nonmissing_col_res",
                                 "Observed data color:",
                                 "black"),
                     br(),
              ),
              column(7, offset = 1, br(),
-                    withSpinner(plotOutput("points", height = 500))),
+                    shinycssloaders::withSpinner(plotOutput("points", height = 500))),
              column(1, download_plot_UI("points"))
            )
   ),
@@ -415,7 +416,7 @@ ui <- navbarPage(
            ),
            column(5,
                   h3("... and click to download the results!"),
-                  downloadBttn("download", "Download!",
+                  shinyWidgets::downloadBttn("download", "Download!",
                                color = "success",
                                style = "material-flat",
                                size = "lg")
@@ -434,7 +435,7 @@ ui <- navbarPage(
 server <- function(input, output, session) {
   dat <- reactiveValues()
 
-  observe_helpers()
+  shinyhelper::observe_helpers()
 
   ##### loading data
   observeEvent(input[["users_path"]], {
@@ -477,7 +478,7 @@ server <- function(input, output, session) {
 
       dat[["grouping_cols"]] <- grouping_cols
 
-      updateMultiInput(session,
+      shinyWidgets::updateMultiInput(session,
                        inputId = "columns",
                        choices = colnames(dat[["missing_data"]]))
       updateSelectInput(session,
@@ -495,13 +496,13 @@ server <- function(input, output, session) {
     req(dat[["missing_data"]])
 
     if(sum(is.na(dat[["missing_data"]])) == 0)
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "Make sure that right missing value denotement is selected!",
                      type = "warning")
 
     # if(sum(is.na(dat[["missing_data"]])) > 0)
-    #   sendSweetAlert(session = session,
+    #   shinyWidgets::sendSweetAlert(session = session,
     #                  title = "Success !",
     #                  text = "Your data is correct!",
     #                  type = "success")
@@ -534,7 +535,7 @@ server <- function(input, output, session) {
     dat[["missing_data"]] <- dat[["uploaded_data"]] %>%
       dplyr::select(-dat[["nonnumeric_cols"]])
     if(ncol(dat[["missing_data"]]) == 0) {
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "No numeric columns!",
                      text = "Make sure that the uploaded file contains dataset with numeric columns.",
                      type = "error")
@@ -620,7 +621,7 @@ server <- function(input, output, session) {
 
     dat[["grouping_cols"]] <- grouping_cols
 
-    updateMultiInput(session,
+    shinyWidgets::updateMultiInput(session,
                      inputId = "columns",
                      choices = colnames(dat[["missing_data"]]))
     updateSelectInput(session,
@@ -643,7 +644,7 @@ server <- function(input, output, session) {
 
     #check if there are missing values in the data
     if(sum(is.na(dat[["uploaded_data"]])) == 0) {
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "We will plot all the variables!",
                      type = "warning")
@@ -683,7 +684,7 @@ server <- function(input, output, session) {
 
     #check if there are missing values in the data
     if(sum(is.na(dat[["uploaded_data"]])) == 0) {
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "Your data contains no missing values!",
                      text = "We will plot all the variables!",
                      type = "warning")
@@ -797,7 +798,7 @@ server <- function(input, output, session) {
             pull(Variable)
         })
         names(grouped_variables) <- groups
-        return(ggvenn(grouped_variables))
+        return(ggvenn::ggvenn(grouped_variables))
       } else {
         return(NULL)
       }
@@ -842,7 +843,7 @@ server <- function(input, output, session) {
     req(input[["timeout"]])
 
     if(is.null(dat[["missing_data"]])) {
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "No data!",
                      text = "Upload your data before imputation!!",
                      type = "error")
@@ -850,7 +851,7 @@ server <- function(input, output, session) {
     }
 
     if(is.null(input[["methods"]])) {
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "No methods!",
                      text = "Select at least one imputation method from the list!",
                      type = "warning")
@@ -866,10 +867,10 @@ server <- function(input, output, session) {
     results <- lapply(methods, function(ith_method) {
       ith_fun <- get(ith_method)
       title <- paste0("In progress ",
-                      str_replace_all(str_remove(ith_method,"impute_"), "_", " "),
+                      stringr::str_replace_all(stringr::str_remove(ith_method,"impute_"), "_", " "),
                       " ...")
       progress <<- progress + progress_step
-      updateProgressBar(session = session,
+      shinyWidgets::updateProgressBar(session = session,
                         id = "progress_bar",
                         value = progress,
                         title = title)
@@ -888,23 +889,23 @@ server <- function(input, output, session) {
         return(NULL)
     })
 
-    updateProgressBar(session = session, id = "progress_bar", value = 100, title = "Done!")
+    shinyWidgets::updateProgressBar(session = session, id = "progress_bar", value = 100, title = "Done!")
     errors <- methods[sapply(results, is.null)]
     success <- setdiff(methods, errors)
 
     if(length(success) == 0)
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "Error!",
                      text = "All of the chosen methods failed to impute your data in provided time!
                      Try to increase the time limit or validate your dataset.",
                      type = "error")
     if(length(errors) == 0)
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "Success!",
                      text = "Imputation is done! You can check and download the results!",
                      type = "success")
     if(length(errors) > 0 & length(success) > 0)
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "Warning!",
                      text = "Imputation is done! However, some of the chosen methods failed to impute your data!",
                      type = "warning")
@@ -914,7 +915,7 @@ server <- function(input, output, session) {
   })
 
 
-  observeEvent(input[["methods"]], {updateProgressBar(session = session,
+  observeEvent(input[["methods"]], {shinyWidgets::updateProgressBar(session = session,
                                                       id = "progress_bar",
                                                       value = 0) })
 
@@ -961,11 +962,11 @@ server <- function(input, output, session) {
                        label = "",
                        choices = pull(success, name),
                        selected = pull(success, name)[1])
-    updatePickerInput(session = session,
+    shinyWidgets::updatePickerInput(session = session,
                       inputId = "plot_var",
                       choices = vars,
                       selected = vars[1])
-    updatePickerInput(session = session,
+    shinyWidgets::updatePickerInput(session = session,
                       inputId = "plot_methods",
                       choices = pull(success, name),
                       selected = pull(success, name)[1])

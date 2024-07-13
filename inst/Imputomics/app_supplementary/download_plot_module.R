@@ -2,7 +2,7 @@
 download_plot_UI <- function(id) {
   ns <- NS(id)
   tagList(
-    dropdownButton(
+    shinyWidgets::dropdownButton(
       inputId = id,
       tagList(
         h4("Plot settings:"),
@@ -15,7 +15,7 @@ download_plot_UI <- function(id) {
                      value = 14, min = 1, max = 20),
         br(),
         column(12,
-               downloadBttn(ns("download_plot"),
+               shinyWidgets::downloadBttn(ns("download_plot"),
                             block = TRUE,
                             label = "Download",
                             color = "primary")),
@@ -24,7 +24,7 @@ download_plot_UI <- function(id) {
       ),
       circle = TRUE, status = "primary", right = TRUE,
       icon = icon("download"), width = "300px",
-      tooltip = tooltipOptions(title = "Click to download!",
+      tooltip = shinyWidgets::tooltipOptions(title = "Click to download!",
                                placement = "left")
     ),
   )

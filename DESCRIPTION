@@ -1,7 +1,7 @@
 Package: imputomics
 Type: Package
 Title: The Most Robust Wrapper for Missing Values Imputation in ‘Omics’ Data
-Version: 0.1.3
+Version: 1.0.1
 Authors@R: c(
           person("Michał", "Burdukiewicz", ,
                email = "michalburdukiewicz@gmail.com",
@@ -15,8 +15,8 @@ Authors@R: c(
                email = "jaroslaw.chilimoniuk@gmail.com", 
                comment = c(ORCID = "0000-0001-5467-018X"),
                role = c("aut", "ctb")),
-          person("Jakub", "Kała", 
-               email = "kalajakub96@gmail.com",
+          person("Jakub", "Kołodziejczyk", 
+               email = "kolodziejczykjakub.mail@gmail.com",
                comment = c(ORCID = "0000-0002-7187-6988"),
                role = c("aut", "ctb")),
           person("Dominik", "Nowakowski", 
@@ -32,69 +32,60 @@ Description: Offers a range of methods for simulating and imputing missing value
 License: GPL-3
 Encoding: UTF-8
 VignetteBuilder: knitr
-Depends: R (>= 4.2)
+Depends: R (>= 4.4)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 URL: https://biogenies.info/imputomics/,
     http://biogenies.info/imputomics/
 BugReports: https://github.com/biogenies/imputomics/issues
-Imports:
-    Amelia,
-    bcv,
-    glmnet,
-    pcaMethods (>= 1.92.0),
-    GMSimpute,
-    checkmate,
-    graphics,
-    shiny,
-    ggplot2,
-    dplyr,
-    ggbeeswarm,
-    patchwork,
-    Hmisc,
-    tidyr,
-    imputation (>= 2.0.3),
-    impute (>= 1.74.0),
-    imputeLCMD,
-    MAI (>= 1.3.0),
-    MetabImpute (>= 0.1.0),
-    methods,
-    mice,
-    missCompare,
-    missForest,
-    missMDA,
-    NMF (>= 0.30.4.900),
-    PEMM (>= 1.0),
-    Rdpack,
-    R.utils,
-    SimDesign,
-    softImpute,
-    truncnorm,
-    VIM,
-    Biobase (>= 2.60.0),
-    TimeProjection (>= 0.2.0),
-    DreamAI (>= 0.1.0)
-Suggests:
-    abind,
-    beeswarm,
-    knitr,
-    testthat,
-    matrixStats,
-    randomForest,
-    spelling,
-    openxlsx,
-    rmarkdown,
-    callr,
-    shinythemes,
-    shinyWidgets,
-    shinycssloaders,
-    DT,
-    shinyhelper,
-    colourpicker,
-    ggvenn
 Language: en-US
 RdMacros: Rdpack
 LazyData: true
+Imports: 
+    abind (>= 1.4.5),
+    Amelia (>= 1.8.2),
+    bcv (>= 1.0.2),
+    Biobase (>= 2.64.0),
+    BiocManager (>= 1.30.23),
+    checkmate (>= 2.3.1),
+    dplyr (>= 1.1.4),
+    DreamAI (>= 0.1.0),
+    ggbeeswarm (>= 0.7.2),
+    ggplot2 (>= 3.5.1),
+    glmnet (>= 4.1.8),
+    GMSimpute (>= 0.0.1.0),
+    Hmisc (>= 5.1.3),
+    imputation (>= 2.0.3),
+    impute (>= 1.78.0),
+    imputeLCMD (>= 2.1),
+    MAI (>= 1.3.0),
+    MetabImpute (>= 0.1.0),
+    mice (>= 3.16.0),
+    missCompare (>= 1.0.3),
+    missForest (>= 1.5),
+    missMDA (>= 1.19),
+    NMF (>= 0.30.4.900),
+    patchwork (>= 1.2.0),
+    pcaMethods (>= 1.96.0),
+    PEMM (>= 1.0),
+    pkgmaker (>= 0.32.10),
+    renv (>= 1.0.7),
+    SimDesign (>= 2.16),
+    softImpute (>= 1.4.1),
+    tidyr (>= 1.3.1),
+    TimeProjection (>= 0.2.0),
+    truncnorm (>= 1.0.9),
+    VIM (>= 6.2.2)
+Suggests: 
+    colourpicker (>= 1.3.0),
+    ggvenn (>= 0.1.10),
+    openxlsx (>= 4.2.5.2),
+    shiny (>= 1.8.1.1),
+    shinycssloaders (>= 1.0.0),
+    shinyhelper (>= 0.3.2),
+    shinythemes (>= 1.2.0),
+    shinyWidgets (>= 0.8.6),
+    stringr (>= 1.5.1)
 Remotes: 
     bioc::Biobase,
     url::https://cran.r-project.org/src/contrib/Archive/PEMM/PEMM_1.0.tar.gz,

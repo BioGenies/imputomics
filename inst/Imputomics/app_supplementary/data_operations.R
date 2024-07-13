@@ -16,7 +16,7 @@ validate_data <- function(uploaded_data, session, input) {
 
   # check if data is empty
   if(is.null(uploaded_data)){
-    sendSweetAlert(session = session,
+    shinyWidgets::sendSweetAlert(session = session,
                    title = "No data!",
                    text = "Your data is empty or the file is broken.
                    Make sure that the uploaded file contains dataset with numeric columns.",
@@ -37,7 +37,7 @@ validate_data <- function(uploaded_data, session, input) {
     }
 
     if(ncol(uploaded_data) == 0) {
-      sendSweetAlert(session = session,
+      shinyWidgets::sendSweetAlert(session = session,
                      title = "No numeric columns!",
                      text = "Make sure that the uploaded file contains dataset with numeric columns.",
                      type = "error")
@@ -98,9 +98,9 @@ get_methods_table <- function(path = "methods_table.RDS") {
 
 
 save_excel <- function(dat, file, download_methods) {
-  wb_file <- createWorkbook()
-  addWorksheet(wb_file, "original_data")
-  writeData(wb_file, "original_data", dat[["uploaded_data"]], colNames = TRUE)
+  wb_file <- openxlsx::createWorkbook()
+  openxlsx::addWorksheet(wb_file, "original_data")
+  openxlsx::writeData(wb_file, "original_data", dat[["uploaded_data"]], colNames = TRUE)
 
   result_data <- dat[["results"]][["results"]]
 
@@ -109,15 +109,15 @@ save_excel <- function(dat, file, download_methods) {
     pull(imputomics_name)
 
   result_data <- result_data[methods]
-  methods <- str_replace_all(str_remove(names(result_data),"impute_"), "_", " ")
+  methods <- stringr::str_replace_all(stringr::str_remove(names(result_data),"impute_"), "_", " ")
   for (i in 1:length(result_data)) {
     if(nrow(result_data[[i]]) != 0) {
-      addWorksheet(wb_file, methods[i])
+      openxlsx::addWorksheet(wb_file, methods[i])
       method_i_full_data <- dat[["uploaded_data"]]
       method_i_full_data[, colnames(result_data[[i]])] <- result_data[[i]]
       method_i_full_data <- method_i_full_data %>% dplyr::select(-dat[["removed"]])
-      writeData(wb_file, methods[i], method_i_full_data, colNames = TRUE)
+      openxlsx::writeData(wb_file, methods[i], method_i_full_data, colNames = TRUE)
     }
   }
-  saveWorkbook(wb_file, file, overwrite = TRUE)
+  openxlsx::saveWorkbook(wb_file, file, overwrite = TRUE)
 }

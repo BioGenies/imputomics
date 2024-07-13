@@ -8,7 +8,7 @@ add_methods_UI <- function(id) {
                      MAR = "Add the 5 most accurate methods for MAR.",
                      MNAR = "Add the 5 most accurate methods for MNAR.")
   tagList(
-    prettySwitch(
+    shinyWidgets::prettySwitch(
       inputId = ns("methods_switch"),
       label = content,
       status = "danger",
@@ -31,7 +31,7 @@ add_methods_SERVER <- function(id, global_input, parent, methods_table) {
       else
         updated_methods <- setdiff(global_input[["methods"]], best_methods)
 
-      updateMultiInput(session = parent,
+      shinyWidgets::updateMultiInput(session = parent,
                        inputId = "methods",
                        selected = updated_methods)
     }, ignoreInit = TRUE)
